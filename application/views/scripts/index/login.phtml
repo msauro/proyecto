@@ -1,0 +1,63 @@
+<?php 
+$this->headMeta()->appendHttpEquiv('Content-Type', 'text/html;charset=utf-8');
+$this->headMeta()->appendHttpEquiv('X-UA-Compatible', 'IE=edge');
+$this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1');
+$this->headTitle()->setSeparator(' - ');
+$this->headTitle('Login - CMX Metre');
+
+echo $this->doctype(); ?>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> 
+	<head>
+	    <?php echo $this->headMeta(); ?> 
+	    <?php echo $this->headTitle(); ?>
+        <?php echo $this->headLink()->prependStylesheet($this->baseUrl().'/admin-public/css/theme-dark.css'); ?>
+    </head>
+    <body class="login-container login-v2">
+        <div class="login-box animated fadeInDown">
+            <div class="login-body">
+                <div class="login-title" style="text-align:center;"><strong>Welcome</strong>!</div>
+                <form id="login-form" name="login-form" action="/index/login" class="form-horizontal" method="post">
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <span class="fa fa-user"></span>
+                                </div>
+                                <input id="email" name="email" type="email" class="form-control" placeholder="e-mail"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <span class="fa fa-lock"></span>
+                                </div>                                
+                                <input id="password" name="password" type="password" class="form-control" placeholder="Password"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <?php if($this->error): ?>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <p class="login-error"><?php echo $this->error ?></p>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <button class="btn btn-primary btn-lg btn-block">Login</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="login-footer">
+                <div style="text-align:center;">
+                    CMX ®
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

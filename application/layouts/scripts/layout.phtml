@@ -1,0 +1,197 @@
+<?php 
+$this->headMeta()->appendHttpEquiv('Content-Type', 'text/html;charset=utf-8');
+$this->headMeta()->appendHttpEquiv('X-UA-Compatible', 'IE=edge');
+$this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1');
+$this->headTitle()->setSeparator(' - ');
+$this->headTitle('CMX');
+$controller = Zend_Controller_Front::getInstance()->getRequest()->getControllerName();
+$action = Zend_Controller_Front::getInstance()->getRequest()->getActionName();
+
+echo $this->doctype(); ?>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> 
+	<head>
+	    <?php echo $this->headMeta(); ?> 
+	    <?php echo $this->headTitle(); ?>
+
+        <link rel="shortcut icon" href="/admin-public/img/logo-small@2x.png" type="image/x-icon">
+
+        <?php echo $this->headLink()->prependStylesheet($this->baseUrl().'/admin-public/css/custom.css'); ?>
+        <?php echo $this->headLink()->prependStylesheet($this->baseUrl().'/admin-public/css/theme-dark.css'); ?>
+        
+    <!-- SCRIPTS -->
+        <!-- PLUGINS -->
+            <script type="text/javascript" src="/admin-public/js/plugins/jquery/jquery.min.js"></script>
+            <script type="text/javascript" src="/admin-public/js/plugins/jquery/jquery-ui.min.js"></script>
+            <script type="text/javascript" src="/admin-public/js/plugins/bootstrap/bootstrap.min.js"></script>
+
+        <!-- SOCKET -->
+            <script>
+                var whereAmI = <?php 
+                                    $whereAmI = array(
+                                        'controller' => $controller,
+                                        'action'     => $action
+                                        );
+                                    echo json_encode($whereAmI);
+                                ?>;
+                var socket_uri = '<?php echo SOCKET_URI ?>';
+            </script>
+            <script src="//cdn.socket.io/socket.io-1.2.0.js"></script>
+            <script src="/admin-public/js/cmxSocket.js"></script> 
+
+        <!-- TEMPLATE -->
+            <script type="text/javascript" src="/admin-public/js/actions.js"></script>
+            <script type="text/javascript" src="/admin-public/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
+            <script type="text/javascript" src="/admin-public/js/custom.js"></script>
+            <script type="text/javascript" src="/admin-public/js/plugins.js"></script>        
+            <script type="text/javascript" src="/admin-public/js/plugins/icheck/icheck.min.js"></script>
+            <script type='text/javascript' src='/admin-public/js/plugins/noty/jquery.noty.js'></script>
+            <script type="text/javascript" src="/admin-public/js/plugins/datatables/jquery.dataTables.min.js"></script>
+    </head>
+    <body class="page-container-boxed">
+    <!-- PAGE CONTAINER -->
+        <div class="page-container <?php echo $this->minimized ? 'page-navigation-toggled page-container-wide' : ''  ?>">
+        <!-- PAGE SIDEBAR -->
+            <div class="page-sidebar">
+                <ul class="x-navigation <?php echo $this->minimized ? 'x-navigation-minimized' : ''  ?>">
+                <!-- PROFILE SECTION -->
+                    <li class="xn-logo">
+                        <a href="/">CMX</a>
+                        <a href="#" class="x-navigation-control"></a>
+                    </li>
+                    <li class="xn-profile">
+                        <a href="#" class="profile-mini">
+                            <img src="<?php echo $this->admin['avatar_url'] ?>" alt="<?php echo $this->admin['first_name'] ?> <?php echo $this->admin['last_name'] ?>"/>
+                        </a>
+                        <div class="profile">
+                            <div class="profile-image">
+                                <img src="<?php echo $this->admin['avatar_url'] ?>" alt="<?php echo $this->admin['first_name'] ?> <?php echo $this->admin['last_name'] ?>"/>
+                            </div>
+                            <div class="profile-data">
+                                <div class="profile-data-name">
+                                    <?php echo $this->admin['first_name'] ?> <?php echo $this->admin['last_name'] ?>
+                                </div>
+                            </div>
+                            <div class="profile-controls">
+                                <a href="/admin/edit/id/<?php echo $this->admin['id_admin'] ?>" class="profile-control-left"><span class="fa fa-info"></span></a>
+                            </div>
+                        </div>                                                                        
+                    </li>
+                <!-- MENU SECTION -->
+                    <li class="xn-title">Menu</li>
+                    <!-- MAIN PANEL -->
+                        <li <?php if($controller == 'Index') echo 'class="active"' ?> >
+                            <a href="/"><span class="fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>
+                        </li>     
+                    <!-- ADMINISTRATORS -->    
+                        <li id="modules-admins" class="xn-openable <?php if($this->admin['isSuperAdmin'] == 0) echo hidden ?>">
+                            <a href="javascript:void(0);">
+                                <div><span class="fa fa-user"></span><span class="xn-text">Administrators</span></div>
+                            </a>
+                            <ul>
+                                <li <?php if($controller == 'admin' && $action == 'add') echo 'class="active"' ?>><a href="/admin/add"><span class="fa fa-group"></span> Add new</a></li>
+                                <li <?php if($controller == 'admin' && $action == 'list') echo 'class="active"' ?>><a href="/admin/list"><span class="fa fa-group"></span> List</a></li>
+                            </ul>
+                        </li>
+                    <!-- SETTINGS -->    
+                       <li id="modules-settings" class="xn-openable">
+                            <a href="javascript:void(0);">
+                                <div><span class="fa fa-cog" aria-hidden="true"></span><span class="xn-text">Settings</span></div>
+                            </a>
+                            <ul>
+                                <li <?php if($controller == 'settings' && $action == 'order') echo 'class="active"' ?>><a href="/settings/order"><span class="fa fa-file-text-o" aria-hidden="true"></span> Order's footer</a></li>
+                            </ul>
+                        </li>
+                <!-- DEFINE MORE SECTIONS -->
+                </ul>
+            </div>
+        <!-- PAGE CONTENT -->
+            <div class="page-content">
+            <!-- X-NAVIGATION VERTICAL -->
+                <ul class="x-navigation x-navigation-horizontal x-navigation-panel">
+                <!-- TOGGLE NAVIGATION -->
+                    <li class="xn-icon-button">
+                        <a href="javascript:void();" class="x-navigation-minimize">
+                            <span class="fa  <?php echo $this->minimized ? 'fa-indent' : 'fa-dedent'  ?>"></span>
+                        </a>
+                    </li>     
+                <!-- LOGOUT -->
+                    <li class="xn-icon-button pull-right last">
+                        <a href="#"><span class="fa fa-power-off"></span></a>
+                        <ul class="xn-drop-left animated zoomIn">
+                            <li><a href="#" class="mb-control" data-box="#mb-signout"><span class="fa fa-sign-out"></span> Log Out</a></li>
+                        </ul>                        
+                    </li> 
+                </ul>
+            <!-- ERROR MESSAGE -->
+                <?php if($this->message['status'] == 'error'): ?>
+                <div class="message-box-admin">
+                    <div class="">
+                        <div class="alert alert-danger">
+                            <i class="fa fa-exclamation-triangle"></i> <?php echo $this->message['msg'] ?>
+                        </div>
+                    </div>
+                </div>
+                <?php endif; ?>
+            <!-- SUCCESS MESSAGE -->
+                <?php if($this->message['status'] == 'success'): ?>
+                <div class="message-box-admin">
+                    <div class="">
+                        <div class="alert alert-success">
+                            <i class="fa fa-info-circle"></i> <?php echo $this->message['msg'] ?>
+                        </div>
+                    </div>
+                </div>
+                <?php endif; ?>
+            <!-- DINAMIC CONTENT -->
+                <?php echo $this->layout()->content; ?>
+            </div>
+        <!-- LOGOUT MESSAGE -->
+            <div class="message-box animated fadeIn" id="mb-signout">
+                <div class="mb-container">
+                    <div class="mb-middle">
+                        <div class="mb-title"><span class="fa fa-sign-out"></span> Log <strong>Out</strong> ?</div>
+                        <div class="mb-content">
+                            <p>Are you sure you want to log out?</p>                    
+                            <p>Press No if you want to continue work. Press Yes to logout.</p>
+                        </div>
+                        <div class="mb-footer">
+                            <div class="pull-right">
+                                <a href="/index/logout" class="btn btn-success btn-lg">Yes</a>
+                                <button class="btn btn-default btn-lg mb-control-close">No</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <!-- MODAL NOTIFICATION -->
+          <div id="modalNotification" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Request update</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="notificationText"></p>
+                    </div>
+                    <div class="modal-footer">
+                      <button class="btn btn-primary btn-close" data-dismiss="modal">Cerrar</button>
+                      <button class="btn btn-primary btn-requestsList" onclick="window.location.href='/'">Request List</button>
+                    </div>
+                </div>
+            </div>
+          </div>
+
+          <script>
+                $(document).ready(function() {
+                    $('#modalNotification').on('hidden.bs.modal', function(){
+                        if(whereAmI.controller === "index" && whereAmI.action === "index") {
+                            location.reload();
+                        };
+                    });
+                });
+          </script>
+    </body>
+</html>

@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+    <head>
+        <style type="text/css" media="all">
+        body { max-width: 300px; margin:0 auto; text-align:center; color:#000; font-family: Arial, Helvetica, sans-serif; font-size:12px; }
+        #wrapper { min-width: 250px; margin: 0 auto; }
+        #wrapper img { max-width: 300px; width: auto; }
+
+        h2, h3, p { margin: 5px 0; }
+        .left { width:60%; float:left; text-align:left; margin-bottom: 3px; }
+        .right { width:40%; float:right; text-align:right; margin-bottom: 3px; }
+        .table, .totals { width: 100%; margin:10px 0; }
+        .table th { border-bottom: 1px solid #000; }
+        .table tr {  }
+        .table td { padding:5px 0px; border-bottom: 1px dashed #eee;}
+        .totals td { width: 24%; padding:5px 0px; }
+        .table td:nth-child(2) { overflow:hidden; }
+
+        @media print {
+            body { text-transform: uppercase; }
+            #buttons { display: none; }
+            #wrapper { width: 100%; margin: 0; font-size:9px; }
+            #wrapper img { max-width:300px; width: 80%; }
+        }
+        </style>
+    </head>
+    <body>
+        <div id="wrapper">
+            <img src="/admin-public/img/logo@2x.png" alt="CMX" style=" margin-top: 10px;max-width:160px;" />
+            <br>
+            <br>
+            <div style="text-align:left;">  
+                <small>
+                    <span><b>Request #: </b><?php echo str_pad($this->request['id'], 8, '0', STR_PAD_LEFT); ?></span><br>
+                    <span ><b>Date:</b> <?php echo date("m-d-Y h:i:s a",strtotime($this->request['date'])) ?></span><br>
+                    <span ><b>User:</b> 
+                        <?php if($this->request['user'] != 'Guest'){
+                            echo $this->request['user']['first_name'].' '.$this->request['user']['last_name'];
+                          }else{
+                            echo $this->request['user'];
+                          } ?>
+                    </span><br>
+                    <span ><b>Place:</b> <?php echo $this->request['place'] ?></span><br>
+                </small>
+                <div style="border-bottom: 1px dashed #000; margin-bottom: 5px;">&nbsp;</div>       
+            </div>
+            <div style="clear:both;"></div>
+        
+            <table class="table" cellspacing="0"  border="0"> 
+                <thead> 
+                <tr style="margin-bottom: 5px;"> 
+                    <th style="text-align:left; width:180px;">Description</th> 
+                    <th>Quantity</th>
+                    <!--<th style="text-align:right;">Subtotal</th> -->
+                </tr> 
+                </thead> 
+                <tbody>
+                    <tr>
+                        <td style="text-align:left; width:180px;"><?php echo $this->request['type'] ?></td>
+                        <td style="text-align:center; width:50px;">1</td>
+                        <!--<td style="text-align:right; width:70px; ">$<?php echo 'SUBTOTAL' ?></td>-->
+                    </tr>
+                </tbody> 
+            </table> 
+            
+        <!-- FOOTER -->
+            <?php echo $this->footer['value']; ?>
+        <script type="text/javascript">window.print();</script>
+    </body>
+</html>
