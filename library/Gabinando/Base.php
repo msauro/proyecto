@@ -1,6 +1,6 @@
 <?php
 include("ImageResize.php");
-abstract class Cmx_Base extends Zend_Controller_Action {
+abstract class Gabinando_Base extends Zend_Controller_Action {
 
 	public $admin_session;
 
@@ -8,7 +8,7 @@ abstract class Cmx_Base extends Zend_Controller_Action {
         parent::init();
 
         // Iniciamos la sesion
-        $this->admin_session = new Zend_Session_Namespace('cmx_metre');
+        $this->admin_session = new Zend_Session_Namespace('gabinando_metre');
 
         $this->isAdminSession();
 
@@ -26,18 +26,18 @@ abstract class Cmx_Base extends Zend_Controller_Action {
         $controller = $this->getRequest()->getControllerName();
         $action = $this->getRequest()->getActionName();
         // Si no está seteada la admin_session y el controlador/action no es admin/login, redireccionar al login
-        if(!isset($this->admin_session->admin)){
-            if("{$controller}/{$action}"!="index/login"){
-                $this->_redirect('index/login');
-                }
-        // Si esta seteada la admin_session, el admin logueado NO es superadmin y el controlador es admin,  redireccionar al dashboard
-        } elseif( $this->admin_session->admin['isSuperAdmin'] == 0) {
-            if("{$controller}"=="admin"){
-                if("{$action}"!="edit"){
-                    $this->_redirect('/');
-                }    
-            }  
-        } 
+        // if(!isset($this->admin_session->admin)){
+        //     if("{$controller}/{$action}"!="index/login"){
+        //         $this->_redirect('index/login');
+        //         }
+        // // Si esta seteada la admin_session, el admin logueado NO es superadmin y el controlador es admin,  redireccionar al dashboard
+        // } elseif( $this->admin_session->admin['isSuperAdmin'] == 0) {
+        //     if("{$controller}"=="admin"){
+        //         if("{$action}"!="edit"){
+        //             $this->_redirect('/');
+        //         }    
+        //     }  
+        // } 
     }
 
     public function addError($msg){

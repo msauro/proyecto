@@ -1,12 +1,12 @@
 <?php         
-$this->title = "Add new Administrator";
+$this->title = "Agregar nuevo producto";
 $this->headTitle($this->title);
 ?>
 <!-- BREADCRUMB -->
     <ul class="breadcrumb">
         <li><a href="/">Dashboard</a></li>
-        <li><a href="/admin/list">Administrators</a></li>
-        <li class="active">New</li>
+        <li><a href="/user/list">Producto</a></li>
+        <li class="active">Nuevo</li>
     </ul>
 
 <!-- PAGE CONTENT WRAPPER -->
@@ -17,7 +17,7 @@ $this->headTitle($this->title);
             <form id="add-form" class="form-horizontal" method="post" enctype="multipart/form-data">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title"><strong>New</strong> Administrator</h3>
+                        <h3 class="panel-title"><strong>Nuevo</strong> Producto</h3>
                         <ul class="panel-controls">
                         </ul>
                     </div>
@@ -25,17 +25,27 @@ $this->headTitle($this->title);
                     <div class="panel-body">
 
                         <div class="form-group">
-                            <label class="col-sm-3 col-xs-12 control-label">Fist name</label>
+                            <label class="col-sm-3 col-xs-12 control-label">Nombre</label>
                             <div class="col-sm-6 col-xs-12">                                            
                                 <div class="input-group">
                                     <span class="input-group-addon"><span class="fa fa-list"></span></span>
-                                    <input name="first_name" id="first_name" type="text" class="form-control"/>
+                                    <input name="first_name" id="name" type="text" class="form-control"/>
                                 </div> 
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 col-xs-12 control-label">Last name</label>
+                            <label class="col-sm-3 col-xs-12 control-label">Descripción</label>
+                            <div class="col-sm-6 col-xs-12">                                            
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-list"></span></span>
+                                    <input name="last_name" id="description" type="text" class="form-control"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 col-xs-12 control-label">Marca</label>
                             <div class="col-sm-6 col-xs-12">                                            
                                 <div class="input-group">
                                     <span class="input-group-addon"><span class="fa fa-list"></span></span>
@@ -45,7 +55,17 @@ $this->headTitle($this->title);
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 col-xs-12 control-label">e-mail</label>
+                            <label class="col-sm-3 col-xs-12 control-label">Rubro</label>
+                            <div class="col-sm-6 col-xs-12">                                            
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-list"></span></span>
+                                    <input name="last_name" id="last_name" type="text" class="form-control"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 col-xs-12 control-label">Email</label>
                             <div class="col-sm-6 col-xs-12">                                            
                                 <div class="input-group">
                                     <span class="input-group-addon"><span class="fa fa-paper-plane-o"></span></span>
@@ -54,18 +74,6 @@ $this->headTitle($this->title);
                             </div>
                         </div>
 
-                        
-                        <div class="form-group">                                        
-                            <label class="col-sm-3 col-xs-12 control-label">Password</label>
-                            <div class="col-sm-6 col-xs-12">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><span class="fa fa-unlock-alt"></span></span>
-                                    <input name="password" id="password" type="password" class="form-control"/>
-                                </div>            
-                            </div>
-                        </div>
-                        
-                        
                         <div class="form-group">
                             <label class="col-sm-3 col-xs-12 control-label">Avatar</label>
                             <div class="col-sm-6 col-xs-12">               
@@ -75,8 +83,8 @@ $this->headTitle($this->title);
                         
                     </div>
                     <div class="panel-footer">
-                        <button class="btn btn-default" type="button" onclick="history.back()">Back</button>
-                        <button class="btn btn-primary pull-right">Submit</button>
+                        <button class="btn btn-default" type="button" onclick="history.back()">Volver</button>
+                        <button class="btn btn-primary pull-right">Guardar</button>
                     </div>
                 </div>
             </form>
@@ -108,7 +116,7 @@ $().ready(function() {
                 required: true,
                 email: true,
                 remote: {
-                    url: '/admin/isemailavailable',
+                    url: '/user/isemailavailable',
                     type: 'POST'
                 }
             },

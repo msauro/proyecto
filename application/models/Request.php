@@ -43,19 +43,19 @@ class Application_Model_Request extends Application_Model_Base
 				return $this->insert($params);
 
 			} catch (Exception $e) {
-					return $e;
-				}
+				return $e;
+			}
 		}		
 	}
 
 
 	public function getOne($id){
 		try{
-      
-      $query = $this->select()->setIntegrityCheck(false)
-				->from($this, array('id' => 'id_request','type','status','id_user','place', 'date', 'time'))
-				->joinLeft('users','requests.id_user = users.id_user')
-	      ->where('id_request = ?', $id);
+			
+			$query = $this->select()->setIntegrityCheck(false)
+			->from($this, array('id' => 'id_request','type','status','id_user','place', 'date', 'time'))
+			->joinLeft('users','requests.id_user = users.id_user')
+			->where('id_request = ?', $id);
 			
 			$row = $this->fetchRow($query);
 
@@ -82,22 +82,22 @@ class Application_Model_Request extends Application_Model_Base
 			$data['status'] = $row['status'];
 			$data['place'] = $row['place'];
 			$data['date'] = $row['date'] . ' ' . $row['time'];   
-	
-        	return $data;
-        }
+			
+			return $data;
+		}
 		catch(Exception $e){
-            return $e;
-        }
+			return $e;
+		}
 	}
 
 
 	public function getList(){
-  	$query = $this->select()->setIntegrityCheck(false)
-          ->from($this, array('id' => 'id_request','type','status','id_user','place', 'date', 'time', 'pushToken', 'waitingSince'))
+		$query = $this->select()->setIntegrityCheck(false)
+		->from($this, array('id' => 'id_request','type','status','id_user','place', 'date', 'time', 'pushToken', 'waitingSince'))
 		->joinLeft('users','requests.id_user = users.id_user');
 
-      $rows = $this->fetchAll($query);
-			$rows = $rows->toArray();
+		$rows = $this->fetchAll($query);
+		$rows = $rows->toArray();
 
 		if(count($rows) > 0){
 			for ($i=0; $i < count($rows) ; $i++) { 
@@ -126,19 +126,19 @@ class Application_Model_Request extends Application_Model_Base
 			$data['requests'] = [];
 		}
 		
-        return $data;
-  }
+		return $data;
+	}
 
 
-  public function getListByUser($id_user){
-  	$query = $this->select()->setIntegrityCheck(false)
-          ->from($this, array('id' => 'id_request','type','status','id_user','place', 'date', 'time'))
+	public function getListByUser($id_user){
+		$query = $this->select()->setIntegrityCheck(false)
+		->from($this, array('id' => 'id_request','type','status','id_user','place', 'date', 'time'))
 		->join('users','requests.id_user = users.id_user')
 		->where('users.id_user = ?', $id_user);
 
-     $rows = $this->fetchAll($query);
+		$rows = $this->fetchAll($query);
 		$rows = $rows->toArray();
-	
+		
 		if(count($rows) > 0){
 
 			for ($i=0; $i < count($rows) ; $i++) { 
@@ -150,7 +150,7 @@ class Application_Model_Request extends Application_Model_Base
 				$data['requests'][$i]['user']['email'] = $rows[$i]['email'];
 				$data['requests'][$i]['user']['iecode'] = $rows[$i]['iecode'];
 				$data['requests'][$i]['user']['avatar_medium'] = $rows[$i]['avatar_medium'];
-	
+				
 				$data['requests'][$i]['id'] = $rows[$i]['id'];
 				$data['requests'][$i]['type'] = $rows[$i]['type'];
 				$data['requests'][$i]['status'] = $rows[$i]['status'];
@@ -161,16 +161,16 @@ class Application_Model_Request extends Application_Model_Base
 			$data['requests'] = [];
 		}
 
-        return $data;
-  }
+		return $data;
+	}
 
 
-  public function getListByGuest($id_guest){
-  	$query = $this->select()->setIntegrityCheck(false)
-          ->from($this, array('id' => 'id_request','type','status','place', 'date', 'id_guest', 'time'))
+	public function getListByGuest($id_guest){
+		$query = $this->select()->setIntegrityCheck(false)
+		->from($this, array('id' => 'id_request','type','status','place', 'date', 'id_guest', 'time'))
 		->where('id_guest = ?', $id_guest);
 
-    $rows = $this->fetchAll($query);
+		$rows = $this->fetchAll($query);
 		$rows = $rows->toArray();
 
 		if(count($rows) > 0){
@@ -191,16 +191,16 @@ class Application_Model_Request extends Application_Model_Base
 			$data['requests'] = [];
 		}
 
-        return $data;
-  }
+		return $data;
+	}
 
 
-  public function getUser($id){
-  	try{
-  		$query = $this->select()->setIntegrityCheck(false)
-				->from($this, 'id_request')
-				->joinLeft('users','requests.id_user = users.id_user')
-	      ->where('id_request = ?', $id);
+	public function getUser($id){
+		try{
+			$query = $this->select()->setIntegrityCheck(false)
+			->from($this, 'id_request')
+			->joinLeft('users','requests.id_user = users.id_user')
+			->where('id_request = ?', $id);
 			
 			$row = $this->fetchRow($query);
 
@@ -220,12 +220,12 @@ class Application_Model_Request extends Application_Model_Base
 				$user = 'Guest';
 			}
 
-      return $user;
-    
-    }catch(Exception $e){
-        return $e;
-    }
-  }
+			return $user;
+			
+		}catch(Exception $e){
+			return $e;
+		}
+	}
 }
 
 ?>

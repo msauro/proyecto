@@ -1,6 +1,6 @@
 <?php
 	
-class Cmx_CancelOldRequests extends Application_Model_Base
+class Gabinando_CancelOldRequests extends Application_Model_Base
 {
 	protected $_name = 'requests';
 

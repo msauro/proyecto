@@ -1,6 +1,6 @@
 <?php
 
-class Cmx_Requestsocket {
+class Gabinando_Requestsocket {
 
 	public function sendMessage($body){
 		$response = $this->curl_request(SOCKET_URI . '/request_update', $body);

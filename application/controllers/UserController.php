@@ -1,6 +1,6 @@
 <?php
 
-class AdminController extends Gabinando_Base {
+class UserController extends Gabinando_Base {
 
 	const UPLOADPATHAVATAR = '/resources/admin_avatars/';
 

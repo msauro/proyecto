@@ -1,6 +1,6 @@
 <?php
 
-class SettingsController extends Cmx_Base{
+class SettingsController extends Gabinando_Base{
 
 	public function init(){
 		parent::init();
@@ -15,9 +15,9 @@ class SettingsController extends Cmx_Base{
             $result = $model->edit('id_setting',1,$params);
 
             if($result instanceof Exception){
-                Cmx_Base::addError($result->getMessage());
+                Gabinando_Base::addError($result->getMessage());
             }else{
-                Cmx_Base::addSuccess('Settings changed successfully');
+                Gabinando_Base::addSuccess('Settings changed successfully');
             }
         }
         

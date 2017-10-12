@@ -3,7 +3,7 @@ $this->headMeta()->appendHttpEquiv('Content-Type', 'text/html;charset=utf-8');
 $this->headMeta()->appendHttpEquiv('X-UA-Compatible', 'IE=edge');
 $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1');
 $this->headTitle()->setSeparator(' - ');
-$this->headTitle('CMX');
+$this->headTitle('Gabinando');
 $controller = Zend_Controller_Front::getInstance()->getRequest()->getControllerName();
 $action = Zend_Controller_Front::getInstance()->getRequest()->getActionName();
 
@@ -14,7 +14,7 @@ echo $this->doctype(); ?>
 	    <?php echo $this->headMeta(); ?> 
 	    <?php echo $this->headTitle(); ?>
 
-        <link rel="shortcut icon" href="/admin-public/img/logo-small@2x.png" type="image/x-icon">
+        <link rel="shortcut icon" href="/admin-public/img/logo.png" type="image/x-icon">
 
         <?php echo $this->headLink()->prependStylesheet($this->baseUrl().'/admin-public/css/custom.css'); ?>
         <?php echo $this->headLink()->prependStylesheet($this->baseUrl().'/admin-public/css/theme-dark.css'); ?>
@@ -24,20 +24,7 @@ echo $this->doctype(); ?>
             <script type="text/javascript" src="/admin-public/js/plugins/jquery/jquery.min.js"></script>
             <script type="text/javascript" src="/admin-public/js/plugins/jquery/jquery-ui.min.js"></script>
             <script type="text/javascript" src="/admin-public/js/plugins/bootstrap/bootstrap.min.js"></script>
-
-        <!-- SOCKET -->
-            <script>
-                var whereAmI = <?php 
-                                    $whereAmI = array(
-                                        'controller' => $controller,
-                                        'action'     => $action
-                                        );
-                                    echo json_encode($whereAmI);
-                                ?>;
-                var socket_uri = '<?php echo SOCKET_URI ?>';
-            </script>
-            <script src="//cdn.socket.io/socket.io-1.2.0.js"></script>
-            <script src="/admin-public/js/cmxSocket.js"></script> 
+           
 
         <!-- TEMPLATE -->
             <script type="text/javascript" src="/admin-public/js/actions.js"></script>
@@ -56,24 +43,24 @@ echo $this->doctype(); ?>
                 <ul class="x-navigation <?php echo $this->minimized ? 'x-navigation-minimized' : ''  ?>">
                 <!-- PROFILE SECTION -->
                     <li class="xn-logo">
-                        <a href="/">CMX</a>
+                        <a href="/">Gabinando</a>
                         <a href="#" class="x-navigation-control"></a>
                     </li>
                     <li class="xn-profile">
                         <a href="#" class="profile-mini">
-                            <img src="<?php echo $this->admin['avatar_url'] ?>" alt="<?php echo $this->admin['first_name'] ?> <?php echo $this->admin['last_name'] ?>"/>
+                            <img src="<?php echo $this->user['avatar_url'] ?>" alt="<?php echo $this->user['first_name'] ?> <?php echo $this->user['last_name'] ?>"/>
                         </a>
                         <div class="profile">
                             <div class="profile-image">
-                                <img src="<?php echo $this->admin['avatar_url'] ?>" alt="<?php echo $this->admin['first_name'] ?> <?php echo $this->admin['last_name'] ?>"/>
+                                <img src="<?php echo $this->user['avatar_url'] ?>" alt="<?php echo $this->user['first_name'] ?> <?php echo $this->user['last_name'] ?>"/>
                             </div>
                             <div class="profile-data">
                                 <div class="profile-data-name">
-                                    <?php echo $this->admin['first_name'] ?> <?php echo $this->admin['last_name'] ?>
+                                    <?php  echo $this->user['first_name'] ?> <?php echo $this->user['last_name'] ?>
                                 </div>
                             </div>
                             <div class="profile-controls">
-                                <a href="/admin/edit/id/<?php echo $this->admin['id_admin'] ?>" class="profile-control-left"><span class="fa fa-info"></span></a>
+                                <a href="/user/edit/id/<?php echo $this->user['id_user'] ?>" class="profile-control-left"><span class="fa fa-info"></span></a>
                             </div>
                         </div>                                                                        
                     </li>
@@ -81,25 +68,62 @@ echo $this->doctype(); ?>
                     <li class="xn-title">Menu</li>
                     <!-- MAIN PANEL -->
                         <li <?php if($controller == 'Index') echo 'class="active"' ?> >
-                            <a href="/"><span class="fa fa-desktop"></span> <span class="xn-text">Dashboard</span></a>
+                            <a href="/"><span class="fa fa-desktop"></span> <span class="xn-text">Panel Principal</span></a>
                         </li>     
                     <!-- ADMINISTRATORS -->    
-                        <li id="modules-admins" class="xn-openable <?php if($this->admin['isSuperAdmin'] == 0) echo hidden ?>">
+                        <li id="modules-admins" class="xn-openable <?php if($this->user['rol'] != -1) echo hidden ?>">
                             <a href="javascript:void(0);">
-                                <div><span class="fa fa-user"></span><span class="xn-text">Administrators</span></div>
+                                <div><span class="fa fa-user"></span><span class="xn-text">Usuarios</span></div>
                             </a>
                             <ul>
-                                <li <?php if($controller == 'admin' && $action == 'add') echo 'class="active"' ?>><a href="/admin/add"><span class="fa fa-group"></span> Add new</a></li>
-                                <li <?php if($controller == 'admin' && $action == 'list') echo 'class="active"' ?>><a href="/admin/list"><span class="fa fa-group"></span> List</a></li>
+                                <li <?php if($controller == 'user' && $action == 'add') echo 'class="active"' ?>><a href="/user/add"><span class="fa fa-group"></span> Add new</a></li>
+                                <li <?php if($controller == 'user' && $action == 'list') echo 'class="active"' ?>><a href="/user/list"><span class="fa fa-group"></span> List</a></li>
                             </ul>
                         </li>
                     <!-- SETTINGS -->    
-                       <li id="modules-settings" class="xn-openable">
+                        <li id="modules-settings" class="xn-openable">
                             <a href="javascript:void(0);">
-                                <div><span class="fa fa-cog" aria-hidden="true"></span><span class="xn-text">Settings</span></div>
+                                <div><span class="fa fa-cog" aria-hidden="true"></span><span class="xn-text">Productos</span></div>
                             </a>
                             <ul>
-                                <li <?php if($controller == 'settings' && $action == 'order') echo 'class="active"' ?>><a href="/settings/order"><span class="fa fa-file-text-o" aria-hidden="true"></span> Order's footer</a></li>
+                                <li <?php if($controller == 'user' && $action == 'add') echo 'class="active"' ?>><a href="/product/add"><span class="fa fa-group"></span> Agregar producto</a></li>
+                                <li <?php if($controller == 'settings' && $action == 'order') echo 'class="active"' ?>><a href="/product/list"><span class="fa fa-file-text-o" aria-hidden="true"></span> Listado</a></li>
+                            </ul>
+                        </li>
+                         <li id="modules-settings" class="xn-openable">
+                            <a href="javascript:void(0);">
+                                <div><span class="fa fa-cog" aria-hidden="true"></span><span class="xn-text">Marcas</span></div>
+                            </a>
+                            <ul>
+                                <li <?php if($controller == 'user' && $action == 'add') echo 'class="active"' ?>><a href="/user/add"><span class="fa fa-group"></span> Agregar marca</a></li>
+                                <li <?php if($controller == 'settings' && $action == 'order') echo 'class="active"' ?>><a href="/settings/order"><span class="fa fa-file-text-o" aria-hidden="true"></span> Listado</a></li>
+                            </ul>
+                        </li>
+                        <li id="modules-settings" class="xn-openable">
+                            <a href="javascript:void(0);">
+                                <div><span class="fa fa-cog" aria-hidden="true"></span><span class="xn-text">Rubros</span></div>
+                            </a>
+                            <ul>
+                                <li <?php if($controller == 'user' && $action == 'add') echo 'class="active"' ?>><a href="/user/add"><span class="fa fa-group"></span> Agregar rubro</a></li>
+                                <li <?php if($controller == 'settings' && $action == 'order') echo 'class="active"' ?>><a href="/settings/order"><span class="fa fa-file-text-o" aria-hidden="true"></span> Listado</a></li>
+                            </ul>
+                        </li>
+                        <li id="modules-settings" class="xn-openable">
+                            <a href="javascript:void(0);">
+                                <div><span class="fa fa-cog" aria-hidden="true"></span><span class="xn-text">Proveedores</span></div>
+                            </a>
+                            <ul>
+                                <li <?php if($controller == 'user' && $action == 'add') echo 'class="active"' ?>><a href="/user/add"><span class="fa fa-group"></span> Agregar proveedor</a></li>
+                                <li <?php if($controller == 'settings' && $action == 'order') echo 'class="active"' ?>><a href="/settings/order"><span class="fa fa-file-text-o" aria-hidden="true"></span> Listado</a></li>
+                            </ul>
+                        </li>
+                        <li id="modules-settings" class="xn-openable">
+                            <a href="javascript:void(0);">
+                                <div><span class="fa fa-cog" aria-hidden="true"></span><span class="xn-text">Pedidos</span></div>
+                            </a>
+                            <ul>
+                                <li <?php if($controller == 'user' && $action == 'add') echo 'class="active"' ?>><a href="/user/add"><span class="fa fa-group"></span> Agregar pedido</a></li>
+                                <li <?php if($controller == 'settings' && $action == 'order') echo 'class="active"' ?>><a href="/settings/order"><span class="fa fa-file-text-o" aria-hidden="true"></span> Listado</a></li>
                             </ul>
                         </li>
                 <!-- DEFINE MORE SECTIONS -->

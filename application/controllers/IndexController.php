@@ -1,6 +1,6 @@
 <?php
 
-class IndexController extends Cmx_Base{
+class IndexController extends Gabinando_Base{
 
 	public function init(){
 		parent::init();
@@ -10,63 +10,63 @@ class IndexController extends Cmx_Base{
     public function indexAction() {
         
         // Get requests list and set into the view
-        $request = new Application_Model_Request();
-        $result = $request->getList();
+        // $request = new Application_Model_Request();
+        // $result = $request->getList();
 
-        if($result instanceof Exception){
-            Cmx_Base::addError($result->getMessage());
-        }
-        else{
-            $assistanceList = array();
-            $requestList = array();
+        // if($result instanceof Exception){
+        //     Gabinando_Base::addError($result->getMessage());
+        // }
+        // else{
+        //     $assistanceList = array();
+        //     $requestList = array();
 
-            foreach ($result['requests'] as $key => $request) {
-                // Set current waiting time for each request
-                if(isset($request['waitingSince'])){
-                    $waitingTime = date("H:i:s", strtotime(date('00:00:00')) + strtotime(date('H:i:s')) - strtotime($request['waitingSince']));
+        //     foreach ($result['requests'] as $key => $request) {
+        //         // Set current waiting time for each request
+        //         if(isset($request['waitingSince'])){
+        //             $waitingTime = date("H:i:s", strtotime(date('00:00:00')) + strtotime(date('H:i:s')) - strtotime($request['waitingSince']));
                                         
-                    $splitedTime = split(":", $waitingTime);
+        //             $splitedTime = split(":", $waitingTime);
 
-                    $request['waitingMin'] = $splitedTime[1];
-                    $request['waitingSec'] = $splitedTime[2];
-                }else{
-                    $request['waitingMin'] = '00';
-                    $request['waitingSec'] = '00';
-                }
+        //             $request['waitingMin'] = $splitedTime[1];
+        //             $request['waitingSec'] = $splitedTime[2];
+        //         }else{
+        //             $request['waitingMin'] = '00';
+        //             $request['waitingSec'] = '00';
+        //         }
 
-                // Clasify request depending its type
-                if($request['type'] == 'Assistance'){
-                    array_push($assistanceList, $request); 
-                }else{
-                    array_push($requestList, $request);
-                }
-            }
-            $this->view->assistanceList = $assistanceList;
-            $this->view->requestList = $requestList;
+        //         // Clasify request depending its type
+        //         if($request['type'] == 'Assistance'){
+        //             array_push($assistanceList, $request); 
+        //         }else{
+        //             array_push($requestList, $request);
+        //         }
+        //     }
+        //     $this->view->assistanceList = $assistanceList;
+        //     $this->view->requestList = $requestList;
 
-            $widgetsData['Pending'] = 0;
-            $widgetsData['Cancelled'] = 0;
-            $widgetsData['Successful'] = 0;
-            $widgetsData['Waiting'] = 0;
+        //     $widgetsData['Pending'] = 0;
+        //     $widgetsData['Cancelled'] = 0;
+        //     $widgetsData['Successful'] = 0;
+        //     $widgetsData['Waiting'] = 0;
 
-            foreach ($result['requests'] as $request){
-                switch($request['status']){
-                    case 'Pending':
-                        $widgetsData['Pending']++;
-                        break;
-                    case 'Cancelled':
-                        $widgetsData['Cancelled']++;
-                        break;
-                    case 'Successful':
-                        $widgetsData['Successful']++;
-                        break;
-                    case 'Waiting':
-                        $widgetsData['Waiting']++;
-                        break;
-                }
-            }
-            $this->view->widgetsData = $widgetsData;
-        }
+        //     foreach ($result['requests'] as $request){
+        //         switch($request['status']){
+        //             case 'Pending':
+        //                 $widgetsData['Pending']++;
+        //                 break;
+        //             case 'Cancelled':
+        //                 $widgetsData['Cancelled']++;
+        //                 break;
+        //             case 'Successful':
+        //                 $widgetsData['Successful']++;
+        //                 break;
+        //             case 'Waiting':
+        //                 $widgetsData['Waiting']++;
+        //                 break;
+        //         }
+        //     }
+        //     $this->view->widgetsData = $widgetsData;
+        // }
     }
 
 
@@ -80,7 +80,7 @@ class IndexController extends Cmx_Base{
 
         if($this->getRequest()->isPost()){
             $params         = $this->getRequest()->getPost();
-            $admin     = new Application_Model_Admin();
+            $admin     = new Application_Model_User();
             $loginResult    = $admin->isValidLogin($params);
 
             if($loginResult instanceof Exception) {
@@ -112,7 +112,7 @@ class IndexController extends Cmx_Base{
             $result = $request->getOne($params['id']);
 
             if($result instanceof Exception){
-                Cmx_Base::addError($result->getMessage());
+                Gabinando_Base::addError($result->getMessage());
             }
             else{
 
@@ -122,7 +122,7 @@ class IndexController extends Cmx_Base{
                 $result = $setting->getSettings(1);
 
                 if($result instanceof Exception){
-                    Cmx_Base::addError($result->getMessage());
+                    Gabinando_Base::addError($result->getMessage());
                 }
                 else{
                     

@@ -1,18 +1,18 @@
 
 $(function(){
 
-	var cmxSocket = {
+	var gabinandoSocket = {
 
 		socket: null,
 
 		init: function(){
 
-			cmxSocket.socket = io(socket_uri);
+			gabinandoSocket.socket = io(socket_uri);
 
-			cmxSocket.socket.on('request_update', function(data){
+			gabinandoSocket.socket.on('request_update', function(data){
 			    var message = 'Request #'+data.id_request+' made by '+data.user+' has been '+data.action+' at '+data.time;
 			  	
-			    cmxSocket.showNotification(message);
+			    gabinandoSocket.showNotification(message);
 			});
 		},
 		showNotification: function(message){
@@ -23,5 +23,5 @@ $(function(){
 		}
 	}
 
-	cmxSocket.init();
+	gabinandoSocket.init();
 });

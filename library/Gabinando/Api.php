@@ -1,6 +1,6 @@
 <?php
 
-abstract class Cmx_Api extends Zend_Controller_Action {
+abstract class Gabinando_Api extends Zend_Controller_Action {
 
     public function init(){
         parent::init();

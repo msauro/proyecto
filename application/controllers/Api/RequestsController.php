@@ -1,6 +1,6 @@
 <?php
 
-class Api_RequestsController extends Cmx_Api{
+class Api_RequestsController extends Gabinando_Api{
 
 
     public function init(){
@@ -38,7 +38,7 @@ class Api_RequestsController extends Cmx_Api{
             else{
 
               // Send notification to front
-                $requestSocket = new Cmx_Requestsocket();
+                $requestSocket = new Gabinando_Requestsocket();
                 $body = array(
                   'action'            => 'created',
                   'id_request'        => $result,
@@ -90,7 +90,7 @@ class Api_RequestsController extends Cmx_Api{
                 else{
 
                   // Send notification to front
-                    $requestSocket = new Cmx_Requestsocket();
+                    $requestSocket = new Gabinando_Requestsocket();
                     $body = array(
                       'action'            => 'cancelled',
                       'id_request'        => $params['id'],
@@ -282,7 +282,7 @@ class Api_RequestsController extends Cmx_Api{
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
 
-        $cancelOldRequets = new Cmx_CancelOldRequests();
+        $cancelOldRequets = new Gabinando_CancelOldRequests();
 
         $cancelOldRequets->cancelOldRequests();
     }

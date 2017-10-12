@@ -98,7 +98,7 @@ class Zend_Validate_File_IsImage extends Zend_Validate_File_MimeType
             'image/vnd.fpx',
             'image/vnd.net-fpx',
             'image/x-cmu-raster',
-            'image/x-cmx',
+            'image/x-gabinando',
             'image/x-coreldraw',
             'image/x-cpi',
             'image/x-emf',
