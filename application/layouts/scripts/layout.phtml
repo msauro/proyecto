@@ -95,17 +95,17 @@ echo $this->doctype(); ?>
                                 <div><span class="fa fa-cog" aria-hidden="true"></span><span class="xn-text">Marcas</span></div>
                             </a>
                             <ul>
-                                <li <?php if($controller == 'user' && $action == 'add') echo 'class="active"' ?>><a href="/marca/add"><span class="fa fa-group"></span> Agregar marca</a></li>
-                                <li <?php if($controller == 'settings' && $action == 'order') echo 'class="active"' ?>><a href="/settings/order"><span class="fa fa-file-text-o" aria-hidden="true"></span> Listado</a></li>
+                                <li <?php if($controller == 'marca' && $action == 'add') echo 'class="active"' ?>><a href="/marca/add"><span class="fa fa-group"></span> Agregar marca</a></li>
+                                <li <?php if($controller == 'marca' && $action == 'list') echo 'class="active"' ?>><a href="/marca/list"><span class="fa fa-file-text-o" aria-hidden="true"></span> Listado</a></li>
                             </ul>
                         </li>
                         <li id="modules-settings" class="xn-openable">
                             <a href="javascript:void(0);">
-                                <div><span class="fa fa-cog" aria-hidden="true"></span><span class="xn-text">Rubros</span></div>
+                                <div><span class="fa fa-cog" aria-hidden="true"></span><span class="xn-text">Precios</span></div>
                             </a>
                             <ul>
-                                <li <?php if($controller == 'user' && $action == 'add') echo 'class="active"' ?>><a href="/categoria/add"><span class="fa fa-group"></span> Agregar rubro</a></li>
-                                <li <?php if($controller == 'settings' && $action == 'order') echo 'class="active"' ?>><a href="/settings/order"><span class="fa fa-file-text-o" aria-hidden="true"></span> Listado</a></li>
+                                <li <?php if($controller == 'precio' && $action == 'add') echo 'class="active"' ?>><a href="/precio/add"><span class="fa fa-group"></span> Agregar precio</a></li>
+                                <li <?php if($controller == 'precio' && $action == 'order') echo 'class="active"' ?>><a href="/precio/list"><span class="fa fa-file-text-o" aria-hidden="true"></span> Listado</a></li>
                             </ul>
                         </li>
                         <li id="modules-settings" class="xn-openable">

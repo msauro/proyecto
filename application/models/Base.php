@@ -12,7 +12,7 @@ class Application_Model_Base extends Zend_Db_Table_Abstract
 
 	public function remove($campo, $id){
         try{
-            $params = array('isDeleted' => true);
+            $params = array('eliminado' => true);
             $this->edit($id, $params);
             return true;
         }catch(Exception $e){

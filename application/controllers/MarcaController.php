@@ -50,8 +50,8 @@ class MarcaController extends Gabinando_Base {
 
 	public function listAction() {
 		$marca = new Application_Model_Marca();
-		$marcaList = $marca->getList();
-		$this->view->marcaList = $marcaList;
+		$listadoMarcas = $marca->getList();
+		$this->view->listadoMarcas = $listadoMarcas;
     }
 
     public function removeAction(){
@@ -61,7 +61,7 @@ class MarcaController extends Gabinando_Base {
 		if($result instanceof Exception){
 			Gabinando_Base::addError($result->getMessage());
 		}else{
-			Gabinando_Base::addSuccess('Marca eliminado correctamente');
+			Gabinando_Base::addSuccess('Marca eliminada correctamente');
 		}
 		$this->_redirect('marca/list');
 
@@ -85,7 +85,7 @@ class MarcaController extends Gabinando_Base {
 			}
 
 			$marca = new Application_Model_Marca();
-			$result = $marca->edit('id', $params['id'], $params);
+			$result = $marca->edit($params['id'], $params);
 
 			if($result instanceof Exception){
                 Gabinando_Base::addError($result->getMessage());

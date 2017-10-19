@@ -39,7 +39,7 @@ $(".xn-icon-button").fadeIn();
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($this->listadomarcas as $marca): ?>
+                                    <?php foreach ($this->listadoMarcas as $marca): ?>
                                     <tr id="<?php echo $marca['id'] ?>" class="element-id">
                                         <td class="text-center"><?php echo $marca['id'] ?></td>
                                         <td><?php echo $marca['nombre'] ?></td>
@@ -47,7 +47,7 @@ $(".xn-icon-button").fadeIn();
                                         <td><?php echo $marca['id_marca'] ?></td>
                                         <td><?php echo $marca['id_categoria'] ?></td> -->
                                         <td class="text-center">
-                                            <button class="btn btn-default btn-rounded btn-condensed btn-sm" onclick="editCategory(<?php echo $marca['id'] ?>)"><span class="fa fa-pencil"></span></button>
+                                            <button class="btn btn-default btn-rounded btn-condensed btn-sm" onclick="editarMarcas(<?php echo $marca['id'] ?>)"><span class="fa fa-pencil"></span></button>
                                             <button class="btn btn-danger btn-rounded btn-condensed btn-sm btn-delete" id="<?php echo $marca['id'] ?>"><span class="fa fa-trash-o" data-toggle="modal" data-target="#delete_modal"></span></button>
                                         </td>
                                     </tr>
@@ -91,14 +91,14 @@ $(".xn-icon-button").fadeIn();
             });
 
             $("#btnYes").click(function(){
-                window.location.href = "/brand/remove/id/" + id;
+                window.location.href = "/marca/remove/id/" + id;
             })
 
         });
     </script>
 
     <script>
-    var editBrand = function(id){
-        window.location.href = "/brand/edit/id/" + id;
+    var editarMarcas = function(id){
+        window.location.href = "/marca/edit/id/" + id;
     }
     </script>
