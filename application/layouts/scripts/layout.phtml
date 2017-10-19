@@ -76,8 +76,8 @@ echo $this->doctype(); ?>
                                 <div><span class="fa fa-user"></span><span class="xn-text">Usuarios</span></div>
                             </a>
                             <ul>
-                                <li <?php if($controller == 'user' && $action == 'add') echo 'class="active"' ?>><a href="/user/add"><span class="fa fa-group"></span> Add new</a></li>
-                                <li <?php if($controller == 'user' && $action == 'list') echo 'class="active"' ?>><a href="/user/list"><span class="fa fa-group"></span> List</a></li>
+                                <li <?php if($controller == 'user' && $action == 'add') echo 'class="active"' ?>><a href="/user/add"><span class="fa fa-group"></span> Agregar usuario</a></li>
+                                <li <?php if($controller == 'user' && $action == 'list') echo 'class="active"' ?>><a href="/user/list"><span class="fa fa-group"></span> Listado</a></li>
                             </ul>
                         </li>
                     <!-- SETTINGS -->    
@@ -86,16 +86,16 @@ echo $this->doctype(); ?>
                                 <div><span class="fa fa-cog" aria-hidden="true"></span><span class="xn-text">Productos</span></div>
                             </a>
                             <ul>
-                                <li <?php if($controller == 'user' && $action == 'add') echo 'class="active"' ?>><a href="/product/add"><span class="fa fa-group"></span> Agregar producto</a></li>
-                                <li <?php if($controller == 'settings' && $action == 'order') echo 'class="active"' ?>><a href="/product/list"><span class="fa fa-file-text-o" aria-hidden="true"></span> Listado</a></li>
+                                <li <?php if($controller == 'user' && $action == 'add') echo 'class="active"' ?>><a href="/producto/add"><span class="fa fa-group"></span> Agregar producto</a></li>
+                                <li <?php if($controller == 'settings' && $action == 'order') echo 'class="active"' ?>><a href="/producto/list"><span class="fa fa-file-text-o" aria-hidden="true"></span> Listado</a></li>
                             </ul>
                         </li>
-                         <li id="modules-settings" class="xn-openable">
+                        <li id="modules-settings" class="xn-openable">
                             <a href="javascript:void(0);">
                                 <div><span class="fa fa-cog" aria-hidden="true"></span><span class="xn-text">Marcas</span></div>
                             </a>
                             <ul>
-                                <li <?php if($controller == 'user' && $action == 'add') echo 'class="active"' ?>><a href="/user/add"><span class="fa fa-group"></span> Agregar marca</a></li>
+                                <li <?php if($controller == 'user' && $action == 'add') echo 'class="active"' ?>><a href="/marca/add"><span class="fa fa-group"></span> Agregar marca</a></li>
                                 <li <?php if($controller == 'settings' && $action == 'order') echo 'class="active"' ?>><a href="/settings/order"><span class="fa fa-file-text-o" aria-hidden="true"></span> Listado</a></li>
                             </ul>
                         </li>
@@ -104,7 +104,7 @@ echo $this->doctype(); ?>
                                 <div><span class="fa fa-cog" aria-hidden="true"></span><span class="xn-text">Rubros</span></div>
                             </a>
                             <ul>
-                                <li <?php if($controller == 'user' && $action == 'add') echo 'class="active"' ?>><a href="/user/add"><span class="fa fa-group"></span> Agregar rubro</a></li>
+                                <li <?php if($controller == 'user' && $action == 'add') echo 'class="active"' ?>><a href="/categoria/add"><span class="fa fa-group"></span> Agregar rubro</a></li>
                                 <li <?php if($controller == 'settings' && $action == 'order') echo 'class="active"' ?>><a href="/settings/order"><span class="fa fa-file-text-o" aria-hidden="true"></span> Listado</a></li>
                             </ul>
                         </li>
@@ -113,7 +113,7 @@ echo $this->doctype(); ?>
                                 <div><span class="fa fa-cog" aria-hidden="true"></span><span class="xn-text">Proveedores</span></div>
                             </a>
                             <ul>
-                                <li <?php if($controller == 'user' && $action == 'add') echo 'class="active"' ?>><a href="/user/add"><span class="fa fa-group"></span> Agregar proveedor</a></li>
+                                <li <?php if($controller == 'user' && $action == 'add') echo 'class="active"' ?>><a href="/proveedor/add"><span class="fa fa-group"></span> Agregar proveedor</a></li>
                                 <li <?php if($controller == 'settings' && $action == 'order') echo 'class="active"' ?>><a href="/settings/order"><span class="fa fa-file-text-o" aria-hidden="true"></span> Listado</a></li>
                             </ul>
                         </li>
@@ -122,8 +122,8 @@ echo $this->doctype(); ?>
                                 <div><span class="fa fa-cog" aria-hidden="true"></span><span class="xn-text">Pedidos</span></div>
                             </a>
                             <ul>
-                                <li <?php if($controller == 'user' && $action == 'add') echo 'class="active"' ?>><a href="/user/add"><span class="fa fa-group"></span> Agregar pedido</a></li>
-                                <li <?php if($controller == 'settings' && $action == 'order') echo 'class="active"' ?>><a href="/settings/order"><span class="fa fa-file-text-o" aria-hidden="true"></span> Listado</a></li>
+                                <li <?php if($controller == 'user' && $action == 'add') echo 'class="active"' ?>><a href="/pedido/add"><span class="fa fa-group"></span> Agregar pedido</a></li>
+                                <li <?php if($controller == 'settings' && $action == 'pedido') echo 'class="active"' ?>><a href="/settings/pedido"><span class="fa fa-file-text-o" aria-hidden="true"></span> Listado</a></li>
                             </ul>
                         </li>
                 <!-- DEFINE MORE SECTIONS -->

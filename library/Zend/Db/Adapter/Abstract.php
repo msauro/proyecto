@@ -595,6 +595,7 @@ abstract class Zend_Db_Adapter_Abstract
          */
         $set = array();
         $i = 0;
+        
         foreach ($bind as $col => $val) {
             if ($val instanceof Zend_Db_Expr) {
                 $val = $val->__toString();
@@ -627,7 +628,6 @@ abstract class Zend_Db_Adapter_Abstract
              . $this->quoteIdentifier($table, true)
              . ' SET ' . implode(', ', $set)
              . (($where) ? " WHERE $where" : '');
-
         /**
          * Execute the statement and return the number of affected rows
          */

@@ -12,14 +12,8 @@ class Application_Model_Base extends Zend_Db_Table_Abstract
 
 	public function remove($campo, $id){
         try{
-            if(is_array($id)){
-                foreach ($id as $value) {
-                    $this->delete("$campo = ". (int)$value);
-                }
-            }else{
-                $params = array('isDeleted' => 1);
-                $this->edit('id_admin', $id, $params);
-            }
+            $params = array('isDeleted' => true);
+            $this->edit($id, $params);
             return true;
         }catch(Exception $e){
             return $e;
@@ -45,9 +39,9 @@ class Application_Model_Base extends Zend_Db_Table_Abstract
         }
     }
 
-    public function edit($campo,$id,$params){
+    public function edit($id,$params){
         try{
-            return $this->update($params, array("$campo = '$id'"));
+            return $this->update($params, array("id = $id"));
         }catch(Exception $e){
             return $e;
         }
