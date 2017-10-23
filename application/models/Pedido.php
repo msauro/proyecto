@@ -1,15 +1,15 @@
 <?php
 
-class Application_Model_Precio extends Application_Model_Base
+class Application_Model_Pedido extends Application_Model_Base
 {
 
-	protected $_name = 'precios';
+	protected $_name = 'pedidos';
 
 	public function getList(){
     	$query = $this->select()->setIntegrityCheck(false)
             ->from($this, array('*'))
-            ->join('productos', 'productos.id = precios.id_producto', array('productos.nombre AS nom_producto'))
-            ->where('precios.eliminado = ?', 0);
+            ->join('productos', 'productos.id = pedidos.id_producto', array('productos.nombre AS nom_producto'))
+            ->where('pedidos.eliminado = ?', 0);
 
         $rows = $this->fetchAll($query);
 
@@ -20,8 +20,8 @@ class Application_Model_Precio extends Application_Model_Base
     	try{
             $query = $this->select()->setIntegrityCheck(false)
 	            ->from($this, array('*'))
-                ->join('productos', 'productos.id = precios.id_producto', array('productos.nombre AS nom_producto'))
-	            ->where('precios.eliminado= ?', 0);
+                ->join('productos', 'productos.id = pedidos.id_producto', array('productos.nombre AS nom_producto'))
+	            ->where('pedidos.eliminado= ?', 0);
 
             $row = $this->fetchRow($query);
 

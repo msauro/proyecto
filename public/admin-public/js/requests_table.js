@@ -1,6 +1,6 @@
-$('.table_date_picker').datepicker({
-    format: 'yyyy-mm-dd'       
-  });
+// $('.table_date_picker').datepicker({
+//     format: 'yyyy-mm-dd'       
+//   });
 
 $(document).ready(function() {
 

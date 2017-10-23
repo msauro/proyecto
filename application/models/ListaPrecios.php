@@ -1,27 +1,27 @@
 <?php
 
-class Application_Model_Precio extends Application_Model_Base
+class Application_Model_ListaPrecios extends Application_Model_Base
 {
 
-	protected $_name = 'precios';
+	protected $_name = 'listas_precios';
 
 	public function getList(){
     	$query = $this->select()->setIntegrityCheck(false)
             ->from($this, array('*'))
-            ->join('productos', 'productos.id = precios.id_producto', array('productos.nombre AS nom_producto'))
-            ->where('precios.eliminado = ?', 0);
+            ->join('precios', 'precios.id_lista_precio = listas_precios.id', array('*'))
+            ->join('productos', 'productos.id = precios.id_producto', array('*'))
+            ->where('listas_precios.eliminado = ?', 0);
 
         $rows = $this->fetchAll($query);
 
         return $rows->toArray();
     }
 
-    public function getPrecioById($id){
+    public function getListaPrecioById($id){
     	try{
             $query = $this->select()->setIntegrityCheck(false)
 	            ->from($this, array('*'))
-                ->join('productos', 'productos.id = precios.id_producto', array('productos.nombre AS nom_producto'))
-	            ->where('precios.eliminado= ?', 0);
+	            ->where('listas_precios.eliminado= ?', 0);
 
             $row = $this->fetchRow($query);
 

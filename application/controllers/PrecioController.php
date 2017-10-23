@@ -11,18 +11,12 @@ class PrecioController extends Gabinando_Base {
     public function addAction(){
 		if($this->getRequest()->isPost()){
 			$params = $this->getRequest()->getPost();
-			// $file = $_FILES['imagen_url'];
-			
-			// $img = $this->uploadImage(self::UPLOADPATHAVATAR,$file,$params['email']);
-
-			// if($img['status'] == 'error'){
-			// 	die($img['message']);
-			// }
-
-			// $params['imagen_url'] = $img['message'];
-		
-			// Set idDeleted property to false in order to "reactivate" the registered admin
+			// $params['fecha'] = new DateTime($params['fecha']);
             $params['eliminado'] = 0;
+			
+			$params['fecha'] = strtotime($params['fecha']);
+
+            $params['fecha'] = date("Y-m-d",($params['fecha']));
 			
 			$precio = new Application_Model_Precio();
             $result = $precio->add($params);
@@ -86,18 +80,6 @@ class PrecioController extends Gabinando_Base {
 			$params = $this->getRequest()->getPost();
 			$params['id'] = $this->getRequest()->getParam('id');
 			
-			if($_FILES['imagen_url']['size'] > 0){
-				$file = $_FILES['imagen_url'];
-
-				$img = $this->uploadImage(self::UPLOADPATHAVATAR,$file,$params['id']);
-
-				if($img['status'] == 'error'){
-					die($img['message']);
-				}
-
-				$params['imagen_url'] = $img['message'];
-			}
-
 			$precio = new Application_Model_Precio();
 			$result = $precio->edit($params['id'], $params);
 
@@ -113,7 +95,6 @@ class PrecioController extends Gabinando_Base {
 		}
 		else{
 			$id = $this->getRequest()->getParam('id');
-			
 			if($id){
 				$marcaModel = new Application_Model_Marca();
 
