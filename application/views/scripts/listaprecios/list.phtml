@@ -31,22 +31,22 @@ $(".xn-icon-button").fadeIn();
                                 <thead>
                                     <tr>
                                         <th width="50">ID</th>
-                                        <th>Producto</th>
-                                        <th>Precio</th>
-                                        <th>Fecha</th>
+                                        <th>Nombre</th>
+                                        <th>Fecha Vigencia</th>
+                                        <th>Tipo de cliente</th>
                                         <th width="150" class="no-sortable text-center">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($this->listadoprecios as $precio): ?>
-                                    <tr id="<?php echo $precio['id'] ?>" class="element-id">
-                                        <td class="text-center"><?php echo $precio['id'] ?></td>
-                                        <td><?php echo $precio['nom_producto'] ?></td>
-                                        <td><?php echo $precio['precio'] ?></td>
-                                        <td><?php echo date("d-m-Y",strtotime($precio['fecha'])) ?></td> 
+                                    <?php foreach ($this->listas_precios as $lista_precio): ?>
+                                    <tr id="<?php echo $lista_precio['id'] ?>" class="element-id">
+                                        <td class="text-center"><?php echo $lista_precio['id'] ?></td>
+                                        <td><?php echo $lista_precio['nombre'] ?></td>
+                                        <td><?php echo date("d-m-Y",strtotime($lista_precio['fecha_vigencia'])) ?></td> 
+                                        <td><?php echo $lista_precio['tipo_cliente'] ?></td>
                                         <td class="text-center">
-                                            <button class="btn btn-default btn-rounded btn-condensed btn-sm" onclick="editarPrecio(<?php echo $precio['id'] ?>)"><span class="fa fa-pencil"></span></button>
-                                            <button class="btn btn-danger btn-rounded btn-condensed btn-sm btn-delete" id="<?php echo $precio['id'] ?>"><span class="fa fa-trash-o" data-toggle="modal" data-target="#delete_modal"></span></button>
+                                            <button class="btn btn-default btn-rounded btn-condensed btn-sm" onclick="editarListaPrecio(<?php echo $lista_precio['id'] ?>)"><span class="fa fa-pencil"></span></button>
+                                            <button class="btn btn-danger btn-rounded btn-condensed btn-sm btn-delete" id="<?php echo $lista_precio['id'] ?>"><span class="fa fa-trash-o" data-toggle="modal" data-target="#delete_modal"></span></button>
                                         </td>
                                     </tr>
                                     <?php endforeach; ?>
@@ -69,7 +69,7 @@ $(".xn-icon-button").fadeIn();
                     <h4 class="modal-title">Confirmación</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Desea eliminar el precio?</p>
+                    <p>Desea eliminar la lista de precios?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
@@ -89,14 +89,14 @@ $(".xn-icon-button").fadeIn();
             });
 
             $("#btnYes").click(function(){
-                window.location.href = "/precio/remove/id/" + id;
+                window.location.href = "/listaprecios/remove/id/" + id;
             })
 
         });
     </script>
 
     <script>
-    var editarPrecio = function(id){
-        window.location.href = "/precio/edit/id/" + id;
+    var editarListaPrecio = function(id){
+        window.location.href = "/listaprecios/edit/id/" + id;
     }
     </script>

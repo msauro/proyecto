@@ -12,11 +12,12 @@ class ProveedorController extends Gabinando_Base {
 			// Set idDeleted property to false in order to "reactivate" the registered admin
             $params['eliminado'] = 0;
 			$proveedor = new Application_Model_Proveedor();
-			$alreadyRegistered = $proveedor->getProveedorByCuitOrEmail($params['cuit']);
+			$alreadyRegisteredByCuit = $proveedor->getProveedorByCuit($params['cuit']);
+			$alreadyRegisteredByEmail = $proveedor->getProveedorByEmail($params['email']);
 
-			if(!is_null($alreadyRegistered)){
-                Gabinando_Base::addError('Existe un proveedor con ese CUIT');
-                $this->_redirect('/proveedor/add');
+			if(!is_null($alreadyRegisteredByCuit) OR !is_null($alreadyRegisteredByEmail)){
+                Gabinando_Base::addError('Existe un proveedor con ese CUIT o Email');
+                $this->_redirect('/proveedor/edit/id/'.$params['id']);
             // If this email wasn't registered in the past -> add a new proveedor
             }else{
            		$result = $proveedor->add($params);
@@ -24,7 +25,6 @@ class ProveedorController extends Gabinando_Base {
 	                Gabinando_Base::addError($result->getMessage());
 	                $this->_redirect('/proveedor/add');
             	}
-            	
             	Gabinando_Base::addSuccess('Proveedor agregado correctamente');
             	$this->_redirect('/proveedor/list');
             }
@@ -61,18 +61,21 @@ class ProveedorController extends Gabinando_Base {
 			$error = null;
 			if ($prov['cuit'] != $params['cuit']) {
 				$alreadyRegistered = $proveedor->getProveedorByCuit($params['cuit']);
-				if(!is_null($alreadyRegistered)) $error = 'Existe un proveedor con ese CUIT';
+				if(!is_null($alreadyRegistered)){
+					$error = 'Existe un proveedor con ese CUIT';
+				} 
 			}
 
 			if ($prov['email'] != $params['email']) {
 				$alreadyRegistered = $proveedor->getProveedorByEmail($params['email']);
-				if(!is_null($alreadyRegistered)) $error = 'Existe un proveedor con ese Email';
+				if(!is_null($alreadyRegistered)){
+					$error = 'Existe un proveedor con ese Email';
+				}
 			}
-
 
 			if(!is_null($error)){
                 Gabinando_Base::addError($error);
-                $this->_redirect('/proveedor/edit');
+                $this->_redirect('/proveedor/edit/id/'.$params['id']);
             }else{
 				$result = $proveedor->edit($params['id'], $params);
 				if($result instanceof Exception){
@@ -84,8 +87,6 @@ class ProveedorController extends Gabinando_Base {
 	            $this->_redirect('/proveedor/list');
 
             }
-
-
 		}
 		else{
 			$id = $this->getRequest()->getParam('id');

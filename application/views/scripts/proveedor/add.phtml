@@ -11,48 +11,81 @@ $this->headTitle($this->title);
 
 <!-- PAGE CONTENT WRAPPER -->
 <div class="page-content-wrap">
-    <div class="row">
+    <?php         
+$this->title = "Agregar nueva lista de precios";
+$this->headTitle($this->title);
+?>
+<!-- BREADCRUMB -->
+    <ul class="breadcrumb">
+        <li><a href="/">Panel Principal</a></li>
+        <li><a href="/user/list">Lista de precios</a></li>
+        <li class="active">Nuevo</li>
+    </ul>
+
+<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap">
+      <div class="row">
         <div class="col-sm-12">
-        <!-- ADD FORM -->
-            <form id="add-form" class="form-horizontal" method="post" enctype="multipart/form-data">
+        <!-- EDIT FORM -->
+            <form id="edit-form" class="form-horizontal" method="post" enctype="multipart/form-data">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title"><strong>Nuev</strong> Lista de precios</h3>
-                        <ul class="panel-controls">
-                        </ul>
+                        <h3 class="panel-title"><strong>Editar</strong> Proveedor</h3>
                     </div>
 
                     <div class="panel-body">
-
+                    
                         <div class="form-group">
-                            <label class="col-sm-3 col-xs-12 control-label">Nombre</label>
+                            <label class="col-sm-3 col-xs-12 control-label">Razón Social</label>
                             <div class="col-sm-6 col-xs-12">                                            
                                 <div class="input-group">
                                     <span class="input-group-addon"><span class="fa fa-list"></span></span>
-                                    <input name="nombre" id="nombre" type="text" class="form-control"/>
-                                </div> 
+                                    <input name="razon_social" type="text" class="form-control" />
+                                </div>                                            
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 col-xs-12 control-label">Fecha de Vigencia</label>
+                            <label class="col-sm-3 col-xs-12 control-label">Cuit</label>
                             <div class="col-sm-6 col-xs-12">                                            
                                 <div class="input-group">
                                     <span class="input-group-addon"><span class="fa fa-list"></span></span>
-                                    <input name="fecha_vigencia" id="fecha_vigencia" type="text" class="form-control"/>
-                                </div> 
+                                    <input name="cuit" type="text" class="form-control" />
+                                </div>                                            
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-3 col-xs-12 control-label">Tipo Cliente</label>
+                            <label class="col-sm-3 col-xs-12 control-label">Dirección</label>
                             <div class="col-sm-6 col-xs-12">                                            
                                 <div class="input-group">
                                     <span class="input-group-addon"><span class="fa fa-list"></span></span>
-                                    <input name="email" id="email" type="text" class="form-control"/>
-                                </div> 
+                                    <input name="direccion" type="text" class="form-control" />
+                                </div>                                            
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 col-xs-12 control-label">Teléfono</label>
+                            <div class="col-sm-6 col-xs-12">                                            
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-list"></span></span>
+                                    <input name="telefono" type="text" class="form-control" />
+                                </div>                                            
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 col-xs-12 control-label">Email</label>
+                            <div class="col-sm-6 col-xs-12">                                            
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-list"></span></span>
+                                    <input name="email" type="text" class="form-control"/>
+                                </div>                                            
+                            </div>
+                        </div>
+
+                        
 
                     </div>
                     <div class="panel-footer">
@@ -63,7 +96,66 @@ $this->headTitle($this->title);
             </form>
             
         </div>
-    </div>                    
+    </div>                     
+    
+</div>
+<!-- END PAGE CONTENT WRAPPER -->                                                
+
+
+<!-- THIS PAGE PLUGINS -->
+<script type="text/javascript" src="/admin-public/js/plugins/bootstrap/bootstrap-file-input.js"></script>
+<script type="text/javascript" src="/admin-public/js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="/admin-public/js/plugins/bootstrap/bootstrap-datepicker.js"></script> 
+<script type="text/javascript" src="/admin-public/js/plugins/bootstrap/bootstrap-select.js"></script>   
+<script type=“text/javascript” src=“/js/plugins/jquery-validation/jquery.validate.js”></script>
+
+<!-- END THIS PAGE PLUGINS -->
+
+<script>
+     $('.datepicker').datepicker({
+    format: 'dd-mm-yyyy',
+    // startDate: '-3d'
+    language: 'es'
+    });
+
+var regexp = /^\d+(\,\d{1,2})?$/;
+var validator;
+$().ready(function() {
+    validator = $("#add-form").validate({
+        ignore: '',
+        rules: {
+            id_producto: {
+                required: true
+            },
+            precio: {
+                required: true,
+                validarprecio: true
+            },
+            fecha: "required"
+        },
+        errorPlacement: function(error, element) {
+            error.insertAfter(element.parent());
+        },
+        messages: {
+            precio: {
+                required: "Campo requerido",
+                validarprecio: "Deben ser numeros del tipo 30 o 30,55."
+            },
+            fecha: {
+                required: "Campo requerido"
+            },
+            id_producto: {
+                required: "Campo requerido"
+            }
+
+        }
+    });
+});
+$.validator.addMethod("validarprecio", function (value, element) {
+    var regex = new RegExp(regexp);
+    return regex.test(value);
+});
+</script>                  
     
 </div>
 <!-- END PAGE CONTENT WRAPPER -->                                                

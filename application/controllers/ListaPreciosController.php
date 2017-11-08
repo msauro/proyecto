@@ -11,31 +11,29 @@ class ListaPreciosController extends Gabinando_Base {
     public function addAction(){
 		if($this->getRequest()->isPost()){
 			$params = $this->getRequest()->getPost();
-			// $params['fecha'] = new DateTime($params['fecha']);
+			$params['fecha_vigencia'] = date("Y-m-d", strtotime($params['fecha_vigencia']));
             $params['eliminado'] = 0;
-			
-			$params['fecha'] = strtotime($params['fecha']);
-
-            $params['fecha'] = date("Y-m-d",($params['fecha']));
-			
 			$lista_precios = new Application_Model_ListaPrecios();
-            $result = $precio->add($params);
-
+            $result = $lista_precios->add($params);
+            if($result instanceof Exception){
+                Gabinando_Base::addError($result->getMessage());
+                $this->_redirect('/listaprecios/list');
+        	}
             Gabinando_Base::addSuccess('Lista de precios agregada correctamente');
             $this->_redirect('/listaprecios/list');
             
 		}else{
 			$tipoClienteModel = new Application_Model_TipoCliente();
 			$listadoTipoCliente = $tipoClienteModel->getListClientes();
-	// die(var_dump($listadoTipoCliente));
+
 			$this->view->listadoTipoCliente = $listadoTipoCliente;
 		}
 	}
 
 	public function listAction() {
-		$precio = new Application_Model_ListaPrecios();
-		$listadoprecios = $precio->getList();
-		$this->view->listadoprecios = $listadoprecios;
+		$lista_precios = new Application_Model_ListaPrecios();
+		$listas_precios = $lista_precios->getList();
+		$this->view->listas_precios = $listas_precios;
     }
 
     public function removeAction(){
@@ -55,9 +53,10 @@ class ListaPreciosController extends Gabinando_Base {
 		if($this->getRequest()->isPost()){
 			$params = $this->getRequest()->getPost();
 			$params['id'] = $this->getRequest()->getParam('id');
+			$params['fecha_vigencia'] = date("Y-m-d", strtotime($params['fecha_vigencia']));
 			
-			$precio = new Application_Model_ListaPrecios();
-			$result = $precio->edit($params['id'], $params);
+			$listaprecioModel = new Application_Model_ListaPrecios();
+			$result = $listaprecioModel->edit($params['id'], $params);
 
 			if($result instanceof Exception){
                 Gabinando_Base::addError($result->getMessage());
@@ -72,25 +71,19 @@ class ListaPreciosController extends Gabinando_Base {
 		else{
 			$id = $this->getRequest()->getParam('id');
 			if($id){
-				$marcaModel = new Application_Model_Marca();
+				$listaprecioModel = new Application_Model_ListaPrecios();
+				$listaPrecio = $listaprecioModel->getListaPrecioById($id);
 
-				$listadoMarcas = $marcaModel->getList();
+				$tipoClienteModel = new Application_Model_TipoCliente();
+				$listadoTipoCliente = $tipoClienteModel->getListClientes();
 
-				$precioModel = new Application_Model_Precio();
-				$precio = $precioModel->getPrecioById($id);
+				$this->view->listadoTipoCliente = $listadoTipoCliente;
+				$this->view->data = $listaPrecio;
 
-				$this->view->listadoMarcas = $listadoMarcas;
-
-				if($precio){
-					$this->view->data = $precio;
-				}
-				else{
-					$this->_redirect('/listaprecios/list');
-				}
 			}
-			else{
-				$this->_redirect('/listaprecios/list');
-			}
+			// else{
+			// 	$this->_redirect('/listaprecios/list');
+			// }
 		}
     }
 		

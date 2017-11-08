@@ -102,8 +102,8 @@ echo $this->doctype(); ?>
                                 <div><span class="fa fa-money" aria-hidden="true"></span><span class="xn-text">Listas de Precios</span></div>
                             </a>
                             <ul>
-                                <li <?php if($controller == 'precio' && $action == 'add') echo 'class="active"' ?>><a href="/listaprecios/add"><span class="fa fa-group"></span> Agregar precio</a></li>
-                                <li <?php if($controller == 'precio' && $action == 'order') echo 'class="active"' ?>><a href="/listas_precios/list"><span class="fa fa-file-text-o" aria-hidden="true"></span> Listado</a></li>
+                                <li <?php if($controller == 'precio' && $action == 'add') echo 'class="active"' ?>><a href="/listaprecios/add"><span class="fa fa-group"></span> Agregar lista de precio</a></li>
+                                <li <?php if($controller == 'precio' && $action == 'order') echo 'class="active"' ?>><a href="/listaprecios/list"><span class="fa fa-file-text-o" aria-hidden="true"></span> Listado</a></li>
                             </ul>
                         </li>
                         <li id="modules-settings" class="xn-openable">
@@ -126,15 +126,6 @@ echo $this->doctype(); ?>
                         </li>
                         <li id="modules-settings" class="xn-openable">
                             <a href="javascript:void(0);">
-                                <div><span class="fa fa-archive" aria-hidden="true"></span><span class="xn-text">Pedidos</span></div>
-                            </a>
-                            <ul>
-                                <li <?php if($controller == 'user' && $action == 'add') echo 'class="active"' ?>><a href="/pedido/add"><span class="fa fa-group"></span> Agregar pedido</a></li>
-                                <li <?php if($controller == 'settings' && $action == 'pedido') echo 'class="active"' ?>><a href="/pedido/list"><span class="fa fa-file-text-o" aria-hidden="true"></span> Listado</a></li>
-                            </ul>
-                        </li>
-                        <li id="modules-settings" class="xn-openable">
-                            <a href="javascript:void(0);">
                                 <div><span class="fa fa-user" aria-hidden="true"></span><span class="xn-text">Clientes</span></div>
                             </a>
                             <ul>
@@ -149,6 +140,15 @@ echo $this->doctype(); ?>
                             <ul>
                                 <li <?php if($controller == 'user' && $action == 'add') echo 'class="active"' ?>><a href="/tipocliente/add"><span class="fa fa-group"></span> Agregar cliente</a></li>
                                 <li <?php if($controller == 'settings' && $action == 'cliente') echo 'class="active"' ?>><a href="/tipocliente/list"><span class="fa fa-file-text-o" aria-hidden="true"></span> Listado</a></li>
+                            </ul>
+                        </li>
+                        <li id="modules-settings" class="xn-openable">
+                            <a href="javascript:void(0);">
+                                <div><span class="fa fa-archive" aria-hidden="true"></span><span class="xn-text">Pedidos</span></div>
+                            </a>
+                            <ul>
+                                <li <?php if($controller == 'user' && $action == 'add') echo 'class="active"' ?>><a href="/pedido/add"><span class="fa fa-group"></span> Agregar pedido</a></li>
+                                <li <?php if($controller == 'settings' && $action == 'pedido') echo 'class="active"' ?>><a href="/pedido/list"><span class="fa fa-file-text-o" aria-hidden="true"></span> Listado</a></li>
                             </ul>
                         </li>
                 <!-- DEFINE MORE SECTIONS -->
