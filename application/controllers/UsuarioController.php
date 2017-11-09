@@ -1,6 +1,6 @@
 <?php
 
-class UserController extends Gabinando_Base {
+class UsuarioController extends Gabinando_Base {
 
 	const UPLOADPATHAVATAR = '/resources/admin_avatars/';
 
@@ -11,7 +11,9 @@ class UserController extends Gabinando_Base {
     public function addAction(){
 		if($this->getRequest()->isPost()){
 			$params = $this->getRequest()->getPost();
-			
+
+			(isset($params["administrador"])) ? $params["administrador"] = 1 : $params["administrador"] = 0;
+				
 			$file = $_FILES['avatar_url'];
 			
 			$img = $this->uploadImage(self::UPLOADPATHAVATAR,$file,$params['email']);
@@ -24,37 +26,37 @@ class UserController extends Gabinando_Base {
 		
 			$params["password"]	= base64_encode(pack("H*",sha1(utf8_encode($params["password"]))));
 
-			$admin = new Application_Model_Admin();
+			$usuario = new Application_Model_Usuario();
 
-			// Search email before add an admin
-			$alreadyRegistered = $admin->getAdminByEmail($params['email']);
+			// Search email before add an usuario
+			$alreadyRegistered = $usuario->getUserByEmail($params['email']);
 			
 			if($alreadyRegistered instanceof Exception){
                 Gabinando_Base::addError($alreadyRegistered->getMessage());
-                $this->_redirect('/admin/add');
-            // If this email wasn't registered in the past -> add a new admin
+                $this->_redirect('/usuario/add');
+            // If this email wasn't registered in the past -> add a new usuario
             }elseif($alreadyRegistered == null){
-            	$result = $admin->add($params);
+            	$result = $usuario->add($params);
 
 				if($result instanceof Exception){
 	                Gabinando_Base::addError($result->getMessage());
-	                $this->_redirect('/admin/add');
+	                $this->_redirect('/usuario/add');
             	}
-            	Gabinando_Base::addSuccess('Administrator succesfully added');
-            	$this->_redirect('/admin/list');
+            	Gabinando_Base::addSuccess('Usuario agregado correctamente');
+            	$this->_redirect('/usuario/list');
             }else{
             	// If this email was registered in the past and is deleted now
-            	// Set idDeleted property to false in order to "reactivate" the registered admin
+            	// Set idDeleted property to false in order to "reactivate" the registered usuario
             	$params['isDeleted'] = 0;
-            	// Update the admin with new properties and the same id
-            	$result = $admin->edit('id_admin', $alreadyRegistered['id_admin'], $params);
+            	// Update the usuario with new properties and the same id
+            	$result = $usuario->edit('id', $alreadyRegistered['id'], $params);
 
 				if($result instanceof Exception){
 	                Gabinando_Base::addError($result->getMessage());
-	                $this->_redirect('/admin/add');
+	                $this->_redirect('/usuario/add');
 	            }
-	            Gabinando_Base::addSuccess('Administrator succesfully added');
-	            $this->_redirect('/admin/list');
+	            Gabinando_Base::addSuccess('Usuario agregado correctamente');
+	            $this->_redirect('/usuario/list');
             }
 		}
 	}
@@ -62,8 +64,10 @@ class UserController extends Gabinando_Base {
 	public function editAction() {
 		if($this->getRequest()->isPost()){
 			$params = $this->getRequest()->getPost();
-			$params['id_admin'] = $this->getRequest()->getParam('id');
-			
+	// die(var_dump($params));
+			$params['id'] = $this->getRequest()->getParam('id');
+			(isset($params["administrador"])) ? $params["administrador"] = 1 : $params["administrador"] = 0;
+
 			if($params['password'] != ""){
 				$params['password']	= base64_encode(pack("H*",sha1(utf8_encode($params['password']))));
 			}
@@ -74,7 +78,7 @@ class UserController extends Gabinando_Base {
 			if($_FILES['avatar_url']['size'] > 0){
 				$file = $_FILES['avatar_url'];
 
-				$img = $this->uploadImage(self::UPLOADPATHAVATAR,$file,$params['id_admin']);
+				$img = $this->uploadImage(self::UPLOADPATHAVATAR,$file,$params['id']);
 
 				if($img['status'] == 'error'){
 					die($img['message']);
@@ -84,71 +88,71 @@ class UserController extends Gabinando_Base {
 			}
 
 			
-			$admin = new Application_Model_Admin();
-			$result = $admin->edit('id_admin', $params['id_admin'], $params);
+			$admin = new Application_Model_Usuario();
+			$result = $admin->edit($params['id'], $params);
 
 			if($result instanceof Exception){
                 Gabinando_Base::addError($result->getMessage());
 
             }else{
 
-            	if($this->admin_session->admin['id_admin'] == $params['id_admin']){
+            	if($this->admin_session->admin['id'] == $params['id']){
             		            		
             		if(isset($params['avatar_url'])) $this->admin_session->admin['avatar_url'] = $params['avatar_url'];
 
-	            	$this->admin_session->admin['first_name'] = $params['first_name'];
-	         		$this->admin_session->admin['last_name'] = $params['last_name'];
+	            	$this->admin_session->admin['nombre'] = $params['nombre'];
+	         		$this->admin_session->admin['apellido'] = $params['apellido'];
 	         		$this->admin_session->admin['password'] = $params['password'];
             	}            	
 
-            	Gabinando_Base::addSuccess('Administrator succesfully updated');
+            	Gabinando_Base::addSuccess('Usuario editado correctamente');
             }
 
-            $this->_redirect('/admin/list');
+            $this->_redirect('/usuario/list');
 		}
 		else{
-			$id_admin = $this->getRequest()->getParam('id');
+			$id = $this->getRequest()->getParam('id');
 			
-			if($id_admin){
-				$adminModel = new Application_Model_Admin();
-				$admin = $adminModel->getAdminById($id_admin);
+			if($id){
+				$usuarioModel = new Application_Model_Usuario();
+				$usuario = $usuarioModel->getUserById($id);
 				
-				if($admin){
-					$this->view->data = $admin;
+				if($usuario){
+					$this->view->data = $usuario;
 				}
 				else{
-					$this->_redirect('/admin/list');
+					$this->_redirect('/usuario/list');
 				}
 			}
 			else{
-				$this->_redirect('/admin/list');
+				$this->_redirect('/usuario/list');
 			}
 
 		}
     }
 
 	public function listAction() {
-		$admin = new Application_Model_Admin();
-		$adminList = $admin->getList();
-		$this->view->adminsList = $adminList;
+		$usuario = new Application_Model_Usuario();
+		$usuarioList = $usuario->getList();
+		$this->view->usuariosList = $usuarioList;
     }
 
 	public function deleteAction(){
-		$id_admin = $this->getRequest()->getParam('id');
-		if($id_admin){
-			if($id_admin != $this->admin_session->admin['id_admin']){
-				$admin = new Application_Model_Admin();
-				$result = $admin->remove('id_admin',$id_admin);
+		$id = $this->getRequest()->getParam('id');
+		if($id){
+			if($id != $this->admin_session->admin['id']){
+				$admin = new Application_Model_Usuario();
+				$result = $admin->remove('id',$id);
 				if($result instanceof Exception){
 					Gabinando_Base::addError($result->getMessage());
 				}else{
-					Gabinando_Base::addSuccess('Administrator succesfully deleted');
+					Gabinando_Base::addSuccess('Usuario eliminado.');
 				}
 			}else{
 				Gabinando_Base::addError('You cannot delete yourself');
 			}
 		}
-		$this->_redirect('admin/list');
+		$this->_redirect('usuario/list');
 	}
 
 
@@ -157,7 +161,7 @@ class UserController extends Gabinando_Base {
 		if($this->getRequest()->isPost()){
 			$email = $this->getRequest()->getParam('email');
 
-			$admin = new Application_Model_Admin();
+			$admin = new Application_Model_Usuario();
 			$isAvailable = $admin->isEmailAvailable($email);
 			
 			if($isAvailable instanceof Exception){

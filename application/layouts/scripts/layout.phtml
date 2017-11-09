@@ -15,6 +15,7 @@ echo $this->doctype(); ?>
 	    <?php echo $this->headTitle(); ?>
 
         <link rel="shortcut icon" href="/admin-public/img/logo.png" type="image/x-icon">
+        <link href="/admin-public/css/bootstrap-switch.min.css" rel="stylesheet">
 
         <?php echo $this->headLink()->prependStylesheet($this->baseUrl().'/admin-public/css/custom.css'); ?>
         <?php echo $this->headLink()->prependStylesheet($this->baseUrl().'/admin-public/css/theme-dark.css'); ?>
@@ -24,6 +25,7 @@ echo $this->doctype(); ?>
             <script type="text/javascript" src="/admin-public/js/plugins/jquery/jquery.min.js"></script>
             <script type="text/javascript" src="/admin-public/js/plugins/jquery/jquery-ui.min.js"></script>
             <script type="text/javascript" src="/admin-public/js/plugins/bootstrap/bootstrap.min.js"></script>
+            <script type="text/javascript" src="/admin-public/js/plugins/tour/intro.min.js"></script>
            
 
         <!-- TEMPLATE -->
@@ -74,14 +76,14 @@ echo $this->doctype(); ?>
                                 <div><span class="fa fa-user"></span><span class="xn-text">Usuarios</span></div>
                             </a>
                             <ul>
-                                <li <?php if($controller == 'user' && $action == 'add') echo 'class="active"' ?>><a href="/user/add"><span class="fa fa-group"></span> Agregar usuario</a></li>
-                                <li <?php if($controller == 'user' && $action == 'list') echo 'class="active"' ?>><a href="/user/list"><span class="fa fa-group"></span> Listado</a></li>
+                                <li <?php if($controller == 'usuario' && $action == 'add') echo 'class="active"' ?>><a href="/usuario/add"><span class="fa fa-group"></span> Agregar usuario</a></li>
+                                <li <?php if($controller == 'usuario' && $action == 'list') echo 'class="active"' ?>><a href="/usuario/list"><span class="fa fa-group"></span> Listado</a></li>
                             </ul>
                         </li>
                     <!-- SETTINGS -->    
                         <li id="modules-settings" class="xn-openable">
                             <a href="javascript:void(0);">
-                                <div><span class="fa fa-car" aria-hidden="true"></span><span class="xn-text">Productos</span></div>
+                                <div data-step="3" data-intro="Acá podrás gestionar los productos" data-position="right"><span class="fa fa-car" aria-hidden="true"></span><span class="xn-text">Productos</span></div>
                             </a>
                             <ul>
                                 <li <?php if($controller == 'user' && $action == 'add') echo 'class="active"' ?>><a href="/producto/add"><span class="fa fa-group"></span> Agregar producto</a></li>
@@ -90,7 +92,7 @@ echo $this->doctype(); ?>
                         </li>
                         <li id="modules-settings" class="xn-openable">
                             <a href="javascript:void(0);">
-                                <div><span class="fa fa-cog" aria-hidden="true"></span><span class="xn-text">Marcas</span></div>
+                                <div data-step="4" data-intro="Acá podrás gestionar las marcas" data-position="right"><span class="fa fa-cog" aria-hidden="true"></span><span class="xn-text">Marcas</span></div>
                             </a>
                             <ul>
                                 <li <?php if($controller == 'marca' && $action == 'add') echo 'class="active"' ?>><a href="/marca/add"><span class="fa fa-group"></span> Agregar marca</a></li>
@@ -99,7 +101,7 @@ echo $this->doctype(); ?>
                         </li>
                         <li id="modules-settings" class="xn-openable">
                             <a href="javascript:void(0);">
-                                <div><span class="fa fa-money" aria-hidden="true"></span><span class="xn-text">Listas de Precios</span></div>
+                                <div data-step="5" data-intro="Acá podrás gestionar las listas de precios" data-position="right"><span class="fa fa-money" aria-hidden="true"></span><span class="xn-text">Listas de Precios</span></div>
                             </a>
                             <ul>
                                 <li <?php if($controller == 'precio' && $action == 'add') echo 'class="active"' ?>><a href="/listaprecios/add"><span class="fa fa-group"></span> Agregar lista de precio</a></li>
@@ -108,7 +110,7 @@ echo $this->doctype(); ?>
                         </li>
                         <li id="modules-settings" class="xn-openable">
                             <a href="javascript:void(0);">
-                                <div><span class="fa fa-money" aria-hidden="true"></span><span class="xn-text">Precios</span></div>
+                                <div data-step="6" data-intro="Acá podrás gestionar los precios" data-position="right"><span class="fa fa-money" aria-hidden="true"></span><span class="xn-text">Precios</span></div>
                             </a>
                             <ul>
                                 <li <?php if($controller == 'precio' && $action == 'add') echo 'class="active"' ?>><a href="/precio/add"><span class="fa fa-group"></span> Agregar precio</a></li>
@@ -117,7 +119,7 @@ echo $this->doctype(); ?>
                         </li>
                         <li id="modules-settings" class="xn-openable">
                             <a href="javascript:void(0);">
-                                <div><span class="fa fa-users" aria-hidden="true"></span><span class="xn-text">Proveedores</span></div>
+                                <div data-step="7" data-intro="Acá podrás gestionar los proveedores" data-position="right"><span class="fa fa-users" aria-hidden="true"></span><span class="xn-text">Proveedores</span></div>
                             </a>
                             <ul>
                                 <li <?php if($controller == 'user' && $action == 'add') echo 'class="active"' ?>><a href="/proveedor/add"><span class="fa fa-group"></span> Agregar proveedor</a></li>
@@ -126,7 +128,7 @@ echo $this->doctype(); ?>
                         </li>
                         <li id="modules-settings" class="xn-openable">
                             <a href="javascript:void(0);">
-                                <div><span class="fa fa-user" aria-hidden="true"></span><span class="xn-text">Clientes</span></div>
+                                <div data-step="8" data-intro="Acá podrás gestionar los clientes" data-position="right"><span class="fa fa-user" aria-hidden="true"></span><span class="xn-text">Clientes</span></div>
                             </a>
                             <ul>
                                 <li <?php if($controller == 'user' && $action == 'add') echo 'class="active"' ?>><a href="/cliente/add"><span class="fa fa-group"></span> Agregar cliente</a></li>
@@ -135,7 +137,16 @@ echo $this->doctype(); ?>
                         </li>
                         <li id="modules-settings" class="xn-openable">
                             <a href="javascript:void(0);">
-                                <div><span class="fa fa-user" aria-hidden="true"></span><span class="xn-text">Tipos de Clientes</span></div>
+                                <div data-step="9" data-intro="Acá podrás gestionar los usuarios" data-position="right"><span class="fa fa-user" aria-hidden="true"></span><span class="xn-text">Usuarios</span></div>
+                            </a>
+                            <ul>
+                                <li <?php if($controller == 'usuario' && $action == 'add') echo 'class="active"' ?>><a href="/usuario/add"><span class="fa fa-group"></span> Agregar usuario</a></li>
+                                <li <?php if($controller == 'usuario' && $action == 'list') echo 'class="active"' ?>><a href="/usuario/list"><span class="fa fa-file-text-o" aria-hidden="true"></span> Listado</a></li>
+                            </ul>
+                        </li>
+                        <li id="modules-settings" class="xn-openable">
+                            <a href="javascript:void(0);">
+                                <div data-step="10" data-intro="Acá podrás gestionar los tipos de cliente" data-position="right"><span class="fa fa-user" aria-hidden="true"></span><span class="xn-text">Tipos de Clientes</span></div>
                             </a>
                             <ul>
                                 <li <?php if($controller == 'user' && $action == 'add') echo 'class="active"' ?>><a href="/tipocliente/add"><span class="fa fa-group"></span> Agregar cliente</a></li>
@@ -144,7 +155,7 @@ echo $this->doctype(); ?>
                         </li>
                         <li id="modules-settings" class="xn-openable">
                             <a href="javascript:void(0);">
-                                <div><span class="fa fa-archive" aria-hidden="true"></span><span class="xn-text">Pedidos</span></div>
+                                <div data-step="11" data-intro="Acá podrás gestionar los pedidos" data-position="right"><span class="fa fa-archive" aria-hidden="true"></span><span class="xn-text">Pedidos</span></div>
                             </a>
                             <ul>
                                 <li <?php if($controller == 'user' && $action == 'add') echo 'class="active"' ?>><a href="/pedido/add"><span class="fa fa-group"></span> Agregar pedido</a></li>
@@ -164,13 +175,33 @@ echo $this->doctype(); ?>
                             <span class="fa  <?php echo $this->minimized ? 'fa-indent' : 'fa-dedent'  ?>"></span>
                         </a>
                     </li>     
+                      <!-- < ?php if(in_array('admin_donations', $this->admin['rol_modules']) || in_array('admin_standarddonations', $this->admin['rol_modules']) || in_array('admin_patients', $this->admin['rol_modules'])) : ?> -->
+                    <li class="xn-icon-button" style="margin-top:10px;">
+                       <div data-step="2" data-intro="Acá podrás crear facturas, pedidos y clientes" data-position="right"><button type="button" class="btn btn-default"><span class="fa fa-plus" style="color:#337ab7;"></span><b>Crear</b></button></div>
+                        <ul class="xn-drop-left xn-drop-white animated zoomIn">
+                            <!-- < ?php if(in_array('admin_donations', $this->admin['rol_modules'])): ?> -->
+                            <li><a href="/admin_donations/add"><span class="fa fa-files-o"></span>Factura</a></li>
+                            <!-- < ?php endif;if(in_array('admin_standarddonations', $this->admin['rol_modules'])): ?> -->
+                            <li><a href="/admin_standarddonations/add"><span class="fa fa-align-justify"></span>Pedido</a></li>
+                            <!-- < ?php endif;if(in_array('admin_patients', $this->admin['rol_modules'])) : ?> -->
+                            <li><a href="/cliente/add"><span class="fa fa-users"></span>Nuevo cliente</a></li> 
+                            <!-- < ?php endif ?> -->
+                        </ul>                        
+                    </li>               
+                    <!-- < ?php endif; ?>    -->
                 <!-- LOGOUT -->
+
                     <li class="xn-icon-button pull-right last">
                         <a href="#"><span class="fa fa-power-off"></span></a>
                         <ul class="xn-drop-left animated zoomIn">
-                            <li><a href="#" class="mb-control" data-box="#mb-signout"><span class="fa fa-sign-out"></span> Log Out</a></li>
+                            <li><a href="#" class="mb-control" data-box="#mb-signout"><span class="fa fa-sign-out"></span> Cerrar sesión</a></li>
                         </ul>                        
                     </li> 
+                       <!-- TOUR -->
+                    <li class="xn-icon-button pull-right" style="padding-top:10px;margin-right:20px;">
+                        <button onclick="introJs().start();" class="btn btn-danger" data-step="1" data-intro="Bienvenido <?php echo $this->admin['first_name'] ?>! para comenzar con el tutorial hacé click en ‘Siguiente’. " data-position="bottom">Empezar tutorial</button>
+                    </li>
+                    <!-- END TOUR -->
                 </ul>
             <!-- ERROR MESSAGE -->
                 <?php if($this->message['status'] == 'error'): ?>
@@ -199,14 +230,14 @@ echo $this->doctype(); ?>
             <div class="message-box animated fadeIn" id="mb-signout">
                 <div class="mb-container">
                     <div class="mb-middle">
-                        <div class="mb-title"><span class="fa fa-sign-out"></span> Log <strong>Out</strong> ?</div>
+                        <div class="mb-title"><span class="fa fa-sign-out"></span> Desea <strong>cerrar sesión</strong> ?</div>
                         <div class="mb-content">
                             <p>Are you sure you want to log out?</p>                    
                             <p>Press No if you want to continue work. Press Yes to logout.</p>
                         </div>
                         <div class="mb-footer">
                             <div class="pull-right">
-                                <a href="/index/logout" class="btn btn-success btn-lg">Yes</a>
+                                <a href="/index/logout" class="btn btn-success btn-lg">Si</a>
                                 <button class="btn btn-default btn-lg mb-control-close">No</button>
                             </div>
                         </div>

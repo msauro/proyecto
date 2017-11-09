@@ -9,8 +9,8 @@ $(".xn-icon-button").fadeIn();
 
 <!-- BREADCRUMB -->
     <ul class="breadcrumb">
-        <li><a href="/">Dashboard</a></li>
-        <li><a href="#">Usuario</a></li>
+        <li><a href="/">Panel Principal</a></li>
+        <li><a href="#">Usuarios</a></li>
         <li class="active">Listado</li>
     </ul>
 
@@ -21,8 +21,7 @@ $(".xn-icon-button").fadeIn();
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <div class="panel-title-box">
-                            <h3>Lista de usuarios</h3>
-                            <span>Info sobre usuarios</span>
+                            <h3>Lista de Usuarios</h3>
                         </div>  
                     </div>
                         
@@ -35,19 +34,21 @@ $(".xn-icon-button").fadeIn();
                                         <th>Nombre</th>
                                         <th>Apellido</th>
                                         <th>Email</th>
+                                        <th>Administrador</th>
                                         <th width="150" class="no-sortable text-center">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($this->usersList as $user): ?>
-                                    <tr id="<?php echo $user['id_user'] ?>" class="element-id">
-                                        <td class="text-center"><?php echo $user['id_user'] ?></td>
-                                        <td><?php echo $user['first_name'] ?></td>
-                                        <td><?php echo $user['last_name'] ?></td>
-                                        <td><?php echo $user['email'] ?></td>
+                                    <?php foreach ($this->usuariosList as $usuario): ?>
+                                    <tr id="<?php echo $usuario['id'] ?>" class="element-id">
+                                        <td class="text-center"><?php echo $usuario['id'] ?></td>
+                                        <td><?php echo $usuario['nombre'] ?></td>
+                                        <td><?php echo $usuario['apellido'] ?></td>
+                                        <td><?php echo $usuario['email'] ?></td>
+                                        <td><?php echo ($usuario['administrador'] == 1) ?  "Si" :  "No"; ?></td>
                                         <td class="text-center">
-                                            <button class="btn btn-default btn-rounded btn-condensed btn-sm" onclick="editUser(<?php echo $user['id_user'] ?>)"><span class="fa fa-pencil"></span></button>
-                                            <button class="btn btn-danger btn-rounded btn-condensed btn-sm btn-delete" id_user="<?php echo $user['id_user'] ?>"><span class="fa fa-trash-o" data-toggle="modal" data-target="#delete_modal"></span></button>
+                                            <button class="btn btn-default btn-rounded btn-condensed btn-sm" onclick="editUsuario(<?php echo $usuario['id'] ?>)"><span class="fa fa-pencil"></span></button>
+                                            <button class="btn btn-danger btn-rounded btn-condensed btn-sm btn-delete" id="<?php echo $usuario['id'] ?>"><span class="fa fa-trash-o" data-toggle="modal" data-target="#delete_modal"></span></button>
                                         </td>
                                     </tr>
                                     <?php endforeach; ?>
@@ -86,18 +87,18 @@ $(".xn-icon-button").fadeIn();
             var id = 0;
 
             $(".btn-delete").click(function(event){
-                id = $(this).attr('id_user');
+                id = $(this).attr('id');
             });
 
             $("#btnYes").click(function(){
-                window.location.href = "/user/delete/id/" + id;
+                window.location.href = "/usuario/delete/id/" + id;
             })
 
         });
     </script>
 
     <script>
-    var editUser = function(id){
-        window.location.href = "/user/edit/id/" + id;
+    var editUsuario = function(id){
+        window.location.href = "/usuario/edit/id/" + id;
     }
     </script>

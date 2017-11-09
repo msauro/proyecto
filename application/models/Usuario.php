@@ -1,9 +1,9 @@
 <?php
 
-class Application_Model_User extends Application_Model_Base
+class Application_Model_Usuario extends Application_Model_Base
 {
 
-	protected $_name = 'users';
+	protected $_name = 'usuarios';
 
 	public function isValidLogin($params){
 		$email	= $params['email'];
@@ -14,7 +14,7 @@ class Application_Model_User extends Application_Model_Base
 				->from($this, '*')
 				->where('email = ?', $email)
 				->where('password = ?', $password)
-				->where('isDeleted = ?', 0);
+				->where('eliminado = ?', 0);
 
 			$row = $this->fetchRow($query);
 
@@ -30,8 +30,8 @@ class Application_Model_User extends Application_Model_Base
 
 	public function getList(){
     	$query = $this->select()
-            ->from($this, array('id_user','email','first_name','last_name'))
-            ->where('isDeleted = ?', 0);
+            ->from($this, array('id','email','nombre','apellido','administrador'))
+            ->where('eliminado = ?', 0);
 
         $rows = $this->fetchAll($query);
 
@@ -42,7 +42,7 @@ class Application_Model_User extends Application_Model_Base
 		try{
             $query = $this->select()
 	            ->from($this, array('*'))
-	            ->where('id_user = ?', $id);
+	            ->where('id = ?', $id);
 
             $row = $this->fetchRow($query);
 
@@ -85,7 +85,7 @@ class Application_Model_User extends Application_Model_Base
 			$query = $this->select()
 				->from($this, array('email'))
 				->where('email = ?', $email)
-				->where('isDeleted = ?', 0);
+				->where('eliminado = ?', 0);
 
 			$row = $this->fetchRow($query);
 

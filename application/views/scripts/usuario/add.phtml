@@ -4,8 +4,8 @@ $this->headTitle($this->title);
 ?>
 <!-- BREADCRUMB -->
     <ul class="breadcrumb">
-        <li><a href="/">Dashboard</a></li>
-        <li><a href="/user/list">Usuario</a></li>
+        <li><a href="/">Panel Principal</a></li>
+        <li><a href="/usuario/list">Usuario</a></li>
         <li class="active">Nuevo</li>
     </ul>
 
@@ -29,7 +29,7 @@ $this->headTitle($this->title);
                             <div class="col-sm-6 col-xs-12">                                            
                                 <div class="input-group">
                                     <span class="input-group-addon"><span class="fa fa-list"></span></span>
-                                    <input name="first_name" id="first_name" type="text" class="form-control"/>
+                                    <input name="nombre" id="nombre" type="text" class="form-control"/>
                                 </div> 
                             </div>
                         </div>
@@ -39,8 +39,17 @@ $this->headTitle($this->title);
                             <div class="col-sm-6 col-xs-12">                                            
                                 <div class="input-group">
                                     <span class="input-group-addon"><span class="fa fa-list"></span></span>
-                                    <input name="last_name" id="last_name" type="text" class="form-control"/>
+                                    <input name="apellido" id="apellido" type="text" class="form-control"/>
                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="form-group-marca" >
+                            <label class="col-sm-3 col-xs-12 control-label">Administrador</label>
+                            <div class="col-sm-6 col-xs-12">                                            
+                                <div class="input-group">
+                                    <input type="checkbox" name="administrador" id="administrador"checked>
+                                </div> 
                             </div>
                         </div>
 
@@ -75,8 +84,8 @@ $this->headTitle($this->title);
                         
                     </div>
                     <div class="panel-footer">
-                        <button class="btn btn-default" type="button" onclick="history.back()">Volver</button>
-                        <button class="btn btn-primary pull-right">Guardar</button>
+                        <button class="btn btn-default" type="button" onclick="history.back()">Back</button>
+                        <button class="btn btn-primary pull-right">Submit</button>
                     </div>
                 </div>
             </form>
@@ -91,26 +100,27 @@ $this->headTitle($this->title);
 <!-- THIS PAGE PLUGINS -->
 <script type="text/javascript" src="/admin-public/js/plugins/bootstrap/bootstrap-file-input.js"></script>
 <script type="text/javascript" src="/admin-public/js/jquery.validate.min.js"></script>
+<script src="/admin-public/js/bootstrap-switch.min.js"></script>
 <!-- END THIS PAGE PLUGINS -->
 
 <script>
 $().ready(function() {
-
-    $("#add-form").validate({
+    $.fn.bootstrapSwitch.defaults.size = 'mini';
+    $("[name='administrador']").bootstrapSwitch();
+    validator = $("#add-form").validate({
+        ignore: '',
         rules: {
-            first_name: "required",
-            last_name: "required",
-            password: {
+            nombre: {
+                required: true
+            },
+            apellido: {
                 required: true,
-                minlength: 8
             },
             email: {
                 required: true,
-                email: true,
-                remote: {
-                    url: '/user/isemailavailable',
-                    type: 'POST'
-                }
+            },
+            password: {
+                required: true,
             },
             avatar_url: "required"
         },
@@ -118,12 +128,22 @@ $().ready(function() {
             error.insertAfter(element.parent());
         },
         messages: {
+            nombre: {
+                required: "Campo requerido",
+            },
+            apellido: {
+                required: "Campo requerido"
+            },
             email: {
-                remote: "This e-mail is already taken."
+                required: "Campo requerido"
+            },
+            password: {
+                required: "Campo requerido"
             },
             avatar_url: {
-                required: "An image is required."
+                required: "Campo requerido"
             }
+
         }
     });
 });
