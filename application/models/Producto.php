@@ -34,5 +34,18 @@ class Application_Model_Producto extends Application_Model_Base
         }
     }
 
+    public function getListPrecios($tipoCliente,$hoy){
+        $query = $this->select()->setIntegrityCheck(false)
+            ->from($this, array('*'))
+            ->join('marcas', 'marcas.id = productos.id_marca', array('marcas.nombre AS nom_marca'))
+            ->join('precios', 'productos.id = precios.id_producto', array('precio'))
+            ->join('listas_precios', 'listas_precios.id = precios.id_lista_precio', array('precio', MAX('fecha_vigencia as fecha_vigencia')))
+            ->where('productos.eliminado = ?', 0)
+            ->where('listas_precios.tipo_cliente = ?', $tipoCliente)
+            ->where('listas_precios.fecha_vigencia <= ', $hoy);
+
+        $rows = $this->fetchAll($query);
+        return $rows->toArray();
+    }
    
 }

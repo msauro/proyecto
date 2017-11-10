@@ -76,5 +76,14 @@ class Application_Model_Cliente extends Application_Model_Base
         }
     }
 
+    public function getListType(){
+        $query = $this->select()->setIntegrityCheck(false)
+            ->from($this, array('*'))
+            ->join('tipo_cliente', 'tipo_cliente.id = clientes.id', array('tipo_cliente.id as tipo_cliente'))
+            ->where('clientes.eliminado = ?', 0);
+
+        $rows = $this->fetchAll($query);
+        return $rows->toArray();
+    }
    
 }
