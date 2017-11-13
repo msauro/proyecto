@@ -137,6 +137,15 @@ echo $this->doctype(); ?>
                         </li>
                         <li id="modules-settings" class="xn-openable">
                             <a href="javascript:void(0);">
+                                <div data-step="8" data-intro="Acá podrás gestionar los clientes" data-position="right"><span class="fa fa-user" aria-hidden="true"></span><span class="xn-text">Estados</span></div>
+                            </a>
+                            <ul>
+                                <li <?php if($controller == 'estado' && $action == 'add') echo 'class="active"' ?>><a href="/estado/add"><span class="fa fa-group"></span> Agregar estado</a></li>
+                                <li <?php if($controller == 'estado' && $action == 'list') echo 'class="active"' ?>><a href="/estado/list"><span class="fa fa-file-text-o" aria-hidden="true"></span> Listado</a></li>
+                            </ul>
+                        </li>
+                        <li id="modules-settings" class="xn-openable">
+                            <a href="javascript:void(0);">
                                 <div data-step="9" data-intro="Acá podrás gestionar los usuarios" data-position="right"><span class="fa fa-user" aria-hidden="true"></span><span class="xn-text">Usuarios</span></div>
                             </a>
                             <ul>

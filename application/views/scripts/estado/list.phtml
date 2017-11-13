@@ -1,5 +1,5 @@
 <?php         
-$this->title = "Lista de clientes";
+$this->title = "Lista de Estados";
 $this->headTitle($this->title);
 ?>
 
@@ -10,7 +10,7 @@ $(".xn-icon-button").fadeIn();
 <!-- BREADCRUMB -->
     <ul class="breadcrumb">
         <li><a href="/">Panel Principal</a></li>
-        <li><a href="#">Clientes</a></li>
+        <li><a href="#">Estados</a></li>
         <li class="active">Listado</li>
     </ul>
 
@@ -21,7 +21,7 @@ $(".xn-icon-button").fadeIn();
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <div class="panel-title-box">
-                            <h3>Lista de clientes</h3>
+                            <h3>Lista de estados</h3>
                         </div>  
                     </div>
                         
@@ -32,29 +32,17 @@ $(".xn-icon-button").fadeIn();
                                     <tr>
                                         <th width="50">ID</th>
                                         <th>Nombre</th>
-                                        <th>Apellido</th>
-                                        <th>Cuit</th>
-                                        <th>Estado</th>
-                                        <th>Dirección</th>
-                                        <th>Teléfono</th>
-                                        <th>Email</th>
                                         <th width="150" class="no-sortable text-center">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($this->listadoclientes as $cliente): ?>
-                                    <tr id="<?php echo $cliente['id'] ?>" class="element-id">
-                                        <td class="text-center"><?php echo $cliente['id'] ?></td>
-                                        <td><?php echo $cliente['nombre'] ?></td>
-                                        <td><?php echo $cliente['apellido'] ?></td>
-                                        <td><?php echo $cliente['cuit'] ?></td>
-                                        <td><?php echo $cliente['nom_marca'] ?></td>
-                                        <td><?php echo $cliente['direccion'] ?></td>
-                                        <td><?php echo $cliente['telefono'] ?></td>
-                                        <td><?php echo $cliente['email'] ?></td>
+                                    <?php foreach ($this->listadoEstados as $estado): ?>
+                                    <tr id="<?php echo $estado['id'] ?>" class="element-id">
+                                        <td class="text-center"><?php echo $estado['id'] ?></td>
+                                        <td><?php echo $estado['nombre'] ?></td>
                                         <td class="text-center">
-                                            <button class="btn btn-default btn-rounded btn-condensed btn-sm" onclick="editarCliente(<?php echo $cliente['id'] ?>)"><span class="fa fa-pencil"></span></button>
-                                            <button class="btn btn-danger btn-rounded btn-condensed btn-sm btn-delete" id="<?php echo $cliente['id'] ?>"><span class="fa fa-trash-o" data-toggle="modal" data-target="#delete_modal"></span></button>
+                                            <button class="btn btn-default btn-rounded btn-condensed btn-sm" onclick="editarEstados(<?php echo $estado['id'] ?>)"><span class="fa fa-pencil"></span></button>
+                                            <button class="btn btn-danger btn-rounded btn-condensed btn-sm btn-delete" id="<?php echo $estado['id'] ?>"><span class="fa fa-trash-o" data-toggle="modal" data-target="#delete_modal"></span></button>
                                         </td>
                                     </tr>
                                     <?php endforeach; ?>
@@ -77,7 +65,7 @@ $(".xn-icon-button").fadeIn();
                     <h4 class="modal-title">Confirmación</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Desea eliminar el cliente?</p>
+                    <p>Desea eliminar el estado?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
@@ -97,14 +85,14 @@ $(".xn-icon-button").fadeIn();
             });
 
             $("#btnYes").click(function(){
-                window.location.href = "/cliente/remove/id/" + id;
+                window.location.href = "/estado/remove/id/" + id;
             })
 
         });
     </script>
 
     <script>
-    var editarCliente = function(id){
-        window.location.href = "/cliente/edit/id/" + id;
+    var editarEstados = function(id){
+        window.location.href = "/estado/edit/id/" + id;
     }
     </script>

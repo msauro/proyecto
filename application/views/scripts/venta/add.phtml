@@ -2,7 +2,6 @@
 $this->title = "Nueva venta";
 $this->headTitle($this->title);
 ?>
-<?= $this->headLink()->prependStylesheet($this->baseUrl().'/admin-public/css/bootstrap/bootstrap-slider.css'); ?>
 <!-- START BREADCRUMB -->
 <ul class="breadcrumb">
     <li><a href="/">Panel Principal</a></li>
@@ -79,22 +78,22 @@ $this->headTitle($this->title);
                             <!-- START STRIPED TABLE SAMPLE -->
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title">clientes</h3>
+                                    <h3 class="panel-title">Clientes</h3>
                                     <div class="col-md-2" style="float:right;">
                                         <button class="btn btn-success btn-block">
-                                            <a href="/admin_patients/add"><span class="fa fa-plus"></span> New</a>
+                                            <a href="/cliente/add"><span class="fa fa-plus"></span> Nuevo</a>
                                         </button>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="panel-body">
-                                        <p>Busca cliente por razón social o ID.</p>
+                                        <p>Buscar cliente</p>
                                         <div class="col-md-6" style="padding-left:0px;">
                                             <div class="input-group">
                                                 <div class="input-group-addon">
                                                     <span class="fa fa-search"></span>
                                                 </div>
-                                                <input id="patientsearch" name="search" type="text" class="form-control" placeholder="Who are you looking for?" value="<?= $this->patient; ?>"/>
+                                                <input id="patientsearch" name="search" type="text" class="form-control" placeholder="Buscar Cliente" value="<?= $this->patient; ?>"/>
                                                 <div class="input-group-btn">
                                                     <button class="btn btn-primary btn-search-patient">Buscar</button>
                                                 </div>
@@ -120,8 +119,8 @@ $this->headTitle($this->title);
                                     </div>
                                 </div>
 
-                                <div id="list-patient" class="col-md-12">
-                                    <?php if( count($this->patients) == 0) : ?>
+                                <div id="list-cliente" class="col-md-12">
+                                    <?php if( count($this->clientes) == 0) : ?>
                                         <div class="col-md-12">
                                             <div class="panel panel-default">
                                                 <div class="panel-body">
@@ -130,33 +129,33 @@ $this->headTitle($this->title);
                                             </div>
                                         </div>
                                     <?php endif; ?>
-                                    <?php foreach($this->patients as $patient): ?>
-                                        <div id="<?php echo $patient['id_patient'] ?>" title="<?php echo $patient['first_name'] .' ' . $patient['last_name'] ?>" rel="<?php echo $patient['id_dispenser'] ?>" class="select-patient col-md-4">
+                                    <?php foreach($this->clientes as $cliente): ?>
+                                        <div id="<?php echo $cliente['id'] ?>" title="<?php echo $cliente['nombre'] .' ' . $cliente['apellido'] ?>" rel="<?php echo $cliente['id'] ?>" class="select-patient col-md-4">
                                             <!-- CONTACT ITEM -->
                                             <div class="panel panel-default">
                                                 <div class="profile-control-left">
                                                     <div class="panel-body profile">
                                                         <div class="profile-image">
-                                                            <img src="<?php echo $patient['avatar_url'] ?>" alt="<?php echo $patient['username'] ?>" <?php echo $patient['status']==0 ? "style='border-color:#FF4D4D;'" : ""; ?> />
+                                                            <img src="<?php echo $cliente['avatar_url'] ?>" alt="<?php echo $cliente['cuit'] ?>" <?php echo $cliente['status']==0 ? "style='border-color:#FF4D4D;'" : ""; ?> />
                                                         </div>
                                                         <div class="profile-data">
-                                                            <div class="profile-data-name"><?php echo $patient['first_name'] .' ' . $patient['last_name'] ?></div>
-                                                            <div class="profile-data-title"><?php echo $patient['username'] ?></div>
+                                                            <div class="profile-data-name"><?php echo $cliente['nombre'] .' ' . $cliente['apellido'] ?></div>
+                                                            <div class="profile-data-title"><?php echo $cliente['cuit'] ?></div>
                                                         </div>
-                                                        <div class="profile-controls">
-                                                            <?php if($patient['expire_recommendation_id']<=date("Y-m-d") OR !$patient['recommendation_allowed']) : ?>
+                                                       <!--  <div class="profile-controls">
+                                                            < ?php if($cliente['expire_recommendation_id']<=date("Y-m-d") OR !$cliente['recommendation_allowed']) : ?>
                                                             <a href="javascript:void()" class="profile-control-right" style="font-size:26px;border-color:#FF4D4D;">
                                                                 <span class="fa fa-exclamation-circle"></span>
                                                             </a>
-                                                        <?php endif; ?>
-                                                        </div>
+                                                        < ?php endif; ?>
+                                                        </div> -->
                                                     </div>      
                                                 </div>                          
                                                 <div class="panel-body" style="height:145px;">
                                                     <div class="contact-info">
-                                                        <p><small>Phone</small><br/><?php echo $patient['phone'] ?></p>
-                                                        <p><small>Doctor Recommendation</small><br/><?php echo $patient['recommendation_id'] ?></p>
-                                                        <p><small>California ID / Driver ID</small><br/><?php echo $patient['driver_id'] ?></p>
+                                                        <p><small>Teléfono</small><br/><?php echo $cliente['telefono'] ?></p>
+                                                        <p><small>Cuit</small><br/><?php echo $cliente['cuit'] ?></p>
+                                                        <p><small>Dirección </small><br/><?php echo $cliente['direccion'] ?></p>
                                                     </div>
                                                 </div>                            
                                             </div>
@@ -415,7 +414,7 @@ $this->headTitle($this->title);
                         </div>
                         <div id="step-7">
                             <!-- START STRIPED TABLE SAMPLE -->
-                            <div class="panel panel-default times"> 
+                         <!--    <div class="panel panel-default times"> 
 
                                 <div class="panel-heading">
                                     <h3 class="panel-title">Add a donation note</h3>
@@ -453,7 +452,7 @@ $this->headTitle($this->title);
                                     <div class="list-group border-bottom">
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <!-- END STRIPED TABLE SAMPLE -->
                         </div>
                         <div id="summary">
@@ -816,7 +815,7 @@ $this->headTitle($this->title);
 <script type="text/javascript" src="/admin-public/js/plugins/smartwizard/jquery.smartWizard-3.3.1.js"></script>
 <script type="text/javascript" src="/admin-public/js/plugins/jquery-validation/jquery.validate.js"></script>
 <script src="https://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
-<script type="text/javascript" src="/admin-public/js/plugins/bootstrap/bootstrap-slider.js"></script>
+<!-- <script type="text/javascript" src="/admin-public/js/plugins/bootstrap/bootstrap-slider.js"></script> -->
 <!-- END PAGE PLUGINS -->
 
 <script>
@@ -882,76 +881,76 @@ $(function() {
     var is_ordered = false;
 
     //START - date time picker - select date and time - future deliveries
-        var futureDeliveries; 
-        var today = new Date()
-        $('#datetimepicker1').datetimepicker({ 
-            format: "hh:mm a / YYYY-MM-DD",
-            stepping: 30
-        });
+        // var futureDeliveries; 
+        // var today = new Date()
+        // $('#datetimepicker1').datetimepicker({ 
+        //     format: "hh:mm a / YYYY-MM-DD",
+        //     stepping: 30
+        // });
 
-        $('#enable_datetimepicker').on('change', function(){
-            if ($('#enable_datetimepicker').is(':checked')) {
-                futureDeliveries = 1;
-                $('#datetimepicker').css('display','inline-block');
-                $('#panelBodyTime').hide();
-                $("#datetimepicker").on("dp.change", function () {
+        // $('#enable_datetimepicker').on('change', function(){
+        //     if ($('#enable_datetimepicker').is(':checked')) {
+        //         futureDeliveries = 1;
+        //         $('#datetimepicker').css('display','inline-block');
+        //         $('#panelBodyTime').hide();
+        //         $("#datetimepicker").on("dp.change", function () {
     
-                    var futureDeliveries = $('#datetimepicker1 input').val(); 
-                    var firstTime = futureDeliveries.substring(0, 5);
-                    var timeAmPm = futureDeliveries.substring(6,8);
-                    var secondTimeAmPm;
-                    var secondTime = addMinutesFutureDeliveries(firstTime, '30');
-                    var dateFutureDeliveries = futureDeliveries.substring(11, 21);
+        //             var futureDeliveries = $('#datetimepicker1 input').val(); 
+        //             var firstTime = futureDeliveries.substring(0, 5);
+        //             var timeAmPm = futureDeliveries.substring(6,8);
+        //             var secondTimeAmPm;
+        //             var secondTime = addMinutesFutureDeliveries(firstTime, '30');
+        //             var dateFutureDeliveries = futureDeliveries.substring(11, 21);
                     
-                    if (firstTime=='11:30' && timeAmPm=='am') {
-                        secondTimeAmPm = 'pm';
-                        var finalTime = firstTime+' '+timeAmPm+' - '+secondTime+' '+secondTimeAmPm;
-                    }else if (firstTime=='11:30' && timeAmPm=='pm') {
-                        secondTimeAmPm = 'am';
-                        var finalTime = firstTime+' '+timeAmPm+' - '+secondTime+' '+secondTimeAmPm;
-                    }else{
-                        var finalTime = firstTime+' '+timeAmPm+' - '+secondTime+' '+timeAmPm;
-                    }
-                    if(futureDeliveries!=''){
-                        $('#panelBodyTime').show();
-                        jQuery('#panelBodyTime .list-group-item').hide();
-                        var overtime = $('.list-group-item.overtime'); 
-                        if(overtime){$('.list-group-item.overtime').remove();}
-                        $(".times .list-group").append('<a href="javascript:void(0);" class="list-group-item system-selected active overtime">'+ finalTime +' <i> / '+dateFutureDeliveries+' Future Deliveries</i></a>');
-                        jQuery('#panelBodyTime .list-group-item.overtime').show();
-                        jQuery('#panelBodyTime .list-group-item.overtime').click(false);
-                        if ($('.list-group-item.overtime.active')) {
-                            if (timeAmPm=='pm') {
-                                firstTime = addMinutesFutureDeliveries(firstTime,'720');
-                            }
-                            time = firstTime+':00'+' '+secondTime+':00'+' '+dateFutureDeliveries;
-                            if ($('#selected-time small')) {
-                                $('#selected-time small').remove();
-                            }
-                            $("#selected-time").append('<small> '+finalTime+'</small>');
-                            $("#form-time").val(time);
-                            $("#form-timeset").val("admin");
-                        }
-                    }
-                });
-            }else{
-                futureDeliveries = '';
-                $('#datetimepicker').css('display','none');
-                $('#panelBodyTime .list-group-item').show();
-                $('#panelBodyTime').css('display','block');
-                $('.list-group-item.overtime').remove();
-                $(".times .list-group").append('<a href="javascript:void(0);" class="list-group-item overtime">Overtime</a>');
-                $('#datetimepickerRefresh').hide(); 
-            }   
-        })
+        //             if (firstTime=='11:30' && timeAmPm=='am') {
+        //                 secondTimeAmPm = 'pm';
+        //                 var finalTime = firstTime+' '+timeAmPm+' - '+secondTime+' '+secondTimeAmPm;
+        //             }else if (firstTime=='11:30' && timeAmPm=='pm') {
+        //                 secondTimeAmPm = 'am';
+        //                 var finalTime = firstTime+' '+timeAmPm+' - '+secondTime+' '+secondTimeAmPm;
+        //             }else{
+        //                 var finalTime = firstTime+' '+timeAmPm+' - '+secondTime+' '+timeAmPm;
+        //             }
+        //             if(futureDeliveries!=''){
+        //                 $('#panelBodyTime').show();
+        //                 jQuery('#panelBodyTime .list-group-item').hide();
+        //                 var overtime = $('.list-group-item.overtime'); 
+        //                 if(overtime){$('.list-group-item.overtime').remove();}
+        //                 $(".times .list-group").append('<a href="javascript:void(0);" class="list-group-item system-selected active overtime">'+ finalTime +' <i> / '+dateFutureDeliveries+' Future Deliveries</i></a>');
+        //                 jQuery('#panelBodyTime .list-group-item.overtime').show();
+        //                 jQuery('#panelBodyTime .list-group-item.overtime').click(false);
+        //                 if ($('.list-group-item.overtime.active')) {
+        //                     if (timeAmPm=='pm') {
+        //                         firstTime = addMinutesFutureDeliveries(firstTime,'720');
+        //                     }
+        //                     time = firstTime+':00'+' '+secondTime+':00'+' '+dateFutureDeliveries;
+        //                     if ($('#selected-time small')) {
+        //                         $('#selected-time small').remove();
+        //                     }
+        //                     $("#selected-time").append('<small> '+finalTime+'</small>');
+        //                     $("#form-time").val(time);
+        //                     $("#form-timeset").val("admin");
+        //                 }
+        //             }
+        //         });
+        //     }else{
+        //         futureDeliveries = '';
+        //         $('#datetimepicker').css('display','none');
+        //         $('#panelBodyTime .list-group-item').show();
+        //         $('#panelBodyTime').css('display','block');
+        //         $('.list-group-item.overtime').remove();
+        //         $(".times .list-group").append('<a href="javascript:void(0);" class="list-group-item overtime">Overtime</a>');
+        //         $('#datetimepickerRefresh').hide(); 
+        //     }   
+        // })
         
-        function addMinutesFutureDeliveries(time, minsToAdd) {
-            function D(J){ return (J<10? '0':'') + J;};
-            var piece = time.split(':');
-            var mins = piece[0]*60 + +piece[1] + +minsToAdd;
+        // function addMinutesFutureDeliveries(time, minsToAdd) {
+        //     function D(J){ return (J<10? '0':'') + J;};
+        //     var piece = time.split(':');
+        //     var mins = piece[0]*60 + +piece[1] + +minsToAdd;
 
-            return D(mins%(24*60)/60 | 0) + ':' + D(mins%60);  
-        }  
+        //     return D(mins%(24*60)/60 | 0) + ':' + D(mins%60);  
+        // }  
     //END - date time picker - select date and time - future deliveries
 
     $(".actionBar .buttonFinish").click(function(e){
@@ -1020,12 +1019,14 @@ $(function() {
 
     $(".note_step5").append('<textarea data-toggle="tooltip" title="Limit 140 characters!" maxlength="140" name="note_donation" id="donation_note" class="form-control" placeholder="Type a note for this donation">');
 
-    $("#list-patient").on( "click", ".select-patient", function(slideEvt) {
+    $("#list-cliente").on( "click", ".select-patient", function(slideEvt) {
         if($(this).attr('id') != ""){
             var params = {};
             // TOMAR ID DE OTRO LADO
-            params.id_patient = $(this).attr('id');
-            id_patient = $(this).attr('id');
+            // params.id_patient = $(this).attr('id');
+            params.id = $(this).attr('id');
+            // id_patient = $(this).attr('id');
+            id = $(this).attr('id');
             $("#form-patient").val(id_patient);
             patient_dispenser = $(this).attr('rel');
             patient_name = $(this).attr('title');
@@ -1042,65 +1043,65 @@ $(function() {
             products = [];
             prices = {};       
             totalSum(prices);
-            <?php if($this->reward['enable_points']): ?>
-                    maxpoints = patient_points > <?= $this->reward['maxpointsdiscount'] ?> ? <?= $this->reward['maxpointsdiscount'] ?> : patient_points; 
-                    partialredemption = <?= $this->reward['partialredemption'] == "0" ? 0 : 1 ?>;
-                    step =  partialredemption ? <?= explode(',',$this->reward['redemptionconversionrate'])[0] ?> : maxpoints;
-                    $('#maxpoints').text('/'+maxpoints);
-                    $('#availablepoints').text("Patien't Available Points: "+patient_points);
-                    slider.slider('setValue',0)
-                    slider.slider('setAttribute','max',maxpoints);
-                    slider.slider('setAttribute','step',step);
-            <?php endif ?>
+            // <?php if($this->reward['enable_points']): ?>
+            //         maxpoints = patient_points > <?= $this->reward['maxpointsdiscount'] ?> ? <?= $this->reward['maxpointsdiscount'] ?> : patient_points; 
+            //         partialredemption = <?= $this->reward['partialredemption'] == "0" ? 0 : 1 ?>;
+            //         step =  partialredemption ? <?= explode(',',$this->reward['redemptionconversionrate'])[0] ?> : maxpoints;
+            //         $('#maxpoints').text('/'+maxpoints);
+            //         $('#availablepoints').text("Patien't Available Points: "+patient_points);
+            //         slider.slider('setValue',0)
+            //         slider.slider('setAttribute','max',maxpoints);
+            //         slider.slider('setAttribute','step',step);
+            // <?php endif ?>
 
-            result = panelAjax("/admin_patients/getpatientphones",params, function(data){
-                    $("#step-2 .panel-heading h3").text(patient_name+" Phones");
-                    $("#selected-patient small").remove();
-                    $("#selected-patient").append('<small>'+patient_name+'</small>');
-                    $("#selected-patient").closest("li").removeClass("fa-square-o");
-                    $("#selected-patient").closest("li").addClass("fa-check-square-o");
+            // result = panelAjax("/admin_patients/getpatientphones",params, function(data){
+            //         $("#step-2 .panel-heading h3").text(patient_name+" Phones");
+            //         $("#selected-patient small").remove();
+            //         $("#selected-patient").append('<small>'+patient_name+'</small>');
+            //         $("#selected-patient").closest("li").removeClass("fa-square-o");
+            //         $("#selected-patient").closest("li").addClass("fa-check-square-o");
                     
-                    $("#phones tbody").empty();
-                    $.each(data, function( index, value ) {
-                        $("#phones tbody").append('<tr id="'+value.id_phone+'">'+
-                                                        '<td>'+value.id_phone+'</td>'+
-                                                        '<td><button rel="'+value.id_phone+'" class="btn btn-warning phone-open" data-toggle="modal" data-target="#modal_edit_phone">'+value.number+'</button></td>'+
-                                                        ' <th class="selected"></th>'+
-                                                        '<th>'+
-                                                        '<button class="btn btn-default select-phone">Choose <!--i class="fa fa-arrow-right"></i></button-->'+
-                                                        '</th>'+
+            //         $("#phones tbody").empty();
+            //         $.each(data, function( index, value ) {
+            //             $("#phones tbody").append('<tr id="'+value.id_phone+'">'+
+            //                                             '<td>'+value.id_phone+'</td>'+
+            //                                             '<td><button rel="'+value.id_phone+'" class="btn btn-warning phone-open" data-toggle="modal" data-target="#modal_edit_phone">'+value.number+'</button></td>'+
+            //                                             ' <th class="selected"></th>'+
+            //                                             '<th>'+
+            //                                             '<button class="btn btn-default select-phone">Choose <!--i class="fa fa-arrow-right"></i></button-->'+
+            //                                             '</th>'+
                                                          
-                                                    '</tr>');
-                        if(value.default == 1) {
-                            $("#"+value.id_phone).find(".selected").html('<span class="label label-default label-form">default</span>');
-                        }
+            //                                         '</tr>');
+            //             if(value.default == 1) {
+            //                 $("#"+value.id_phone).find(".selected").html('<span class="label label-default label-form">default</span>');
+            //             }
 
-                    });                    
+            //         });                    
 
-                    $(".actionBar .btn-default.pull-right").removeClass("disabled");
-                    $('.buttonNext').click();
-                });
+            //         $(".actionBar .btn-default.pull-right").removeClass("disabled");
+            //         $('.buttonNext').click();
+            //     });
 
-            panelAjax("/admin_patients/getpreviouslyordered",params, function(data){
-                $('#previously_product_name').empty();
-                if (data.firstDonationDate!=null) {
-                    var firstDate = data.firstDonationDate.substr(0,10);
-                    $('#previously_product_name').append('<div class="firstDate">'+firstDate+'</div>');
-                    $.each(data.firstDonation, function(index, value) {
-                        $('.firstDate').append('<span>'+ value['name_product']+'</span></br>');
-                    })
-                }
-                if (data.secondDonationDate!=null) {
-                    var secondDate = data.secondDonationDate.substr(0,10);
-                    $('#previously_product_name').append('<div class="secondDate">'+secondDate+'</div>');
-                    $.each(data.secondDonation, function(index, value) {
-                        $('.secondDate').append('<span>'+ value['name_product'] +'</span></br>');
-                    })
-                }
-                if (data.secondDonationDate==null && data.firstDonationDate==null) {
-                    $('#previously_product_name').append('<div class="secondDate">No previously ordered</div>');
-                }
-            })
+            // panelAjax("/admin_patients/getpreviouslyordered",params, function(data){
+            //     $('#previously_product_name').empty();
+            //     if (data.firstDonationDate!=null) {
+            //         var firstDate = data.firstDonationDate.substr(0,10);
+            //         $('#previously_product_name').append('<div class="firstDate">'+firstDate+'</div>');
+            //         $.each(data.firstDonation, function(index, value) {
+            //             $('.firstDate').append('<span>'+ value['name_product']+'</span></br>');
+            //         })
+            //     }
+            //     if (data.secondDonationDate!=null) {
+            //         var secondDate = data.secondDonationDate.substr(0,10);
+            //         $('#previously_product_name').append('<div class="secondDate">'+secondDate+'</div>');
+            //         $.each(data.secondDonation, function(index, value) {
+            //             $('.secondDate').append('<span>'+ value['name_product'] +'</span></br>');
+            //         })
+            //     }
+            //     if (data.secondDonationDate==null && data.firstDonationDate==null) {
+            //         $('#previously_product_name').append('<div class="secondDate">No previously ordered</div>');
+            //     }
+            // })
         }else{
             if(!$(".actionBar .btn-default.pull-right").hasClass("disabled"))
                 $(".actionBar .btn-default.pull-right").addClass("disabled");
@@ -1294,13 +1295,13 @@ $(function() {
         var search = $('#patientsearch').val();
         if(search.length > 3 || event.keyCode == 13){
             clearTimeout(timeoutID);
-            timeoutID = setTimeout(function() { getPatients(search); }, 500);
+            timeoutID = setTimeout(function() { getClientes(search); }, 500);
         }
     });
 
     $('.btn-search-patient').click(function() {
         var search = $('#patientsearch').val();
-        getPatients(search);
+        getClientes(search);
     });
 
     $(".actionBar .btn-default.pull-right").click(function(){
@@ -1765,7 +1766,7 @@ function checkTierPrice(id,qty,callback){
     val         = parseInt(val) + parseInt(1);
     $('#page-patient').attr('rel',val);
     search      = $('#patientsearch').val();
-    getPatients(search);
+    getClientes(search);
 });
 
 $("#back-patient").click(function() {
@@ -1774,35 +1775,34 @@ $("#back-patient").click(function() {
         val         = parseInt(val) - parseInt(1);
         $('#page-patient').attr('rel',val);
         search      = $('#patientsearch').val();
-        getPatients(search);
+        getClientes(search);
     }
 });
 
-function getPatients(search){
+function getClientes(search){
 
     $("div#spinner").fadeIn("fast");
-    $("#list-patient").hide();
+    $("#list-cliente").hide();
    
     var params = {};
     params.search   = search;
     params.page     = $('#page-patient').attr('rel');
     if (params.page < 0) { params.page = 1; };
-    panelAjax("/admin_patients/getpatients/",params, function(data){
-        $("#list-patient").html('');
-        $(".result-search-patient").html(data.patients.length + ' of ' + data.total + ' patients');
-
-        if (data.patients.length == 0) {
+    panelAjax("/cliente/getClientes/",params, function(data){
+        $("#list-cliente").html('');
+        $(".result-search-patient").html(data.clientes.length + ' de ' + data.total + ' clientes');
+        if (data.clientes.length == 0) {
             $('.pagination').fadeOut(500);
             var item = "<div class='col-md-12'>" +
                 "<div class='panel panel-default'>" +
                     "<div class='panel-body'>" +
-                        "<p style='text-align:center;'>No patient found</p>" + 
+                        "<p style='text-align:center;'>No se encontraron clientes</p>" + 
                     "</div>" +
                 "</div>" +
             "</div>";
-            $("#list-patient").append(item);
+            $("#list-cliente").append(item);
         }else{
-            pager = data.page + " of " + data.pages + "</span>";
+            pager = data.page + " de " + data.pages + "</span>";
 
             if (data.page == 1) {
                 $("#back-patient").hide();
@@ -1824,63 +1824,63 @@ function getPatients(search){
                 $("#next-patient-disabled").show();
             }
 
-            $.each(data.patients, function( index, value ) {
-                     var item = "<div id='" + value.id_patient + "'title='" + value.first_name + " " + value.last_name + "' rel='" + value.id_dispenser + "' attr-points='"+value.points+"' class='select-patient col-md-4' style='cursor:pointer;'>" +
+            $.each(data.clientes, function( index, value ) {
+                     var item = "<div id='" + value.id + "'title='" + value.nombre + " " + value.apellido + "' rel='" + value.id + "'  class='select-patient col-md-4' style='cursor:pointer;'>" +
                     "<!-- CONTACT ITEM -->" + 
                     "<div class='panel panel-default'>" +
                         "<div class='profile-control-left'>" + 
                             "<div class='panel-body profile'>" + 
                                 "<div class='profile-image'>" +
-                                    "<img src='" + value.avatar_url + "' alt='" + value.username + "'" +
+                                    "<img src='" + value.avatar_url + "' alt='" + value.cuit + "'" +
                                 "</div>" + 
                                 "<div class='profile-data'>" +
-                                    "<div class='profile-data-name'>" + value.first_name + " " + value.last_name + "</div>" +
-                                    "<div class='profile-data-title'>" + value.username + "</div>" + 
+                                    "<div class='profile-data-name'>" + value.nombre + " " + value.apellido + "</div>" +
+                                    "<div class='profile-data-title'>" + value.cuit + "</div>" + 
                                 "</div>" +
                                 "<div class='profile-controls'>";
                                     date = new Date();
                                     mm = (date.getMonth()+1).toString();
                                     dd = date.getDate().toString();
 
-                                    birthDate = date.getFullYear() + "-" + (mm[1]?mm:"0"+mm[0]) + "-" + (dd[1]?dd:"0"+dd[0]);                    
+                                    // birthDate = date.getFullYear() + "-" + (mm[1]?mm:"0"+mm[0]) + "-" + (dd[1]?dd:"0"+dd[0]);                    
 
-                                    birth_date = value.birth_date.substring(4);
-                                    birth_date = date.getFullYear() + birth_date;
+                                    // birth_date = value.birth_date.substring(4);
+                                    // birth_date = date.getFullYear() + birth_date;
 
-                                    if(birth_date == birthDate) {
-                                    item = item + "<a class='profile-control-right' style='right: 145px;'><span class='fa fa-birthday-cake'></span></a>";
-                                    }
+                                    // if(birth_date == birthDate) {
+                                    // item = item + "<a class='profile-control-right' style='right: 145px;'><span class='fa fa-birthday-cake'></span></a>";
+                                    // }
 
-                                    strDate = date.getFullYear() + "-" + (mm[1]?mm:"0"+mm[0]) + "-" + (dd[1]?dd:"0"+dd[0]);
-                                    if(value.expire_recommendation_id <= strDate) {
-                                    item = item + "<a class='profile-control-right-up' style='font-size:26px;border-color:#FF4D4D;right: 10px;'>" +
-                                        "<span class='fa fa-exclamation-circle'></span>" + 
-                                    "</a>";
-                                    }
-                                    if(value.recommendation_allowed == 0) {
-                                    item = item + "<a class='profile-control-right-down' style='font-size:26px;border-color:#e3e141;right: 10px;'>" +
-                                        "<span class='fa fa-exclamation-circle'></span>" + 
-                                    "</a>";
-                                    }
-                                item = item + "</div>" +
+                                    // strDate = date.getFullYear() + "-" + (mm[1]?mm:"0"+mm[0]) + "-" + (dd[1]?dd:"0"+dd[0]);
+                                    // if(value.expire_recommendation_id <= strDate) {
+                                    // item = item + "<a class='profile-control-right-up' style='font-size:26px;border-color:#FF4D4D;right: 10px;'>" +
+                                    //     "<span class='fa fa-exclamation-circle'></span>" + 
+                                    // "</a>";
+                                    // }
+                                    // if(value.recommendation_allowed == 0) {
+                                    // item = item + "<a class='profile-control-right-down' style='font-size:26px;border-color:#e3e141;right: 10px;'>" +
+                                    //     "<span class='fa fa-exclamation-circle'></span>" + 
+                                    // "</a>";
+                                    // }
+                                // item = item + "</div>" +
                             "</div>" +
                         "</div>" +
                         "<div class='panel-body' style='height:145px;'>" +
                             "<div class='contact-info'>" +
-                                "<p><small>Phone</small><br/>" + value.phone + "</p>" +
-                                "<p><small>Doctor Recommendation</small><br/>" + value.recommendation_id + "</p>" + 
-                                "<p><small>California ID / Driver ID</small><br/>" + value.driver_id + "</p>" +
+                                "<p><small>Teléfono</small><br/>" + value.telefono + "</p>" +
+                                "<p><small>Dirección</small><br/>" + value.direccion + "</p>" + 
+                                // "<p><small>California ID / Driver ID</small><br/>" + value.driver_id + "</p>" +
                             "</div>" + 
                         "</div>" + 
                     "</div>" +
                     "<!-- END CONTACT ITEM -->" + 
                 "</div>";            
-                $("#list-patient").append(item);
+                $("#list-cliente").append(item);
             });
         }
     });
     $("div#spinner").fadeOut("fast");
-    $("#list-patient").show();
+    $("#list-cliente").show();
 }
 
 

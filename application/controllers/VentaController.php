@@ -71,11 +71,11 @@ class VentaController extends Gabinando_Base{
 
 		// $discountModel = new Application_Model_Discounts();
 		// $discount = $discountModel->getList();
-
-		$tipoCliente = 0;
-		$hoy = 0;
-		$clientestypeList = $clientesModel->getListType();
-		$productospreciosList = $productosModel->getListPrecios($tipoCliente,$hoy);
+		$ventas = $ventasModel->getList();
+		// $tipoCliente = 0;
+		// $hoy = 0;
+		// $clientestypeList = $clientesModel->getListType();
+		// $productospreciosList = $productosModel->getListPrecios($tipoCliente,$hoy);
 
 		// $drivers = $driver->getDriversWithAreaWork();
 		// $patientList = $patient->getAllowedList($this->admin_session->admin['id_dispenser'],6);

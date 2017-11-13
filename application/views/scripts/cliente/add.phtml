@@ -84,6 +84,23 @@ $this->headTitle($this->title);
                             </div>
                         </div>
 
+                         <div class="form-group" id="form-group-estado" >
+                            <label class="col-sm-3 col-xs-12 control-label">Estado</label>
+                            <div class="col-sm-6 col-xs-12">                                            
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-suitcase"></span></span>
+                                    <select name="estado" id="estado" type="text" class="form-control select">
+                                        <option value="">Selecciona Estado</option>
+                                        <?php 
+                                           foreach ($this->listadoEstados as $key => $estado): ?>
+                                                <option <?php echo $this->data['id'] == $estado['id'] ? "selected" : '' ; ?> value=<?php echo  $estado['id'] ?>><?php echo $estado['nombre']?></option>
+                                            
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div> 
+                            </div>
+                        </div>
+
                     </div>
                     <div class="panel-footer">
                         <button class="btn btn-default" type="button" onclick="history.back()">Volver</button>
@@ -124,6 +141,7 @@ $().ready(function() {
             id_producto: {
                 required: true
             },
+            id_estado: "required",
             precio: {
                 required: true,
                 validarprecio: true
@@ -138,6 +156,7 @@ $().ready(function() {
                 required: "Campo requerido",
                 validarprecio: "Deben ser numeros del tipo 30 o 30,55."
             },
+            id_estado: "required",
             fecha: {
                 required: "Campo requerido"
             },
