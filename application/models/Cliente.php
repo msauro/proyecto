@@ -147,7 +147,7 @@ class Application_Model_Cliente extends Application_Model_Base
             //         break;                        
             //     default:
             //         break;
-            // }      
+            // }    
         $rows = $this->fetchAll($query);
 
         return $rows->toArray();

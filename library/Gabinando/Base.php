@@ -54,6 +54,14 @@ abstract class Gabinando_Base extends Zend_Controller_Action {
         if($this->admin_session->message)
             $this->admin_session->message = null;
     }
+    public function sendSuccessResponse($data = '',$message = 'Success'){
+        $json = array(
+                'error'    => false,
+                'data'      => $data,
+                'message'   => $message
+            );
+        $this->_helper->json($json);
+    }
 
     public function uploadImage($path,$file,$name,$normal=NULL){
         $name = str_replace(' ', '-', $name);

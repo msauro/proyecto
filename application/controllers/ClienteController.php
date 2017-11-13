@@ -2,6 +2,8 @@
 
 class ClienteController extends Gabinando_Base {
 
+	const UPLOADPATHAVATAR = '/resources/admin_avatars/';
+
 	public function init(){
 		parent::init();
 	}
@@ -9,7 +11,15 @@ class ClienteController extends Gabinando_Base {
     public function addAction(){
 		if($this->getRequest()->isPost()){
 			$params = $this->getRequest()->getPost();
-			// die(var_dump($params));
+			$file = $_FILES['imagen_url'];
+			
+			$img = $this->uploadImage(self::UPLOADPATHAVATAR,$file,$params['email']);
+
+			if($img['status'] == 'error'){
+				die($img['message']);
+			}
+
+			$params['imagen_url'] = $img['message'];
 			// Set idDeleted property to false in order to "reactivate" the registered admin
             $params['eliminado'] = 0;
 			$cliente = new Application_Model_cliente();
@@ -65,6 +75,18 @@ class ClienteController extends Gabinando_Base {
 			$cliente = new Application_Model_Cliente();
 			$prov = $cliente->getClienteById($params['id']);
 
+			if($_FILES['imagen_url']['size'] > 0){
+				$file = $_FILES['imagen_url'];
+
+				$img = $this->uploadImage(self::UPLOADPATHAVATAR,$file,$params['id']);
+
+				if($img['status'] == 'error'){
+					die($img['message']);
+				}
+
+				$params['imagen_url'] = $img['message'];
+			}
+
 			$error = null;
 			if ($prov['cuit'] != $params['cuit']) {
 				$alreadyRegistered = $cliente->getClienteByCuit($params['cuit']);
@@ -118,10 +140,9 @@ class ClienteController extends Gabinando_Base {
 		}
     }
 
-	public function getClientesAction(){
-		$patient = new Application_Model_Cliente();		
+	public function getclientesAction(){
+		$cliente = new Application_Model_Cliente();		
 		$params 	 = $params = $this->getRequest()->getParams();
-die(var_dump($params));
 		if( isset($params['search']) ){
 			$search 	 = array(
 				'search' => $params['search'],
@@ -129,8 +150,7 @@ die(var_dump($params));
 			);
 		}else{
 			$search 	 = array(
-				'search' => '',
-				'filter' => 'active'
+				'search' => ''
 			);
 		}
 
@@ -147,10 +167,9 @@ die(var_dump($params));
 		$clienteFilteredList = $cliente->getListFiltered($search,$paginate);
 		if($clienteFilteredList instanceof Exception)
 			$this->sendErrorResponse($clienteFilteredList->getMessage());
-
-		$patientPager		 = $patient->getListFiltered($search);
-		if($patientPager instanceof Exception)
-			$this->sendErrorResponse($patientPager->getMessage());
+		$clientePager = $cliente->getListFiltered($search);
+		if($clientePager instanceof Exception)
+			$this->sendErrorResponse($clientePager->getMessage());
 
 		$clienteList = $cliente->getList($search);
 		if($clienteList instanceof Exception)
@@ -161,7 +180,7 @@ die(var_dump($params));
 		$this->sendSuccessResponse(array(
 				'search' 	=> $search,
 				'clientes' 	=> $clienteFilteredList,
-				'total' 	=> count($patientList),
+				'total' 	=> count($clienteList),
 				'pages' 	=> $pages,
 				'page' 		=> $paginate['page']
 			));

@@ -101,6 +101,18 @@ $this->headTitle($this->title);
                             </div>
                         </div>
 
+                         <div class="text-center" id="user_image">
+                            <img src="<?php echo $this->data['imagen_url'] ?>" class="img-thumbnail" width="200px">
+                            <span class="help-block">Imagen actual</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 col-xs-12 control-label">Imagen</label>
+                            <div class="col-sm-6 col-xs-12">               
+                                <input name="avatar_url" type="file" class="fileinput btn-primary" title="Browse file"/>
+                            </div>
+                        </div>
+
                         
 
                     </div>
