@@ -53,13 +53,13 @@ $this->headTitle($this->title);
                                 </a>
                             </li> -->
                             <li>
-                                <a href="#step-5" class="step-5">
+                                <a href="#step-2" class="step-2">
                                     <span class="stepNumber">5</span>
                                     <span class="stepDesc">Seleccioanr<br /><small> productos</small></span>
                                 </a>
                             </li>
                             <li>
-                                <a href="#step-6" class="step-6">
+                                <a href="#step-4" class="step-4">
                                     <span class="stepNumber">6</span>
                                     <span class="stepDesc">Seleccioanr<br /><small>Descuentos/Impuestos</small></span>
                                 </a>
@@ -129,40 +129,6 @@ $this->headTitle($this->title);
                                             </div>
                                         </div>
                                     <?php endif; ?>
-                                    <?php foreach($this->clientes as $cliente): ?>
-                                        <div id="<?php echo $cliente['id'] ?>" title="<?php echo $cliente['nombre'] .' ' . $cliente['apellido'] ?>" rel="<?php echo $cliente['id'] ?>" class="select-patient col-md-4">
-                                            <!-- CONTACT ITEM -->
-                                            <div class="panel panel-default">
-                                                <div class="profile-control-left">
-                                                    <div class="panel-body profile">
-                                                        <div class="profile-image">
-                                                            <img src="<?php echo $cliente['avatar_url'] ?>" alt="<?php echo $cliente['cuit'] ?>" <?php echo $cliente['status']==0 ? "style='border-color:#FF4D4D;'" : ""; ?> />
-                                                        </div>
-                                                        <div class="profile-data">
-                                                            <div class="profile-data-name"><?php echo $cliente['nombre'] .' ' . $cliente['apellido'] ?></div>
-                                                            <div class="profile-data-title"><?php echo $cliente['cuit'] ?></div>
-                                                        </div>
-                                                       <!--  <div class="profile-controls">
-                                                            < ?php if($cliente['expire_recommendation_id']<=date("Y-m-d") OR !$cliente['recommendation_allowed']) : ?>
-                                                            <a href="javascript:void()" class="profile-control-right" style="font-size:26px;border-color:#FF4D4D;">
-                                                                <span class="fa fa-exclamation-circle"></span>
-                                                            </a>
-                                                        < ?php endif; ?>
-                                                        </div> -->
-                                                    </div>      
-                                                </div>                          
-                                                <div class="panel-body" style="height:145px;">
-                                                    <div class="contact-info">
-                                                        <p><small>Teléfono</small><br/><?php echo $cliente['telefono'] ?></p>
-                                                        <p><small>Cuit</small><br/><?php echo $cliente['cuit'] ?></p>
-                                                        <p><small>Dirección </small><br/><?php echo $cliente['direccion'] ?></p>
-                                                    </div>
-                                                </div>                            
-                                            </div>
-                                            <!-- END CONTACT ITEM -->
-                                        </div>
-                                    <?php endforeach; ?>
-
                                 </div>
 
                             </div>
@@ -269,7 +235,7 @@ $this->headTitle($this->title);
                             </div>
                         </div> -->
 
-                        <div id="step-5">
+                        <div id="step-2">
 
                             <!-- START STRIPED TABLE SAMPLE -->
                             <div class="panel panel-default">
@@ -311,7 +277,7 @@ $this->headTitle($this->title);
                             </div>
                             <!-- END STRIPED TABLE SAMPLE -->
                         </div>
-                        <div id="step-6">
+                        <div id="step-4">
                             <div id="summarydiscounts" style="display: none;">
                             <!-- START STRIPED TABLE SAMPLE -->
                             <div class="panel panel-default">
@@ -1347,11 +1313,11 @@ $(function() {
         }      
     });
 
-    $(".step-5").click(function(){
+    $(".step-2").click(function(){
        $('#summarydiscounts').hide();  
     });
 
-    $(".step-6").click(function(){
+    $(".step-4").click(function(){
        $('#summarydiscounts').show(); 
        
     });
@@ -1582,7 +1548,7 @@ function validateSteps(step) {
         case "1":
             if( form_data[0]['value']=="" ){
                 status = false;
-                $('.wizard').smartWizard('showMessage','Please choose patient and click next.');
+                $('.wizard').smartWizard('showMessage','Selecciona un cliente y haga click en "Siguiente".');
                 $('.wizard').smartWizard('setError',{stepnum:step,iserror:true});
             }else{
                 $('.wizard').smartWizard('hideMessage');
@@ -1592,7 +1558,7 @@ function validateSteps(step) {
         case "2":
             if( form_data[1]['value']=="" ){
                 status = false;
-                $('.wizard').smartWizard('showMessage','Please choose phone and click next.');
+                $('.wizard').smartWizard('showMessage','Selecciona los productos y haga click en "Siguiente".');
                 $('.wizard').smartWizard('setError',{stepnum:step,iserror:true});         
             }else{
                 $('.wizard').smartWizard('hideMessage');
@@ -1602,41 +1568,41 @@ function validateSteps(step) {
         case "3":
             if( form_data[2]['value']=="" ){
                 status = false;
-                $('.wizard').smartWizard('showMessage','Please choose location and click next.');
+                $('.wizard').smartWizard('showMessage','Verifique los datos y haga click en "Finalizar".');
                 $('.wizard').smartWizard('setError',{stepnum:step,iserror:true});         
             }else{
                 $('.wizard').smartWizard('hideMessage');
                 $('.wizard').smartWizard('setError',{stepnum:step,iserror:false});
             }
             break;
-        case "4":
-            if( form_data[3]['value']=="" ){
-                status = false; 
-                $('.wizard').smartWizard('showMessage','Please choose driver and click next.');
-                $('.wizard').smartWizard('setError',{stepnum:step,iserror:true});         
-            }else{
-                $('.wizard').smartWizard('hideMessage');
-                $('.wizard').smartWizard('setError',{stepnum:step,iserror:false});
-            }
-            break;
+        // case "4":
+        //     if( form_data[3]['value']=="" ){
+        //         status = false; 
+        //         $('.wizard').smartWizard('showMessage','Please choose driver and click next.');
+        //         $('.wizard').smartWizard('setError',{stepnum:step,iserror:true});         
+        //     }else{
+        //         $('.wizard').smartWizard('hideMessage');
+        //         $('.wizard').smartWizard('setError',{stepnum:step,iserror:false});
+        //     }
+        //     break;
 
-        case "6":
-            if ($('#reason').css('display')=='block' && $("#reason_value").val() == '' || ($('#datetimepicker1 input').val() =='' && $('#enable_datetimepicker').is(':checked'))) {
-                status = false; 
-                if ($('#reason').css('display')=='block' && $("#reason_value").val() == '') {
-                    $('.wizard').smartWizard('showMessage','Please write the discount reason and click finish.');
-                    $('.wizard').smartWizard('setError',{stepnum:step,iserror:true});
-                }else{
+        // case "6":
+        //     if ($('#reason').css('display')=='block' && $("#reason_value").val() == '' || ($('#datetimepicker1 input').val() =='' && $('#enable_datetimepicker').is(':checked'))) {
+        //         status = false; 
+        //         if ($('#reason').css('display')=='block' && $("#reason_value").val() == '') {
+        //             $('.wizard').smartWizard('showMessage','Please write the discount reason and click finish.');
+        //             $('.wizard').smartWizard('setError',{stepnum:step,iserror:true});
+        //         }else{
                     
-                    $('.wizard').smartWizard('showMessage','Please insert a date.');
-                    $('.wizard').smartWizard('setError',{stepnum:step,iserror:true});
-                }
+        //             $('.wizard').smartWizard('showMessage','Please insert a date.');
+        //             $('.wizard').smartWizard('setError',{stepnum:step,iserror:true});
+        //         }
                          
-            }else{
-                $('.wizard').smartWizard('hideMessage');
-                $('.wizard').smartWizard('setError',{stepnum:step,iserror:false});
-            }
-            break;       
+        //     }else{
+        //         $('.wizard').smartWizard('hideMessage');
+        //         $('.wizard').smartWizard('setError',{stepnum:step,iserror:false});
+        //     }
+        //     break;       
         default:
             status = true;
             break;
@@ -1645,9 +1611,9 @@ function validateSteps(step) {
     return status;
 }
 
-function addMinutes(date, minutes) {
-    return new Date(date.getTime() + minutes*60000);
-}
+// function addMinutes(date, minutes) {
+//     return new Date(date.getTime() + minutes*60000);
+// }
 
 function resetForm(step){
     if (step==1) {
@@ -1693,8 +1659,8 @@ function resetForm(step){
         $("#step-3").find(".selected").html('<span class="label label-default label-form"></span>');
     };
 
-    if (step==6) {
-        $("#step-6").find(".selected").html('<span class="label label-default label-form"></span>');
+    if (step==4) {
+        $("#step-4").find(".selected").html('<span class="label label-default label-form"></span>');
     };
 }
 
@@ -1779,6 +1745,7 @@ $("#back-patient").click(function() {
     }
 });
 
+//al hacer click en buscar, muestra los clientes
 function getClientes(search){
 
     $("div#spinner").fadeIn("fast");
@@ -1831,47 +1798,23 @@ function getClientes(search){
                         "<div class='profile-control-left'>" + 
                             "<div class='panel-body profile'>" + 
                                 "<div class='profile-image'>" +
-                                    "<img src='" + value.avatar_url + "' alt='" + value.cuit + "'" +
+                                    "<img src='" + value.imagen_url + "' alt='" + value.cuit + "'" +
                                 "</div>" + 
                                 "<div class='profile-data'>" +
                                     "<div class='profile-data-name'>" + value.nombre + " " + value.apellido + "</div>" +
-                                    "<div class='profile-data-title'>" + value.cuit + "</div>" + 
+                                    "<div class='profile-data-title'>" + value.direccion + "</div>" + 
+                                    "<div class='profile-data-title'> Tel: " + value.telefono + "</div>" + 
+                                    "<div class='profile-data-title'> " + value.email + "</div>" + 
                                 "</div>" +
                                 "<div class='profile-controls'>";
-                                    date = new Date();
-                                    mm = (date.getMonth()+1).toString();
-                                    dd = date.getDate().toString();
-
-                                    // birthDate = date.getFullYear() + "-" + (mm[1]?mm:"0"+mm[0]) + "-" + (dd[1]?dd:"0"+dd[0]);                    
-
-                                    // birth_date = value.birth_date.substring(4);
-                                    // birth_date = date.getFullYear() + birth_date;
-
-                                    // if(birth_date == birthDate) {
-                                    // item = item + "<a class='profile-control-right' style='right: 145px;'><span class='fa fa-birthday-cake'></span></a>";
-                                    // }
-
-                                    // strDate = date.getFullYear() + "-" + (mm[1]?mm:"0"+mm[0]) + "-" + (dd[1]?dd:"0"+dd[0]);
-                                    // if(value.expire_recommendation_id <= strDate) {
-                                    // item = item + "<a class='profile-control-right-up' style='font-size:26px;border-color:#FF4D4D;right: 10px;'>" +
-                                    //     "<span class='fa fa-exclamation-circle'></span>" + 
-                                    // "</a>";
-                                    // }
-                                    // if(value.recommendation_allowed == 0) {
-                                    // item = item + "<a class='profile-control-right-down' style='font-size:26px;border-color:#e3e141;right: 10px;'>" +
-                                    //     "<span class='fa fa-exclamation-circle'></span>" + 
-                                    // "</a>";
-                                    // }
-                                // item = item + "</div>" +
+                                    if(value.nom_estado == 'Deudor') {
+                                    item = item + "<a class='profile-control-right-up' style='font-size:26px;border-color:#FF4D4D;right: 10px; top:13px;'>" +
+                                        "<span class='fa fa-exclamation-circle' data-toggle='tooltip' data-original-title='El cliente posee una deuda.'></span>" + 
+                                    "</a>";
+                                    }
+                                item = item + "</div>" +
                             "</div>" +
                         "</div>" +
-                        "<div class='panel-body' style='height:145px;'>" +
-                            "<div class='contact-info'>" +
-                                "<p><small>Teléfono</small><br/>" + value.telefono + "</p>" +
-                                "<p><small>Dirección</small><br/>" + value.direccion + "</p>" + 
-                                // "<p><small>California ID / Driver ID</small><br/>" + value.driver_id + "</p>" +
-                            "</div>" + 
-                        "</div>" + 
                     "</div>" +
                     "<!-- END CONTACT ITEM -->" + 
                 "</div>";            

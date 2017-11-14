@@ -10,7 +10,7 @@ $(".xn-icon-button").fadeIn();
 <!-- BREADCRUMB -->
     <ul class="breadcrumb">
         <li><a href="/">Panel Principal</a></li>
-        <li><a href="#">Clientes</a></li>
+        <li><a href="/cliente/list/">Clientes</a></li>
         <li class="active">Listado</li>
     </ul>
 
@@ -33,6 +33,7 @@ $(".xn-icon-button").fadeIn();
                                         <th width="50">ID</th>
                                         <th>Nombre</th>
                                         <th>Apellido</th>
+                                        <th>Tipo</th>
                                         <th>Cuit</th>
                                         <th>Estado</th>
                                         <th>Dirección</th>
@@ -47,8 +48,9 @@ $(".xn-icon-button").fadeIn();
                                         <td class="text-center"><?php echo $cliente['id'] ?></td>
                                         <td><?php echo $cliente['nombre'] ?></td>
                                         <td><?php echo $cliente['apellido'] ?></td>
+                                        <td><?php echo $cliente['nom_tipo'] ?></td>
                                         <td><?php echo $cliente['cuit'] ?></td>
-                                        <td><?php echo $cliente['nom_marca'] ?></td>
+                                        <td><?php echo $cliente['nom_estado'] ?></td>
                                         <td><?php echo $cliente['direccion'] ?></td>
                                         <td><?php echo $cliente['telefono'] ?></td>
                                         <td><?php echo $cliente['email'] ?></td>

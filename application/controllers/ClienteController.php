@@ -41,10 +41,13 @@ class ClienteController extends Gabinando_Base {
             }
 		}else{
 			$estadoModel = new Application_Model_Estado();
+			$tiposclientesModel = new Application_Model_TipoCliente();
 
 			$listadoEstados = $estadoModel->getList();
+			$listadoTiposClientes = $tiposclientesModel->getList();
 
 			$this->view->listadoEstados = $listadoEstados;
+			$this->view->listadoTiposClientes = $listadoTiposClientes;
 		}
 	}
 
@@ -70,6 +73,7 @@ class ClienteController extends Gabinando_Base {
 	public function editAction() {
 		if($this->getRequest()->isPost()){
 			$params = $this->getRequest()->getPost();
+			// die(var_dump($params));
 			$params['id'] = $this->getRequest()->getParam('id');
 
 			$cliente = new Application_Model_Cliente();
@@ -120,13 +124,16 @@ class ClienteController extends Gabinando_Base {
 			$id = $this->getRequest()->getParam('id');
 			if($id){
 				$estadoModel = new Application_Model_Estado();
-
+				$tiposclientesModel = new Application_Model_TipoCliente();
+				
+				$listadoTiposClientes = $tiposclientesModel->getList();
 				$listadoEstados = $estadoModel->getList();
 
 				$this->view->listadoEstados = $listadoEstados;
+				$this->view->listadoTiposClientes = $listadoTiposClientes;
+
 				$clienteModel = new Application_Model_Cliente();
 				$cliente = $clienteModel->getClienteById($id);
-
 				if($cliente){
 					$this->view->data = $cliente;
 				}

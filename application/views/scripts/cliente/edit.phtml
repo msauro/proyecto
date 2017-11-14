@@ -101,6 +101,23 @@ $this->headTitle($this->title);
                             </div>
                         </div>
 
+                        <div class="form-group" id="form-group-marca" >
+                            <label class="col-sm-3 col-xs-12 control-label">Tipo de cliente</label>
+                            <div class="col-sm-6 col-xs-12">                                            
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-suitcase"></span></span>
+                                    <select name="id_tipo_cliente" id="id_tipo_cliente" type="text" class="form-control select">
+                                        <option value="">Selecciona Tipo</option>
+                                        <?php 
+                                           foreach ($this->listadoTiposClientes as $key => $tipo): ?>
+                                                <option <?php echo $this->data['id_tipo_cliente'] == $tipo['id'] ? "selected" : '' ; ?> value=<?php echo  $tipo['id'] ?>><?php echo $tipo['nombre']?></option>
+                                            
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div> 
+                            </div>
+                        </div>
+
                          <div class="text-center" id="user_image">
                             <img src="<?php echo $this->data['imagen_url'] ?>" class="img-thumbnail" width="200px">
                             <span class="help-block">Imagen actual</span>
@@ -109,7 +126,7 @@ $this->headTitle($this->title);
                         <div class="form-group">
                             <label class="col-sm-3 col-xs-12 control-label">Imagen</label>
                             <div class="col-sm-6 col-xs-12">               
-                                <input name="avatar_url" type="file" class="fileinput btn-primary" title="Browse file"/>
+                                <input name="imagen_url" type="file" class="fileinput btn-primary" title="Browse file"/>
                             </div>
                         </div>
 

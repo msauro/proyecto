@@ -74,7 +74,7 @@ class VentaController extends Gabinando_Base{
 		$ventas = $ventasModel->getList();
 		// $tipoCliente = 0;
 		// $hoy = 0;
-		// $clientestypeList = $clientesModel->getListType();
+		$clientestypeList = $clientesModel->getListType();
 		// $productospreciosList = $productosModel->getListPrecios($tipoCliente,$hoy);
 
 		// $drivers = $driver->getDriversWithAreaWork();
