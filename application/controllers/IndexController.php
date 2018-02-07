@@ -80,14 +80,13 @@ class IndexController extends Gabinando_Base{
 
         if($this->getRequest()->isPost()){
             $params         = $this->getRequest()->getPost();
-            $admin     = new Application_Model_User();
+            $admin          = new Application_Model_Usuario();
             $loginResult    = $admin->isValidLogin($params);
-
             if($loginResult instanceof Exception) {
-                $this->view->error = 'There was an error. Please, try again.';
+                $this->view->error = 'Se produjo un error, intente mas tarde.';
             }
 			elseif(!$loginResult){
-                $this->view->error = 'Incorrect e-mail or password.';
+                $this->view->error = 'E-mail o contraseña incorrectos.';
             }
             else{
                 $this->admin_session->admin = $loginResult;
