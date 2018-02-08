@@ -32,7 +32,8 @@ $(".xn-icon-button").fadeIn();
                                     <tr>
                                         <th width="50">ID</th>
                                         <th>Nombre</th>
-                                        <th>Fecha Vigencia</th>
+                                        <th>Fecha desde</th>
+                                        <th>Fecha hasta</th>
                                         <th>Tipo de cliente</th>
                                         <th width="150" class="no-sortable text-center">Acciones</th>
                                     </tr>
@@ -42,7 +43,8 @@ $(".xn-icon-button").fadeIn();
                                     <tr id="<?php echo $lista_precio['id'] ?>" class="element-id">
                                         <td class="text-center"><?php echo $lista_precio['id'] ?></td>
                                         <td><?php echo $lista_precio['nombre'] ?></td>
-                                        <td><?php echo date("d-m-Y",strtotime($lista_precio['fecha_vigencia'])) ?></td> 
+                                        <td><?php echo date("d-m-Y",strtotime($lista_precio['fecha_desde'])) ?></td> 
+                                        <td><?php echo date("d-m-Y",strtotime($lista_precio['fecha_hasta'])) ?></td>
                                         <td><?php echo $lista_precio['tipo_cliente'] ?></td>
                                         <td class="text-center">
                                             <button class="btn btn-default btn-rounded btn-condensed btn-sm" onclick="editarListaPrecio(<?php echo $lista_precio['id'] ?>)"><span class="fa fa-pencil"></span></button>
