@@ -12,8 +12,7 @@ class ProductoController extends Gabinando_Base {
 		if($this->getRequest()->isPost()){
 			$params = $this->getRequest()->getPost();
 			$file = $_FILES['imagen_url'];
-			
-			$img = $this->uploadImage(self::UPLOADPATHAVATAR,$file,$params['email']);
+			$img = $this->uploadImage(self::UPLOADPATHAVATAR,$file,$params['nombre']);
 
 			if($img['status'] == 'error'){
 				die($img['message']);
@@ -21,38 +20,31 @@ class ProductoController extends Gabinando_Base {
 
 			$params['imagen_url'] = $img['message'];
 		
-			// Set idDeleted property to false in order to "reactivate" the registered admin
             $params['eliminado'] = 0;
 			
 			$producto = new Application_Model_Producto();
-            $result = $producto->add($params);
-
-			if($alreadyRegistered instanceof Exception){
-                Gabinando_Base::addError($alreadyRegistered->getMessage());
+			$productoExistente = $producto->getProductosByParams($params['descripcion'], $params['nombre'], $params['id_marca']);
+			
+			if($productoExistente instanceof Exception){
+                Gabinando_Base::addError($productoExistente->getMessage());
                 $this->_redirect('/producto/add');
-            // If this email wasn't registered in the past -> add a new producto
-            }elseif($alreadyRegistered == null){
+            // si el producto no fue agregado anteriormente -> agrego nuevo producto
+            }elseif($productoExistente == null){
 
+           		$result = $producto->add($params);
 				if($result instanceof Exception){
 	                Gabinando_Base::addError($result->getMessage());
-	                $this->_redirect('/producto/add');
+	                // $this->_redirect('/producto/add');
             	}
+
             	Gabinando_Base::addSuccess('Producto agregado correctamente');
             	$this->_redirect('/producto/list');
             }else{
-            	// If this email was registered in the past and is deleted now
-            	// Set idDeleted property to false in order to "reactivate" the registered admin
-            	$params['eliminado'] = 0;
-            	// Update the admin with new properties and the same id
-            	$result = $producto->edit('id', $alreadyRegistered['id'], $params);
-
-				if($result instanceof Exception){
-	                Gabinando_Base::addError($result->getMessage());
-	                $this->_redirect('/producto/add');
-	            }
-	            Gabinando_Base::addSuccess('Producto agregado correctamente');
-	            $this->_redirect('/producto/list');
+            	
+            	Gabinando_Base::addError('Ya existe un producto con ese nombre, esa descripción y esa marca.');
+				
             }
+        	$this->_redirect('/producto/add');
 		}else{
 			$marcaModel = new Application_Model_Marca();
 
