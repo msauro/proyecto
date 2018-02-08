@@ -34,7 +34,6 @@ class ProductoController extends Gabinando_Base {
            		$result = $producto->add($params);
 				if($result instanceof Exception){
 	                Gabinando_Base::addError($result->getMessage());
-	                // $this->_redirect('/producto/add');
             	}
 
             	Gabinando_Base::addSuccess('Producto agregado correctamente');
