@@ -23,6 +23,7 @@ $(".xn-icon-button").fadeIn();
                         <div class="panel-title-box">
                             <h3>Lista de estados</h3>
                         </div>  
+                        <button class="btn btn-primary pull-right" onclick="agregarEstado()" data-toggle="dropdown"><span class="fa fa-plus" ></span> Nuevo</button>
                     </div>
                         
                     <div class="panel-body">
@@ -89,10 +90,10 @@ $(".xn-icon-button").fadeIn();
             })
 
         });
-    </script>
-
-    <script>
-    var editarEstados = function(id){
-        window.location.href = "/estado/edit/id/" + id;
+        var editarEstados = function(id){
+            window.location.href = "/estado/edit/id/" + id;
+        }
+        var agregarEstado = function(){
+        window.location.href = "/estado/add/";
     }
     </script>

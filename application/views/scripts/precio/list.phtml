@@ -23,6 +23,7 @@ $(".xn-icon-button").fadeIn();
                         <div class="panel-title-box">
                             <h3>Lista de precios</h3>
                         </div>  
+                        <button class="btn btn-primary pull-right" onclick="agregarPrecio()" data-toggle="dropdown"><span class="fa fa-plus" ></span> Nuevo</button>
                     </div>
                         
                     <div class="panel-body">
@@ -93,10 +94,10 @@ $(".xn-icon-button").fadeIn();
             })
 
         });
-    </script>
-
-    <script>
     var editarPrecio = function(id){
         window.location.href = "/precio/edit/id/" + id;
+    }
+    var agregarPrecio = function(id){
+        window.location.href = "/precio/add/";
     }
     </script>

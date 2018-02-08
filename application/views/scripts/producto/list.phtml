@@ -24,6 +24,7 @@ $(".xn-icon-button").fadeIn();
                             <h3>Lista de productos</h3>
                             <span>Info sobre productos</span>
                         </div>  
+                        <button class="btn btn-primary pull-right" onclick="agregarProducto()" data-toggle="dropdown"><span class="fa fa-plus" ></span> Nuevo</button>
                     </div>
                         
                     <div class="panel-body">
@@ -96,10 +97,10 @@ $(".xn-icon-button").fadeIn();
             })
 
         });
-    </script>
-
-    <script>
     var editarProducto = function(id){
         window.location.href = "/producto/edit/id/" + id;
+    }
+    var agregarProducto = function(){
+        window.location.href = "/producto/add/";
     }
     </script>

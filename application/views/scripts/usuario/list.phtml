@@ -22,7 +22,8 @@ $(".xn-icon-button").fadeIn();
                     <div class="panel-heading">
                         <div class="panel-title-box">
                             <h3>Lista de Usuarios</h3>
-                        </div>  
+                        </div>
+                        <button class="btn btn-primary pull-right" onclick="agregarUsuario()" data-toggle="dropdown"><span class="fa fa-plus" ></span> Nuevo</button>  
                     </div>
                         
                     <div class="panel-body">
@@ -95,10 +96,10 @@ $(".xn-icon-button").fadeIn();
             })
 
         });
-    </script>
-
-    <script>
-    var editUsuario = function(id){
-        window.location.href = "/usuario/edit/id/" + id;
-    }
+        var editUsuario = function(id){
+            window.location.href = "/usuario/edit/id/" + id;
+        }
+        var agregarUsuario = function(id){
+            window.location.href = "/usuario/add/";
+        }
     </script>
