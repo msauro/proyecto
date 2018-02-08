@@ -47,5 +47,26 @@ class Application_Model_Producto extends Application_Model_Base
         $rows = $this->fetchAll($query);
         return $rows->toArray();
     }
+
+    public function getProductosByParams($descripcion, $nombre, $id_marca){
+        try{
+            $query = $this->select()
+                ->from($this, array('*'))
+                ->where('id_marca = ?', $id_marca)
+                ->where('eliminado = ?', 0)
+                ->where('id_marca = ?', $id_marca)
+                ->where('nombre = ?', $nombre);
+
+            $row = $this->fetchRow($query);
+            if(!$row) {
+                return null;
+            }
+
+            return $row->toArray();
+        }
+        catch(Exception $e){
+            return $e;
+        }
+    }
    
 }

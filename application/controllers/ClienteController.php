@@ -20,15 +20,14 @@ class ClienteController extends Gabinando_Base {
 			}
 
 			$params['imagen_url'] = $img['message'];
-			// Set idDeleted property to false in order to "reactivate" the registered admin
             $params['eliminado'] = 0;
 			$cliente = new Application_Model_cliente();
-			$alreadyRegistered = $cliente->getClienteBycuit($params['cuit'],$params['email']);
+			$alreadyRegisteredByCuit = $cliente->getClienteByCuit($params['cuit']);
+			$alreadyRegisteredByEmail = $cliente->getClienteByEmail($params['email']);
 
-			if(!is_null($alreadyRegistered)){
+			if(!is_null($alreadyRegisteredByCuit) OR !is_null($alreadyRegisteredByEmail)){
                 Gabinando_Base::addError('Existe un cliente con ese CUIT o Email');
                 $this->_redirect('/cliente/add');
-            // If this email wasn't registered in the past -> add a new cliente
             }else{
            		$result = $cliente->add($params);
 				if($result instanceof Exception){

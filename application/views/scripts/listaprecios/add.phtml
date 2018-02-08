@@ -5,7 +5,7 @@ $this->headTitle($this->title);
 <!-- BREADCRUMB -->
     <ul class="breadcrumb">
         <li><a href="/">Panel Principal</a></li>
-        <li><a href="/user/list">Producto</a></li>
+        <li><a href="/listaprecios/list">Producto</a></li>
         <li class="active">Nuevo</li>
     </ul>
 
@@ -51,11 +51,20 @@ $this->headTitle($this->title);
                         </div>
 
                         <div class="form-group">                                        
-                            <label class="col-md-3 col-xs-12 control-label">Fecha vigencia</label>
+                            <label class="col-md-3 col-xs-12 control-label">Fecha desde</label>
                             <div class="col-md-6 col-xs-12">
                                 <div class="input-group">
                                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                                    <input name="fecha_vigencia" id="fecha_vigencia" type="text" class="form-control datepicker" />
+                                    <input name="fecha_desde" id="fecha_desde" type="text" class="form-control datepicker" />
+                                </div>            
+                            </div>
+                        </div>
+                        <div class="form-group">                                        
+                            <label class="col-md-3 col-xs-12 control-label">Fecha hasta</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                    <input name="fecha_hasta" id="fecha_hasta" type="text" class="form-control datepicker" />
                                 </div>            
                             </div>
                         </div>
@@ -102,7 +111,12 @@ $().ready(function() {
             tipo_cliente: {
                 required: true,
             },
-            fecha_vigencia: "required"
+            fecha_desde: "required",
+            fecha_hasta: "required"
+            //PREGUNTAR
+            // if (fecha_hasta <= fecha_desde) {
+            //     fecha_hasta: "La fecha ingresada debe ser mayor a la fecha desde",
+            // }
         },
         errorPlacement: function(error, element) {
             error.insertAfter(element.parent());
@@ -111,7 +125,10 @@ $().ready(function() {
             nombre: {
                 required: "Campo requerido",
             },
-            fecha_vigencia: {
+            fecha_desde: {
+                required: "Campo requerido"
+            },
+            fecha_hasta: {
                 required: "Campo requerido"
             },
             tipo_cliente: {
@@ -120,6 +137,11 @@ $().ready(function() {
 
         }
     });
+    
+
+    if (fechaHasta =< fechaDesde){
+        console.log('msj');
+    }
 });
 
 </script>
