@@ -22,7 +22,8 @@ $(".xn-icon-button").fadeIn();
                     <div class="panel-heading">
                         <div class="panel-title-box">
                             <h3>Lista de marcas</h3>
-                        </div>  
+                        </div> 
+                        <button class="btn btn-primary pull-right" onclick="agregarMarca()" data-toggle="dropdown"><span class="fa fa-plus" ></span> Nuevo</button> 
                     </div>
                         
                     <div class="panel-body">
@@ -95,10 +96,10 @@ $(".xn-icon-button").fadeIn();
             })
 
         });
-    </script>
-
-    <script>
     var editarMarcas = function(id){
         window.location.href = "/marca/edit/id/" + id;
+    }
+    var agregarMarca = function(id){
+        window.location.href = "/marca/add/";
     }
     </script>

@@ -248,3 +248,6 @@ body.page-container-boxed {
 .profile-imagen{
   text-align: center;
 }
+.btn-new{
+  position: right;
+}

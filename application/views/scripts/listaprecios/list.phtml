@@ -10,7 +10,7 @@ $(".xn-icon-button").fadeIn();
 <!-- BREADCRUMB -->
     <ul class="breadcrumb">
         <li><a href="/">Panel Principal</a></li>
-        <li><a href="#">Precios</a></li>
+        <li><a href="#">Listas de Precios</a></li>
         <li class="active">Listado</li>
     </ul>
 
@@ -23,6 +23,7 @@ $(".xn-icon-button").fadeIn();
                         <div class="panel-title-box">
                             <h3>Lista de precios</h3>
                         </div>  
+                        <button class="btn btn-primary pull-right" onclick="agregarListaPrecios()" data-toggle="dropdown"><span class="fa fa-plus" ></span> Nuevo</button>
                     </div>
                         
                     <div class="panel-body">
@@ -95,10 +96,12 @@ $(".xn-icon-button").fadeIn();
             })
 
         });
-    </script>
-
-    <script>
     var editarListaPrecio = function(id){
         window.location.href = "/listaprecios/edit/id/" + id;
     }
+     var agregarListaPrecios = function(){
+        window.location.href = "/listaprecios/add";
+    }
     </script>
+
+    
