@@ -302,9 +302,9 @@ $(function() {
                     cycleSteps: false, // cycle step navigation
                     enableFinishButton: false, // makes finish button enabled always
                     errorSteps:[],    // array of step numbers to highlighting as error steps
-                    labelNext:'Next', // label for Next button
-                    labelPrevious:'Previous', // label for Previous button
-                    labelFinish:'Finish',  // label for Finish button        
+                    labelNext:'Siguiente', // label for Next button
+                    labelPrevious:'Anterior', // label for Previous button
+                    labelFinish:'Finalizar',  // label for Finish button        
                     // Events
                     // This part of code can be removed FROM
                     onLeaveStep: function(obj,context){

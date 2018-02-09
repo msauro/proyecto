@@ -13,8 +13,9 @@ echo $this->doctype(); ?>
 	<head>
 	    <?php echo $this->headMeta(); ?> 
 	    <?php echo $this->headTitle(); ?>
-
+        <!-- agrega favicon -->
         <link rel="shortcut icon" href="/admin-public/img/logo.png" type="image/x-icon">
+        <!-- END agrega favicon -->
         <link href="/admin-public/css/bootstrap-switch.min.css" rel="stylesheet">
 
         <?php echo $this->headLink()->prependStylesheet($this->baseUrl().'/admin-public/css/custom.css'); ?>
