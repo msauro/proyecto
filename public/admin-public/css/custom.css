@@ -251,3 +251,6 @@ body.page-container-boxed {
 .btn-new{
   position: right;
 }
+.fa.fa-user.deudor {
+  color: red !important;
+}

@@ -95,7 +95,7 @@ $this->headTitle($this->title);
                                                 </div>
                                                 <input id="patientsearch" name="search" type="text" class="form-control" placeholder="Buscar Cliente" value="<?= $this->patient; ?>"/>
                                                 <div class="input-group-btn">
-                                                    <button class="btn btn-primary btn-search-patient">Buscar</button>
+                                                    <button class="btn btn-primary btn-buscar-cliente">Buscar</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -245,9 +245,9 @@ $this->headTitle($this->title);
                                 <div class="panel-body">
                                     <p>
                                         <div class="form-group">
-                                            <label class="col-md-2 control-label" style="width:auto; text-align:left;">Search</label>
+                                            <label class="col-md-2 control-label" style="width:auto; text-align:left;">Buscar</label>
                                             <div class="col-md-4">
-                                                <input id="product-search" class="form-control" placeholder="Search Products"/>
+                                                <input id="buscar-productos" class="form-control" placeholder="Buscar productos"/>
                                             </div>
                                             <div class="col-md-2">
                                                 <button class="btn"><i class="glyphicon glyphicon-search"></i></button>
@@ -428,24 +428,24 @@ $this->headTitle($this->title);
                                     <h3 class="panel-title">Resumen</h3>
                                 </div>
                                 <div class="panel-body">
-                                    <form id="create-donation" role="form" class="form-horizontal">
-                                        <input type="hidden" id="form-patient" name="id_patient">
-                                        <input type="hidden" id="form-phone" name="id_phone">
-                                        <input type="hidden" id="form-driver" name="id_driver">
-                                        <input type="hidden" id="form-location" name="id_location">
-                                        <input type="hidden" id="form-time" name="time">
-                                        <input type="hidden" id="form-timeset" name="timeset">
-                                        <input type="hidden" id="form-donation_note" name="donation_note">
-                                        <input type="hidden" id="form-points" name="points">
+                                    <form id="crear-venta" role="form" class="form-horizontal">
+                                        <input type="hidden" id="form-cliente" name="id_cliente">
+                                        <!-- <input type="hidden" id="form-phone" name="id_phone"> -->
+                                        <!-- <input type="hidden" id="form-driver" name="id_driver"> -->
+                                        <!-- <input type="hidden" id="form-location" name="id_location"> -->
+                                        <!-- <input type="hidden" id="form-time" name="time"> -->
+                                        <!-- <input type="hidden" id="form-timeset" name="timeset"> -->
+                                        <!-- <input type="hidden" id="form-donation_note" name="donation_note"> -->
+                                        <!-- <input type="hidden" id="form-points" name="points"> -->
                                         <input type="hidden" id="form-id_discount" name="id_discount">
-                                        <input type="hidden" id="form-reason" name="reason">
-                                        <input type="hidden" id="form-special-discount" name="special-discount">
-                                        <input type="hidden" id="form-coupon" name="id_coupon">
-                                        <input type="hidden" id="form-discount" name="discount">
-                                        <input type="hidden" id="form-future_deliveries" name="future_deliveries">
+                                        <!-- <input type="hidden" id="form-reason" name="reason"> -->
+                                        <!-- <input type="hidden" id="form-special-discount" name="special-discount"> -->
+                                        <!-- <input type="hidden" id="form-coupon" name="id_coupon"> -->
+                                        <!-- <input type="hidden" id="form-discount" name="discount"> -->
+                                        <!-- <input type="hidden" id="form-future_deliveries" name="future_deliveries"> -->
                                         <ul style="padding:0px;">
                                             <li class="fa fa-square-o">
-                                                <span id="cliente-seleccionado" class="stepDesc">Cliente seleccionado: </span>
+                                                <span class="stepDesc">Cliente seleccionado: <span id="cliente-seleccionado"></span> </span>
                                             </li>
                                             <!-- <li class="fa fa-square-o">
                                                 <span id="selected-phone" class="stepDesc">Productos seleccionados: </span>
@@ -791,10 +791,11 @@ $('.datepicker').datepicker({
 });
 
 $(document).ready(function(){
+     
 
     <?php if ( isset($this->patient) ) : ?>
     setTimeout(function(){
-      $('.btn-search-patient').click();
+      $('.btn-buscar-cliente').click();
     }, 100);
     <?php endif; ?>
 
@@ -948,7 +949,7 @@ $(function() {
                 
                 var params = {};
 
-                params.data = $("#create-donation").serialize();    
+                params.data = $("#crear-venta").serialize();    
                 params.futureDeliveries = futureDeliveries;
                 panelAjax("/admin_donations/setdonation",params, function(data){              
  
@@ -985,6 +986,7 @@ $(function() {
 
     $(".note_step5").append('<textarea data-toggle="tooltip" title="Limit 140 characters!" maxlength="140" name="note_donation" id="donation_note" class="form-control" placeholder="Type a note for this donation">');
 
+    //Selecciono el cliente
     $("#list-cliente").on( "click", ".select-patient", function(slideEvt) {
         if($(this).attr('id') != ""){
             var params = {};
@@ -992,24 +994,26 @@ $(function() {
             // params.id_patient = $(this).attr('id');
             params.id = $(this).attr('id');
             params.nombre = $(this).attr('title');
+            console.log(params);
             $(this).toggleClass('selected');
             $(this).siblings().removeClass('selected');
               if(!$("#cliente-seleccionado").closest('li').hasClass("fa-check-square-o"))
                 $("#cliente-seleccionado").closest('li').toggleClass('fa-square-o fa-check-square-o');
-             $("#cliente-seleccionado").text(params.nombre);
+            $("#cliente-seleccionado").text(params.nombre);
 
-
+            //lleno el formulario con el ID del cliente
+            $("#form-cliente").val(params.id);
+            $('.buttonNext').click();
 
 
 
 
             // id_patient = $(this).attr('id');
-            console.log( params);
-            id = $(this).attr('id');
-            $("#form-patient").val(id_patient);
-            patient_dispenser = $(this).attr('rel');
-            patient_name = $(this).attr('title');
-            patient_points = $(this).attr('attr-points');      
+            // console.log( params);
+            // id = $(this).attr('id');
+            // patient_dispenser = $(this).attr('rel');
+            // patient_name = $(this).attr('title');
+            // patient_points = $(this).attr('attr-points');      
 
             // if($('#previously_ordered .patientName')){
             //     $('#previously_ordered .patientName').remove();
@@ -1048,16 +1052,18 @@ $(function() {
         id_driver = $(this).find(".driver_id").text();
         $(".drivers .widget").removeClass("widget-success");
         $(this).addClass("widget-success");
-        $("#form-driver").val(id_driver);
+        $id_cliente = $("#form-cliente").val();
         var params = {};
-        params.id_patient = id_patient;
+        var id_cliente = $("#form-cliente").val();
+
+        params.id_cliente = id_cliente;
         params.id_dispenser = patient_dispenser;
         params.lat = latitude;
         params.lon = longitude;
         params.id_driver = id_driver;
         
         // Traigo los productos del driver para listar
-        getProducts(id_driver,null);
+        getProducts(id_cliente,null);
         //Cargo el mapa con las locations
         calcRoute(id_driver);
         
@@ -1205,11 +1211,12 @@ $(function() {
     });
 
     var timeoutID = null;
-    $('#product-search').keyup(function() {
+    $('#buscar-productos').keyup(function() {
         clearTimeout(timeoutID);
         var $target = $(this);
         var id_driver = $("#form-driver").val();
-        timeoutID = setTimeout(function() { getProducts(id_driver,$target.val()); }, 500); 
+        var id_cliente = $("#form-cliente").val();
+        timeoutID = setTimeout(function() { getProducts(id_cliente,$target.val()); }, 500); 
     });
 
     $('#patientsearch').keyup(function(event) {
@@ -1220,7 +1227,7 @@ $(function() {
         }
     });
 
-    $('.btn-search-patient').click(function() {
+    $('.btn-buscar-cliente').click(function() {
         var search = $('#patientsearch').val();
         getClientes(search);
     });
@@ -1234,9 +1241,9 @@ $(function() {
         var val     = $('#page').attr('rel');
         val         = parseInt(val) + parseInt(1);
         page        = $('#page').attr('rel',val);
-        search      = $('#product-search').val();
-        id_driver   = $("#form-driver").val();
-        getProducts(id_driver,search);
+        search      = $('#buscar-productos').val();
+        id_cliente  = $("#form-cliente").val();
+        getProducts(id_cliente,search);
     });
 
     $("#prev").click(function() {
@@ -1244,9 +1251,10 @@ $(function() {
         if (val > 1) {
             val         = parseInt(val) - parseInt(1);
             page        = $('#page').attr('rel',val);
-            search      = $('#product-search').val();
-            id_driver   = $("#form-driver").val();
-            getProducts(id_driver,search);
+            search      = $('#buscar-productos').val();
+            id_cliente  = $("#form-cliente").val();
+
+            getProducts(id_cliente,search);
         }
     });
 
@@ -1268,9 +1276,13 @@ $(function() {
         }      
     });
 
+    
+
     $(".step-2").click(function(){
        $('#summarydiscounts').hide();  
     });
+
+
 
     $(".step-4").click(function(){
        $('#summarydiscounts').show(); 
@@ -1498,9 +1510,11 @@ var totalSum = function(prices){
 function validateSteps(step) {
     var status = true;
     var form_data = {};
-    form_data = $("#create-donation").serializeArray();
+    form_data = $("#crear-venta").serializeArray();
     switch(step) {
         case "1":
+        console.log(form_data);
+
             if( form_data[0]['value']=="" ){
                 status = false;
                 $('.wizard').smartWizard('showMessage','Selecciona un cliente y haga click en "Siguiente".');
@@ -1619,13 +1633,14 @@ function resetForm(step){
     };
 }
 
-function getProducts(driver,search){
+function getProducts(id_cliente,search){
     var params = {};
-    params.id       = driver;
-    params.search   = search;
-    params.page     = $('#page').attr('rel');
+    params.id_cliente    = id_cliente;
+    params.search        = search;
+    params.page          = $('#page').attr('rel');
+    console.log(params);
     if (params.page < 0) { params.page = 1; };
-    panelAjax("/admin_drivers/adminproducts/",params, function(data){
+    panelAjax("/producto/getproductos/",params, function(data){
         $(".products tbody").html('');
         $.each(data, function( index, value ){
             item = "<tr id='product_" + value.id_product + "'>" +
