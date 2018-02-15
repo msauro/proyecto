@@ -33,6 +33,7 @@ $(".xn-icon-button").fadeIn();
                                 <thead>
                                     <tr>
                                         <th width="50">ID</th>
+                                        <th>Código</th>
                                         <th>Nombre</th>
                                         <th>Descripción</th>
                                         <th>Pto. Pedido</th>
@@ -44,6 +45,7 @@ $(".xn-icon-button").fadeIn();
                                     <?php foreach ($this->listadoProductos as $producto): ?>
                                     <tr id="<?php echo $producto['id'] ?>" class="element-id">
                                         <td class="text-center"><?php echo $producto['id'] ?></td>
+                                        <td><?php echo $producto['codigo'] ?></td>
                                         <td><?php echo $producto['nombre'] ?></td>
                                         <td><?php echo $producto['descripcion'] ?></td>
                                         <td><?php echo $producto['punto_pedido'] ?></td>
