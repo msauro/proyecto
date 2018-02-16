@@ -142,7 +142,7 @@ class ProductoController extends Gabinando_Base {
     }
 
     public function getproductosAction(){
-		$cliente = new Application_Model_Cliente();		
+		$producto = new Application_Model_Producto();		
 		$params 	 = $params = $this->getRequest()->getParams();
 // die(var_dump($params['id_cliente']));
 		if( isset($params['search']) ){
@@ -168,10 +168,10 @@ class ProductoController extends Gabinando_Base {
 
 		$paginate['start_from'] = ($paginate['page']-1) * $paginate['per_page'];
 
-		$clienteFilteredList = $cliente->getProductosSegunLista($id_cliente,$search,$paginate);
-		if($clienteFilteredList instanceof Exception)
-			$this->sendErrorResponse($clienteFilteredList->getMessage());
-
+		$productos = $producto->getProductosSegunLista($id_cliente,$search,$paginate);
+		if($productos instanceof Exception)
+			$this->sendErrorResponse($productos->getMessage());
+die(var_dump($productos));
 
 
 		$clientePager = $cliente->getListFiltered($search);
@@ -186,7 +186,7 @@ class ProductoController extends Gabinando_Base {
 
 		$this->sendSuccessResponse(array(
 				'search' 	=> $search,
-				'clientes' 	=> $clienteFilteredList,
+				'clientes' 	=> $productos,
 				'total' 	=> count($clienteList),
 				'pages' 	=> $pages,
 				'page' 		=> $paginate['page']

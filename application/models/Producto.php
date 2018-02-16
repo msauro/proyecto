@@ -73,14 +73,18 @@ class Application_Model_Producto extends Application_Model_Base
         $fecha = date('Y-m-j');
         $nuevafecha = strtotime ( "-$days day" , strtotime ( $fecha ) ) ;
         $nuevafecha = date ( 'Y-m-j' , $nuevafecha );
-
+// die('ARREGLAR JOIN CON CLIENTE, NO DETECTA EL $ID_CLIENTE');
         $search['search'] = $search['search'];
         $query = $this->select()->setIntegrityCheck(false)
             ->from($this, array('*'))
-            ->join('estados', 'estados.id = clientes.estado', array('estados.nombre as nom_estado'))
-            ->where('clientes.eliminado = 0')
-            ->where("(clientes.id LIKE '%{$search['search']}%' OR clientes.nombre LIKE '%{$search['search']}%' OR apellido LIKE '%{$search['search']}%' OR email LIKE '%{$search['search']}%' OR cuit LIKE '%{$search['search']}%' OR CONCAT(clientes.nombre,' ', apellido) LIKE '%{$search['search']}%')")
-            ->group('clientes.id');
+            ->join('clientes', 'clientes.id ='+$id_cliente+, array('*'))
+            ->join('listas_precios', 'listas_precios.tipo_cliente = clientes.id_tipo_cliente', array('*'))
+            ->join('precios', 'precios.id_producto = productos.id' AND 'precios.id_lista_precio = listas_precios.id', array('*'))
+            ->where('listas_precios.eliminado = 0')
+            ->where('precios.eliminado = 0')
+            ->where('productos.eliminado = 0')
+            ->where('clientes.eliminado = 0');
+            
 
             // if(!$order){
             //     $query->order('id DESC');
@@ -130,6 +134,7 @@ class Application_Model_Producto extends Application_Model_Base
             //     default:
             //         break;
             // }    
+    die($query);
         $rows = $this->fetchAll($query);
 
         return $rows->toArray();
