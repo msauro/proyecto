@@ -23,7 +23,7 @@ class ProductoController extends Gabinando_Base {
             $params['eliminado'] = 0;
 			
 			$producto = new Application_Model_Producto();
-			$productoExistente = $producto->getProductosByParams($params['descripcion'], $params['nombre'], $params['id_marca']);
+			$productoExistente = $producto->getProductosByParams($params['codigo'], $params['id_marca']);
 			
 			if($productoExistente instanceof Exception){
                 Gabinando_Base::addError($productoExistente->getMessage());
@@ -39,9 +39,8 @@ class ProductoController extends Gabinando_Base {
             	Gabinando_Base::addSuccess('Producto agregado correctamente');
             	$this->_redirect('/producto/list');
             }else{
-            	
-            	Gabinando_Base::addError('Ya existe un producto con ese nombre, esa descripción y esa marca.');
-				
+
+            	Gabinando_Base::addError('Ya existe un producto con ese código para esa marca.');
             }
         	$this->_redirect('/producto/add');
 		}else{
@@ -90,18 +89,32 @@ class ProductoController extends Gabinando_Base {
 			}
 
 			$producto = new Application_Model_Producto();
-			$result = $producto->edit($params['id'], $params);
+			$productoExistente = $producto->getProductosByParams($params['codigo'], $params['id_marca']);
+			
+			if($productoExistente instanceof Exception){
+                Gabinando_Base::addError($productoExistente->getMessage());
+            // si el producto no fue agregado anteriormente -> edito producto
+            }elseif($productoExistente == null){
 
-			if($result instanceof Exception){
-                Gabinando_Base::addError($result->getMessage());
+				$producto = new Application_Model_Producto();
+				$result = $producto->edit($params['id'], $params);
 
-            }else{
-            	           		
-            	Gabinando_Base::addSuccess('Producto actualizado correctamente');
+				if($result instanceof Exception){
+	                Gabinando_Base::addError($result->getMessage());
+
+	            }else{
+	            	           		
+	            	Gabinando_Base::addSuccess('Producto actualizado correctamente');
+	            	$this->_redirect('/producto/list');
+	            }
+	        }else{
+
+            	Gabinando_Base::addError('Ya existe un producto con ese código para esa marca.');
+                $this->_redirect('/producto/edit/id/'.$params['id']);
+            	
             }
 
-            $this->_redirect('/producto/list');
-		}
+		}//si no es POST
 		else{
 			$id = $this->getRequest()->getParam('id');
 			
@@ -127,6 +140,60 @@ class ProductoController extends Gabinando_Base {
 			}
 		}
     }
+
+    public function getproductosAction(){
+		$cliente = new Application_Model_Cliente();		
+		$params 	 = $params = $this->getRequest()->getParams();
+// die(var_dump($params['id_cliente']));
+		if( isset($params['search']) ){
+			$search 	 = array(
+				'search' => $params['search'],
+				'filter' => 'active'
+			);
+		}else{
+			$search 	 = array(
+				'search' => ''
+			);
+		}
+
+		$id_cliente = $params['id_cliente'];
+
+		if (isset($params['page']) AND $params['page']) {
+			$paginate['page']  	= $params['page'];
+		} else {
+			$paginate['page'] 	= 1;
+		}
+
+		$paginate['per_page'] 	= 6;
+
+		$paginate['start_from'] = ($paginate['page']-1) * $paginate['per_page'];
+
+		$clienteFilteredList = $cliente->getProductosSegunLista($id_cliente,$search,$paginate);
+		if($clienteFilteredList instanceof Exception)
+			$this->sendErrorResponse($clienteFilteredList->getMessage());
+
+
+
+		$clientePager = $cliente->getListFiltered($search);
+		if($clientePager instanceof Exception)
+			$this->sendErrorResponse($clientePager->getMessage());
+
+		$clienteList = $cliente->getList($search);
+		if($clienteList instanceof Exception)
+			$this->sendErrorResponse($clienteList->getMessage());
+
+		$pages = ceil(count($clientePager) / $paginate['per_page']);
+
+		$this->sendSuccessResponse(array(
+				'search' 	=> $search,
+				'clientes' 	=> $clienteFilteredList,
+				'total' 	=> count($clienteList),
+				'pages' 	=> $pages,
+				'page' 		=> $paginate['page']
+			));
+
+	}
+		
 		
 		
 	

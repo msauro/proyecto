@@ -23,7 +23,16 @@ $this->headTitle($this->title);
                     </div>
 
                     <div class="panel-body">
-                    
+                        <div class="form-group">
+                            <label class="col-sm-3 col-xs-12 control-label">Código</label>
+                            <div class="col-sm-6 col-xs-12">                                            
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-list"></span></span>
+                                    <input name="codigo" type="text" class="form-control" value="<?php echo $this->data['codigo'] ?>"/>
+                                </div>                                            
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label class="col-sm-3 col-xs-12 control-label">Nombre</label>
                             <div class="col-sm-6 col-xs-12">                                            

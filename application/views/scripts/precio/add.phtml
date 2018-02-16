@@ -58,8 +58,8 @@ $this->headTitle($this->title);
                                     <select name="id_lista_precio" id="id_lista_precio" type="text" class="form-control select">
                                         <option value="">Selecciona Lista de precios</option>
                                         <?php 
-                                           foreach ($this->listadoProductos as $key => $producto): ?>
-                                                <option <?php echo $this->data['id_lista_precio'] == $producto['id'] ? "selected" : '' ; ?> value=<?php echo  $producto['id'] ?>><?php echo $producto['nombre']?></option>
+                                           foreach ($this->listadoListaPrecios as $key => $lista): ?>
+                                                <option <?php echo $this->data['id_lista_precio'] == $lista['id'] ? "selected" : '' ; ?> value=<?php echo  $lista['id'] ?>><?php echo $lista['nombre']?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div> 
