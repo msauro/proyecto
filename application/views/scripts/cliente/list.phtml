@@ -10,7 +10,7 @@ $(".xn-icon-button").fadeIn();
 <!-- BREADCRUMB -->
     <ul class="breadcrumb">
         <li><a href="/">Panel Principal</a></li>
-        <li><a href="/cliente/list/">Clientes</a></li>
+        <li><a href="#">Clientes</a></li>
         <li class="active">Listado</li>
     </ul>
 
@@ -23,6 +23,7 @@ $(".xn-icon-button").fadeIn();
                         <div class="panel-title-box">
                             <h3>Lista de clientes</h3>
                         </div>  
+                        <button class="btn btn-primary pull-right" onclick="agregarCliente()" data-toggle="dropdown"><span class="fa fa-plus" ></span> Nuevo</button>
                     </div>
                         
                     <div class="panel-body">
@@ -103,10 +104,10 @@ $(".xn-icon-button").fadeIn();
             })
 
         });
-    </script>
-
-    <script>
-    var editarCliente = function(id){
-        window.location.href = "/cliente/edit/id/" + id;
-    }
+        var editarCliente = function(id){
+            window.location.href = "/cliente/edit/id/" + id;
+        }
+        var agregarCliente = function(){
+            window.location.href = "/cliente/add/";
+        }
     </script>

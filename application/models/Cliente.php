@@ -89,7 +89,7 @@ class Application_Model_Cliente extends Application_Model_Base
         return $rows->toArray();
     }
 
-     public function getListFiltered($search,$paginate=NULL){
+    public function getListFiltered($search,$paginate=NULL){
         $days = 15;
         $fecha = date('Y-m-j');
         $nuevafecha = strtotime ( "-$days day" , strtotime ( $fecha ) ) ;

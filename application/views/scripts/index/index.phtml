@@ -1,5 +1,5 @@
 <?php         
-$this->title = "Dashboard";
+$this->title = "Panel principal";
 $this->headTitle($this->title);
 ?>
 
@@ -9,7 +9,7 @@ $(".xn-icon-button").fadeIn();
 
 <!-- BREADCRUMB -->
   <ul class="breadcrumb">                 
-      <li class="active">Dashboard</li>
+      <li class="active">Panel principal</li>
   </ul>
 
 <!-- PAGE CONTENT WRAPPER -->
@@ -32,7 +32,7 @@ $(".xn-icon-button").fadeIn();
                   <?php echo $this->widgetsData['Successful']; ?> 
               </div>
               <div class="widget-title">
-                  SUCCESSFUL REQUESTS
+                  Productos sin stock
               </div>
               <?php } ?>
             </div>
@@ -54,7 +54,7 @@ $(".xn-icon-button").fadeIn();
                   <?php echo $this->widgetsData['Cancelled']; ?> 
               </div>
               <div class="widget-title">
-                  CANCELLED REQUESTS
+                  Deudas de clientes
               </div>
               <?php } ?>
             </div>
@@ -76,7 +76,7 @@ $(".xn-icon-button").fadeIn();
                     <?php echo $this->widgetsData['Pending']; ?> 
                 </div>
                 <div class="widget-title">
-                    PENDING REQUESTS
+                    Pagos pendientes
                 </div>
                 <?php } ?>
             </div>

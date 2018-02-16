@@ -13,8 +13,9 @@ echo $this->doctype(); ?>
 	<head>
 	    <?php echo $this->headMeta(); ?> 
 	    <?php echo $this->headTitle(); ?>
-
+        <!-- agrega favicon -->
         <link rel="shortcut icon" href="/admin-public/img/logo.png" type="image/x-icon">
+        <!-- END agrega favicon -->
         <link href="/admin-public/css/bootstrap-switch.min.css" rel="stylesheet">
 
         <?php echo $this->headLink()->prependStylesheet($this->baseUrl().'/admin-public/css/custom.css'); ?>
@@ -198,9 +199,9 @@ echo $this->doctype(); ?>
                        <div data-step="2" data-intro="Acá podrás crear facturas, pedidos y clientes" data-position="right"><button type="button" class="btn btn-default"><span class="fa fa-plus" style="color:#337ab7;"></span><b>Crear</b></button></div>
                         <ul class="xn-drop-left xn-drop-white animated zoomIn">
                             <!-- < ?php if(in_array('admin_donations', $this->admin['rol_modules'])): ?> -->
-                            <li><a href="/admin_donations/add"><span class="fa fa-files-o"></span>Factura</a></li>
+                            <li><a href="/venta/add"><span class="fa fa-files-o"></span>Venta</a></li>
                             <!-- < ?php endif;if(in_array('admin_standarddonations', $this->admin['rol_modules'])): ?> -->
-                            <li><a href="/admin_standarddonations/add"><span class="fa fa-align-justify"></span>Pedido</a></li>
+                            <li><a href="/pedido/add"><span class="fa fa-align-justify"></span>Pedido</a></li>
                             <!-- < ?php endif;if(in_array('admin_patients', $this->admin['rol_modules'])) : ?> -->
                             <li><a href="/cliente/add"><span class="fa fa-users"></span>Nuevo cliente</a></li> 
                             <!-- < ?php endif ?> -->
@@ -249,10 +250,7 @@ echo $this->doctype(); ?>
                 <div class="mb-container">
                     <div class="mb-middle">
                         <div class="mb-title"><span class="fa fa-sign-out"></span> Desea <strong>cerrar sesión</strong> ?</div>
-                        <div class="mb-content">
-                            <p>Are you sure you want to log out?</p>                    
-                            <p>Press No if you want to continue work. Press Yes to logout.</p>
-                        </div>
+                        
                         <div class="mb-footer">
                             <div class="pull-right">
                                 <a href="/index/logout" class="btn btn-success btn-lg">Si</a>

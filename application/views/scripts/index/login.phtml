@@ -3,9 +3,12 @@ $this->headMeta()->appendHttpEquiv('Content-Type', 'text/html;charset=utf-8');
 $this->headMeta()->appendHttpEquiv('X-UA-Compatible', 'IE=edge');
 $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1');
 $this->headTitle()->setSeparator(' - ');
-$this->headTitle('Login - Gabinando Metre');
+$this->headTitle('Login - Gabinando');
 
 echo $this->doctype(); ?>
+<!-- agrega favicon -->
+<link rel="shortcut icon" href="/admin-public/img/logo.png" type="image/x-icon">
+<!-- END agrega favicon -->
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"> 
 	<head>
@@ -16,7 +19,7 @@ echo $this->doctype(); ?>
     <body class="login-container login-v2">
         <div class="login-box animated fadeInDown">
             <div class="login-body">
-                <div class="login-title" style="text-align:center;"><strong>Welcome</strong>!</div>
+                <div class="login-title" style="text-align:center;"><strong>Bienvenido</strong>!</div>
                 <form id="login-form" name="login-form" action="/index/login" class="form-horizontal" method="post">
                     <div class="form-group">
                         <div class="col-sm-12">

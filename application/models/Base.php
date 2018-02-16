@@ -10,6 +10,11 @@ class Application_Model_Base extends Zend_Db_Table_Abstract
         }
 	}
 
+    public function addWithConditions(Array $params){
+        
+
+    }
+
 	public function remove($campo, $id){
         try{
             $params = array('eliminado' => true);

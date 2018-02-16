@@ -548,6 +548,9 @@ class VentaController extends Gabinando_Base{
 		$this->sendSuccessResponse(array('donations' 	=> $donationsArray, 'start' => $donationStart));		
 	}
 	
+
+
+
     public function mapAction(){
 		$id_area = $this->getRequest()->getParam('id_area');
 		$id_driver = $this->getRequest()->getParam('id_driver');

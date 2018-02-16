@@ -24,7 +24,6 @@ class PrecioController extends Gabinando_Base {
 			if($alreadyRegistered instanceof Exception){
                 Gabinando_Base::addError($alreadyRegistered->getMessage());
                 $this->_redirect('/precio/add');
-            // If this email wasn't registered in the past -> add a new precio
             }elseif($alreadyRegistered == null){
 
 				if($result instanceof Exception){
@@ -34,10 +33,7 @@ class PrecioController extends Gabinando_Base {
             	Gabinando_Base::addSuccess('precio agregado correctamente');
             	$this->_redirect('/precio/list');
             }else{
-            	// If this email was registered in the past and is deleted now
-            	// Set idDeleted property to false in order to "reactivate" the registered admin
             	$params['eliminado'] = 0;
-            	// Update the admin with new properties and the same id
             	$result = $precio->edit('id', $alreadyRegistered['id'], $params);
 
 				if($result instanceof Exception){
@@ -54,6 +50,7 @@ class PrecioController extends Gabinando_Base {
 			$listaPreciosModel = new Application_Model_ListaPrecios();
 			$listadoListaPrecios = $listaPreciosModel->getList();
 
+			$this->view->listadoListaPrecios = $listadoListaPrecios;
 			$this->view->listadoProductos = $listadoProductos;
 		}
 	}

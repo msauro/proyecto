@@ -11,40 +11,31 @@ class MarcaController extends Gabinando_Base {
     public function addAction(){
 		if($this->getRequest()->isPost()){
 			$params = $this->getRequest()->getPost();
-			
-		
+			// die(var_dump($params));
 			// Set idDeleted property to false in order to "reactivate" the registered admin
             $params['eliminado'] = 0;
 			
 			$marca = new Application_Model_Marca();
-            $result = $marca->add($params);
 
-			if($alreadyRegistered instanceof Exception){
-                Gabinando_Base::addError($alreadyRegistered->getMessage());
+            $marcaExistente = $marca->getMarcaByName($params['nombre']);
+
+			if($marcaExistente instanceof Exception){
+                Gabinando_Base::addError($marcaExistente->getMessage());
                 $this->_redirect('/marca/add');
-            // If this email wasn't registered in the past -> add a new marca
-            }elseif($alreadyRegistered == null){
+            // si no existe -> agregar nueva marca
+            }elseif($marcaExistente == null){
+            	$result = $marca->add($params);
 
 				if($result instanceof Exception){
 	                Gabinando_Base::addError($result->getMessage());
 	                $this->_redirect('/marca/add');
             	}
-            	Gabinando_Base::addSuccess('Marca editado correctamente');
+            	Gabinando_Base::addSuccess('Marca agregada correctamente');
             	$this->_redirect('/marca/list');
             }else{
-            	// If this email was registered in the past and is deleted now
-            	// Set idDeleted property to false in order to "reactivate" the registered admin
-            	$params['eliminado'] = 0;
-            	// Update the admin with new properties and the same id
-            	$result = $marca->edit('id', $alreadyRegistered['id'], $params);
-
-				if($result instanceof Exception){
-	                Gabinando_Base::addError($result->getMessage());
-	                $this->_redirect('/marca/add');
-	            }
-	            Gabinando_Base::addSuccess('Marca editado correctamente');
-	            $this->_redirect('/marca/list');
-            }
+            	Gabinando_Base::addError('Ya existe una marca con ese nombre.');
+	        }
+	        $this->_redirect('/marca/list');
 		}
 	}
 

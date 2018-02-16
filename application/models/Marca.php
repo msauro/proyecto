@@ -34,5 +34,24 @@ class Application_Model_Marca extends Application_Model_Base
         }
     }
 
+     public function getMarcaByName($nombre){
+        try{
+            $query = $this->select()
+                ->from($this, array('*'))
+                ->where('nombre = ?', $nombre)
+                ->where('eliminado = ?', 0);
+
+            $row = $this->fetchRow($query);
+            if(!$row) {
+                return null;
+            }
+
+            return $row->toArray();
+        }
+        catch(Exception $e){
+            return $e;
+        }
+    }
+
    
 }

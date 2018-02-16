@@ -5,7 +5,7 @@ $this->headTitle($this->title);
 <!-- BREADCRUMB -->
     <ul class="breadcrumb">
         <li><a href="/">Panel Principal</a></li>
-        <li><a href="/user/list">Producto</a></li>
+        <li><a href="/producto/list">Producto</a></li>
         <li class="active">Nuevo</li>
     </ul>
 
@@ -30,6 +30,16 @@ $this->headTitle($this->title);
                                 <div class="input-group">
                                     <span class="input-group-addon"><span class="fa fa-list"></span></span>
                                     <input name="nombre" id="nombre" type="text" class="form-control"/>
+                                </div> 
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 col-xs-12 control-label">Código</label>
+                            <div class="col-sm-6 col-xs-12">                                            
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-list"></span></span>
+                                    <input name="codigo" id="codigo" type="text" class="form-control"/>
                                 </div> 
                             </div>
                         </div>
@@ -108,6 +118,7 @@ $().ready(function() {
         ignore: '',
         rules: {
             nombre: "required",
+            codigo: "required",
             descripcion: "required",
             id_marca: "required",
             punto_pedido: "required"
@@ -127,6 +138,9 @@ $().ready(function() {
                 required: "Campo requerido"
             },
             nombre: {
+                required: "Campo requerido"
+            },
+            codigo: {
                 required: "Campo requerido"
             },
             punto_pedido: {

@@ -22,7 +22,8 @@ $(".xn-icon-button").fadeIn();
                     <div class="panel-heading">
                         <div class="panel-title-box">
                             <h3>Tipos de clientes</h3>
-                        </div>  
+                        </div>
+                        <button class="btn btn-primary pull-right" onclick="agregarTipoCliente()" data-toggle="dropdown"><span class="fa fa-plus" ></span> Nuevo</button>  
                     </div>
                         
                     <div class="panel-body">
@@ -89,10 +90,11 @@ $(".xn-icon-button").fadeIn();
             })
 
         });
-    </script>
-
-    <script>
     var editarTipoCliente = function(id){
         window.location.href = "/tipocliente/edit/id/" + id;
     }
+    var agregarTipoCliente = function(id){
+        window.location.href = "/tipocliente/add/";
+    }
     </script>
+

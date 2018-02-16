@@ -64,8 +64,6 @@ abstract class Gabinando_Base extends Zend_Controller_Action {
     }
 
     public function uploadImage($path,$file,$name,$normal=NULL){
-        $name = str_replace(' ', '-', $name);
-        $name = preg_replace('/[^A-Za-z0-9\-]/', '', $name);
         $name = strtolower($name);
         $filename = $file['name'];
         $tmp = explode('.', $filename);

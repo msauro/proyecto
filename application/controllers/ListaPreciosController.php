@@ -11,9 +11,19 @@ class ListaPreciosController extends Gabinando_Base {
     public function addAction(){
 		if($this->getRequest()->isPost()){
 			$params = $this->getRequest()->getPost();
-			$params['fecha_vigencia'] = date("Y-m-d", strtotime($params['fecha_vigencia']));
+	// 		$date_desde = new DateTime($params['fecha_desde']);
+ // $date_desde->format('Y-m-d');
+
+ 			$params['fecha_desde'] = date_create($params['fecha_desde']);
+			$params['fecha_desde'] = date_format($params['fecha_desde'],  'Y-m-d');
+			$params['fecha_hasta'] = date_create($params['fecha_hasta']);
+			$params['fecha_hasta'] = date_format($params['fecha_hasta'],  'Y-m-d');
+			// die(var_dump($date));
+			// $params['fecha_desde'] = date("Y-m-d", strtotime($params['fecha_vigencia']));
+			// $params['fecha_hasta'] = date("Y-m-d", strtotime($params['fecha_vigencia']));
             $params['eliminado'] = 0;
 			$lista_precios = new Application_Model_ListaPrecios();
+
             $result = $lista_precios->add($params);
             if($result instanceof Exception){
                 Gabinando_Base::addError($result->getMessage());
@@ -53,7 +63,10 @@ class ListaPreciosController extends Gabinando_Base {
 		if($this->getRequest()->isPost()){
 			$params = $this->getRequest()->getPost();
 			$params['id'] = $this->getRequest()->getParam('id');
-			$params['fecha_vigencia'] = date("Y-m-d", strtotime($params['fecha_vigencia']));
+			$params['fecha_desde'] = date_create($params['fecha_desde']);
+			$params['fecha_desde'] = date_format($params['fecha_desde'],  'Y-m-d');
+			$params['fecha_hasta'] = date_create($params['fecha_hasta']);
+			$params['fecha_hasta'] = date_format($params['fecha_hasta'],  'Y-m-d');
 			
 			$listaprecioModel = new Application_Model_ListaPrecios();
 			$result = $listaprecioModel->edit($params['id'], $params);

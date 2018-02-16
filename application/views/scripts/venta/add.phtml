@@ -5,7 +5,7 @@ $this->headTitle($this->title);
 <!-- START BREADCRUMB -->
 <ul class="breadcrumb">
     <li><a href="/">Panel Principal</a></li>
-    <li><a href="/usuario/list">Venta</a></li>
+    <li><a href="/venta/list">Venta</a></li>
     <li class="active">Nueva</li>
 </ul>
 <!-- END BREADCRUMB -->
@@ -55,13 +55,13 @@ $this->headTitle($this->title);
                             <li>
                                 <a href="#step-2" class="step-2">
                                     <span class="stepNumber">5</span>
-                                    <span class="stepDesc">Seleccioanr<br /><small> productos</small></span>
+                                    <span class="stepDesc">Seleccionar<br /><small> Productos</small></span>
                                 </a>
                             </li>
                             <li>
                                 <a href="#step-4" class="step-4">
                                     <span class="stepNumber">6</span>
-                                    <span class="stepDesc">Seleccioanr<br /><small>Descuentos/Impuestos</small></span>
+                                    <span class="stepDesc">Total<br /><small>Descuentos/Impuestos</small></span>
                                 </a>
                             </li>
                             <!-- <li>
@@ -95,7 +95,7 @@ $this->headTitle($this->title);
                                                 </div>
                                                 <input id="patientsearch" name="search" type="text" class="form-control" placeholder="Buscar Cliente" value="<?= $this->patient; ?>"/>
                                                 <div class="input-group-btn">
-                                                    <button class="btn btn-primary btn-search-patient">Buscar</button>
+                                                    <button class="btn btn-primary btn-buscar-cliente">Buscar</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -245,9 +245,9 @@ $this->headTitle($this->title);
                                 <div class="panel-body">
                                     <p>
                                         <div class="form-group">
-                                            <label class="col-md-2 control-label" style="width:auto; text-align:left;">Search</label>
+                                            <label class="col-md-2 control-label" style="width:auto; text-align:left;">Buscar</label>
                                             <div class="col-md-4">
-                                                <input id="product-search" class="form-control" placeholder="Search Products"/>
+                                                <input id="buscar-productos" class="form-control" placeholder="Buscar productos"/>
                                             </div>
                                             <div class="col-md-2">
                                                 <button class="btn"><i class="glyphicon glyphicon-search"></i></button>
@@ -425,47 +425,40 @@ $this->headTitle($this->title);
                             <!-- START STRIPED TABLE SAMPLE -->
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title">Summary</h3>
+                                    <h3 class="panel-title">Resumen</h3>
                                 </div>
                                 <div class="panel-body">
-                                    <form id="create-donation" role="form" class="form-horizontal">
-                                        <input type="hidden" id="form-patient" name="id_patient">
-                                        <input type="hidden" id="form-phone" name="id_phone">
-                                        <input type="hidden" id="form-driver" name="id_driver">
-                                        <input type="hidden" id="form-location" name="id_location">
-                                        <input type="hidden" id="form-time" name="time">
-                                        <input type="hidden" id="form-timeset" name="timeset">
-                                        <input type="hidden" id="form-donation_note" name="donation_note">
-                                        <input type="hidden" id="form-points" name="points">
+                                    <form id="crear-venta" role="form" class="form-horizontal">
+                                        <input type="hidden" id="form-cliente" name="id_cliente">
+                                        <!-- <input type="hidden" id="form-phone" name="id_phone"> -->
+                                        <!-- <input type="hidden" id="form-driver" name="id_driver"> -->
+                                        <!-- <input type="hidden" id="form-location" name="id_location"> -->
+                                        <!-- <input type="hidden" id="form-time" name="time"> -->
+                                        <!-- <input type="hidden" id="form-timeset" name="timeset"> -->
+                                        <!-- <input type="hidden" id="form-donation_note" name="donation_note"> -->
+                                        <!-- <input type="hidden" id="form-points" name="points"> -->
                                         <input type="hidden" id="form-id_discount" name="id_discount">
-                                        <input type="hidden" id="form-reason" name="reason">
-                                        <input type="hidden" id="form-special-discount" name="special-discount">
-                                        <input type="hidden" id="form-coupon" name="id_coupon">
-                                        <input type="hidden" id="form-discount" name="discount">
-                                        <input type="hidden" id="form-future_deliveries" name="future_deliveries">
+                                        <!-- <input type="hidden" id="form-reason" name="reason"> -->
+                                        <!-- <input type="hidden" id="form-special-discount" name="special-discount"> -->
+                                        <!-- <input type="hidden" id="form-coupon" name="id_coupon"> -->
+                                        <!-- <input type="hidden" id="form-discount" name="discount"> -->
+                                        <!-- <input type="hidden" id="form-future_deliveries" name="future_deliveries"> -->
                                         <ul style="padding:0px;">
                                             <li class="fa fa-square-o">
-                                                <span id="selected-patient" class="stepDesc">Selected Patient: </span>
+                                                <span class="stepDesc">Cliente seleccionado: <span id="cliente-seleccionado"></span> </span>
                                             </li>
-                                            <li class="fa fa-square-o">
-                                                <span id="selected-phone" class="stepDesc">Selected Phone: </span>
-                                            </li>
-                                            <li class="fa fa-square-o">
-                                                <span id="selected-location" class="stepDesc">Selected Location: </span>
-                                            </li>
-                                            <li class="fa fa-square-o">
-                                                <span id="selected-driver" class="stepDesc">Selected Driver: </span>
-                                            </li>
+                                            <!-- <li class="fa fa-square-o">
+                                                <span id="selected-phone" class="stepDesc">Productos seleccionados: </span>
+                                            </li> -->
                                             <li id="selected-products" class="fa fa-square-o">
-                                                <span class="stepDesc">Selected Products:</span>
+                                                <span class="stepDesc">Productos seleccionados:</span>
                                                 <div class="table-responsive" style="margin-top:10px;">
                                                     <table class="table table-striped" style="font-size: 10px;display:none;">
                                                         <thead>
                                                             <tr>
-                                                                <th>Qty</th>
-                                                                <th>Name</th>
-                                                                <!--th>Sub-Total</th-->
-                                                                <th></th>
+                                                                <th>Cant</th>
+                                                                <th>Nombre</th>
+                                                                <th>Sub-Total</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -491,20 +484,27 @@ $this->headTitle($this->title);
                                                  
                                             </li>
                                             <li class="fa fa-square-o">
-                                                <span id="selected-time" class="stepDesc">Selected Time: </span>
+                                                <span id="selected-location" class="stepDesc">Total: </span>
                                             </li>
+                                            <!-- <li class="fa fa-square-o">
+                                                <span id="selected-driver" class="stepDesc">Selected Driver: </span>
+                                            </li> -->
+                                            
+                                            <!-- <li class="fa fa-square-o">
+                                                <span id="selected-time" class="stepDesc">Selected Time: </span>
+                                            </li> -->
                                         </ul>
                                     </form>
                                 </div>
                             </div>
-                            <div class="panel panel-default">
+                            <!-- <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h3 id="previously_ordered" class="panel-title">Previously Ordered</br></h3>
                                 </div>
                                 <div id='previously_product_name'>
 
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
    
                         <!-- Modal -->
@@ -514,10 +514,10 @@ $this->headTitle($this->title);
                                 <div class="modal-content" >
                                     <div class="modal-header" id="discount-header">
                                       <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                      <h4 class="modal-title">Warning!</h4>
+                                      <h4 class="modal-title">Atención!</h4>
                                     </div>
                                     <div class="modal-body">
-                                      <p>The selected discount is larger than the sale total</p>
+                                      <p>El descuento seleccionado es mayor al total</p>
                                       <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
                                     </div>
                                 </div>
@@ -791,10 +791,11 @@ $('.datepicker').datepicker({
 });
 
 $(document).ready(function(){
+     
 
     <?php if ( isset($this->patient) ) : ?>
     setTimeout(function(){
-      $('.btn-search-patient').click();
+      $('.btn-buscar-cliente').click();
     }, 100);
     <?php endif; ?>
 
@@ -948,7 +949,7 @@ $(function() {
                 
                 var params = {};
 
-                params.data = $("#create-donation").serialize();    
+                params.data = $("#crear-venta").serialize();    
                 params.futureDeliveries = futureDeliveries;
                 panelAjax("/admin_donations/setdonation",params, function(data){              
  
@@ -985,23 +986,39 @@ $(function() {
 
     $(".note_step5").append('<textarea data-toggle="tooltip" title="Limit 140 characters!" maxlength="140" name="note_donation" id="donation_note" class="form-control" placeholder="Type a note for this donation">');
 
+    //Selecciono el cliente
     $("#list-cliente").on( "click", ".select-patient", function(slideEvt) {
         if($(this).attr('id') != ""){
             var params = {};
             // TOMAR ID DE OTRO LADO
             // params.id_patient = $(this).attr('id');
             params.id = $(this).attr('id');
-            // id_patient = $(this).attr('id');
-            id = $(this).attr('id');
-            $("#form-patient").val(id_patient);
-            patient_dispenser = $(this).attr('rel');
-            patient_name = $(this).attr('title');
-            patient_points = $(this).attr('attr-points');      
+            params.nombre = $(this).attr('title');
+            console.log(params);
+            $(this).toggleClass('selected');
+            $(this).siblings().removeClass('selected');
+              if(!$("#cliente-seleccionado").closest('li').hasClass("fa-check-square-o"))
+                $("#cliente-seleccionado").closest('li').toggleClass('fa-square-o fa-check-square-o');
+            $("#cliente-seleccionado").text(params.nombre);
 
-            if($('#previously_ordered .patientName')){
-                $('#previously_ordered .patientName').remove();
-            }
-            $("#previously_ordered").append('<strong class="patientName">'+patient_name+' </strong>'); 
+            //lleno el formulario con el ID del cliente
+            $("#form-cliente").val(params.id);
+            $('.buttonNext').click();
+
+
+
+
+            // id_patient = $(this).attr('id');
+            // console.log( params);
+            // id = $(this).attr('id');
+            // patient_dispenser = $(this).attr('rel');
+            // patient_name = $(this).attr('title');
+            // patient_points = $(this).attr('attr-points');      
+
+            // if($('#previously_ordered .patientName')){
+            //     $('#previously_ordered .patientName').remove();
+            // }
+            // $("#previously_ordered").append('<strong class="patientName">'+patient_name+' </strong>'); 
 
             // TOMAR ID DE OTRO LADO
              // Borrar los datos de los pasos siguientes
@@ -1009,65 +1026,7 @@ $(function() {
             products = [];
             prices = {};       
             totalSum(prices);
-            // <?php if($this->reward['enable_points']): ?>
-            //         maxpoints = patient_points > <?= $this->reward['maxpointsdiscount'] ?> ? <?= $this->reward['maxpointsdiscount'] ?> : patient_points; 
-            //         partialredemption = <?= $this->reward['partialredemption'] == "0" ? 0 : 1 ?>;
-            //         step =  partialredemption ? <?= explode(',',$this->reward['redemptionconversionrate'])[0] ?> : maxpoints;
-            //         $('#maxpoints').text('/'+maxpoints);
-            //         $('#availablepoints').text("Patien't Available Points: "+patient_points);
-            //         slider.slider('setValue',0)
-            //         slider.slider('setAttribute','max',maxpoints);
-            //         slider.slider('setAttribute','step',step);
-            // <?php endif ?>
-
-            // result = panelAjax("/admin_patients/getpatientphones",params, function(data){
-            //         $("#step-2 .panel-heading h3").text(patient_name+" Phones");
-            //         $("#selected-patient small").remove();
-            //         $("#selected-patient").append('<small>'+patient_name+'</small>');
-            //         $("#selected-patient").closest("li").removeClass("fa-square-o");
-            //         $("#selected-patient").closest("li").addClass("fa-check-square-o");
-                    
-            //         $("#phones tbody").empty();
-            //         $.each(data, function( index, value ) {
-            //             $("#phones tbody").append('<tr id="'+value.id_phone+'">'+
-            //                                             '<td>'+value.id_phone+'</td>'+
-            //                                             '<td><button rel="'+value.id_phone+'" class="btn btn-warning phone-open" data-toggle="modal" data-target="#modal_edit_phone">'+value.number+'</button></td>'+
-            //                                             ' <th class="selected"></th>'+
-            //                                             '<th>'+
-            //                                             '<button class="btn btn-default select-phone">Choose <!--i class="fa fa-arrow-right"></i></button-->'+
-            //                                             '</th>'+
-                                                         
-            //                                         '</tr>');
-            //             if(value.default == 1) {
-            //                 $("#"+value.id_phone).find(".selected").html('<span class="label label-default label-form">default</span>');
-            //             }
-
-            //         });                    
-
-            //         $(".actionBar .btn-default.pull-right").removeClass("disabled");
-            //         $('.buttonNext').click();
-            //     });
-
-            // panelAjax("/admin_patients/getpreviouslyordered",params, function(data){
-            //     $('#previously_product_name').empty();
-            //     if (data.firstDonationDate!=null) {
-            //         var firstDate = data.firstDonationDate.substr(0,10);
-            //         $('#previously_product_name').append('<div class="firstDate">'+firstDate+'</div>');
-            //         $.each(data.firstDonation, function(index, value) {
-            //             $('.firstDate').append('<span>'+ value['name_product']+'</span></br>');
-            //         })
-            //     }
-            //     if (data.secondDonationDate!=null) {
-            //         var secondDate = data.secondDonationDate.substr(0,10);
-            //         $('#previously_product_name').append('<div class="secondDate">'+secondDate+'</div>');
-            //         $.each(data.secondDonation, function(index, value) {
-            //             $('.secondDate').append('<span>'+ value['name_product'] +'</span></br>');
-            //         })
-            //     }
-            //     if (data.secondDonationDate==null && data.firstDonationDate==null) {
-            //         $('#previously_product_name').append('<div class="secondDate">No previously ordered</div>');
-            //     }
-            // })
+            
         }else{
             if(!$(".actionBar .btn-default.pull-right").hasClass("disabled"))
                 $(".actionBar .btn-default.pull-right").addClass("disabled");
@@ -1093,16 +1052,18 @@ $(function() {
         id_driver = $(this).find(".driver_id").text();
         $(".drivers .widget").removeClass("widget-success");
         $(this).addClass("widget-success");
-        $("#form-driver").val(id_driver);
+        $id_cliente = $("#form-cliente").val();
         var params = {};
-        params.id_patient = id_patient;
+        var id_cliente = $("#form-cliente").val();
+
+        params.id_cliente = id_cliente;
         params.id_dispenser = patient_dispenser;
         params.lat = latitude;
         params.lon = longitude;
         params.id_driver = id_driver;
         
         // Traigo los productos del driver para listar
-        getProducts(id_driver,null);
+        getProducts(id_cliente,null);
         //Cargo el mapa con las locations
         calcRoute(id_driver);
         
@@ -1250,11 +1211,12 @@ $(function() {
     });
 
     var timeoutID = null;
-    $('#product-search').keyup(function() {
+    $('#buscar-productos').keyup(function() {
         clearTimeout(timeoutID);
         var $target = $(this);
         var id_driver = $("#form-driver").val();
-        timeoutID = setTimeout(function() { getProducts(id_driver,$target.val()); }, 500); 
+        var id_cliente = $("#form-cliente").val();
+        timeoutID = setTimeout(function() { getProducts(id_cliente,$target.val()); }, 500); 
     });
 
     $('#patientsearch').keyup(function(event) {
@@ -1265,7 +1227,7 @@ $(function() {
         }
     });
 
-    $('.btn-search-patient').click(function() {
+    $('.btn-buscar-cliente').click(function() {
         var search = $('#patientsearch').val();
         getClientes(search);
     });
@@ -1279,9 +1241,9 @@ $(function() {
         var val     = $('#page').attr('rel');
         val         = parseInt(val) + parseInt(1);
         page        = $('#page').attr('rel',val);
-        search      = $('#product-search').val();
-        id_driver   = $("#form-driver").val();
-        getProducts(id_driver,search);
+        search      = $('#buscar-productos').val();
+        id_cliente  = $("#form-cliente").val();
+        getProducts(id_cliente,search);
     });
 
     $("#prev").click(function() {
@@ -1289,9 +1251,10 @@ $(function() {
         if (val > 1) {
             val         = parseInt(val) - parseInt(1);
             page        = $('#page').attr('rel',val);
-            search      = $('#product-search').val();
-            id_driver   = $("#form-driver").val();
-            getProducts(id_driver,search);
+            search      = $('#buscar-productos').val();
+            id_cliente  = $("#form-cliente").val();
+
+            getProducts(id_cliente,search);
         }
     });
 
@@ -1313,9 +1276,13 @@ $(function() {
         }      
     });
 
+    
+
     $(".step-2").click(function(){
        $('#summarydiscounts').hide();  
     });
+
+
 
     $(".step-4").click(function(){
        $('#summarydiscounts').show(); 
@@ -1543,9 +1510,11 @@ var totalSum = function(prices){
 function validateSteps(step) {
     var status = true;
     var form_data = {};
-    form_data = $("#create-donation").serializeArray();
+    form_data = $("#crear-venta").serializeArray();
     switch(step) {
         case "1":
+        console.log(form_data);
+
             if( form_data[0]['value']=="" ){
                 status = false;
                 $('.wizard').smartWizard('showMessage','Selecciona un cliente y haga click en "Siguiente".');
@@ -1664,13 +1633,14 @@ function resetForm(step){
     };
 }
 
-function getProducts(driver,search){
+function getProducts(id_cliente,search){
     var params = {};
-    params.id       = driver;
-    params.search   = search;
-    params.page     = $('#page').attr('rel');
+    params.id_cliente    = id_cliente;
+    params.search        = search;
+    params.page          = $('#page').attr('rel');
+    console.log(params);
     if (params.page < 0) { params.page = 1; };
-    panelAjax("/admin_drivers/adminproducts/",params, function(data){
+    panelAjax("/producto/getproductos/",params, function(data){
         $(".products tbody").html('');
         $.each(data, function( index, value ){
             item = "<tr id='product_" + value.id_product + "'>" +
