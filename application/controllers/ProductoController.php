@@ -144,7 +144,6 @@ class ProductoController extends Gabinando_Base {
     public function getproductosAction(){
 		$producto = new Application_Model_Producto();		
 		$params 	 = $params = $this->getRequest()->getParams();
-// die(var_dump($params['id_cliente']));
 		if( isset($params['search']) ){
 			$search 	 = array(
 				'search' => $params['search'],
@@ -156,7 +155,7 @@ class ProductoController extends Gabinando_Base {
 			);
 		}
 
-		$id_cliente = $params['id_cliente'];
+		// $id_cliente = $params['id_cliente'];
 
 		if (isset($params['page']) AND $params['page']) {
 			$paginate['page']  	= $params['page'];
@@ -168,28 +167,25 @@ class ProductoController extends Gabinando_Base {
 
 		$paginate['start_from'] = ($paginate['page']-1) * $paginate['per_page'];
 
-		$productos = $producto->getProductosSegunLista($id_cliente,$search,$paginate);
+		$productos = $producto->getListFiltered($search,$paginate);
 		if($productos instanceof Exception)
 			$this->sendErrorResponse($productos->getMessage());
-die(var_dump($productos));
+		$productoPager = $producto->getListFiltered($search);
+		if($productoPager instanceof Exception)
+			$this->sendErrorResponse($productoPager->getMessage());
 
+		$productoList = $producto->getList($search);
+		if($productoList instanceof Exception)
+			$this->sendErrorResponse($productoList->getMessage());
 
-		$clientePager = $cliente->getListFiltered($search);
-		if($clientePager instanceof Exception)
-			$this->sendErrorResponse($clientePager->getMessage());
-
-		$clienteList = $cliente->getList($search);
-		if($clienteList instanceof Exception)
-			$this->sendErrorResponse($clienteList->getMessage());
-
-		$pages = ceil(count($clientePager) / $paginate['per_page']);
+		$pages = ceil(count($productoPager) / $paginate['per_page']);
 
 		$this->sendSuccessResponse(array(
-				'search' 	=> $search,
-				'clientes' 	=> $productos,
-				'total' 	=> count($clienteList),
-				'pages' 	=> $pages,
-				'page' 		=> $paginate['page']
+				'search' 		=> $search,
+				'productos' 	=> $productos,
+				'total' 		=> count($productoList),
+				'pages' 		=> $pages,
+				'page' 			=> $paginate['page']
 			));
 
 	}

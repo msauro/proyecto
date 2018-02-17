@@ -68,76 +68,34 @@ class Application_Model_Producto extends Application_Model_Base
         }
     }
 
-    public function getProductosSegunLista($id_cliente,$search=NULL,$paginate=NULL){
+     public function getListFiltered($search,$paginate=NULL){
         $days = 15;
         $fecha = date('Y-m-j');
         $nuevafecha = strtotime ( "-$days day" , strtotime ( $fecha ) ) ;
         $nuevafecha = date ( 'Y-m-j' , $nuevafecha );
-// die('ARREGLAR JOIN CON CLIENTE, NO DETECTA EL $ID_CLIENTE');
+
         $search['search'] = $search['search'];
         $query = $this->select()->setIntegrityCheck(false)
             ->from($this, array('*'))
-            ->join('clientes', 'clientes.id ='+$id_cliente+, array('*'))
-            ->join('listas_precios', 'listas_precios.tipo_cliente = clientes.id_tipo_cliente', array('*'))
-            ->join('precios', 'precios.id_producto = productos.id' AND 'precios.id_lista_precio = listas_precios.id', array('*'))
-            ->where('listas_precios.eliminado = 0')
-            ->where('precios.eliminado = 0')
+            ->join('precios', 'precios.id_producto = productos.id', array('precios.precio'))
+            ->join('marcas', 'marcas.id = productos.id_marca', array('marcas.nombre as nom_marca'))
             ->where('productos.eliminado = 0')
-            ->where('clientes.eliminado = 0');
-            
-
+            ->where('marcas.eliminado = 0')
+            ->where('precios.eliminado = 0')
+            ->where("(productos.codigo LIKE '%{$search['search']}%' OR productos.nombre LIKE '%{$search['search']}%' OR descripcion LIKE '%{$search['search']}%')")
+            ->group('productos.nombre');
             // if(!$order){
             //     $query->order('id DESC');
             // }else{
             //     $query->order( $order );
             // }
 
-            if ($paginate)
-                $query->limit($paginate['per_page'],$paginate['start_from']);
-            // switch ($search["filter"]) {
-            //     case 'auth':
-            //         $query->where('recommendation_allowed = 1');
-            //         break;
-            //     case 'notauth':
-            //         $query->where('recommendation_allowed = 0');
-            //         break;
-            //     case 'active':
-            //         $query->where('status = 1');
-            //         break;
-            //     case 'inactive':
-            //         $query->where('status = 0');
-            //         break;
-            //     case 'new':
-            //         $fecha = date('Y-m-j');
-            //         $nuevafecha = strtotime ( "-$days day" , strtotime ( $fecha ) ) ;
-            //         $nuevafecha = date ( 'Y-m-j' , $nuevafecha );
-
-            //         $query = $this->select()->setIntegrityCheck(false)
-            //         ->from($this, array('*'))
-            //         ->where('eliminado = 0')
-            //         // ->where("created_at >= '$nuevafecha'")
-            //         ->group('id');
-
-            //         // $query->where("created_at >= '$nuevafecha'");
-            //         break;
-            //     case 'expired':
-            //         $query->where('expire_recommendation_id <= ?',date('Y-m-d'));
-            //         break;
-            //     case 'dontbuy30days':
-            //         $query = $this->select()->setIntegrityCheck(false)
-            //             ->from($this, '*')
-            //             ->where('id_patient NOT IN (SELECT donations.id_patient FROM donations WHERE (date >= (NOW() - INTERVAL 30 DAY)) GROUP BY `donations`.`id_patient`)')
-            //             ->where('is_deleted = 0')
-            //             ->where('status = 1')
-            //             ->group('patients.id_patient');
-            //         break;                        
-            //     default:
-            //         break;
-            // }    
-    die($query);
+        if ($paginate)
+            $query->limit($paginate['per_page'],$paginate['start_from']);
+             
         $rows = $this->fetchAll($query);
 
         return $rows->toArray();
     }
-   
+
 }

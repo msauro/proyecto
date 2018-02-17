@@ -258,13 +258,13 @@ $this->headTitle($this->title);
                                         <table class="table table-striped">
                                             <thead>
                                                 <tr>
-                                                    <th>#</th>
+                                                    <th>Código</th>
                                                     <th>Nombre</th>
                                                     <th>Marca</th>
                                                     <th>Stock</th>
                                                     <th>Precio</th>
-                                                    <th>Status</th>
-                                                    <th style="width: 70px"></th>
+                                                    <th>Estado</th>
+                                                    <th style="width: 70px">Acciones</th>
                                                 <tr>
                                             </thead>
                                             <tbody id="productList"></tbody>
@@ -1063,7 +1063,7 @@ $(function() {
         params.id_driver = id_driver;
         
         // Traigo los productos del driver para listar
-        getProducts(id_cliente,null);
+        getProducts();
         //Cargo el mapa con las locations
         calcRoute(id_driver);
         
@@ -1216,7 +1216,7 @@ $(function() {
         var $target = $(this);
         var id_driver = $("#form-driver").val();
         var id_cliente = $("#form-cliente").val();
-        timeoutID = setTimeout(function() { getProducts(id_cliente,$target.val()); }, 500); 
+        timeoutID = setTimeout(function() { getProducts(); }, 500); 
     });
 
     $('#patientsearch').keyup(function(event) {
@@ -1243,7 +1243,7 @@ $(function() {
         page        = $('#page').attr('rel',val);
         search      = $('#buscar-productos').val();
         id_cliente  = $("#form-cliente").val();
-        getProducts(id_cliente,search);
+        getProducts();
     });
 
     $("#prev").click(function() {
@@ -1254,7 +1254,7 @@ $(function() {
             search      = $('#buscar-productos').val();
             id_cliente  = $("#form-cliente").val();
 
-            getProducts(id_cliente,search);
+            getProducts();
         }
     });
 
@@ -1633,45 +1633,40 @@ function resetForm(step){
     };
 }
 
-function getProducts(id_cliente,search){
+function getProducts(){
     var params = {};
-    params.id_cliente    = id_cliente;
-    params.search        = search;
+    // params.id_cliente    = id_cliente;
+    params.search        = $('#buscar-productos').val();;
     params.page          = $('#page').attr('rel');
     console.log(params);
     if (params.page < 0) { params.page = 1; };
     panelAjax("/producto/getproductos/",params, function(data){
         $(".products tbody").html('');
-        $.each(data, function( index, value ){
-            item = "<tr id='product_" + value.id_product + "'>" +
-                "<td class='id_product'>" + value.id_product + "</td>" +
-                "<td><div class='name'>" + value.name + " (" + value.amount + " " + value.measure +  ")</div>";
-
-                if(value.prices){
-                    item = item + "<p style='padding-top:6px;'>";
-                    $.each(value.prices,function( i, val ) {
-                        if (val.qty > 0) {
-                            item = item + "<strong>Buy " + val.qty + "</strong> (" + val.label + ") for <strong>$" + val.price + "</strong><br>";
-                        };
-                    })
-                    item = item + "</p>";
-                };
-
-                item = item + "</td><td>" + value.categoryName + "</td>" + 
-                "<td>" + value.qty + "</td>" +
-                "<td class='price'>$" + value.price;
+        $.each(data.productos, function( index, value ){
+        console.log('eeeeee');
+        console.log(value);
+            item = "<tr id='id" + value.id + "'>" +
+                "<td class='codigo'>" + value.codigo + "</td>" +
+                "<td class='marca'>" + value.nombre + "</td>" +
+                "<td class='marca'>" + value.nom_marca + "</td>" +
+                "<td class='existencia'>" + value.existencia + "</td>" +
+                "<td class='precio'>$ " + value.precio + "</td>";
+               
+                // item = item + "</td><td>" + value.categoryName + "</td>" + 
+                // "<td>" + value.qty + "</td>" +
+                // "<td class='price'>$" + value.price;
                 
-                if (value.price_special) {
-                    item = item + " <i class='fa fa-tags'></i>";
-                };
+                // if (value.price_special) {
+                //     item = item + " <i class='fa fa-tags'></i>";
+                // };
 
                 item = item + "</td>" + "<td>";
-                if (value.qty <= 0 || value.qty == null) {
-                    item = item + "<span class='label label-danger'>Out of stock</span>";
-                }else if(value.qty < value.driver_point_order){
-                    item = item + "<span class='label label-warning'>Point of order</span>";
+                if (value.existencia <= 0 || value.existencia == null) {
+                    item = item + "<span class='label label-danger'>Sin stock</span>";
+                }else if(value.existencia < value.punto_pedido){
+                    item = item + "<span class='label label-warning'>Punto de pedido</span>";
                 }else{
-                    item = item + "<span class='label label-success'>In Stock</span>";
+                    item = item + "<span class='label label-success'>En Stock</span>";
                 }
                 item = item + "</td>" + 
                 "<td style='margin:0px;padding:0px;'>" +
@@ -1681,7 +1676,7 @@ function getProducts(id_cliente,search){
                 "</div>"              
                 "</td>" +
             "</tr>";
-            $(".products tbody").append(item);
+            $("#productList").append(item);
         });
     });
 }
