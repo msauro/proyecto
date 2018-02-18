@@ -254,3 +254,9 @@ body.page-container-boxed {
 .fa.fa-user.deudor {
   color: red !important;
 }
+.profile-data{
+  color: #FFF;
+}
+.ver-producto{
+  margin-left: 1px !important;
+}

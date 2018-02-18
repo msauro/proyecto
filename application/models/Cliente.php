@@ -99,6 +99,7 @@ class Application_Model_Cliente extends Application_Model_Base
         $query = $this->select()->setIntegrityCheck(false)
             ->from($this, array('*'))
             ->join('estados', 'estados.id = clientes.estado', array('estados.nombre as nom_estado'))
+            ->join('tipo_cliente', 'tipo_cliente.id = clientes.id_tipo_cliente', array('tipo_cliente.nombre as tipo_cliente', 'tipo_cliente.descuento'))
             ->where('clientes.eliminado = 0')
             ->where("(clientes.id LIKE '%{$search['search']}%' OR clientes.nombre LIKE '%{$search['search']}%' OR apellido LIKE '%{$search['search']}%' OR email LIKE '%{$search['search']}%' OR cuit LIKE '%{$search['search']}%' OR CONCAT(clientes.nombre,' ', apellido) LIKE '%{$search['search']}%')")
             ->group('clientes.id');

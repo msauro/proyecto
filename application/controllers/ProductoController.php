@@ -89,7 +89,7 @@ class ProductoController extends Gabinando_Base {
 			}
 
 			$producto = new Application_Model_Producto();
-			$productoExistente = $producto->getProductosByParams($params['codigo'], $params['id_marca']);
+			$productoExistente = $producto->getProductosByParams($params['codigo'], $params['id_marca'], $params['id']);
 			
 			if($productoExistente instanceof Exception){
                 Gabinando_Base::addError($productoExistente->getMessage());
@@ -188,6 +188,12 @@ class ProductoController extends Gabinando_Base {
 				'page' 			=> $paginate['page']
 			));
 
+	}
+
+	public function getProductoById($id=null){
+		$producto = new Application_Model_Producto();		
+		$params 	 = $params = $this->getRequest()->getParams();
+		die(var_dump($id));
 	}
 		
 		

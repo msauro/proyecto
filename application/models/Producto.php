@@ -48,13 +48,16 @@ class Application_Model_Producto extends Application_Model_Base
         return $rows->toArray();
     }
 
-    public function getProductosByParams($codigo, $id_marca){
+    public function getProductosByParams($codigo, $id_marca, $id_producto = null){
         try{
             $query = $this->select()
                 ->from($this, array('*'))
                 ->where('id_marca = ?', $id_marca)
                 ->where('codigo = ?', $codigo)
                 ->where('eliminado = ?', 0);
+            if ($id_producto) {
+                $query ->where('id != ?', $id_producto);
+            }
 
             $row = $this->fetchRow($query);
             if(!$row) {
@@ -68,7 +71,7 @@ class Application_Model_Producto extends Application_Model_Base
         }
     }
 
-     public function getListFiltered($search,$paginate=NULL){
+    public function getListFiltered($search,$paginate=NULL){
         $days = 15;
         $fecha = date('Y-m-j');
         $nuevafecha = strtotime ( "-$days day" , strtotime ( $fecha ) ) ;
