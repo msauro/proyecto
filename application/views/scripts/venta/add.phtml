@@ -43,7 +43,7 @@ $this->headTitle($this->title);
                             <li>
                                 <a href="#step-3" class="step-3">
                                     <span class="stepNumber">6</span>
-                                    <span class="stepDesc">Finalizar<br /><small>Venta</small></span>
+                                    <span class="stepDesc">Resumen<br /><small>Venta</small></span>
                                 </a>
                             </li>
                           
@@ -111,6 +111,57 @@ $this->headTitle($this->title);
                             <!-- END STRIPED TABLE SAMPLE -->
                         </div>
 
+                        <!-- <div id="step-2">
+                            <div id="list-phone" class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <p>
+                                            <button class="btn btn-success" data-toggle="modal" data-target="#modal_add_phone">Add new phone</button>
+                                        </p>
+                                        <div id="phones" class="table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Phone Number</th> 
+                                                        <th></th>                                                   
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+
+                       <!--  <div id="step-3">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <p>
+                                        <button class="btn btn-success" data-toggle="modal" data-target="#modal_add_location">Add new location</button>
+                                    </p>
+                                    <div id="locations" class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Name</th>
+                                                    <th>Address</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+
+
                         <div id="step-2">
 
                             <!-- START STRIPED TABLE SAMPLE -->
@@ -166,15 +217,31 @@ $this->headTitle($this->title);
                             </div>
                             <!-- END STRIPED TABLE SAMPLE -->
                         </div>
-
                         <div id="step-3">
+                            <div id="summarydiscounts" style="display: none;">
                             <!-- START STRIPED TABLE SAMPLE -->
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title">Resumen de la venta</h3>
+                                    <h3 class="panel-title">Descuentos</h3>
                                 </div>
                                 <div class="panel-body">
+                                   <!--  < ?php if($this->reward['enable_points']): ?>
+                                        <b id="availablepoints" style="text-align: center;padding-top: 5px;";></b>                           
                                     <div class="form-group">
+                                        <h6 style="text-align: center">< ?= $this->reward['pointslabel']?></h6>    
+                                        <div class="col-md-12" style="text-align: center">
+                                            <b style="margin-right: 15px;padding-top: 5px;">0</b>
+                                            <input id="slider" type="text" data-slider-min="0" data-slider-max="0" data-slider-step="0" data-slider-value="0"><b id="points" style="margin-left: 15px;padding-top: 5px;";>0</b><b id="maxpoints" style="margin-left: 15px;padding-top: 5px;";></b><span class="fa fa-question-circle fa-lg col-md-1 qstdon" aria-hidden="true" data-toggle="tooltip" title="" data-original-title="The maximum amount of usable points is the minimum value between patient’s available points and the maximum points for donation set in Reward Program section."></span>
+                                            <div style="text-align: center;">
+                                                <span id="redeemspan">
+                                                    &#9733;<strong id="redeempoints">0</strong> = $<strong id="reedemamount">0</strong>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    < ?php endif;?>  -->
+                                    <div class="form-group">
+                                        
                                         <label class="col-md-3 control-label">Coupon</label>
                                         <span id="couponspan">
                                             <strong id="couponamount"><span class="fa fa-ticket" style="float:none;color: #719D47;"></span></strong>
@@ -216,7 +283,7 @@ $this->headTitle($this->title);
                                     </div>
                                 </div>
                             </div>
-                          <!--   <div class="panel panel-default">
+                            <div class="panel panel-default" style="display:none">
                                 <div class="panel-heading">
                                     <h3 class="panel-title">Fees</h3>
                                 </div>
@@ -247,7 +314,8 @@ $this->headTitle($this->title);
                                     </div>
                                                                    
                                 </div>
-                            </div> -->
+                            </div>
+                        </div>
                             
                         </div>
                       
@@ -720,6 +788,23 @@ $(function() {
         }
     });
 
+    $(".buttonNext").click(function(){
+        var step = $('.wizard').smartWizard('currentStep');
+        switch(step){
+            case 6:
+                $('#summarydiscounts').show();
+                break;           
+        }      
+    });
+
+    $(".buttonPrevious").click(function(){
+        var step = $('.wizard').smartWizard('currentStep');
+        switch(step){
+            case 5:
+                $('#summarydiscounts').hide();
+                break;          
+        }      
+    });
 
     var donations = [];
     var sortedDonations = [];
