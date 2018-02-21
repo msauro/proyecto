@@ -69,7 +69,7 @@ $this->headTitle($this->title);
                                                 <div class="input-group-addon">
                                                     <span class="fa fa-search"></span>
                                                 </div>
-                                                <input id="patientsearch" name="search" type="text" class="form-control" placeholder="Buscar Cliente" value="<?= $this->patient; ?>"/>
+                                                <input id="buscar-cliente" name="search" type="text" class="form-control" placeholder="Buscar Cliente" value="<?= $this->patient; ?>"/>
                                                 <div class="input-group-btn">
                                                     <button class="btn btn-primary btn-buscar-cliente">Buscar</button>
                                                 </div>
@@ -111,59 +111,7 @@ $this->headTitle($this->title);
                             <!-- END STRIPED TABLE SAMPLE -->
                         </div>
 
-                        <!-- <div id="step-2">
-                            <div id="list-phone" class="col-md-12">
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-                                        <p>
-                                            <button class="btn btn-success" data-toggle="modal" data-target="#modal_add_phone">Add new phone</button>
-                                        </p>
-                                        <div id="phones" class="table-responsive">
-                                            <table class="table table-striped">
-                                                <thead>
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>Phone Number</th> 
-                                                        <th></th>                                                   
-                                                        <th></th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
-
-                       <!--  <div id="step-3">
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                    <p>
-                                        <button class="btn btn-success" data-toggle="modal" data-target="#modal_add_location">Add new location</button>
-                                    </p>
-                                    <div id="locations" class="table-responsive">
-                                        <table class="table table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>Name</th>
-                                                    <th>Address</th>
-                                                    <th></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
-
-
                         <div id="step-2">
-
                             <!-- START STRIPED TABLE SAMPLE -->
                             <div class="panel panel-default">
                                 <div class="panel-heading">
@@ -217,108 +165,94 @@ $this->headTitle($this->title);
                             </div>
                             <!-- END STRIPED TABLE SAMPLE -->
                         </div>
+                        <!-- //Finalizar venta -->
                         <div id="step-3">
                             <div id="summarydiscounts" style="display: none;">
                             <!-- START STRIPED TABLE SAMPLE -->
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title">Descuentos</h3>
-                                </div>
-                                <div class="panel-body">
-                                   <!--  < ?php if($this->reward['enable_points']): ?>
-                                        <b id="availablepoints" style="text-align: center;padding-top: 5px;";></b>                           
-                                    <div class="form-group">
-                                        <h6 style="text-align: center">< ?= $this->reward['pointslabel']?></h6>    
-                                        <div class="col-md-12" style="text-align: center">
-                                            <b style="margin-right: 15px;padding-top: 5px;">0</b>
-                                            <input id="slider" type="text" data-slider-min="0" data-slider-max="0" data-slider-step="0" data-slider-value="0"><b id="points" style="margin-left: 15px;padding-top: 5px;";>0</b><b id="maxpoints" style="margin-left: 15px;padding-top: 5px;";></b><span class="fa fa-question-circle fa-lg col-md-1 qstdon" aria-hidden="true" data-toggle="tooltip" title="" data-original-title="The maximum amount of usable points is the minimum value between patient’s available points and the maximum points for donation set in Reward Program section."></span>
-                                            <div style="text-align: center;">
-                                                <span id="redeemspan">
-                                                    &#9733;<strong id="redeempoints">0</strong> = $<strong id="reedemamount">0</strong>
-                                                </span>
-                                            </div>
-                                        </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Descuentos</h3>
                                     </div>
-                                    < ?php endif;?>  -->
-                                    <div class="form-group">
-                                        
-                                        <label class="col-md-3 control-label">Coupon</label>
-                                        <span id="couponspan">
-                                            <strong id="couponamount"><span class="fa fa-ticket" style="float:none;color: #719D47;"></span></strong>
-                                        </span>  
-                                        <div class="col-md-6">
-                                            <input id="coupon_value" type="text" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <h6 style="text-align: center"><u>Reward Discount</u></h6>  
-                                        <div class="col-md-12" style="text-align: center;">
-                                         <h3><span id="rdiscount">0%</span></h3>
-                                          <input id="rdiscount_hidden" type="hidden" class="form-control" value="0">                       
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label">Discount</label>
-                                       
-                                        <div class="col-md-3 " id="percent_fa">
-                                              
-                                            <select class="form-control select" id="discount_options">
-                                                <option value="select_discount"><?php echo "Please select a discount" ?></option>
-                                                <?php foreach ($this->discount as $i => $discount) {?> 
-                                                <option value="<?php echo $discount['id_discount']; ?>" attr-amount="<?php echo $discount['amount']; ?>" attr-reason ="<?php echo $discount['reason']; ?>"> <?php echo $discount['name']; ?></option>
-                                                <?php } ?> 
-                                            </select>
-                                        </div>
-                                        <div class="input-group col-md-2">
-                                            <input id="discount" name="discount" value="0" type="text" class="form-control" style="border-radius: 4px !important;" readonly>
+                                    <div class="panel-body">
+                                        <div class="form-group">
                                             
-                                        <span class="fa fa-question-circle fa-lg col-md-1 qstdon" aria-hidden="true" data-toggle="tooltip" title="Write a number to set the discount in a specific amount, or type '%' after the number to set it as a percentage"></span> 
-                                        </div> 
-                                        <div class="form-group" style="display:none" id="reason">
-                                            <label class="col-md-3 control-label">Reason</label>
+                                            <label class="col-md-3 control-label">Coupon</label>
+                                            <span id="couponspan">
+                                                <strong id="couponamount"><span class="fa fa-ticket" style="float:none;color: #719D47;"></span></strong>
+                                            </span>  
                                             <div class="col-md-6">
-                                                <textarea class="form-control" name="reason" id="reason_value" ></textarea>
+                                                <input id="coupon_value" type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <h6 style="text-align: center"><u>Reward Discount</u></h6>  
+                                            <div class="col-md-12" style="text-align: center;">
+                                             <h3><span id="rdiscount">0%</span></h3>
+                                              <input id="rdiscount_hidden" type="hidden" class="form-control" value="0">                       
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Discount</label>
+                                           
+                                            <div class="col-md-3 " id="percent_fa">
+                                                  
+                                                <select class="form-control select" id="discount_options">
+                                                    <option value="select_discount"><?php echo "Please select a discount" ?></option>
+                                                    <?php foreach ($this->discount as $i => $discount) {?> 
+                                                    <option value="<?php echo $discount['id_discount']; ?>" attr-amount="<?php echo $discount['amount']; ?>" attr-reason ="<?php echo $discount['reason']; ?>"> <?php echo $discount['name']; ?></option>
+                                                    <?php } ?> 
+                                                </select>
+                                            </div>
+                                            <div class="input-group col-md-2">
+                                                <input id="discount" name="discount" value="0" type="text" class="form-control" style="border-radius: 4px !important;" readonly>
+                                                
+                                            <span class="fa fa-question-circle fa-lg col-md-1 qstdon" aria-hidden="true" data-toggle="tooltip" title="Write a number to set the discount in a specific amount, or type '%' after the number to set it as a percentage"></span> 
+                                            </div> 
+                                            <div class="form-group" style="display:none" id="reason">
+                                                <label class="col-md-3 control-label">Reason</label>
+                                                <div class="col-md-6">
+                                                    <textarea class="form-control" name="reason" id="reason_value" ></textarea>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="panel panel-default" style="display:none">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title">Fees</h3>
-                                </div>
-                                <div class="panel-body">
-                                    
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label">Shipping</label>
-                                        <div class="input-group col-md-3">
-                                            <div class="input-group-addon">
-                                                <span class="fa fa-truck"></span>
-                                            </div>
-                                            <input id="shipping" name="shipping" type="number" class="form-control" value="0" min="0" style="border-radius: 4px !important;">
-                                            <input id="discount_hidden" type="hidden" class="form-control" value="0">
-                                            <span class="fa fa-question-circle fa-lg col-md-1 qstdon" aria-hidden="true" data-toggle="tooltip" title="Add a surcharge for shipping concepts"></span> 
-                                        </div>
+                                <div class="panel panel-default" style="display:none">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Fees</h3>
                                     </div>
+                                    <div class="panel-body">
+                                        
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Shipping</label>
+                                            <div class="input-group col-md-3">
+                                                <div class="input-group-addon">
+                                                    <span class="fa fa-truck"></span>
+                                                </div>
+                                                <input id="shipping" name="shipping" type="number" class="form-control" value="0" min="0" style="border-radius: 4px !important;">
+                                                <input id="discount_hidden" type="hidden" class="form-control" value="0">
+                                                <span class="fa fa-question-circle fa-lg col-md-1 qstdon" aria-hidden="true" data-toggle="tooltip" title="Add a surcharge for shipping concepts"></span> 
+                                            </div>
+                                        </div>
 
-                                    <div class="form-group">
-                                        <label class="col-md-3 control-label">Convenience</label>
-                                        <div class="input-group col-md-3">
-                                            <div class="input-group-addon">
-                                                <span class="fa fa-money"></span>
-                                            </div>
-                                            <input id="convenience" name="convenience" type="number" class="form-control" value="0" min="0" style="border-radius: 4px !important;">
-                                            <input id="discount_hidden" type="hidden" class="form-control" value="0"> 
-                                            <span class="fa fa-question-circle fa-lg col-md-1 qstdon" aria-hidden="true" data-toggle="tooltip" title="Add a surcharge for particular concepts"></span>
-                                        </div> 
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Convenience</label>
+                                            <div class="input-group col-md-3">
+                                                <div class="input-group-addon">
+                                                    <span class="fa fa-money"></span>
+                                                </div>
+                                                <input id="convenience" name="convenience" type="number" class="form-control" value="0" min="0" style="border-radius: 4px !important;">
+                                                <input id="discount_hidden" type="hidden" class="form-control" value="0"> 
+                                                <span class="fa fa-question-circle fa-lg col-md-1 qstdon" aria-hidden="true" data-toggle="tooltip" title="Add a surcharge for particular concepts"></span>
+                                            </div> 
+                                        </div>
+                                                                       
                                     </div>
-                                                                   
                                 </div>
                             </div>
                         </div>
-                            
-                        </div>
-                      
+                        <!-- //Finalizar venta -->
+                        
                         <div id="summary">
                             <!-- START STRIPED TABLE SAMPLE -->
                             <div class="panel panel-default">
@@ -352,9 +286,6 @@ $this->headTitle($this->title);
                                             <li class="fa fa-square-o">
                                                 <span class="stepDesc">Cliente seleccionado: <span id="cliente-seleccionado"></span> </span>
                                             </li>
-                                            <!-- <li class="fa fa-square-o">
-                                                <span id="selected-phone" class="stepDesc">Productos seleccionados: </span>
-                                            </li> -->
                                             <li id="selected-products" class="fa fa-square-o">
                                                 <span class="stepDesc">Productos seleccionados:</span>
                                                 <div class="table-responsive" style="margin-top:10px;">
@@ -371,12 +302,6 @@ $this->headTitle($this->title);
                                                         </tbody>
                                                     </table>
                                                 </div>
-                                               <!--  <?php if(!empty($this->tax)): ?>
-                                             
-                                                <input type="checkbox" id="tax_exempt_checkbox" name="tax_exempt" style="display:none">
-                                                <span id="tax_exempt"></span>
-                                                <span id="tax" class="label label-warning label-form fee" style="width: 100%;"></span>
-                                                <?php endif; ?> -->
                                                 <span id="total_dona" class="label label-warning label-form fee" style="width: 100%;"></span>
                                                 
                                                 <span id="total_cost" class="label label-warning label-form fee" style="width: 100%;"></span>
@@ -394,13 +319,6 @@ $this->headTitle($this->title);
                                             <li class="fa fa-square-o">
                                                 <span id="form-total" class="stepDesc">Total: </span>
                                             </li>
-                                            <!-- <li class="fa fa-square-o">
-                                                <span id="selected-driver" class="stepDesc">Selected Driver: </span>
-                                            </li> -->
-                                            
-                                            <!-- <li class="fa fa-square-o">
-                                                <span id="selected-time" class="stepDesc">Selected Time: </span>
-                                            </li> -->
                                         </ul>
                                     </form>
                                 </div>
@@ -423,8 +341,8 @@ $this->headTitle($this->title);
     
 </div>
 <!-- END PAGE CONTENT WRAPPER -->                                                
-<div id="spinner">        
-</div>
+<!-- <div id="spinner">        
+</div> -->
 <!-- MODALS -->
 <!-- <div class="modal" id="modal_add_phone" tabindex="-1" role="dialog" aria-labelledby="defModalHead" aria-hidden="true">
     <div class="modal-dialog">
@@ -455,25 +373,18 @@ $this->headTitle($this->title);
 <!-- END MODALS -->
 
 <!-- THIS PAGE PLUGINS -->
-<script type="text/javascript" src="/admin-public/js/plugins/moment.min.js"></script>
+<!-- <script type="text/javascript" src="/admin-public/js/plugins/moment.min.js"></script> -->
 <script type="text/javascript" src="/admin-public/js/plugins/bootstrap/bootstrap-datepicker.js"></script>
 <script type="text/javascript" src="/admin-public/js/plugins/bootstrap/bootstrap-datetimepicker.js"></script>
 <script type="text/javascript" src="/admin-public/js/plugins/bootstrap/bootstrap-file-input.js"></script>
 <script type="text/javascript" src="/admin-public/js/plugins/bootstrap/bootstrap-select.js"></script>
-<script type="text/javascript" src="/admin-public/js/plugins/tagsinput/jquery.tagsinput.min.js"></script>
 <script type="text/javascript" src="/admin-public/js/jquery.validate.min.js"></script>
-<script type="text/javascript" src="/admin-public/js/additional-methods.min.js"></script>
-<!-- END THIS PAGE PLUGINS -->
-
-<!-- THIS PAGE PLUGINS -->    
 <script type='text/javascript' src='/admin-public/js/plugins/icheck/icheck.min.js'></script>
-<script type="text/javascript" src="/admin-public/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
-<script type="text/javascript" src="/admin-public/js/plugins/owl/owl.carousel.min.js"></script>
 <script type="text/javascript" src="/admin-public/js/plugins/smartwizard/jquery.smartWizard-3.3.1.js"></script>
 <script type="text/javascript" src="/admin-public/js/plugins/jquery-validation/jquery.validate.js"></script>
-<script src="https://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
-<!-- <script type="text/javascript" src="/admin-public/js/plugins/bootstrap/bootstrap-slider.js"></script> -->
-<!-- END PAGE PLUGINS -->
+<!-- <script type="text/javascript" src="/admin-public/js/plugins/tagsinput/jquery.tagsinput.min.js"></script> -->
+<!-- <script type="text/javascript" src="/admin-public/js/additional-methods.min.js"></script> -->
+<!-- END THIS PAGE PLUGINS -->
 
 <script>
 
@@ -483,15 +394,18 @@ $('.datepicker').datepicker({
 
 $(document).ready(function(){
     var  descuento;
+    //Inicializo los switch en false
     $('#switch-descuento').val(false);
     $('#switch-envio').val(false);
 
+    //Cuando cambia el switch tomo el valor y calculo el total
     $(document).on('change','#switch-descuento' ,function(e) {
         if(this.checked) $('#switch-descuento').val(true);
         else $('#switch-descuento').val(false);
         calculateTotal();
     });
 
+    //Cuando cambia el switch tomo el valor y calculo el total
     $(document).on('change','#switch-envio' ,function(e) {
         if(this.checked) $('#switch-envio').val(true);
         else $('#switch-envio').val(false);
@@ -507,7 +421,7 @@ $(document).ready(function(){
     <?php endif; ?>
 
 
-    $('#patientsearch').focus();
+    $('#buscar-cliente').focus();
 
     $(".btn.btn-primary.pull-right").click(function(e){
         e.preventDefault();
@@ -541,29 +455,20 @@ $(document).ready(function(){
 });
 
 $(function() {
-    var id_patient;
-    var patient_dispenser;
-    var id_location;
-    var id_phone;
-    var id_driver;
-    var arrival_time;
-    var latitude;
-    var longitude;
     var products = new Array();
     var prices = {};
-    var time;
-    var is_ordered = false;
+    var is_ordered = false;//BORRAAR
 
     //Click en finalizar
     $(".actionBar .buttonFinish").click(function(e){
-        if(!validateSteps("6")) return; 
+        if(!validateSteps("3")) return; 
         if (!$(".actionBar .buttonFinish").hasClass("buttonDisabled")){
             $(".buttonFinish").fadeOut(50,function(){
-                $("#form-donation_note").val($("textarea#donation_note").val());      
+                // $("#form-donation_note").val($("textarea#donation_note").val());      
                 // $("#form-id_discount").val($("#discount_options").val());  
-                $("#form-reason").val($("#reason_value").val());  
+                // $("#form-reason").val($("#reason_value").val());  
                 $("#form-discount").val($("#rdiscount_hidden").val());  
-                $('#form-future_deliveries').val(futureDeliveries);
+                // $('#form-future_deliveries').val(futureDeliveries);
                 
                 var reason = $('#discount_options option:selected').attr('attr-reason');
                 
@@ -618,9 +523,6 @@ $(function() {
     });
 
     $(".actionBar .btn-default.pull-right").addClass("disabled");
-
-    // $(".note_step5").append('<textarea data-toggle="tooltip" title="Limit 140 characters!" maxlength="140" name="note_donation" id="donation_note" class="form-control" placeholder="Type a note for this donation">');
-
 
     //Selecciono el cliente
     $("#list-cliente").on( "click", ".select-patient", function(slideEvt) {
@@ -688,8 +590,6 @@ $(function() {
                                                         '<input name="id_product[]" type="hidden" value="'+producto_id+'">'+
                                                         '<input name="price[]" type="hidden" value="'+producto_precio+'">'+
                                                         '<input name="subtotal[]" type="hidden" value="'+producto_precio+'">'+
-                                                        // '<input name="gift[]" type="hidden" value="0">'+
-                                                        // '<td><input name="cant[]" value="1" aria-invalid="false" class="valid quantity"></td>'+
                                                         '<td>'+producto_codigo+'</td>'+
                                                         '<td>'+producto_marca+'</td>'+
                                                         '<td>$'+producto_precio+'</td>'+
@@ -740,13 +640,12 @@ $(function() {
     $('#buscar-productos').keyup(function() {
         clearTimeout(timeoutID);
         var $target = $(this);
-        var id_driver = $("#form-driver").val();
         var id_cliente = $("#form-cliente").val();
         timeoutID = setTimeout(function() { getProducts(); }, 500); 
     });
 
-    $('#patientsearch').keyup(function(event) {
-        var search = $('#patientsearch').val();
+    $('#buscar-cliente').keyup(function(event) {
+        var search = $('#buscar-cliente').val();
         if(search.length > 3 || event.keyCode == 13){
             clearTimeout(timeoutID);
             timeoutID = setTimeout(function() { getClientes(search); }, 500);
@@ -758,14 +657,9 @@ $(function() {
     });
 
     $('.btn-buscar-cliente').click(function() {
-        var search = $('#patientsearch').val();
+        var search = $('#buscar-cliente').val();
         getClientes(search);
     });
-
-    // $(".actionBar .btn-default.pull-right").click(function(){
-    //     if($(".steps_5 .step-1").hasClass("selected"))
-    //         $(".actionBar .btn-default.pull-right").addClass("disabled");
-    // });
 
     $("#next").click(function() {
         var val     = $('#page').attr('rel');
@@ -806,71 +700,6 @@ $(function() {
         }      
     });
 
-    var donations = [];
-    var sortedDonations = [];
-    var orderDonations = [];
-    var datadonation = {};
-
-    $("#sortable").before($("#sortable :first-child"));
-
-    $("#sortable").sortable({ 
-        placeholder: "ui-sortable-placeholder",
-        items: 'li:not(:first)',
-        start: function(event, ui) {
-              ui.item.data('start_pos', ui.item.index());
-        },
-        stop: function(event, ui) {  
-            var start_pos = ui.item.data('start_pos');
-            if (start_pos != ui.item.index()) {
-                is_ordered = true;
-                orderDonations = [];           
-                donations = [];
-                $("#sortable li").each(function(i){
-                     id_donation = $(this).attr("id"); 
-                    $("#"+id_donation+" #diff").html("");
-                    if(id_donation) donations.push(id_donation);
-                    text = $(this).context.innerHTML;
-                    orderDonations.push(text.substring(text.lastIndexOf("(")+1,text.lastIndexOf(")")));
-                });
-                var params = {};         
-                params.donations = donations;
-                params.datadonation = datadonation;
-                params.id_driver = $('#form-driver').val();
-                panelAjaxNoMessage("/admin_donations/getnewallowedtime",params, function(data){
-
-                    $.each(data.diff,function(i,v){
-                        $("#"+v.id_donation+" #diff").html(" ( "+v.difference+" M )");
-                        sortedDonations[i] = {
-                            id_donation : v.id_donation,
-                            arrival_time : v.arrival_time_new
-                        };
-
-                        if(v.id_donation == "new"){
-                            $.each(v.range,function(index,rangetime){
-                                if(rangetime.status){
-                                    $("#selected-time small").remove();
-                                    $("#selected-time").append('<small> '+rangetime[0]+' - '+rangetime[1]+'</small>');
-                                    $(".times .list-group .system-selected").removeClass("system-selected active");
-                                    $('.times .list-group-item:contains('+rangetime[0]+' - '+rangetime[1]+')').remove();
-                                    $('.times i').contents().first().remove();
-                                    $('.times .list-group .ordertime').remove();
-                                    $(".times .list-group").prepend('<a href="javascript:void(0);" class="list-group-item system-selected active ordertime">'+rangetime[0]+' - '+rangetime[1]+' <i>Selected by system as the best option</i></a>');
-                                };
-                            });
-                            $(".times .list-group").append('<a href="javascript:void(0);" class="list-group-item">Overtime</a>');
-                        };
-                    }); 
-                       
-                });
-                updateRoute();                                     
-            }
-        }       
-    });
-
-    $( "#sortable" ).disableSelection();
-
-    var coupon = {};
-
     $('#discount').keyup(function(){
         var discount = $(this).val();
 
@@ -888,109 +717,12 @@ $(function() {
         calculateTotal();
     });
 
-    $('#shipping').change(function(){
-        var shipping = $(this).val();
-        calculateTotal();
-    });
-
-    $('#convenience').change(function(){
-        var convenience = $(this).val();
-        
-        calculateTotal();
-    });
-
     $('#selected-products').on('change','#tax_exempt_checkbox', function(){
         totalSum(prices);
     });
 
-    var calculateDiscount = function(){
-        var percent = 0;
-        var total = parseFloat($("#subtotal_cost_hidden").val());
-        if(!jQuery.isEmptyObject(coupon)){
-
-            if(coupon.type == 'fix'){
-                if(total)
-                    percent = coupon.discount * 100 / total;    
-
-            }else{
-                percent = coupon.discount;
-                // percent = coupon.discount * ((100 - percent) / 100) + percent
-            }
-        }
-        if($('#reedemamount').text() != 0){
-            if(total)             
-
-                percentpoints = parseFloat($('#reedemamount').text()) * 100 / total;
-                percent = percentpoints + percent;         
-        }
-        if($('#discount').val() != 0){
-            if(total){  
-                if ($('#discount').val().includes("%")) {
-                    discount = parseFloat($('#discount').val());
-                    percent = discount + percent;                                   
-                } 
-                else{
-                    disc = parseFloat($('#discount').val());
-                    discount = disc * 100 / total;
-                    percent = discount  + percent; 
-                }             
-            }
-        }
-            total = (100 - percent) * total / 100;                  
-
-
-        percent = percent ? percent.toFixed(2) : 0;
-        $('#rdiscount').text(percent+'%');
-        $('#rdiscount_hidden').val(percent);  
-          
-    }    
-
     var stepDisplay;
 
-    function showSteps(directionResult) {
-        // For each step, place a marker, and add the text to the marker's
-        // info window. Also attach the marker to an array so we
-        // can keep track of it and remove it when calculating new
-        // routes.
-
-        var myRoute = directionResult;
-        var icon;
-        var marker;
-        for (var i = 0; i < myRoute.request.waypoints.length  ; i++) {
-          if(orderDonations[i+1] == "⚑") icon = "https://chart.googleapis.com/chart?chst=d_map_pin_icon&chld=flag|ADDE63"
-          else icon = "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=" + orderDonations[i+1] + "|FF0000|000000";
-          if(jQuery.isEmptyObject(orderDonations)) icon = "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=" + (i + 2) + "|FF0000|000000";
-          locationLatLng = myRoute.request.waypoints[i].location.split(',');
-          marker = new google.maps.Marker({
-            position: new google.maps.LatLng(locationLatLng[0],locationLatLng[1]), 
-            map: mapDonation,
-            icon: icon 
-              
-          }); 
-          markerArray.push(marker);
-        };
-
-        marker = new google.maps.Marker({
-          position: myRoute.request.origin, 
-          map: mapDonation,
-          icon:  "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=1|FF0000|000000"
-         
-        });
-        markerArray.push(marker);
-        if(orderDonations[i+1] == "⚑") icon = "https://chart.googleapis.com/chart?chst=d_map_pin_icon&chld=flag|ADDE63"
-        else icon = "https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=" + orderDonations[i+1] + "|FF0000|000000";
-        if(jQuery.isEmptyObject(orderDonations)) icon = "https://chart.googleapis.com/chart?chst=d_map_pin_icon&chld=flag|ADDE63";
-        
-        marker = new google.maps.Marker({
-          position: myRoute.request.destination, 
-          map: mapDonation,
-          icon: icon 
-        });
-        markerArray.push(marker);
-        
-        google.maps.event.trigger(markerArray[0], "click");      
-
-      }
 });
 
 
@@ -1054,34 +786,7 @@ function validateSteps(step) {
                 $('.wizard').smartWizard('setError',{stepnum:step,iserror:false});
             }
             break;
-        // case "4":
-        //     if( form_data[3]['value']=="" ){
-        //         status = false; 
-        //         $('.wizard').smartWizard('showMessage','Please choose driver and click next.');
-        //         $('.wizard').smartWizard('setError',{stepnum:step,iserror:true});         
-        //     }else{
-        //         $('.wizard').smartWizard('hideMessage');
-        //         $('.wizard').smartWizard('setError',{stepnum:step,iserror:false});
-        //     }
-        //     break;
-
-        // case "6":
-        //     if ($('#reason').css('display')=='block' && $("#reason_value").val() == '' || ($('#datetimepicker1 input').val() =='' && $('#enable_datetimepicker').is(':checked'))) {
-        //         status = false; 
-        //         if ($('#reason').css('display')=='block' && $("#reason_value").val() == '') {
-        //             $('.wizard').smartWizard('showMessage','Please write the discount reason and click finish.');
-        //             $('.wizard').smartWizard('setError',{stepnum:step,iserror:true});
-        //         }else{
-                    
-        //             $('.wizard').smartWizard('showMessage','Please insert a date.');
-        //             $('.wizard').smartWizard('setError',{stepnum:step,iserror:true});
-        //         }
-                         
-        //     }else{
-        //         $('.wizard').smartWizard('hideMessage');
-        //         $('.wizard').smartWizard('setError',{stepnum:step,iserror:false});
-        //     }
-        //     break;       
+        
         default:
             status = true;
             break;
@@ -1098,37 +803,17 @@ function resetForm(step){
         $("#form-total").parent().addClass('fa-square-o');
         $("#form-total").html('Total: ');
         $("#form-driver").val('');
-        $("#selected-driver").parent().removeClass('fa-check-square-o');
-        $("#selected-driver").parent().addClass('fa-square-o');
-        $("#selected-driver").html('Selected Driver: ');
-         $(".drivers .widget").removeClass("widget-success");
-        $("#form-phone").val('');
-        $("#selected-phone").parent().removeClass('fa-check-square-o');
-        $("#selected-phone").parent().addClass('fa-square-o');
-        $("#selected-phone").html('Selected Phone: ');
         $("#selected-products table tbody").empty();          
         $("#selected-products").removeClass("fa-check-square-o");
         $("#selected-products").addClass("fa-square-o");
         $("#selected-products table").hide();
-        $("#tax_exempt_checkbox").hide();
         $("#total_cost").hide();
         $("#envio").hide();
         $("#tot_discount").hide();
         $("#tot_iva").hide();
         $("#tot_donation").hide();
-        $("#donation_note").val('');
-        $("#form-donation_note").val(''); 
-        $("#selected-time").closest("li").addClass("fa-square-o");
-        $("#selected-time").closest("li").removeClass("fa-check-square-o");
-        $("#selected-time small").remove();
-        $("#form-time").val('');
-        $("#form-timeset").val('');
-        $("#form-coupon").val('');
-        $("#form-points").val('');
         $("#discount").val('');
-        $("#rdiscount").val('');
         $("#discount_hidden").val(0);
-        $("#rdiscount_hidden").val(0);
         $("#discount").val(0);
         $("#form-discount").val('');      
     };
@@ -1183,22 +868,12 @@ function getProducts(){
     });
 }
 
-function checkTierPrice(id,cant,callback){
-    var price;
-    var params = {};
-    params.id = id;
-    params.cant = cant;
-    panelAjax("/admin_products/getprice/",params, function(data){
-        return callback(data);
-    });
-    //return price;
-}
 
 $("#next-patient").click(function() {
     var val     = $('#page-patient').attr('rel');
     val         = parseInt(val) + parseInt(1);
     $('#page-patient').attr('rel',val);
-    search      = $('#patientsearch').val();
+    search      = $('#buscar-cliente').val();
     getClientes(search);
 });
 
@@ -1207,7 +882,7 @@ $("#back-patient").click(function() {
     if (val > 1) {
         val         = parseInt(val) - parseInt(1);
         $('#page-patient').attr('rel',val);
-        search      = $('#patientsearch').val();
+        search      = $('#buscar-cliente').val();
         getClientes(search);
     }
 });
@@ -1299,7 +974,7 @@ function getClientes(search){
 }
 
 
-//Calcula total con descuento e iva
+//Calcula total con descuento, envío e iva
 var calculateTotal = function(){
     var tot_discount, enviototal, total;
     total = parseFloat($("#subtotal_cost_hidden").val()); 
