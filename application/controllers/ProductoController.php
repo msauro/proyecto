@@ -89,7 +89,7 @@ class ProductoController extends Gabinando_Base {
 			}
 
 			$producto = new Application_Model_Producto();
-			$productoExistente = $producto->getProductosByParams($params['codigo'], $params['id_marca']);
+			$productoExistente = $producto->getProductosByParams($params['codigo'], $params['id_marca'], $params['id']);
 			
 			if($productoExistente instanceof Exception){
                 Gabinando_Base::addError($productoExistente->getMessage());
@@ -142,9 +142,8 @@ class ProductoController extends Gabinando_Base {
     }
 
     public function getproductosAction(){
-		$cliente = new Application_Model_Cliente();		
+		$producto = new Application_Model_Producto();		
 		$params 	 = $params = $this->getRequest()->getParams();
-// die(var_dump($params['id_cliente']));
 		if( isset($params['search']) ){
 			$search 	 = array(
 				'search' => $params['search'],
@@ -156,7 +155,7 @@ class ProductoController extends Gabinando_Base {
 			);
 		}
 
-		$id_cliente = $params['id_cliente'];
+		// $id_cliente = $params['id_cliente'];
 
 		if (isset($params['page']) AND $params['page']) {
 			$paginate['page']  	= $params['page'];
@@ -168,30 +167,33 @@ class ProductoController extends Gabinando_Base {
 
 		$paginate['start_from'] = ($paginate['page']-1) * $paginate['per_page'];
 
-		$clienteFilteredList = $cliente->getProductosSegunLista($id_cliente,$search,$paginate);
-		if($clienteFilteredList instanceof Exception)
-			$this->sendErrorResponse($clienteFilteredList->getMessage());
+		$productos = $producto->getListFiltered($search,$paginate);
+		if($productos instanceof Exception)
+			$this->sendErrorResponse($productos->getMessage());
+		$productoPager = $producto->getListFiltered($search);
+		if($productoPager instanceof Exception)
+			$this->sendErrorResponse($productoPager->getMessage());
 
+		$productoList = $producto->getList($search);
+		if($productoList instanceof Exception)
+			$this->sendErrorResponse($productoList->getMessage());
 
-
-		$clientePager = $cliente->getListFiltered($search);
-		if($clientePager instanceof Exception)
-			$this->sendErrorResponse($clientePager->getMessage());
-
-		$clienteList = $cliente->getList($search);
-		if($clienteList instanceof Exception)
-			$this->sendErrorResponse($clienteList->getMessage());
-
-		$pages = ceil(count($clientePager) / $paginate['per_page']);
+		$pages = ceil(count($productoPager) / $paginate['per_page']);
 
 		$this->sendSuccessResponse(array(
-				'search' 	=> $search,
-				'clientes' 	=> $clienteFilteredList,
-				'total' 	=> count($clienteList),
-				'pages' 	=> $pages,
-				'page' 		=> $paginate['page']
+				'search' 		=> $search,
+				'productos' 	=> $productos,
+				'total' 		=> count($productoList),
+				'pages' 		=> $pages,
+				'page' 			=> $paginate['page']
 			));
 
+	}
+
+	public function getProductoById($id=null){
+		$producto = new Application_Model_Producto();		
+		$params 	 = $params = $this->getRequest()->getParams();
+		die(var_dump($id));
 	}
 		
 		

@@ -32,7 +32,8 @@ $(".xn-icon-button").fadeIn();
                                 <thead>
                                     <tr>
                                         <th width="50">ID</th>
-                                        <th>nombre</th>
+                                        <th>Nombre</th>
+                                        <th>Descuento (%)</th>
                                         <th width="150" class="no-sortable text-center">Acciones</th>
                                     </tr>
                                 </thead>
@@ -41,6 +42,7 @@ $(".xn-icon-button").fadeIn();
                                     <tr id="<?php echo $tipo_cliente['id'] ?>" class="element-id">
                                         <td class="text-center"><?php echo $tipo_cliente['id'] ?></td>
                                         <td><?php echo $tipo_cliente['nombre'] ?></td>
+                                        <td><?php echo $tipo_cliente['descuento'] ?></td>
                                         <td class="text-center">
                                             <button class="btn btn-default btn-rounded btn-condensed btn-sm" onclick="editarTipoCliente(<?php echo $tipo_cliente['id'] ?>)"><span class="fa fa-pencil"></span></button>
                                             <button class="btn btn-danger btn-rounded btn-condensed btn-sm btn-delete" id="<?php echo $tipo_cliente['id'] ?>"><span class="fa fa-trash-o" data-toggle="modal" data-target="#delete_modal"></span></button>

@@ -102,7 +102,7 @@ class VentaController extends Gabinando_Base{
 		// $this->view->patients = array();
 		$this->view->clientes = $clientestypeList;
 		// $this->view->drivers = $drivers;
-		$this->view->productos = $productospreciosList;
+		// $this->view->productos = $productospreciosList;
 
 		// $this->view->reward = $reward;
 		// $this->view->tax = $this->getConfig("tax");	
