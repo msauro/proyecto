@@ -261,6 +261,7 @@ $this->headTitle($this->title);
                                 </div>
                                 <div class="panel-body">
                                     <form id="crear-venta" role="form" class="form-horizontal">
+                                        <!--datos cliente-->
                                         <input type="hidden" id="form-cliente" name="id_cliente">
                                         <input type="hidden" id="form-descuento" name="descuento">
                                         <input type="hidden" id="form-direccion" name="direccion">
@@ -270,6 +271,13 @@ $this->headTitle($this->title);
                                         <input type="hidden" id="form-apellido" name="apellido">
                                         <input type="hidden" id="form-email" name="email">
                                         <input type="hidden" id="form-tipo_cliente" name="tipo_cliente">
+                                        <!--datos productos-->
+                                        <input type="hidden" id="form-producto_id" name="producto_id">
+                                        <input type="hidden" id="form-producto_codigo" name="producto_codigo">
+                                        <input type="hidden" id="form-producto_marca" name="producto_marca">
+                                        <input type="hidden" id="form-producto_precio" name="producto_precio">
+
+
 
                                         <!-- <input type="hidden" id="form-location" name="id_location"> -->
                                         <!-- <input type="hidden" id="form-time" name="time"> -->
@@ -478,7 +486,6 @@ $(function() {
                     } 
                     else{
                         var total = parseFloat($("#subtotal_cost_hidden").val());
-                        console.log(total);
                         disc = $('#discount').val();
                         discount = disc * 100 / total;
                     }             
@@ -577,7 +584,7 @@ $(function() {
         producto_marca = $(this).closest("tr").find("#marca").text();
         producto_precio = $(this).closest("tr").find("#precio").text();
         producto_imagen = $(this).closest("tr").find("#imagen_url").text();
-       
+ 
         if(jQuery.inArray( producto_id, products ) >= 0){
             alert("El producto ya se encuentra agregado");
             return;
@@ -585,11 +592,20 @@ $(function() {
         $("#selected-products").removeClass("fa-square-o");
         $("#selected-products").addClass("fa-check-square-o");
         products.push(producto_id);
+
+        //agrego datos del producto a la venta
+        $("#form-producto_id").val(producto_id);
+        $("#form-producto_codigo").val(producto_codigo);
+        $("#form-producto_marca").val(producto_marca);
+        $("#form-producto_precio_unit").val(producto_precio);
+
+        //asigno precio al resumen
         prices[producto_id] = producto_precio;
         $("#selected-products table tbody").append('<tr>'+
                                                         '<input name="id_product[]" type="hidden" value="'+producto_id+'">'+
                                                         '<input name="price[]" type="hidden" value="'+producto_precio+'">'+
                                                         '<input name="subtotal[]" type="hidden" value="'+producto_precio+'">'+
+                                                        '<td><input name="cant[]" value="1" aria-invalid="false" class="cantidad"></td>'+
                                                         '<td>'+producto_codigo+'</td>'+
                                                         '<td>'+producto_marca+'</td>'+
                                                         '<td>$'+producto_precio+'</td>'+
@@ -617,23 +633,26 @@ $(function() {
         totalSum(prices);
     });
 
-    $("#selected-products tbody").on( "change", "tr .quantity", function() {
+    $("#selected-products tbody").on( "change", "tr .cantidad", function() {
         // Actualizar precio segun cantidad
         var product_tr = $(this).closest("tr");
-        id_producto = $(this).closest("tr").find("input[name='id_product[]']").val();
+        producto_id = $(this).closest("tr").find("input[name='id_product[]']").val();
         cant = $(this).val();
+        precio = $(this).closest("tr").find("input[name='price[]']").val();
+        
+
+        prices[producto_id] = cant*precio;
+        //actualizo el valor de cada producto dependiendo la cantidad comprada
+        $("#selected-products table tbody").find("input[name='subtotal[]']").val(cant*precio);
+
         if(cant<=0){
             $(this).val(1);
             $(this).attr('value',1);
-            alert("La cantidad no puede ser cero o menos");
+            alert("La cantidad debe ser mayor que cero");
             return;
         }
-        // if($(this).closest("tr").find("input[name='gift[]']").val() == "1") return;
-        checkTierPrice(id_producto,cant,function(data){
-            product_tr.find("input[name='subtotal[]']").val(data);
-            prices[id_producto] = data;
-            totalSum(prices);
-        });
+        
+        totalSum(prices);
     });
 
     var timeoutID = null;
@@ -725,13 +744,14 @@ $(function() {
 
 });
 
-
+//Calculo sub-total
 var totalSum = function(prices){
     var total_cost = 0;
     
     $.each(prices, function( index, value ) {
         total_cost = parseFloat(total_cost) + parseFloat(value);
     });
+
     tax = <?= json_encode($this->tax) ?>;
     tax = (total_cost * tax / 100);
 
@@ -753,10 +773,10 @@ function validateSteps(step) {
     var status = true;
     var form_data = {};
     form_data = $("#crear-venta").serializeArray();
+    console.log('form_data');
+    console.log(form_data);
     switch(step) {
         case "1":
-        console.log(form_data);
-
             if( form_data[0]['value']=="" ){
                 status = false;
                 $('.wizard').smartWizard('showMessage','Selecciona un cliente y haga click en "Siguiente".');
@@ -767,7 +787,7 @@ function validateSteps(step) {
             }
             break;
         case "2":
-            if( form_data[1]['value']=="" ){
+            if( form_data[15]['value']=="0.00" ){
                 status = false;
                 $('.wizard').smartWizard('showMessage','Selecciona los productos y haga click en "Siguiente".');
                 $('.wizard').smartWizard('setError',{stepnum:step,iserror:true});         
@@ -933,9 +953,6 @@ function getClientes(search){
             }
 
             $.each(data.clientes, function( index, value ) {
-
-                console.log('value');
-                console.log(value);
                      var item = "<div id='" + value.id + "'title='" + value.nombre + " " + value.apellido + "' rel='" + value.id + "'attr-direccion='"+ value.direccion +"'   class='select-patient col-md-4' style='cursor:pointer;'>" +
                     "<!-- CONTACT ITEM -->" + 
                     "<div class='panel panel-default'>" +
