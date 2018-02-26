@@ -260,3 +260,9 @@ body.page-container-boxed {
 .ver-producto{
   margin-left: 1px !important;
 }
+#type-cash{
+  padding-top: 30px;
+}
+#methods{
+  margin-right: 20px;
+}
