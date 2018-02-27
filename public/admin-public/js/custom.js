@@ -37,7 +37,6 @@ function panelAjax(url,params,callback) {
 				//$('#load').html('<img src="/resources/img/load-ajax.gif">');
 			},
 			success: function(data) {
-				console.log(data);
 				setTimeout(function() { $.mpb('destroy') }, 3000);
 				if(data.error){
 					$(".page-content .message-box-admin").remove();
@@ -86,7 +85,6 @@ function messageAjax(url) {
 				$.mpb('show',{value: [0,100],speed: 10});
 			},
 			success: function(data,callback) {
-				console.log(data);
 				setTimeout(function() { $.mpb('destroy') }, 3000);
 				if(data.type != ""){
 					$("#message-box-" + data.type).children(".mb-container").children(".mb-middle").children(".mb-title").html(data.title);
@@ -116,10 +114,8 @@ function noticeAjax(url) {
 					$.mpb('show',{value: [0,100],speed: 10});
 				},
 				success: function(data) {
-					console.log(data);
 					setTimeout(function() { $.mpb('destroy') }, 3000);
 					data.forEach(function(entry) {
-					    console.log(entry);
 						switch (entry.type){
 							case "success": 
 						    	noty({text: entry.message, layout: 'topRight', type: 'success'})

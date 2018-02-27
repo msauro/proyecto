@@ -132,7 +132,7 @@ $this->headTitle($this->title);
                                                   <input id="switch-descuento" type="checkbox" data-size="mini">
                                                   <span class="slider round"></span>
                                               </label>
-                                          </div>
+                                            </div>
                                           <label class="col-md-2 control-label" style="width:auto; text-align:left;">Enviar</label>
                                           <div class="col-md-2">
                                             <label class="switch">
@@ -173,7 +173,15 @@ $this->headTitle($this->title);
                                     <h3 class="panel-title">Forma de pago</h3>
                                 </div>
                                 <div class="panel-body">
-                                       
+                                       <div class="panel-ctate" style="display:none;">
+                                        <label class="col-md-2 control-label" style="width:auto; text-align:left;">Cuenta Corriente</label>
+                                            <div class="col-md-2">
+                                                <label class="switch">
+                                                  <input id="switch-ctacte" type="checkbox" data-size="mini">
+                                                  <span class="slider round"></span>
+                                              </label>
+                                            </div>
+                                        </div>
                                         <div class="col-md-6 " id="methods">
                                             <div class="form-group">  
                                                 <select id="payment-methods" class="col-md-9 form-control select">
@@ -194,7 +202,7 @@ $this->headTitle($this->title);
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><span class="fa fa fa-money"></span></span>
                                                     <input class="form-control" type="number" placeholder="Ingrese el monto en efectivo" id="cashamount">
-                                                    <span class="input-group-addon"><attr data-toggle="tooltip" title="Este es el monto con el que se va a abonar"><span class="fa fa-info-circle fa-lg info"></span></attr></span>
+                                                    <span class="input-group-addon"><attr data-toggle="tooltip" title="Si no abona la totalidad el resto pasará a la cuenta corriente"><span class="fa fa-info-circle fa-lg info"></span></attr></span>
                                                 </div>                                               
                                             </div>
                                         </div>
@@ -264,13 +272,18 @@ $this->headTitle($this->title);
                                                 <span id="total_dona" class="label label-warning label-form fee" style="width: 100%;"></span>
                                                 
                                                 <span id="total_cost" class="label label-warning label-form fee" style="width: 100%;"></span>
+
                                                 <input id="total_cost_hidden" name="total" type="hidden" value="0">
                                                 <input id="subtotal_cost_hidden" name="subtotal_products" type="hidden" value="0">
                                                 <span id="tot_discount" class="label label-default label-form tot_discount" style="width: 100%;"></span>
                                                 <span id="tot_iva" class="label label-danger label-form tot_iva" style="width: 100%;"></span>
                                                 <span id="envio" class="label label-primary label-form" style="width: 100%;"></span>
+                                                 <span id="envio_hidden" class="label label-primary label-form"></span>
+                                                <span id="tipo_cliente_hidden" class="label label-primary label-form" ></span>
                                                 <span id="tot_donation" class="label label-success label-form tot_donation" style="width: 100%;"></span>
                                                 <input id="tax_hidden" name="tax" type="hidden" value="0">
+                                                <input id="iva_hidden" name="iva_hidden" type="hidden" value="0">
+                                                <input id="ctacte_hidden" name="ctacte_hidden" type="hidden" value="0">
 
                                             </li>
                                             <li class="fa fa-square-o">
@@ -354,6 +367,7 @@ $this->headTitle($this->title);
     //Inicializo los switch en false
     $('#switch-descuento').val(false);
     $('#switch-envio').val(false);
+    $('#switch-ctacte').val(false);
 
     //Cuando cambia el switch del descuento tomo el valor y calculo el total
     $(document).on('change','#switch-descuento' ,function(e) {
@@ -369,12 +383,20 @@ $this->headTitle($this->title);
         calculateTotal();
     });
 
+    //Cuando cambia el switch de cta cte tomo el valor y calculo el total
+    $(document).on('change','#switch-ctacte' ,function(e) {
+        if(this.checked) $('#switch-ctacte').val(true);
+        else $('#switch-ctacte').val(false);
+        resumen();
+    });
+
+
 
 
     <?php if ( isset($this->patient) ) : ?>
-    setTimeout(function(){
-      $('.btn-buscar-cliente').click();
-  }, 100);
+        setTimeout(function(){
+          $('.btn-buscar-cliente').click();
+        }, 100);
     <?php endif; ?>
 
 
@@ -411,20 +433,31 @@ $this->headTitle($this->title);
     }); 
 
      //si el tipo de pago en el select no es efectivo esconde el campo
-        $("#payment-methods").on('change', function() {
-            var type_cash = document.getElementById("payment-methods").value;
-            if (type_cash == 'cash'){ 
-                $("#type-cash").show();
-            }else{ 
-                $("#type-cash").hide();
-            }
-        });
+    $("#payment-methods").on('change', function() {
+        var type_cash = document.getElementById("payment-methods").value;
+        if (type_cash == 'cash'){ 
+            $("#type-cash").show();
+        }else{ 
+            $("#type-cash").hide();
+        }
+        resumen();
+    });
+
+    if ($("#tipo_cliente_hidden").val() != 'Particular') {
+        $(".panel-ctate").show();
+    }
+
+    $('#cashamount').on('change', function(){
+        cashamount = $('cashamount').val();
+        resumen();
+    });
+
 });
 
     $(function() {
         var products = new Array();
         var prices = {};
-    var is_ordered = false;//BORRAAR
+        var is_ordered = false;//BORRAAR
 
     //Click en finalizar
     $(".actionBar .buttonFinish").click(function(e){
@@ -487,7 +520,6 @@ $this->headTitle($this->title);
             $(".btn.btn-warning.mb-control").click();
             // End Popup
         }
-
     });
 
     $(".actionBar .btn-default.pull-right").addClass("disabled");
@@ -506,6 +538,7 @@ $this->headTitle($this->title);
             params.id = $(this).attr('id');
             params.nombre = $(this).attr('title');
 
+            $("#tipo_cliente_hidden").val(params.tipo_cliente);
             $(this).toggleClass('selected');
             $(this).siblings().removeClass('selected');
             if(!$("#cliente-seleccionado").closest('li').hasClass("fa-check-square-o"))
@@ -734,8 +767,6 @@ function validateSteps(step) {
     var status = true;
     var form_data = {};
     form_data = $("#crear-venta").serializeArray();
-    console.log('form_data');
-    console.log(form_data);
     switch(step) {
         case "1":
         if( form_data[0]['value']=="" ){
@@ -804,6 +835,7 @@ function resetForm(step){
 
     if (step==3) {
         $("#step-3").find(".selected").html('<span class="label label-default label-form"></span>');
+        resumen();
     };
 }
 
@@ -962,28 +994,31 @@ var calculateTotal = function(){
     if ($('#switch-descuento').val() == 'false') {
         subtotal = total;
         $("#tot_discount").html("<span style='float:left'>Descuento:</span><span style='float:right;padding-right: 22px;'>0 %</span>");
-        // $("#tot_discount").hide();
+        $('#tot_discount').val(0);
 
     }else{
         disc = descuento * total / 100;
         subtotal = (total - disc);
         $("#tot_discount").html("<span style='float:left'>Descuento:</span><span style='float:right;padding-right: 22px;'>"+descuento+" %</span>");
-        
+        $('#tot_discount').val(disc);
     }
 
     if ($('#switch-envio').val() == 'false') {
         enviototal = 0;
         $("#envio").html("<span style='float:left'>Envio:</span><span style='float:right;padding-right: 22px;'>$0</span>");
-        // $("#envio").hide();
+        $('#envio_hidden').val(0);
 
     }else{
         enviototal = 50;
         $("#envio").html("<span style='float:left'>Envío:</span><span style='float:right;padding-right: 22px;'>$"+enviototal.toFixed(2)+"</span>");
         $("#envio").show();
-
+        $('#envio_hidden').val(enviototal);
     }
 
-    iva  = 21 * subtotal / 100;
+    iva  = 21 * subtotal / 100;+
+    $('#iva_hidden').val(21);
+
+
 
     if (subtotal >= 0) {
         $(".buttonNext").removeClass('buttonDisabled');
@@ -1006,10 +1041,34 @@ var calculateTotal = function(){
     
     $('#label-total').text('$'+total);        
     $('#total_cost_hidden').val(total);
-
 }
 
+//Resumen y forma de pago
+var resumen = function(){
+
+     if ($('#switch-ctacte').val() == 'false') {
+        $('#ctacte_hidden').val(false);
+    }else{
+        $('#ctacte_hidden').val(true);
+    }
+
+    var resumen_total        = $('#total_cost_hidden').val();
+    var resumen_descuento    = $('#tot_discount').val();
+    var resumen_subtotal     = $('#subtotal_cost_hidden').val();
+    var resumen_envio        = $('#envio_hidden').val();
+    var resumen_iva          = $('#iva_hidden').val();
+    var resumen_paga         = $('#cashamount').val();
+    var ctacte               = $('#ctacte_hidden').val();
+
+console.log(resumen_total);
+console.log(resumen_descuento);
+console.log(resumen_subtotal);
+console.log(resumen_envio);
+console.log(resumen_iva);
+console.log(resumen_paga);
+//si es true ctacte es pq no paga
+console.log(ctacte);
+}
+
+
 </script>
-
-
-<!-- END SCRIPTS --> 
