@@ -42,7 +42,7 @@ $this->headTitle($this->title);
                             </li>
                             <li>
                                 <a href="#step-3" class="step-3">
-                                    <span class="stepNumber">6</span>
+                                    <span class="stepNumber">3</span>
                                     <span class="stepDesc">Forma de pago<br /><small>Venta</small></span>
                                 </a>
                             </li>
@@ -173,7 +173,7 @@ $this->headTitle($this->title);
                                     <h3 class="panel-title">Forma de pago</h3>
                                 </div>
                                 <div class="panel-body">
-                                       <div class="panel-ctate" style="display:none;">
+                                       <div class="panel-ctate col-md-12" >
                                         <label class="col-md-2 control-label" style="width:auto; text-align:left;">Cuenta Corriente</label>
                                             <div class="col-md-2">
                                                 <label class="switch">
@@ -182,7 +182,7 @@ $this->headTitle($this->title);
                                               </label>
                                             </div>
                                         </div>
-                                        <div class="col-md-6 " id="methods">
+                                        <div class="col-md-6 " id="methods" >
                                             <div class="form-group">  
                                                 <select id="payment-methods" class="col-md-9 form-control select">
                                                     <option value="null" data-thumbnail="images/icon-chrome.png">Seleccionar forma de pago</option>
@@ -195,17 +195,17 @@ $this->headTitle($this->title);
                                                   </optgroup>
                                                 </select>
                                             </div>
-                                        </div>
-
-                                        <div class="col-md-6 " id="type-cash" style="display:none;">
-                                            <div class="form-group">                                    
-                                                <div class="input-group">
-                                                    <span class="input-group-addon"><span class="fa fa fa-money"></span></span>
-                                                    <input class="form-control" type="number" placeholder="Ingrese el monto en efectivo" id="cashamount">
-                                                    <span class="input-group-addon"><attr data-toggle="tooltip" title="Si no abona la totalidad el resto pasará a la cuenta corriente"><span class="fa fa-info-circle fa-lg info"></span></attr></span>
-                                                </div>                                               
+                                            <div  id="type-cash" style="display:none;">
+                                                <div class="form-group">                                    
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><span class="fa fa fa-money"></span></span>
+                                                        <input class="form-control" type="number" placeholder="Ingrese el monto en efectivo" id="cashamount">
+                                                        <span class="input-group-addon"><attr data-toggle="tooltip" title="Si no abona la totalidad el resto pasará a la cuenta corriente"><span class="fa fa-info-circle fa-lg info"></span></attr></span>
+                                                    </div>                                               
+                                                </div>
                                             </div>
                                         </div>
+
                                     </div>
                             </div>
                             
@@ -385,8 +385,15 @@ $this->headTitle($this->title);
 
     //Cuando cambia el switch de cta cte tomo el valor y calculo el total
     $(document).on('change','#switch-ctacte' ,function(e) {
-        if(this.checked) $('#switch-ctacte').val(true);
-        else $('#switch-ctacte').val(false);
+        if(this.checked){
+            $('#switch-ctacte').val(true);
+            $('#methods').hide();
+            $('#methods').css("display", "none");
+        }else {
+            $('#switch-ctacte').val(false);
+            $('#methods').show();
+            $('#methods').css("display", "block");
+        }
         resumen();
     });
 
@@ -789,6 +796,7 @@ function validateSteps(step) {
         }
         break;
         case "3":
+        console.log(form_data);
         if( form_data[2]['value']=="" ){
             status = false;
             $('.wizard').smartWizard('showMessage','Verifique los datos y haga click en "Finalizar".');
@@ -1050,6 +1058,7 @@ var resumen = function(){
         $('#ctacte_hidden').val(false);
     }else{
         $('#ctacte_hidden').val(true);
+
     }
 
     var resumen_total        = $('#total_cost_hidden').val();
@@ -1057,16 +1066,33 @@ var resumen = function(){
     var resumen_subtotal     = $('#subtotal_cost_hidden').val();
     var resumen_envio        = $('#envio_hidden').val();
     var resumen_iva          = $('#iva_hidden').val();
-    var resumen_paga         = $('#cashamount').val();
     var ctacte               = $('#ctacte_hidden').val();
+    var forma_pago           = $('#payment-methods').val();
+    var resumen_efectivo;
 
+    if((ctacte == 'false') && (forma_pago == "cash")){
+        resumen_efectivo      = $('#cashamount').val();
+    }else if (ctacte == 'true'){
+        forma_pago = 'ctacte';
+    }
+
+
+console.log('forma_pago');
+console.log(forma_pago);
+console.log('resumen_total');
 console.log(resumen_total);
+console.log('resumen_descuento');
 console.log(resumen_descuento);
+console.log('resumen_subtotal');
 console.log(resumen_subtotal);
+console.log('resumen_envio');
 console.log(resumen_envio);
+console.log('resumen_iva');
 console.log(resumen_iva);
-console.log(resumen_paga);
+console.log('resumen_efectivo');
+console.log(resumen_efectivo);
 //si es true ctacte es pq no paga
+console.log('ctacte');
 console.log(ctacte);
 }
 
