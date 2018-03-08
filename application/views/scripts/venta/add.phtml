@@ -444,6 +444,7 @@ $this->headTitle($this->title);
         var type_cash = document.getElementById("payment-methods").value;
         if (type_cash == 'cash'){ 
             $("#type-cash").show();
+            $("#cashamount").val($('#total_cost_hidden').val());
         }else{ 
             $("#type-cash").hide();
         }
