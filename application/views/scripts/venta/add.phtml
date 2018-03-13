@@ -227,14 +227,9 @@ $this->headTitle($this->title);
                                         <input type="hidden" id="form-cuit" name="cuit">
                                         <input type="hidden" id="form-telefono" name="telefono">
                                         <input type="hidden" id="form-nombre" name="nombre">
-                                        <input type="hidden" id="form-apellido" name="apellido">
                                         <input type="hidden" id="form-email" name="email">
                                         <input type="hidden" id="form-tipo_cliente" name="tipo_cliente">
                                         <!--datos productos-->
-                                        <input type="hidden" id="form-producto_id" name="producto_id">
-                                        <input type="hidden" id="form-producto_codigo" name="producto_codigo">
-                                        <input type="hidden" id="form-producto_marca" name="producto_marca">
-                                        <input type="hidden" id="form-producto_precio" name="producto_precio">
 
 
 
@@ -281,8 +276,11 @@ $this->headTitle($this->title);
                                                  <span id="envio_hidden" class="label label-primary label-form"></span>
                                                 <span id="tipo_cliente_hidden" class="label label-primary label-form" ></span>
                                                 <span id="tot_donation" class="label label-success label-form tot_donation" style="width: 100%;"></span>
-                                                <input id="tax_hidden" name="tax" type="hidden" value="0">
-                                                <input id="iva_hidden" name="iva_hidden" type="hidden" value="0">
+                                                <input id="forma_pago_hidden" name="forma_pago" type="hidden" value="0">
+                                                <input id="resumen_efectivo_hidden" name="efectivo" type="hidden" value="0">
+                                                <input id="resumen_envio_hidden" name="envio" type="hidden" value="0">
+
+                                                <input id="iva_hidden" name="iva" type="hidden" value="0">
                                                 <input id="ctacte_hidden" name="ctacte_hidden" type="hidden" value="0">
 
                                             </li>
@@ -415,7 +413,7 @@ $this->headTitle($this->title);
         var action = $("#add-form").attr("action");
         result = panelAjax(action,params, function(data){
             if(data == true)
-               window.location.href = "/admin_donations";
+               window.location.href = "/venta/add";
        });
     });    
 
@@ -480,34 +478,34 @@ $this->headTitle($this->title);
                 $("#form-discount").val($("#rdiscount_hidden").val());  
                 // $('#form-future_deliveries').val(futureDeliveries);
                 
-                var reason = $('#discount_options option:selected').attr('attr-reason');
+               // var reason = $('#discount_options option:selected').attr('attr-reason');
                 
-                if (reason==1) {
-                    if ($('#discount').val().includes("%")) {
-                        discount = parseFloat($('#discount').val());
-                    } 
-                    else{
-                        var total = parseFloat($("#subtotal_cost_hidden").val());
-                        disc = $('#discount').val();
-                        discount = disc * 100 / total;
-                    }             
+               // if (reason==1) {
+               //     if ($('#discount').val().includes("%")) {
+                //        discount = parseFloat($('#discount').val());
+                //    } 
+                //    else{
+                //        var total = parseFloat($("#subtotal_cost_hidden").val());
+                //        disc = $('#discount').val();
+                //        discount = disc * 100 / total;
+                //    }             
 
-                    $("#form-special-discount").val(discount); 
+                //    $("#form-special-discount").val(discount); 
 
-                }
+                //}
                 
                 var params = {};
 
                 params.data = $("#crear-venta").serialize();    
-                params.futureDeliveries = futureDeliveries;
-                panelAjax("/admin_donations/setdonation",params, function(data){              
+                //params.futureDeliveries = futureDeliveries;
+                panelAjax("/venta/setventa",params, function(data){              
 
                     if(data){
                         if(is_ordered){                          
                             updateTimeDonations();                           
                         }
                         else{
-                            setTimeout(function(){ window.location.href = "/admin_donations"; }, 2000);                               
+                            setTimeout(function(){ window.location.href = "/venta/add"; }, 2000);                               
                         }
                     }else{
                         $(".buttonFinish").fadeIn();
@@ -595,18 +593,12 @@ $this->headTitle($this->title);
         $("#selected-products").addClass("fa-check-square-o");
         products.push(producto_id);
 
-        //agrego datos del producto a la venta
-        $("#form-producto_id").val(producto_id);
-        $("#form-producto_codigo").val(producto_codigo);
-        $("#form-producto_marca").val(producto_marca);
-        $("#form-producto_precio_unit").val(producto_precio);
-
         //asigno precio al resumen
         prices[producto_id] = producto_precio;
         $("#selected-products table tbody").append('<tr>'+
-            '<input name="id_product[]" type="hidden" value="'+producto_id+'">'+
-            '<input name="price[]" type="hidden" value="'+producto_precio+'">'+
-            '<input name="subtotal[]" type="hidden" value="'+producto_precio+'">'+
+            '<input name="id_producto[]" type="hidden" value="'+producto_id+'">'+
+            '<input name="precio[]" type="hidden" value="'+producto_precio+'">'+
+            '<input name="subtotal[]" id="sub-res" type="hidden" value="'+producto_precio+'">'+
             '<td><input name="cant[]" value="1" aria-invalid="false" class="cantidad"></td>'+
             '<td>'+producto_codigo+'</td>'+
             '<td>'+producto_marca+'</td>'+
@@ -627,7 +619,7 @@ $this->headTitle($this->title);
 
     $("#selected-products tbody").on( "click", "tr .fa-trash-o", function() {
         // Remove Product
-        id_producto = $(this).closest("tr").find("input[name='id_product[]']").val();
+        id_producto = $(this).closest("tr").find("input[name='id_producto[]']").val();
         index = products.indexOf(id_producto);
         products.splice(index, 1);
         delete prices[id_producto];
@@ -638,9 +630,9 @@ $this->headTitle($this->title);
     $("#selected-products tbody").on( "change", "tr .cantidad", function() {
         // Actualizar precio segun cantidad
         var product_tr = $(this).closest("tr");
-        producto_id = $(this).closest("tr").find("input[name='id_product[]']").val();
+        producto_id = $(this).closest("tr").find("input[name='id_producto[]']").val();
         cant = $(this).val();
-        precio = $(this).closest("tr").find("input[name='price[]']").val();
+        precio = $(this).closest("tr").find("input[name='precio[]']").val();
         
 
         prices[producto_id] = cant*precio;
@@ -822,7 +814,7 @@ function resetForm(step){
         $("#form-location").val('');
         $("#form-total").parent().removeClass('fa-check-square-o');
         $("#form-total").parent().addClass('fa-square-o');
-        $("#form-total").html('Total: ');
+        $("#form-total").html('Forma de pago');
         $("#form-driver").val('');
         $("#selected-products table tbody").empty();          
         $("#selected-products").removeClass("fa-check-square-o");
@@ -1055,11 +1047,15 @@ var calculateTotal = function(){
 //Resumen y forma de pago
 var resumen = function(){
 
-     if ($('#switch-ctacte').val() == 'false') {
+    if ($('#switch-ctacte').val() == 'false') {
         $('#ctacte_hidden').val(false);
+        $('#forma_pago_hidden').val($('#payment-methods').val());
+        $('#resumen_efectivo_hidden').val($('#cashamount').val());
+        $('#resumen_envio_hidden').val($('#envio_hidden').val());
+
     }else{
         $('#ctacte_hidden').val(true);
-
+         $('#forma_pago_hidden').val('ctacte');
     }
 
     var resumen_total        = $('#total_cost_hidden').val();
@@ -1078,23 +1074,23 @@ var resumen = function(){
     }
 
 
-console.log('forma_pago');
-console.log(forma_pago);
-console.log('resumen_total');
-console.log(resumen_total);
-console.log('resumen_descuento');
-console.log(resumen_descuento);
-console.log('resumen_subtotal');
-console.log(resumen_subtotal);
-console.log('resumen_envio');
-console.log(resumen_envio);
-console.log('resumen_iva');
-console.log(resumen_iva);
-console.log('resumen_efectivo');
-console.log(resumen_efectivo);
-//si es true ctacte es pq no paga
-console.log('ctacte');
-console.log(ctacte);
+    console.log('forma_pago');
+    console.log(forma_pago);
+    console.log('resumen_total');
+    console.log(resumen_total);
+    console.log('resumen_descuento');
+    console.log(resumen_descuento);
+    console.log('resumen_subtotal');
+    console.log(resumen_subtotal);
+    console.log('resumen_envio');
+    console.log(resumen_envio);
+    console.log('resumen_iva');
+    console.log(resumen_iva);
+    console.log('resumen_efectivo');
+    console.log(resumen_efectivo);
+    //si es true ctacte es pq no paga
+    console.log('ctacte');
+    console.log(ctacte);
 }
 
 

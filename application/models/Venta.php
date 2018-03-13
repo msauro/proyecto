@@ -76,4 +76,25 @@ class Application_Model_Venta extends Application_Model_Base
 			return $e;
 		}
 	}
+
+	public function getFullVenta($id){
+		try{
+            $query = $this->select()
+	            ->from($this, array('*'))
+            	->join('ventas_detalles', 'ventas_detalles.id_venta = ventas.id', array('*'))
+	            ->where('ventas.id = ?', $id);
+
+            $row = $this->fetchRow($query);
+
+			if(!$row) {
+				return null;
+			}
+
+			return $row->toArray();
+			
+        }
+		catch(Exception $e){
+            return $e;
+        }
+	}
 }

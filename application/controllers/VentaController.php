@@ -203,8 +203,8 @@ class VentaController extends Gabinando_Base{
 					if($donation['products'] && $donation['driver']['id_driver']){
 						foreach ($donation['products'] as $key => $_prod) {
 				           	$where	= "id_driver = {$donation['driver']['id_driver']} AND id_product = {$_prod['id_product']}";
-			            	$qty 	= $_prod['quantity'];
-							$data 	= array('qty' => new Zend_Db_Expr("qty + {$qty}")); 
+			            	$cant 	= $_prod['quantity'];
+							$data 	= array('cant' => new Zend_Db_Expr("cant + {$cant}")); 
 			            	$edit 	= $inventoryDriverModel->editWithConditions($data,$where);
 			            	if($edit instanceof Exception) $this->sendErrorResponse($edit->getMessage());		            	
 						}
@@ -651,8 +651,8 @@ class VentaController extends Gabinando_Base{
 				foreach ($donation['products'] as $key => $_prod) {
 					// Start Inventario
 	            	$where	= "id_driver = {$donation['driver']['id_driver']} AND id_product = {$_prod['id_product']}";
-	            	$qty 	= $_prod['quantity'];
-					$data 	= array('qty' => new Zend_Db_Expr("qty + {$qty}")); 
+	            	$cant 	= $_prod['quantity'];
+					$data 	= array('cant' => new Zend_Db_Expr("cant + {$cant}")); 
 	            	$edit 	= $inventoryDriverModel->editWithConditions($data,$where);
 	            	if($edit instanceof Exception) $this->sendErrorResponse($edit->getMessage());
 	            	// End Inventario
@@ -664,7 +664,7 @@ class VentaController extends Gabinando_Base{
 					// Armar el precio del proucto con la funcion getPrice()
 					$dProductsObj = array(
 							'id_product'	=> $params['id_product'][$count],
-							'quantity'		=> $params['qty'][$count],
+							'quantity'		=> $params['cant'][$count],
 							'subtotal'		=> $params['subtotal'][$count],
 							'id_donation'	=> $params['id_donation']
 						);
@@ -673,8 +673,8 @@ class VentaController extends Gabinando_Base{
 
 					// Start Inventario
 		           	$where	= "id_driver = {$donation['driver']['id_driver']} AND id_product = {$params['id_product'][$count]}";
-		           	$qty 	= $params['qty'][$count];
-					$data 	= array('qty' => new Zend_Db_Expr("qty - {$qty}")); 
+		           	$cant 	= $params['cant'][$count];
+					$data 	= array('cant' => new Zend_Db_Expr("cant - {$cant}")); 
 		           	$edit 	= $inventoryDriverModel->editWithConditions($data,$where);
 		           	if($edit instanceof Exception) $this->sendErrorResponse($edit->getMessage());
 		           	// End Inventario
@@ -737,11 +737,11 @@ class VentaController extends Gabinando_Base{
 			if($params['time']=='Dispensary closed')
 				return $this->sendErrorResponse("Collective is closed.");
 
-			// Chequeamos que ningun producto venga con qty 0
+			// Chequeamos que ningun producto venga con cant 0
 			$count = 0;
 			if(isset($params['id_product'])) :
 				foreach ($params['id_product'] as $_prod) {
-					if($params['qty'][$count]==0)
+					if($params['cant'][$count]==0)
 						return $this->sendErrorResponse("Please insert at least 1 in quantity.");
 					$count++;
 				}
@@ -888,8 +888,8 @@ class VentaController extends Gabinando_Base{
 				foreach ($beforeDonation['products'] as $key => $_prod) {
 					// Start Inventario
 	            	$where	= "id_driver = {$beforeDonation['driver']['id_driver']} AND id_product = {$_prod['id_product']}";
-	            	$qty 	= $_prod['quantity'];
-					$data 	= array('qty' => new Zend_Db_Expr("qty + {$qty}")); 
+	            	$cant 	= $_prod['quantity'];
+					$data 	= array('cant' => new Zend_Db_Expr("cant + {$cant}")); 
 	            	$edit 	= $inventoryDriverModel->editWithConditions($data,$where);
 	            	if($edit instanceof Exception) $this->sendErrorResponse($edit->getMessage());
 	            	// End Inventario
@@ -908,7 +908,7 @@ class VentaController extends Gabinando_Base{
 						// Armar el precio del proucto con la funcion getPrice()
 						$dProductsObj = array(
 								'id_product'	=> $params['id_product'][$count],
-								'quantity'		=> $params['qty'][$count],
+								'quantity'		=> $params['cant'][$count],
 								'subtotal'		=> $params['subtotal'][$count],
 								'id_donation'	=> $params['id_donation']
 							);
@@ -917,8 +917,8 @@ class VentaController extends Gabinando_Base{
 
 						// Start Inventario
 		            	$where	= "id_driver = {$id_driver} AND id_product = {$params['id_product'][$count]}";
-		            	$qty 	= $params['qty'][$count];
-						$data 	= array('qty' => new Zend_Db_Expr("qty - {$qty}")); 
+		            	$cant 	= $params['cant'][$count];
+						$data 	= array('cant' => new Zend_Db_Expr("cant - {$cant}")); 
 		            	$edit 	= $inventoryDriverModel->editWithConditions($data,$where);
 		            	if($edit instanceof Exception) $this->sendErrorResponse($edit->getMessage());
 		            	// End Inventario
@@ -931,8 +931,8 @@ class VentaController extends Gabinando_Base{
 					foreach ($beforeDonation['products'] as $key => $_prod) {
 						// Start Inventario
 		            	$where	= "id_driver = {$id_driver} AND id_product = {$_prod['id_product']}";
-		            	$qty 	= $_prod['quantity'];
-						$data 	= array('qty' => new Zend_Db_Expr("qty - {$qty}")); 
+		            	$cant 	= $_prod['quantity'];
+						$data 	= array('cant' => new Zend_Db_Expr("cant - {$cant}")); 
 		            	$edit 	= $inventoryDriverModel->editWithConditions($data,$where);
 		            	if($edit instanceof Exception) $this->sendErrorResponse($edit->getMessage());
 		            	// End Inventario
@@ -1042,319 +1042,160 @@ class VentaController extends Gabinando_Base{
 						
 	}
 
-	public function setdonationAction(){
+	public function setventaAction(){
 		if($this->getRequest()->isPost()){
 			$params 		= $this->getRequest()->getPost();
+	//echo "<pre>"; die(var_dump($params['data']));
+			//Validaciones
 			if(isset($params["data"]))
 				parse_str($params["data"], $params);
 
-			if(!isset($params['id_patient']) || $params['id_patient'] == "none")
-				return $this->sendErrorResponse("No patient selected.");
+			if(!isset($params['id_cliente']) || $params['id_cliente'] == "none")
+				return $this->sendErrorResponse("No se seleccionó ningun cliente.");
 
-			if(!isset($params['id_location']) || $params['id_location'] == "none")
-				return $this->sendErrorResponse("No location selected.");
+			if(!isset($params['total']) || $params['total'] == 0)
+				return $this->sendErrorResponse("El total no puede ser cero");
 
+			if(!isset($params['id_producto'])) return $this->sendErrorResponse("No se seleccionó ningun producto");
 
-			// if(!isset($params['id_product'])) return $this->sendErrorResponse("No products selected");
-
-			if($params['time']=='')
-				return $this->sendErrorResponse("No time selected.");
-
-			//if($params['time']=='Dispensary closed') return $this->sendErrorResponse("Collective is closed.");
-
-			// Chequeamos que ningun producto venga con qty 0
+			// Chequeamos que ningun producto venga con cant = 0
 			$count = 0;
-			if(isset($params['id_product'])) :
-				foreach ($params['id_product'] as $_prod) {
-					if($params['qty'][$count]==0)
-						return $this->sendErrorResponse("Please insert at least 1 in quantity.");
+			if(isset($params['id_producto'])) :
+				foreach ($params['id_producto'] as $_prod) {
+					if($params['cant'][$count]==0)
+						return $this->sendErrorResponse("La cantidad no puede ser cero");
 					$count++;
 				}
 			endif;
+			//Fin Validaciones
 
-			$patientModel  	= new Application_Model_Patient();
-			$patient	   	= $patientModel->getPatient($params['id_patient']);
+			$clienteModel  	= new Application_Model_Cliente();
+			$cliente	   	= $clienteModel->getClienteById($params['id_cliente']);
 
 			// Validamos que al paciente le corresponda la location
-			$locationsModel = new Application_Model_Location();
-			$location	   	= $locationsModel->getLocation($params['id_location'],$params['id_patient']);
-			if($location instanceof Exception)
-				return $this->sendErrorResponse($location->getMessage());
-			if(!count($location))
-				return $this->sendErrorResponse('mm... this location does not correspond to this patient.');
+			//$locationsModel = new Application_Model_Location();
+			//$location	   	= $locationsModel->getLocation($params['id_location'],$params['id_patient']);
+			//if($location instanceof Exception)
+			//	return $this->sendErrorResponse($location->getMessage());
+			//if(!count($location))
+			//	return $this->sendErrorResponse('mm... this location does not correspond to this patient.');
 
-			$locationPoints = array(
-					'lat' => $location['lat'],
-					'lon' => $location['lon']
-				);
+			//$locationPoints = array(
+			//		'lat' => $location['lat'],
+			//		'lon' => $location['lon']
+			//	);
 
-			$apiRoute 	= new Application_Model_Route($this->admin_session->admin['id_dispenser']);
+			//$apiRoute 	= new Application_Model_Route($this->admin_session->admin['id_dispenser']);
 
 			try{
 				// Buscamos los tiempos del Driver seleccionado en el Add Donation
-				$assignResult  = $apiRoute->assignDriver($patient['id_dispenser'], $locationPoints, $params['id_patient'], $params["id_driver"]);
+				//$assignResult  = $apiRoute->assignDriver($patient['id_dispenser'], $locationPoints, $params['id_patient'], $params["id_driver"]);
 
 				$ventaModel= new Application_Model_Venta();
 
-				// Auth Patient
 				// Ver si recommendation_allowed esta true
-				if ($patient["status"] == "0")
-					return $this->sendErrorResponse('mm... Patient status is inactive.');
+				//if ($patient["status"] == "0")
+				//	return $this->sendErrorResponse('mm... Patient status is inactive.');
 				// Ver si tiene expirada la expired_recommendation_id
 				// Ver en Settings si el not authorized puede comprar
-				$settingsModel = new Application_Model_Setting();
-				$settings = $settingsModel->getAll();
-				if($settings['enablenotauthorized']=="disabled") {
-	            	if($patient["recommendation_allowed"]=="1"){
-	                    if($patient["expire_recommendation_id"] < date("Y-m-d"))
-	                        return $this->sendErrorResponse('mm... your Recommendation ID has expired.');
-	            	}elseif ($patient["recommendation_allowed"]=="2") {
-	                    return $this->sendErrorResponse('mm... your Recommendation ID is pending authorization.');
-	                }else{
-	                    return $this->sendErrorResponse('mm... your Recommendation ID is not authorized.');
-	            	}
-	            }
+				
 				
 				// Ver si ya tiene alguna donacion con estado pendiente el día de hoy
-            	$lastDonation = $ventaModel->getDonationForPatient($patient['id_patient']);
-            	if($lastDonation instanceof Exception)
-					return $this->sendErrorResponse($lastDonation->getMessage());
+            	//$lastDonation = $ventaModel->getDonationForPatient($patient['id_patient']);
+            	//if($lastDonation instanceof Exception)
+				//	return $this->sendErrorResponse($lastDonation->getMessage());
 
-				if ($lastDonation['status']=='going' OR $lastDonation['status']=='pending')
-					return $this->sendErrorResponse('mm... this patient already has a pending donation.');
+				//if ($lastDonation['status']=='going' OR $lastDonation['status']=='pending')
+				//	return $this->sendErrorResponse('mm... this patient already has a pending donation.');
 
-				// Start - Calculamos el Tiempo de Servicio
-				$service = $this->_serviceTime($params["id_patient"],$params["id_driver"]);
-				// End - Calculamos el Tiempo de Servicio
-				$donationObj = array(
-						'id_patient' 		=> $params['id_patient'],
-						'date' 				=> date('Y-m-d H:i:s'),
-						'arrival_time' 		=> $assignResult['arrival_time'],
-						'service_time' 		=> $service,
-						'status' 			=> 'pending',
-						'discount'			=> $params['discount'],
-						'points'			=> $params['points'],						
-						'id_driver' 		=> $assignResult['id_driver'],
-						'note'          	=> $params['donation_note'],
-						'id_dispenser' 		=> $patient['id_dispenser'],
-						'id_phone'      	=> $params['id_phone'],
+				$forma_entrega = ($params['envio']) ? 'delivery' : 'retira';
+				$ventaObj = array(
+						'id_cliente' 		=> $params['id_cliente'],
+						'fecha' 			=> date('Y-m-d H:i:s'),
+						'forma_pago'		=> $params['forma_pago'],
+						'descuento'			=> $params['descuento'],
+						'total'      		=> $params['total'],
 						'subtotal' 			=> $params['subtotal_products'],
-						'amount' 			=> $params['total'],
-						'tax'				=> $params['tax'],
-						'tax_exempt' 		=> isset($params['tax_exempt']) ? 1 : 0,	
-						'fee_shipping' 		=> $params['fee_shipping'],					
-						'fee_convenience' 	=> $params['fee_convenience'],					
-						'id_discount'		=> $params['id_discount'],
-						'special_discount'  => $params['special-discount'],
-						'reason_discount' 	=> $params['reason'],					
-						'future_deliveries' => $params['future_deliveries'],					
-						'service_type'  	=> 'delivery'
+						'envio' 			=> $params['envio'],
+						'iva'				=> $params['iva'],
+						'forma_entrega'		=> $forma_entrega
 					);
-				if(isset($params["id_driver"]))
-					$donationObj["id_driver"] = $params["id_driver"];
 
-				// $time_in_24_hour_format  = date("H:i", strtotime($params["time"]));
-				if(isset($params["timeset"]) && !empty($params["timeset"])){
-					$time = substr($params["time"], 0, 8);
-					$date = substr($params['time'], 18, 29);
-
-					if ($params['future_deliveries']==1) {
-						if ($date!='') {
-							$time = $date.' '.$time;
-						}
-					}else{
-						if($time == 'Overtime'){
-							$time = date('Y-m-d 23:59:59');
-						}else{
-							$time = date('Y-m-d H:i:s', strtotime($time));
-						}
-					}
-					$donationObj["arrival_time"] = $time;
-					$donationObj['is_fixed_time'] = 1;
-
-				}
 				// Start - Crea la donation
-				$donationId = $ventaModel->add($donationObj);				// End - Crea la donation
+				$idVenta = $ventaModel->add($ventaObj);				
+				// End - Crea la donation
 
 
-				$dAddressesModel = new Application_Model_Donationaddresses();
-				$dAddressesObj = array(
-						'name'			=> $location['name'],
-						'street'		=> $location['street'],
-						'number'		=> $location['number'],					
-						'apartment'		=> $location['apartment'],
-						'meetup'		=> $location['meetup'],
-						'city'			=> $location['city'],
-						'state'			=> $location['state'],
-						'lat'			=> $location['lat'],
-						'lon'			=> $location['lon'],
-						'note'			=> $location['note'],
-						'id_donation'	=> $donationId
-					);	
+				//$dAddressesModel = new Application_Model_Donationaddresses();
+				//$dAddressesObj = array(
+				//		'name'			=> $location['name'],
+				//		'street'		=> $location['street'],
+				//		'number'		=> $location['number'],					
+				//		'apartment'		=> $location['apartment'],
+				//		'meetup'		=> $location['meetup'],
+				//		'city'			=> $location['city'],
+				//		'state'			=> $location['state'],
+				//		'lat'			=> $location['lat'],
+				//		'lon'			=> $location['lon'],
+				//		'note'			=> $location['note'],
+				//		'id_donation'	=> $idVenta
+				//	);	
 				// Start - Crea la address de la Donation
-				$dAddressesModel->add($dAddressesObj);
+				//$dAddressesModel->add($dAddressesObj);
 
-				if(isset($params['id_product']) && count($params['id_product'])){
-					$dProductsModel = new Application_Model_Donationproducts();
-					$inventoryDriverModel	= new Application_Model_Productinventorydriver();
+				//if(isset($params['id_product']) && count($params['id_product'])){
+					$ventas_detalleModel = new Application_Model_VentaDetalle();
+					$productoModel	= new Application_Model_Producto();
 					$count = 0;
-					foreach ($params['id_product'] as $_prod) {
+					foreach ($params['id_producto'] as $_prod) {
 						// Armar el precio del proucto con la funcion getPrice()
 						$dProductsObj = array(
-								'id_product'	=> $params['id_product'][$count],
-								'quantity'		=> $params['qty'][$count],
-								'subtotal'		=> $params['subtotal'][$count],
-								'gift'			=> $params['gift'][$count],
-								'id_donation'	=> $donationId
+								'id_producto'	=> $params['id_producto'][$count],
+								'cantidad'		=> $params['cant'][$count],
+								'precio'		=> $params['precio'],
+								'id_venta'		=> $idVenta
 							);
+						//die(var_dump($dProductsObj));
 						// Start - Crea los productos en la donation
-						$dProductsModel->add($dProductsObj);
-						
-						// Start Inventario
-		            	$where	= "id_driver = {$assignResult['id_driver']} AND id_product = {$params['id_product'][$count]}";
-		            	$qty 	= $params['qty'][$count];
-						$data 	= array('qty' => new Zend_Db_Expr("qty - {$qty}")); 
-		            	$edit 	= $inventoryDriverModel->editWithConditions($data,$where);
-		            	if($edit instanceof Exception) $this->sendErrorResponse($edit->getMessage());
-		            	// End Inventario
+						$ventas_detalleModel->add($dProductsObj);
+						// Start descontar stock Inventario VER COMO HACER
+						$productoModel->editarStock($params['id_producto'],$params['cant']);
 
+		            	//$where	= " id_product = {$params['id_product'][$count]}";
+		            	//$cant 	= $params['cant'][$count];
+						//$data 	= array('cant' => new Zend_Db_Expr("cant - {$cant}")); 
+		            	//$edit 	= $inventoryDriverModel->editWithConditions($data,$where);
+		            	//if($edit instanceof Exception) $this->sendErrorResponse($edit->getMessage());
+		            	// End Inventario
 
 						$count++;
 
-					}
+					//}
 				}
 
-            	$rewardsettingModel = new Application_Model_Reward();
-              	$rewards = $rewardsettingModel->getListbyValue();
+				//$arrayEvent = array(
+				//	'event_type' 	=> 'newdonation',
+				//	'date'			=> date('Y-m-d H:i:s'),
+				//	'content'		=> "New Donation created by Admin.",
+				//	'id_donation'	=> $idVenta,
+				//	'id_admin'		=> $this->admin_session->admin['id_admin']
+				//);
+				//$donationEventsModel = new Application_Model_Donationevents();
 
-				/*if($rewards['enabled'] && !empty($params['points'])){ 
-				 	$pointlabel = $params['points'] > 1 ? $rewards['pointslabel'] : $rewards['pointlabel'];                         
-                    $reedemamount = $this->getAmountbyPoints($params['points']);
-                 
-					$arrayPointsEvent = array(
-                        'event_type'      => 'adminpoints',
-                        'date'            => date('Y-m-d H:i:s'),
-                        'content'         => "The Admin used ".$params['points']." ".$pointlabel . " for a $" .$reedemamount. " discount",
-                        'id_donation'     => $donationId,
-                        'id_admin'		  => $this->admin_session->admin['id_admin']
-                  	);
-				}*/
+				//$result = $donationEventsModel->add($arrayEvent);
 
-				// Start - Se registra el cupon usado si tiene //
-	            $couponModel = new Application_Model_Coupons();
-	            $usedcouponModel = new Application_Model_Usedcoupons();	          
-				if(!empty($params['id_coupon'])){
-					$coupon = $couponModel->getCoupon($params['id_coupon']);
-					
-						$couponParams = array(
-		                  'id_coupon'       => $coupon['id_coupon'],
-		                  'id_patient'      => $params['id_patient'],
-		                  'id_donation'     => $donationId,
-		                  'date'            => date('Y-m-d H:i:s'),
-		                  'used'            => 1
-		            );	       
-		            $usedcouponModel->add($couponParams);
+				//CREAR
+            	$venta = $ventaModel->getFullVenta($idVenta);
+            	
+				// Start - Mail al cliente para avisarle que tiene una nueva VENTA (Donation) VER/TERMINAR
+				//$sender 	= new Application_Model_Mail_Sender();
+				//$message 	= "Hola {$venta['patient']['first_name']}! Gracias por tu compra. <br><br> Fecha: " . date('m-d-Y h:i a',strtotime($venta['date'])) . "<br>  <a href='" . front_uri . "/index/donations' target='_blank'>Check your donation's status</a>";
 
-                  /*  $textdiscount = $coupon['fix_discount'] ? '$'.$coupon['fix_discount'] : $coupon['percent_discount'].'%';
+				//$result 	= $sender->sendEmail($patient['email'],"Nueva compra",$message);
+				// End - Mail al cliente para avisarle que tiene una nueva venta
+							
 
-		            $arrayCouponEvent = array(
-                        'event_type'      => 'admincoupon',
-                        'date'            => date('Y-m-d H:i:s'),
-                        'content'         => "The Admin used a coupon : ".$coupon['value'] . " for a " . $textdiscount . " discount",
-                        'id_donation'     => $donationId,
-                        'id_admin'		  => $this->admin_session->admin['id_admin']
-                  	);*/	       
-				}
-				// End - Se registra el cupon usado si tiene //
-
-
-				// Start - Crea la donation en donation_msg_read
-				$donationMessagesModel = new Application_Model_Donationmessagesread();
-				$readParamas = array(
-								'id_donation' 	=> $donationId
-								);
-				$result = $donationMessagesModel->add($readParamas);
-				// End - Crea la donation en donation_msg_read
-
-				$arrayEvent = array(
-					'event_type' 	=> 'newdonation',
-					'date'			=> date('Y-m-d H:i:s'),
-					'content'		=> "New Donation created by Admin.",
-					'id_donation'	=> $donationId,
-					'id_admin'		=> $this->admin_session->admin['id_admin']
-				);
-				$donationEventsModel = new Application_Model_Donationevents();
-
-				$result = $donationEventsModel->add($arrayEvent);
-
-				/*if(isset($arrayCouponEvent))
-					$result = $donationEventsModel->add($arrayCouponEvent);	
-				
-				if(isset($arrayPointsEvent))
-					$result = $donationEventsModel->add($arrayPointsEvent);
-				*/
-				// Recalcula todos los tiempos posteriores a la $donationId
-				$apiRoute->updateRoute($assignResult['id_driver'], $donationId);
-
-            	$donation = $ventaModel->getFullVenta($donationId);
-            	// Start - Push al Driver para avisarle que tiene una nueva Donation
-            	$notificationModel = $this->getPushNotificationModel();
-            	$dispenserModel = new Application_Model_Dispenser();
-            	$dispenser = $dispenserModel->getDispenser();
-            	$message = "Hey {$donation['driver']['first_name']}! There's a new donation assigned to you: {$donation['patient']['first_name']} {$donation['patient']['last_name']} at {$donation['address']['number']} {$donation['address']['street']} ({$donation['address']['city']})";
-            	$data = array
-		            (
-		                'title'     => $dispenser['name'],
-		                'body'      =>  $message,
-		                'token'		=> $donation['driver']['parse_token'],
-		                'icon'      => 'icon',
-		                'sound'     => 'default',
-		                'color'     => '#66AB30',
-		                'type'		=> 'NEW_DONATION'
-		            );
-						
-
-				$result = $notificationModel->sendPush($data);
-				// End - Push al Driver para avisarle que tiene una nueva Donation
-				// Start - Push al Patient para avisarle que tiene una nueva Donation
-            	$message = "Hey {$donation['patient']['first_name']}! We have a new donation for you! Check it out!";
-
-				$data = array
-		            (
-		                'title'     => $dispenser['name'],
-		                'body'      =>  $message,
-		                'token'		=> $donation['patient']['parse_token'],
-		                'icon'      => 'icon',
-		                'sound'     => 'default',
-		                'color'     => '#66AB30',
-		                'type'		=> 'NEW_DONATION'
-		            );
-
-				$result = $notificationModel->sendPush($data);
-				// End - Push al Patient para avisarle que tiene una nueva Donation
-				// Start - Mail al Patient para avisarle que tiene una nueva Donation
-				$sender 	= new Application_Model_Mail_Sender();
-				$message 	= "Hey {$donation['patient']['first_name']}! Thank you for your donation request. <br><br> Date: " . date('m-d-Y h:i a',strtotime($donation['date'])) . "<br> Driver assigned: {$donation['driver']['first_name']} <br><br> <a href='" . front_uri . "/index/donations' target='_blank'>Check your donation's status</a>";
-				$result 	= $sender->sendEmail($patient['email'],"New Donation Requested",$message);
-				// End - Mail al Patient para avisarle que tiene una nueva Donation
-				// Start - Sms al Patient para avisarle que tiene una nueva Donation
-				if($settings['enablesms']['value'] == "enabled"){
-					if($patient['sms_enabled']){
-						$phoneModel 	= new Application_Model_Phone();
-						$sms 			= $this->getSMSNotificationModel();
-						$defaultPhone 	= $phoneModel->getDefaultPhone($patient['id_patient']);
-						$message 		= "Hey {$donation['patient']['first_name']}! Thank you for your donation request. Date: " . date('m-d-Y h:i a',strtotime($donation['date'])) . " / ETA: " . date('h:i a',strtotime($donation['arrival_time'])) . ". Check your donation's status in " . front_uri;
-						$data = array(
-							'message' 		=> $message,
-							'phone'     	=> $defaultPhone['number']				
-						);							
-						$status = $sms->sendSMS($data);						
-					}
-					
-				} 
-				// End - Sms al Patient para avisarle que tiene una nueva Donation				
-
-				$this->sendSuccessResponse(true,"Donation saved.");
+				$this->sendSuccessResponse(true,"Venta guardada");
 
 			}catch(Exception $e){
 				return $this->sendErrorResponse($e->getMessage());

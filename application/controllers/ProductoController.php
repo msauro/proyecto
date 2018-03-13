@@ -163,7 +163,7 @@ class ProductoController extends Gabinando_Base {
 			$paginate['page'] 	= 1;
 		}
 
-		$paginate['per_page'] 	= 6;
+		$paginate['per_page'] 	= 15;
 
 		$paginate['start_from'] = ($paginate['page']-1) * $paginate['per_page'];
 
