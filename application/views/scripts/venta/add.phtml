@@ -495,8 +495,20 @@ $this->headTitle($this->title);
                 //}
                 
                 var params = {};
+                var productos = [];
 
-                params.data = $("#crear-venta").serialize();    
+                params.data = $("#crear-venta").serializeObject();
+                params.data['id_producto[]'].forEach(function(e, i) {
+                    var producto = {
+                        id_producto: e,
+                        precio: params.data['precio[]'][i],
+                        cant: params.data['cant[]'][i],
+                        subtotal: params.data['subtotal[]'][i],
+                    }
+
+                    productos.push(producto);
+                })
+                params.productos = productos;
                 //params.futureDeliveries = futureDeliveries;
                 panelAjax("/venta/setventa",params, function(data){              
 

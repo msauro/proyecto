@@ -1045,7 +1045,8 @@ class VentaController extends Gabinando_Base{
 	public function setventaAction(){
 		if($this->getRequest()->isPost()){
 			$params 		= $this->getRequest()->getPost();
-	//echo "<pre>"; die(var_dump($params['data']));
+			$productos = $params['productos'];
+	//die(var_dump($params));
 			//Validaciones
 			if(isset($params["data"]))
 				parse_str($params["data"], $params);
@@ -1060,11 +1061,10 @@ class VentaController extends Gabinando_Base{
 
 			// Chequeamos que ningun producto venga con cant = 0
 			$count = 0;
-			if(isset($params['id_producto'])) :
-				foreach ($params['id_producto'] as $_prod) {
-					if($params['cant'][$count]==0)
+			if(isset($productos['id_producto'])) :
+				foreach ($productos['cant'] as $prod) {
+					if($prod == 0)
 						return $this->sendErrorResponse("La cantidad no puede ser cero");
-					$count++;
 				}
 			endif;
 			//Fin Validaciones
@@ -1072,43 +1072,11 @@ class VentaController extends Gabinando_Base{
 			$clienteModel  	= new Application_Model_Cliente();
 			$cliente	   	= $clienteModel->getClienteById($params['id_cliente']);
 
-			// Validamos que al paciente le corresponda la location
-			//$locationsModel = new Application_Model_Location();
-			//$location	   	= $locationsModel->getLocation($params['id_location'],$params['id_patient']);
-			//if($location instanceof Exception)
-			//	return $this->sendErrorResponse($location->getMessage());
-			//if(!count($location))
-			//	return $this->sendErrorResponse('mm... this location does not correspond to this patient.');
-
-			//$locationPoints = array(
-			//		'lat' => $location['lat'],
-			//		'lon' => $location['lon']
-			//	);
-
-			//$apiRoute 	= new Application_Model_Route($this->admin_session->admin['id_dispenser']);
-
 			try{
-				// Buscamos los tiempos del Driver seleccionado en el Add Donation
-				//$assignResult  = $apiRoute->assignDriver($patient['id_dispenser'], $locationPoints, $params['id_patient'], $params["id_driver"]);
 
 				$ventaModel= new Application_Model_Venta();
 
-				// Ver si recommendation_allowed esta true
-				//if ($patient["status"] == "0")
-				//	return $this->sendErrorResponse('mm... Patient status is inactive.');
-				// Ver si tiene expirada la expired_recommendation_id
-				// Ver en Settings si el not authorized puede comprar
-				
-				
-				// Ver si ya tiene alguna donacion con estado pendiente el día de hoy
-            	//$lastDonation = $ventaModel->getDonationForPatient($patient['id_patient']);
-            	//if($lastDonation instanceof Exception)
-				//	return $this->sendErrorResponse($lastDonation->getMessage());
-
-				//if ($lastDonation['status']=='going' OR $lastDonation['status']=='pending')
-				//	return $this->sendErrorResponse('mm... this patient already has a pending donation.');
-
-				$forma_entrega = ($params['envio']) ? 'delivery' : 'retira';
+				$forma_entrega = ($params['envio'] != 0) ? 'delivery' : 'retira';
 				$ventaObj = array(
 						'id_cliente' 		=> $params['id_cliente'],
 						'fecha' 			=> date('Y-m-d H:i:s'),
@@ -1125,53 +1093,30 @@ class VentaController extends Gabinando_Base{
 				$idVenta = $ventaModel->add($ventaObj);				
 				// End - Crea la donation
 
-
-				//$dAddressesModel = new Application_Model_Donationaddresses();
-				//$dAddressesObj = array(
-				//		'name'			=> $location['name'],
-				//		'street'		=> $location['street'],
-				//		'number'		=> $location['number'],					
-				//		'apartment'		=> $location['apartment'],
-				//		'meetup'		=> $location['meetup'],
-				//		'city'			=> $location['city'],
-				//		'state'			=> $location['state'],
-				//		'lat'			=> $location['lat'],
-				//		'lon'			=> $location['lon'],
-				//		'note'			=> $location['note'],
-				//		'id_donation'	=> $idVenta
-				//	);	
-				// Start - Crea la address de la Donation
-				//$dAddressesModel->add($dAddressesObj);
-
 				//if(isset($params['id_product']) && count($params['id_product'])){
 					$ventas_detalleModel = new Application_Model_VentaDetalle();
 					$productoModel	= new Application_Model_Producto();
-					$count = 0;
-					foreach ($params['id_producto'] as $_prod) {
+					$existenciaModel	= new Application_Model_Existencia();
+
+					foreach ($productos as $prod) {
 						// Armar el precio del proucto con la funcion getPrice()
 						$dProductsObj = array(
-								'id_producto'	=> $params['id_producto'][$count],
-								'cantidad'		=> $params['cant'][$count],
-								'precio'		=> $params['precio'],
+								'id_producto'	=> $prod['id_producto'],
+								'cantidad'		=> $prod['cant'],
+								'precio'		=> $prod['precio'],
 								'id_venta'		=> $idVenta
-							);
-						//die(var_dump($dProductsObj));
-						// Start - Crea los productos en la donation
-						$ventas_detalleModel->add($dProductsObj);
-						// Start descontar stock Inventario VER COMO HACER
-						$productoModel->editarStock($params['id_producto'],$params['cant']);
+						);
 
-		            	//$where	= " id_product = {$params['id_product'][$count]}";
-		            	//$cant 	= $params['cant'][$count];
-						//$data 	= array('cant' => new Zend_Db_Expr("cant - {$cant}")); 
-		            	//$edit 	= $inventoryDriverModel->editWithConditions($data,$where);
-		            	//if($edit instanceof Exception) $this->sendErrorResponse($edit->getMessage());
+						// Start - Crea linea de pedido
+						$ventas_detalleModel->add($dProductsObj);
+
+						// Start descontar stock Inventario VER COMO HACER
+						$existenciaModel->editarStock($prod['id_producto'], $prod['cant']);
 		            	// End Inventario
 
-						$count++;
 
-					//}
-				}
+					}
+				//}
 
 				//$arrayEvent = array(
 				//	'event_type' 	=> 'newdonation',
