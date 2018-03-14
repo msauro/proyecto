@@ -1046,21 +1046,22 @@ class VentaController extends Gabinando_Base{
 		if($this->getRequest()->isPost()){
 			$params 		= $this->getRequest()->getPost();
 			$productos = $params['productos'];
+
 	//die(var_dump($params));
+
 			//Validaciones
-			if(isset($params["data"]))
-				parse_str($params["data"], $params);
+			//if(isset($params["data"]))
+			//	parse_str($params["data"], $params);
 
-			if(!isset($params['id_cliente']) || $params['id_cliente'] == "none")
-				return $this->sendErrorResponse("No se seleccionó ningun cliente.");
+			//if(!isset($params['id_cliente']) || $params['id_cliente'] == "none")
+			//	return $this->sendErrorResponse("No se seleccionó ningun cliente.");
 
-			if(!isset($params['total']) || $params['total'] == 0)
-				return $this->sendErrorResponse("El total no puede ser cero");
+			//if(!isset($params['total']) || $params['total'] == 0)
+			//	return $this->sendErrorResponse("El total no puede ser cero");
 
-			if(!isset($params['id_producto'])) return $this->sendErrorResponse("No se seleccionó ningun producto");
+			//if(!isset($params['id_producto'])) return $this->sendErrorResponse("No se seleccionó ningun producto");
 
 			// Chequeamos que ningun producto venga con cant = 0
-			$count = 0;
 			if(isset($productos['id_producto'])) :
 				foreach ($productos['cant'] as $prod) {
 					if($prod == 0)
@@ -1070,22 +1071,22 @@ class VentaController extends Gabinando_Base{
 			//Fin Validaciones
 
 			$clienteModel  	= new Application_Model_Cliente();
-			$cliente	   	= $clienteModel->getClienteById($params['id_cliente']);
+			$cliente	   	= $clienteModel->getClienteById($params['data']['id_cliente']);
 
 			try{
 
 				$ventaModel= new Application_Model_Venta();
 
-				$forma_entrega = ($params['envio'] != 0) ? 'delivery' : 'retira';
+				$forma_entrega = ($params['data']['envio'] != 0) ? 'delivery' : 'retira';
 				$ventaObj = array(
-						'id_cliente' 		=> $params['id_cliente'],
+						'id_cliente' 		=> $params['data']['id_cliente'],
 						'fecha' 			=> date('Y-m-d H:i:s'),
-						'forma_pago'		=> $params['forma_pago'],
-						'descuento'			=> $params['descuento'],
-						'total'      		=> $params['total'],
-						'subtotal' 			=> $params['subtotal_products'],
-						'envio' 			=> $params['envio'],
-						'iva'				=> $params['iva'],
+						'forma_pago'		=> $params['data']['forma_pago'],
+						'descuento'			=> $params['data']['descuento'],
+						'total'      		=> $params['data']['total'],
+						'subtotal' 			=> $params['data']['subtotal_products'],
+						'envio' 			=> $params['data']['envio'],
+						'iva'				=> $params['data']['iva'],
 						'forma_entrega'		=> $forma_entrega
 					);
 
@@ -1110,29 +1111,21 @@ class VentaController extends Gabinando_Base{
 						// Start - Crea linea de pedido
 						$ventas_detalleModel->add($dProductsObj);
 
+				die('VER COMO HACER CONSULTA PARA ACTUALIZAR STOCK, EN EL DIE() DE LA QUERY FORMA BIEN LA CONSULTA PERO NO IMPACTA EN LA DB');
+
 						// Start descontar stock Inventario VER COMO HACER
 						$existenciaModel->editarStock($prod['id_producto'], $prod['cant']);
 		            	// End Inventario
 
 
 					}
-				//}
+		
 
-				//$arrayEvent = array(
-				//	'event_type' 	=> 'newdonation',
-				//	'date'			=> date('Y-m-d H:i:s'),
-				//	'content'		=> "New Donation created by Admin.",
-				//	'id_donation'	=> $idVenta,
-				//	'id_admin'		=> $this->admin_session->admin['id_admin']
-				//);
-				//$donationEventsModel = new Application_Model_Donationevents();
-
-				//$result = $donationEventsModel->add($arrayEvent);
-
-				//CREAR
-            	$venta = $ventaModel->getFullVenta($idVenta);
+				
+            	//$venta = $ventaModel->getFullVenta($idVenta);
             	
 				// Start - Mail al cliente para avisarle que tiene una nueva VENTA (Donation) VER/TERMINAR
+				
 				//$sender 	= new Application_Model_Mail_Sender();
 				//$message 	= "Hola {$venta['patient']['first_name']}! Gracias por tu compra. <br><br> Fecha: " . date('m-d-Y h:i a',strtotime($venta['date'])) . "<br>  <a href='" . front_uri . "/index/donations' target='_blank'>Check your donation's status</a>";
 
@@ -1140,10 +1133,10 @@ class VentaController extends Gabinando_Base{
 				// End - Mail al cliente para avisarle que tiene una nueva venta
 							
 
-				$this->sendSuccessResponse(true,"Venta guardada");
+				$this->sendSuccessResponse(true,"Venta guardada y stock actualizado");
 
 			}catch(Exception $e){
-				return $this->sendErrorResponse($e->getMessage());
+				return $this->sendErrorResponse($e->getMessage('error'));
 			}
 		}
 	}

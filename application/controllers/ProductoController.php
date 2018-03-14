@@ -20,9 +20,10 @@ class ProductoController extends Gabinando_Base {
 
 			$params['imagen_url'] = $img['message'];
 		
-            $params['eliminado'] = 0;
+           // $params['eliminado'] = 0;
 			
 			$producto = new Application_Model_Producto();
+			$stock = new Application_Model_Existencia();
 			$productoExistente = $producto->getProductosByParams($params['codigo'], $params['id_marca']);
 			
 			if($productoExistente instanceof Exception){
@@ -30,9 +31,31 @@ class ProductoController extends Gabinando_Base {
                 $this->_redirect('/producto/add');
             // si el producto no fue agregado anteriormente -> agrego nuevo producto
             }elseif($productoExistente == null){
+            	$paramsProducto = array(
+				    "codigo" 		=> $params['codigo'],
+				    "id_marca" 		=> $params['id_marca'],
+				    "nombre"		=> $params['nombre'],
+				    "eliminado"		=> 0,
+				    "imagen_url"		=> $img['message'],
+				    "descripcion"	=> $params['descripcion']
+				);
+				
+           		$result = $producto->add($paramsProducto);
 
-           		$result = $producto->add($params);
-				if($result instanceof Exception){
+           		if($result instanceof Exception){
+	                Gabinando_Base::addError($result->getMessage());
+            	}
+           		
+           		$paramsStock = array(
+				    "id_producto" 	=> $result,
+				    "cantidad" 		=> $params['cantidad'],
+				    "punto_pedido"	=> $params['punto_pedido'],
+					'fecha' 		=> date('Y-m-d H:i:s')
+
+				);
+
+           		$resultStock = $stock->add($paramsStock);
+				if($resultStock instanceof Exception){
 	                Gabinando_Base::addError($result->getMessage());
             	}
 
@@ -85,7 +108,7 @@ class ProductoController extends Gabinando_Base {
 					die($img['message']);
 				}
 
-				$params['imagen_url'] = $img['message'];
+				//$params['imagen_url'] = $img['message'];
 			}
 
 			$producto = new Application_Model_Producto();
@@ -95,9 +118,26 @@ class ProductoController extends Gabinando_Base {
                 Gabinando_Base::addError($productoExistente->getMessage());
             // si el producto no fue agregado anteriormente -> edito producto
             }elseif($productoExistente == null){
+            	$paramsProducto = array(
+				    "codigo" 		=> $params['codigo'],
+				    "id_marca" 		=> $params['id_marca'],
+				    "nombre"		=> $params['nombre'],
+				    "eliminado"		=> 0,
+				    "imagen_url"	=> $img['message'],
+				    "descripcion"	=> $params['descripcion']
+				);
+				$paramsStock = array(
+				    "id_producto" 	=> $params['id'],
+				    "cantidad" 		=> $params['cantidad'],
+				    "punto_pedido"	=> $params['punto_pedido'],
+					'fecha' 		=> date('Y-m-d H:i:s')
 
+				);
 				$producto = new Application_Model_Producto();
-				$result = $producto->edit($params['id'], $params);
+				$stock = new Application_Model_Existencia();
+
+				$resultProducto = $producto->edit($params['id'], $paramsProducto);
+           		$resultStock = $stock->edit($params['id'], $paramsStock);
 
 				if($result instanceof Exception){
 	                Gabinando_Base::addError($result->getMessage());

@@ -471,29 +471,7 @@ $this->headTitle($this->title);
         $("#form-total").removeClass("fa-square-o");
         $("#form-total").addClass("fa-check-square-o");
         if (!$(".actionBar .buttonFinish").hasClass("buttonDisabled")){
-            $(".buttonFinish").fadeOut(50,function(){
-                // $("#form-donation_note").val($("textarea#donation_note").val());      
-                // $("#form-id_discount").val($("#discount_options").val());  
-                // $("#form-reason").val($("#reason_value").val());  
-                $("#form-discount").val($("#rdiscount_hidden").val());  
-                // $('#form-future_deliveries').val(futureDeliveries);
-                
-               // var reason = $('#discount_options option:selected').attr('attr-reason');
-                
-               // if (reason==1) {
-               //     if ($('#discount').val().includes("%")) {
-                //        discount = parseFloat($('#discount').val());
-                //    } 
-                //    else{
-                //        var total = parseFloat($("#subtotal_cost_hidden").val());
-                //        disc = $('#discount').val();
-                //        discount = disc * 100 / total;
-                //    }             
-
-                //    $("#form-special-discount").val(discount); 
-
-                //}
-                
+            $(".buttonFinish").addClass('buttonDisabled');
                 var params = {};
                 var productos = [];
 
@@ -524,7 +502,6 @@ $this->headTitle($this->title);
                         $(".btn.btn-default.btn-lg.pull-right.mb-control-close").click();
                     }
                 });
-            });
             // Armo el Popup
             $("#message-box-warning").children(".mb-container").children(".mb-middle").children(".mb-title").html("Please wait");
             $("#message-box-warning").children(".mb-container").children(".mb-middle").children(".mb-content").html("<p>The system is setting the new donation.</p>");

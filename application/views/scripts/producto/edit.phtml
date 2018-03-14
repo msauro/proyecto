@@ -63,6 +63,15 @@ $this->headTitle($this->title);
                             </div>
                         </div>
 
+                        <div class="form-group">
+                            <label class="col-sm-3 col-xs-12 control-label">Cantidad</label>
+                            <div class="col-sm-6 col-xs-12">                                            
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-list"></span></span>
+                                    <input name="cantidad" id="cantidad" type="number" class="form-control" value="<?php echo $this->data['cantidad'] ?>"/>
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="form-group" id="form-group-marca" >
                             <label class="col-sm-3 col-xs-12 control-label">Marca</label>
