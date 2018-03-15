@@ -66,7 +66,6 @@ class Zend_Db_Statement_Mysqli extends Zend_Db_Statement
     public function _prepare($sql)
     {
         $mysqli = $this->_adapter->getConnection();
-
         $this->_stmt = $mysqli->prepare($sql);
 
         if ($this->_stmt === false || $mysqli->errno) {

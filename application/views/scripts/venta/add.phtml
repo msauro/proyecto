@@ -844,16 +844,16 @@ function getProducts(){
             "<td id='codigo'>" + value.codigo + "</td>" +
             "<td id='nombre'>" + value.nombre + "</td>" +
             "<td id='marca'>" + value.nom_marca + "</td>" +
-            "<td id='existencia'>" + value.existencia + "</td>" +
+            "<td id='existencia'>" + value.cantidad + "</td>" +
             "<td id='imagen_url' class='hidden'>" + value.imagen_url + "</td>" +
             "<td id='precio'>" + value.precio + "</td>";
             var disable;
                 //Mido nivel de Stock
                 item = item + "</td>" + "<td>";
-                if (value.existencia <= 0 || value.existencia == null) {
+                if (value.cantidad <= 0 || value.cantidad == null) {
                     item = item + "<span class='label label-danger'>Sin stock</span>";
                     disable = 'disabled';
-                }else if(value.existencia < value.punto_pedido){
+                }else if(value.cantidad < value.punto_pedido || value.cantidad == value.punto_pedido){
                     item = item + "<span class='label label-warning'>Punto de pedido</span>";
                 }else{
                     item = item + "<span class='label label-success'>En Stock</span>";

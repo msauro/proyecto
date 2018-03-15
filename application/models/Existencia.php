@@ -2,19 +2,24 @@
 
 class Application_Model_Existencia extends Application_Model_Base
 {
-
     protected $_name = 'existencias';
 
     //Descontar en $cant la cantidad almacenada en la db
     public function editarStock($id, $cant){
     	try {
-	    	$sql = 'UPDATE existencias
+	    	$query = 'UPDATE existencias
 			SET cantidad = cantidad-'.$cant.'
 			WHERE id_producto = '.$id;
+			
+			//$db =Zend_Db_Table_Abstract::getDefaultAdapter();
+	    	//$stmt = new Zend_Db_Statement_Mysqli($db, $sql);
 	    	 
-	    	$stmt = new Zend_Db_Statement_Mysqli($this, $sql);
-	    	 
-	    	$stmt->execute();
+	    	//$stmt->execute();
+
+	    	$db = Zend_Db_Table_Abstract::getDefaultAdapter();
+        
+        	$stmt = $db->query($query);
+       		$existencia =  $stmt->fetchRow();
 
 	    	return true;
     	} catch (Exception $e) {

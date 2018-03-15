@@ -2,7 +2,7 @@
 
 class Application_Model_Producto extends Application_Model_Base
 {
-
+    // protected $_db = Zend_Db_Table_Abstract::getDefaultAdapter();
 	protected $_name = 'productos';
 
 	public function getList(){
@@ -17,9 +17,10 @@ class Application_Model_Producto extends Application_Model_Base
 
     public function getProductoById($id){
     	try{
-            $query = $this->select()
+            $query = $this->select()->setIntegrityCheck(false)
 	            ->from($this, array('*'))
-	            ->where('id = ?', $id);
+                ->join('existencias', 'productos.id = existencias.id_producto', array('*'))
+	            ->where('productios.id = ?', $id);
 
             $row = $this->fetchRow($query);
 
@@ -78,27 +79,30 @@ class Application_Model_Producto extends Application_Model_Base
         $nuevafecha = date ( 'Y-m-j' , $nuevafecha );
 
         $search['search'] = $search['search'];
-        $query = $this->select()->setIntegrityCheck(false)
-            ->from($this, array('*'))
-            ->join('precios', 'precios.id_producto = productos.id', array('precios.precio'))
-            ->join('marcas', 'marcas.id = productos.id_marca', array('marcas.nombre as nom_marca'))
-            ->where('productos.eliminado = 0')
-            ->where('marcas.eliminado = 0')
-            ->where('precios.eliminado = 0')
-            ->where("(productos.codigo LIKE '%{$search['search']}%' OR productos.nombre LIKE '%{$search['search']}%' OR descripcion LIKE '%{$search['search']}%')")
-            ->group('productos.nombre');
-            // if(!$order){
-            //     $query->order('id DESC');
-            // }else{
-            //     $query->order( $order );
-            // }
-
+        $query = 
+                "SELECT `productos`.*, `precios`.`precio`, `marcas`.`nombre` AS `nom_marca`, `existencias`.`cantidad`, `existencias`.`punto_pedido` 
+                FROM `productos`
+                INNER JOIN `precios` ON precios.id_producto = productos.id
+                INNER JOIN `marcas` ON marcas.id = productos.id_marca
+                INNER JOIN (
+                    SELECT MAX(id) AS maxid, id_producto
+                        FROM existencias
+                        GROUP BY id_producto
+                ) AS t2 ON t2.id_producto = productos.id
+                INNER JOIN `existencias` ON existencias.id = t2.maxid
+                WHERE (existencias.eliminado = 0) 
+                AND (productos.eliminado = 0) 
+                AND (marcas.eliminado = 0) 
+                AND (precios.eliminado = 0) 
+                AND ((productos.codigo LIKE '%%' OR productos.nombre LIKE '%%' OR descripcion LIKE '%%')) GROUP BY `productos`.`id`";
         if ($paginate)
-            $query->limit($paginate['per_page'],$paginate['start_from']);
-             
-        $rows = $this->fetchAll($query);
-
-        return $rows->toArray();
+            $query.= "LIMIT ".$paginate['per_page']." OFFSET ". $paginate['start_from'];
+        
+        $db = Zend_Db_Table_Abstract::getDefaultAdapter();
+        $stmt = $db->query($query);
+        $productos =  $stmt->fetchAll();
+        return $productos;
+        
     }
 
 }

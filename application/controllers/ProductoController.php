@@ -165,7 +165,7 @@ class ProductoController extends Gabinando_Base {
 
 				$productoModel = new Application_Model_Producto();
 				$producto = $productoModel->getProductoById($id);
-
+die(var_dump($producto));
 				$this->view->listadoMarcas = $listadoMarcas;
 
 				if($producto){
@@ -208,6 +208,7 @@ class ProductoController extends Gabinando_Base {
 		$paginate['start_from'] = ($paginate['page']-1) * $paginate['per_page'];
 
 		$productos = $producto->getListFiltered($search,$paginate);
+	//die(var_dump($productos));
 		if($productos instanceof Exception)
 			$this->sendErrorResponse($productos->getMessage());
 		$productoPager = $producto->getListFiltered($search);
@@ -233,7 +234,7 @@ class ProductoController extends Gabinando_Base {
 	public function getProductoById($id=null){
 		$producto = new Application_Model_Producto();		
 		$params 	 = $params = $this->getRequest()->getParams();
-		die(var_dump($id));
+		//die(var_dump($id));
 	}
 		
 		
