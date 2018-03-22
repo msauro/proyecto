@@ -1047,20 +1047,6 @@ class VentaController extends Gabinando_Base{
 			$params 		= $this->getRequest()->getPost();
 			$productos = $params['productos'];
 
-	//die(var_dump($params));
-
-			//Validaciones
-			//if(isset($params["data"]))
-			//	parse_str($params["data"], $params);
-
-			//if(!isset($params['id_cliente']) || $params['id_cliente'] == "none")
-			//	return $this->sendErrorResponse("No se seleccionó ningun cliente.");
-
-			//if(!isset($params['total']) || $params['total'] == 0)
-			//	return $this->sendErrorResponse("El total no puede ser cero");
-
-			//if(!isset($params['id_producto'])) return $this->sendErrorResponse("No se seleccionó ningun producto");
-
 			// Chequeamos que ningun producto venga con cant = 0
 			if(isset($productos['id_producto'])) :
 				foreach ($productos['cant'] as $prod) {
@@ -1088,38 +1074,49 @@ class VentaController extends Gabinando_Base{
 						'envio' 			=> $params['data']['envio'],
 						'iva'				=> $params['data']['iva'],
 						'forma_entrega'		=> $forma_entrega
-					);
+				);
 
 				// Start - Crea la donation
-				$idVenta = $ventaModel->add($ventaObj);				
+				$idVenta = $ventaModel->add($ventaObj);	
 				// End - Crea la donation
 
-				//if(isset($params['id_product']) && count($params['id_product'])){
-					$ventas_detalleModel = new Application_Model_VentaDetalle();
-					$productoModel	= new Application_Model_Producto();
-					$existenciaModel	= new Application_Model_Existencia();
+				$ventas_detalleModel = new Application_Model_VentaDetalle();
+				$productoModel	= new Application_Model_Producto();
+				$existenciaModel	= new Application_Model_Existencia();
 
-					foreach ($productos as $prod) {
-						// Armar el precio del proucto con la funcion getPrice()
-						$dProductsObj = array(
-								'id_producto'	=> $prod['id_producto'],
-								'cantidad'		=> $prod['cant'],
-								'precio'		=> $prod['precio'],
-								'id_venta'		=> $idVenta
-						);
+				foreach ($productos as $prod) {
+					$id_producto = $prod['id_producto'];
+					$productoMaxExistencia = $existenciaModel->getUltimaExistencia($id_producto);
+					
+					$nuevaCantidad = $productoMaxExistencia['cantidad'] - $prod['cant'];
 
-						// Start - Crea linea de pedido
-						$ventas_detalleModel->add($dProductsObj);
+					// Start - Crea linea de venta
+					$dProductsObj = array(
+							'id_producto'	=> $prod['id_producto'],
+							'cantidad'		=> $prod['cant'],
+							'precio'		=> $prod['precio'],
+							'id_venta'		=> $idVenta
+					);
 
-				die('VER COMO HACER CONSULTA PARA ACTUALIZAR STOCK, EN EL DIE() DE LA QUERY FORMA BIEN LA CONSULTA PERO NO IMPACTA EN LA DB');
-
-						// Start descontar stock Inventario VER COMO HACER
-						$existenciaModel->editarStock($prod['id_producto'], $prod['cant']);
-		            	// End Inventario
-
-
-					}
+					$ventas_detalleModel->add($dProductsObj);
+					
+					// Start descontar stock Inventario 
+					$actualizarStock = array(
+						'id_producto'	=> $id_producto,
+						'cantidad'		=> $nuevaCantidad,
+						'fecha' 		=> date('Y-m-d H:i:s')
+					);
+					//disminuye el stock en la existencia
+					$result = $existenciaModel->add($actualizarStock);
+	            	// End Inventario
+				}
 		
+					// if($result instanceof Exception){
+		   //              Gabinando_Base::addError($result->getMessage());
+		   //          }else{
+		   //          	Gabinando_Base::addSuccess('Producto actualizado correctamente');
+		   //          	// $this->_redirect('/producto/list');
+		   //          }
 
 				
             	//$venta = $ventaModel->getFullVenta($idVenta);
@@ -1130,6 +1127,7 @@ class VentaController extends Gabinando_Base{
 				//$message 	= "Hola {$venta['patient']['first_name']}! Gracias por tu compra. <br><br> Fecha: " . date('m-d-Y h:i a',strtotime($venta['date'])) . "<br>  <a href='" . front_uri . "/index/donations' target='_blank'>Check your donation's status</a>";
 
 				//$result 	= $sender->sendEmail($patient['email'],"Nueva compra",$message);
+
 				// End - Mail al cliente para avisarle que tiene una nueva venta
 							
 

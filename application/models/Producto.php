@@ -80,7 +80,7 @@ class Application_Model_Producto extends Application_Model_Base
 
         $search['search'] = $search['search'];
         $query = 
-                "SELECT `productos`.*, `precios`.`precio`, `marcas`.`nombre` AS `nom_marca`, `existencias`.`cantidad`, `existencias`.`punto_pedido` 
+                "SELECT `productos`.*, `precios`.`precio`, `marcas`.`nombre` AS `nom_marca`, `existencias`.`cantidad`
                 FROM `productos`
                 INNER JOIN `precios` ON precios.id_producto = productos.id
                 INNER JOIN `marcas` ON marcas.id = productos.id_marca

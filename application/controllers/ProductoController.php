@@ -36,7 +36,8 @@ class ProductoController extends Gabinando_Base {
 				    "id_marca" 		=> $params['id_marca'],
 				    "nombre"		=> $params['nombre'],
 				    "eliminado"		=> 0,
-				    "imagen_url"		=> $img['message'],
+				    "imagen_url"	=> $img['message'],
+				    "punto_pedido"	=> $params['punto_pedido'],
 				    "descripcion"	=> $params['descripcion']
 				);
 				
@@ -49,7 +50,6 @@ class ProductoController extends Gabinando_Base {
            		$paramsStock = array(
 				    "id_producto" 	=> $result,
 				    "cantidad" 		=> $params['cantidad'],
-				    "punto_pedido"	=> $params['punto_pedido'],
 					'fecha' 		=> date('Y-m-d H:i:s')
 
 				);
@@ -124,12 +124,12 @@ class ProductoController extends Gabinando_Base {
 				    "nombre"		=> $params['nombre'],
 				    "eliminado"		=> 0,
 				    "imagen_url"	=> $img['message'],
+				    "punto_pedido"	=> $params['punto_pedido'],
 				    "descripcion"	=> $params['descripcion']
 				);
 				$paramsStock = array(
 				    "id_producto" 	=> $params['id'],
 				    "cantidad" 		=> $params['cantidad'],
-				    "punto_pedido"	=> $params['punto_pedido'],
 					'fecha' 		=> date('Y-m-d H:i:s')
 
 				);
@@ -165,7 +165,7 @@ class ProductoController extends Gabinando_Base {
 
 				$productoModel = new Application_Model_Producto();
 				$producto = $productoModel->getProductoById($id);
-die(var_dump($producto));
+// die(var_dump($producto));
 				$this->view->listadoMarcas = $listadoMarcas;
 
 				if($producto){

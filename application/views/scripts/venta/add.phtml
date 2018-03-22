@@ -837,6 +837,8 @@ function getProducts(){
     if (params.page < 0) { params.page = 1; };
 
     panelAjax("/producto/getproductos/",params, function(data){
+        console.log('data');
+        console.log(data);
         $(".products tbody").html('');
         $.each(data.productos, function( index, value ){
             item = "<tr id='id_producto' value='"+ value.id +"'>" +
@@ -848,16 +850,35 @@ function getProducts(){
             "<td id='imagen_url' class='hidden'>" + value.imagen_url + "</td>" +
             "<td id='precio'>" + value.precio + "</td>";
             var disable;
+            console.log('value.cantidad');
+            var cant_real = parseInt(value.cantidad);
+            var pto_pedido = parseInt(value.punto_pedido);
+        console.log('value.punto_pedido');
+        console.log(value.punto_pedido);
                 //Mido nivel de Stock
                 item = item + "</td>" + "<td>";
-                if (value.cantidad <= 0 || value.cantidad == null) {
+
+                if(cant_real > pto_pedido ){
+                    item = item + "<span class='label label-success'>En Stock</span>";
+                    
+                }else if(cant_real <= 0 || cant_real == null){
                     item = item + "<span class='label label-danger'>Sin stock</span>";
                     disable = 'disabled';
-                }else if(value.cantidad < value.punto_pedido || value.cantidad == value.punto_pedido){
-                    item = item + "<span class='label label-warning'>Punto de pedido</span>";
+
                 }else{
-                    item = item + "<span class='label label-success'>En Stock</span>";
+                    item = item + "<span class='label label-warning'>Punto de pedido</span>";
+
                 }
+                // if (value.cantidad <= 0 || value.cantidad == null) {
+                // }
+                // if (true) {}
+                // else{
+                //     if(cant_real < pto_pedido ){
+                //         item = item + "<span class='label label-warning'>Punto de pedido</span>";
+                //     }else{
+                //         item = item + "<span class='label label-success'>En Stock</span>";
+                //     }
+                // } 
                 item = item + "</td>" + 
                 "<td style='margin:0px;padding:0px;'>" +
                 "<div class='btn-group' role='group'>"+
