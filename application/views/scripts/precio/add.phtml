@@ -33,7 +33,7 @@ $this->headTitle($this->title);
                                         <option value="">Selecciona Producto</option>
                                         <?php 
                                            foreach ($this->listadoProductos as $key => $producto): ?>
-                                                <option <?php echo $this->data['id_producto'] == $producto['id'] ? "selected" : '' ; ?> value=<?php echo  $producto['id'] ?>><?php echo $producto['nombre']?></option>
+                                                <option <?php echo $this->data['id_producto'] == $producto['id'] ? "selected" : '' ; ?> value=<?php echo  $producto['id'] ?>><?php echo $producto['nombre'] .' - '.$producto['nom_marca']?></option>
                                         <?php endforeach; ?>
                                     </select>
                                 </div> 
@@ -50,7 +50,7 @@ $this->headTitle($this->title);
                             </div>
                         </div>
 
-                        <div class="form-group" id="form-group-marca" >
+                        <!-- <div class="form-group" id="form-group-marca" >
                             <label class="col-sm-3 col-xs-12 control-label">Lista de precios</label>
                             <div class="col-sm-6 col-xs-12">                                            
                                 <div class="input-group">
@@ -64,7 +64,7 @@ $this->headTitle($this->title);
                                     </select>
                                 </div> 
                             </div>
-                        </div>
+                        </div> -->
 
                     </div>
                     <div class="panel-footer">

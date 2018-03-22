@@ -24,6 +24,7 @@ class ProductoController extends Gabinando_Base {
 			
 			$producto = new Application_Model_Producto();
 			$stock = new Application_Model_Existencia();
+			$precioModel = new Application_Model_Precio();
 			$productoExistente = $producto->getProductosByParams($params['codigo'], $params['id_marca']);
 			
 			if($productoExistente instanceof Exception){
@@ -54,10 +55,23 @@ class ProductoController extends Gabinando_Base {
 
 				);
 
+
            		$resultStock = $stock->add($paramsStock);
 				if($resultStock instanceof Exception){
 	                Gabinando_Base::addError($result->getMessage());
             	}
+
+				$paramsPrecio = array(
+					"id_producto" 	=> $result,
+					"precio" 	=> $params['precio'],
+					'fecha' 		=> date('Y-m-d H:i:s')
+				);
+
+				$resultPrecio = $precioModel->add($paramsPrecio);
+				if($resultStock instanceof Exception){
+	                Gabinando_Base::addError($result->getMessage());
+            	}
+
 
             	Gabinando_Base::addSuccess('Producto agregado correctamente');
             	$this->_redirect('/producto/list');

@@ -47,10 +47,10 @@ class PrecioController extends Gabinando_Base {
 			$productoModel = new Application_Model_Producto();
 			$listadoProductos = $productoModel->getList();
 
-			$listaPreciosModel = new Application_Model_ListaPrecios();
-			$listadoListaPrecios = $listaPreciosModel->getList();
+			// $listaPreciosModel = new Application_Model_ListaPrecios();
+			// $listadoListaPrecios = $listaPreciosModel->getList();
 
-			$this->view->listadoListaPrecios = $listadoListaPrecios;
+			// $this->view->listadoListaPrecios = $listadoListaPrecios;
 			$this->view->listadoProductos = $listadoProductos;
 		}
 	}

@@ -20,7 +20,7 @@ class Application_Model_Producto extends Application_Model_Base
             $query = $this->select()->setIntegrityCheck(false)
 	            ->from($this, array('*'))
                 ->join('existencias', 'productos.id = existencias.id_producto', array('*'))
-	            ->where('productios.id = ?', $id);
+	            ->where('productos.id = ?', $id);
 
             $row = $this->fetchRow($query);
 
