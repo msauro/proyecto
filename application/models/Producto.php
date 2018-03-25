@@ -78,7 +78,7 @@ class Application_Model_Producto extends Application_Model_Base
         $nuevafecha = strtotime ( "-$days day" , strtotime ( $fecha ) ) ;
         $nuevafecha = date ( 'Y-m-j' , $nuevafecha );
 
-        $search['search'] = $search['search'];
+        $search= $search['search'];
         $query = 
                 "SELECT `productos`.*, `precios`.`precio`, `marcas`.`nombre` AS `nom_marca`, `existencias`.`cantidad`
                 FROM `productos`
@@ -94,10 +94,11 @@ class Application_Model_Producto extends Application_Model_Base
                 AND (productos.eliminado = 0) 
                 AND (marcas.eliminado = 0) 
                 AND (precios.eliminado = 0) 
-                AND ((productos.codigo LIKE '%%' OR productos.nombre LIKE '%%' OR descripcion LIKE '%%')) GROUP BY `productos`.`id`";
+                -- AND ('productos.codigo LIKE %$search%' OR 'productos.nombre LIKE %$search%' OR 'productos.descripcion LIKE %$search%') GROUP BY `productos`.`id`
+                GROUP BY `productos`.`id`";
+        
         if ($paginate)
             $query.= "LIMIT ".$paginate['per_page']." OFFSET ". $paginate['start_from'];
-        
         $db = Zend_Db_Table_Abstract::getDefaultAdapter();
         $stmt = $db->query($query);
         $productos =  $stmt->fetchAll();

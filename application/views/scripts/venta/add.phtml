@@ -476,16 +476,29 @@ $this->headTitle($this->title);
                 var productos = [];
 
                 params.data = $("#crear-venta").serializeObject();
-                params.data['id_producto[]'].forEach(function(e, i) {
-                    var producto = {
-                        id_producto: e,
-                        precio: params.data['precio[]'][i],
-                        cant: params.data['cant[]'][i],
-                        subtotal: params.data['subtotal[]'][i],
+        console.log(params.data);
+                if (params.data['cant[]'].length == 1) {
+                    var productos = {
+                            id_producto: params.data['id_producto[]'],
+                            precio: params.data['precio[]'],
+                            cant: params.data['cant[]'],
+                            subtotal: params.data['subtotal[]'],
+                            simple: true,
                     }
+                }else{
+                    params.data['id_producto[]'].forEach(function(e, i) {
+                        var producto = {
+                            id_producto: e,
+                            precio: params.data['precio[]'][i],
+                            cant: params.data['cant[]'][i],
+                            subtotal: params.data['subtotal[]'][i],
+                            simple: false,
+                        }
 
-                    productos.push(producto);
-                })
+                        productos.push(producto);
+                    })
+                    
+                }
                 params.productos = productos;
                 //params.futureDeliveries = futureDeliveries;
                 panelAjax("/venta/setventa",params, function(data){              
@@ -1006,12 +1019,14 @@ var calculateTotal = function(){
         subtotal = total;
         $("#tot_discount").html("<span style='float:left'>Descuento:</span><span style='float:right;padding-right: 22px;'>0 %</span>");
         $('#tot_discount').val(0);
+        $("#form-descuento").val(0);
 
     }else{
         disc = descuento * total / 100;
         subtotal = (total - disc);
         $("#tot_discount").html("<span style='float:left'>Descuento:</span><span style='float:right;padding-right: 22px;'>"+descuento+" %</span>");
         $('#tot_discount').val(disc);
+        $("#form-descuento").val(descuento);
     }
 
     if ($('#switch-envio').val() == 'false') {

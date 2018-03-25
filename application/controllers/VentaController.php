@@ -1046,16 +1046,6 @@ class VentaController extends Gabinando_Base{
 		if($this->getRequest()->isPost()){
 			$params 		= $this->getRequest()->getPost();
 			$productos = $params['productos'];
-
-			// Chequeamos que ningun producto venga con cant = 0
-			if(isset($productos['id_producto'])) :
-				foreach ($productos['cant'] as $prod) {
-					if($prod == 0)
-						return $this->sendErrorResponse("La cantidad no puede ser cero");
-				}
-			endif;
-			//Fin Validaciones
-
 			$clienteModel  	= new Application_Model_Cliente();
 			$cliente	   	= $clienteModel->getClienteById($params['data']['id_cliente']);
 
@@ -1084,23 +1074,20 @@ class VentaController extends Gabinando_Base{
 				$productoModel	= new Application_Model_Producto();
 				$existenciaModel	= new Application_Model_Existencia();
 
-				foreach ($productos as $prod) {
-					$id_producto = $prod['id_producto'];
+				if ($productos['simple'] == true) {
+					$id_producto = $productos['id_producto'];
 					$productoMaxExistencia = $existenciaModel->getUltimaExistencia($id_producto);
-					
-					$nuevaCantidad = $productoMaxExistencia['cantidad'] - $prod['cant'];
-
+						
+					$nuevaCantidad = $productoMaxExistencia['cantidad'] - $productos['cant'];
 					// Start - Crea linea de venta
 					$dProductsObj = array(
-							'id_producto'	=> $prod['id_producto'],
-							'cantidad'		=> $prod['cant'],
-							'precio'		=> $prod['precio'],
+							'id_producto'	=> $productos['id_producto'],
+							'cantidad'		=> $productos['cant'],
+							'precio'		=> $productos['precio'],
 							'id_venta'		=> $idVenta
 					);
 
 					$ventas_detalleModel->add($dProductsObj);
-					
-					// Start descontar stock Inventario 
 					$actualizarStock = array(
 						'id_producto'	=> $id_producto,
 						'cantidad'		=> $nuevaCantidad,
@@ -1109,6 +1096,33 @@ class VentaController extends Gabinando_Base{
 					//disminuye el stock en la existencia
 					$result = $existenciaModel->add($actualizarStock);
 	            	// End Inventario
+				}else{
+					foreach ($productos as $prod) {
+						$id_producto = $prod['id_producto'];
+						$productoMaxExistencia = $existenciaModel->getUltimaExistencia($id_producto);
+						
+						$nuevaCantidad = $productoMaxExistencia['cantidad'] - $prod['cant'];
+
+						// Start - Crea linea de venta
+						$dProductsObj = array(
+								'id_producto'	=> $prod['id_producto'],
+								'cantidad'		=> $prod['cant'],
+								'precio'		=> $prod['precio'],
+								'id_venta'		=> $idVenta
+						);
+
+						$ventas_detalleModel->add($dProductsObj);
+						
+						// Start descontar stock Inventario 
+						$actualizarStock = array(
+							'id_producto'	=> $id_producto,
+							'cantidad'		=> $nuevaCantidad,
+							'fecha' 		=> date('Y-m-d H:i:s')
+						);
+						//disminuye el stock en la existencia
+						$result = $existenciaModel->add($actualizarStock);
+		            	// End Inventario
+					}
 				}
 		
 					// if($result instanceof Exception){

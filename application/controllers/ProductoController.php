@@ -198,6 +198,7 @@ class ProductoController extends Gabinando_Base {
     public function getproductosAction(){
 		$producto = new Application_Model_Producto();		
 		$params 	 = $params = $this->getRequest()->getParams();
+	// die(var_dump($params));
 		if( isset($params['search']) ){
 			$search 	 = array(
 				'search' => $params['search'],
