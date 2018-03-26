@@ -122,6 +122,7 @@ $().ready(function() {
             },
             cuit: {
                 required: true,
+                validarcuit: true
             },
             email: "required"
         },
@@ -152,4 +153,7 @@ $.validator.addMethod("validarprecio", function (value, element) {
     var regex = new RegExp(regexp);
     return regex.test(value);
 });
+$.validator.addMethod('validarcuit', function (value, element) {
+        return this.optional(element) || /^\d{11}$/.test(value);
+}, "El formato debe ser (00-00000000-0). No ingrese los guiones");
 </script>

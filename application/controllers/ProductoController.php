@@ -12,14 +12,16 @@ class ProductoController extends Gabinando_Base {
 		if($this->getRequest()->isPost()){
 			$params = $this->getRequest()->getPost();
 			$file = $_FILES['imagen_url'];
-			$img = $this->uploadImage(self::UPLOADPATHAVATAR,$file,$params['nombre']);
+			if ($file['size'] > 0) {
 
-			if($img['status'] == 'error'){
-				die($img['message']);
+				$img = $this->uploadImage(self::UPLOADPATHAVATAR,$file,$params['nombre']);
+
+				if($img['status'] == 'error'){
+					die($img['message']);
+				}
+
+				$params['imagen_url'] = $img['message'];
 			}
-
-			$params['imagen_url'] = $img['message'];
-		
            // $params['eliminado'] = 0;
 			
 			$producto = new Application_Model_Producto();

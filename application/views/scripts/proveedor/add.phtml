@@ -44,7 +44,7 @@ $this->headTitle($this->title);
                             <div class="col-sm-6 col-xs-12">                                            
                                 <div class="input-group">
                                     <span class="input-group-addon"><span class="fa fa-list"></span></span>
-                                    <input name="cuit" type="text" class="form-control" />
+                                    <input name="cuit" type="number" class="form-control" />
                                 </div>                                            
                             </div>
                         </div>
@@ -184,6 +184,10 @@ $().ready(function() {
                 required: true,
                 validarprecio: true
             },
+            cuit: {
+                required: true,
+                validarcuit: true
+            },
             fecha: "required"
         },
         errorPlacement: function(error, element) {
@@ -208,4 +212,7 @@ $.validator.addMethod("validarprecio", function (value, element) {
     var regex = new RegExp(regexp);
     return regex.test(value);
 });
+$.validator.addMethod('validarcuit', function (value, element) {
+        return this.optional(element) || /^\d{11}$/.test(value);
+}, "El formato debe ser (00-00000000-0). No ingrese los guiones");
 </script>

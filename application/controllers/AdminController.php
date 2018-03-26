@@ -13,14 +13,15 @@ class AdminController extends Gabinando_Base {
 			$params = $this->getRequest()->getPost();
 			
 			$file = $_FILES['avatar_url'];
-			
-			$img = $this->uploadImage(self::UPLOADPATHAVATAR,$file,$params['email']);
+			if ($file['size'] > 0) {
+				$img = $this->uploadImage(self::UPLOADPATHAVATAR,$file,$params['email']);
 
-			if($img['status'] == 'error'){
-				die($img['message']);
+				if($img['status'] == 'error'){
+					die($img['message']);
+				}
+
+				$params['avatar_url'] = $img['message'];
 			}
-
-			$params['avatar_url'] = $img['message'];
 		
 			$params["password"]	= base64_encode(pack("H*",sha1(utf8_encode($params["password"]))));
 

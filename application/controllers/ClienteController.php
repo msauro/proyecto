@@ -12,11 +12,13 @@ class ClienteController extends Gabinando_Base {
 		if($this->getRequest()->isPost()){
 			$params = $this->getRequest()->getPost();
 			$file = $_FILES['imagen_url'];
-			
-			$img = $this->uploadImage(self::UPLOADPATHAVATAR,$file,$params['email']);
+			//solo intenta subir la foto si el tamaño es mayor a cero
+			if ($file['size'] > 0) {
+				$img = $this->uploadImage(self::UPLOADPATHAVATAR,$file,$params['email']);
 
-			if($img['status'] == 'error'){
-				die($img['message']);
+				if($img['status'] == 'error'){
+					die($img['message']);
+				}
 			}
 
 			$params['imagen_url'] = $img['message'];
