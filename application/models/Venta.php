@@ -79,9 +79,10 @@ class Application_Model_Venta extends Application_Model_Base
 
 	public function getFullVenta($id){
 		try{
-            $query = $this->select()
+            $query = $this->select()->setIntegrityCheck(false)
 	            ->from($this, array('*'))
             	->join('ventas_detalles', 'ventas_detalles.id_venta = ventas.id', array('*'))
+            	->join('clientes', 'clientes.id = ventas.id_cliente', array('*'))
 	            ->where('ventas.id = ?', $id);
 
             $row = $this->fetchRow($query);

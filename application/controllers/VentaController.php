@@ -1133,14 +1133,14 @@ class VentaController extends Gabinando_Base{
 		   //          }
 
 				
-            	//$venta = $ventaModel->getFullVenta($idVenta);
-            	
-				// Start - Mail al cliente para avisarle que tiene una nueva VENTA (Donation) VER/TERMINAR
+            	$venta = $ventaModel->getFullVenta($idVenta);
+            	// die(var_dump($venta));
+				// Start - Mail al cliente para avisarle que tiene una nueva VENTA  VER/TERMINAR
 				
-				//$sender 	= new Application_Model_Mail_Sender();
-				//$message 	= "Hola {$venta['patient']['first_name']}! Gracias por tu compra. <br><br> Fecha: " . date('m-d-Y h:i a',strtotime($venta['date'])) . "<br>  <a href='" . front_uri . "/index/donations' target='_blank'>Check your donation's status</a>";
+				$sender 	= new Application_Model_Mail_Sender();
+				$message 	= "Hola ".$venta['nombre']." ".$venta['apellido']."! Gracias por tu compra. Total:".$venta['total']." <br><br> Fecha: " . date('d-m-Y h:i a',strtotime($venta['fecha'])) ;
 
-				//$result 	= $sender->sendEmail($patient['email'],"Nueva compra",$message);
+				$result 	= $sender->sendEmail($venta['email'],"Nueva compra",$message);
 
 				// End - Mail al cliente para avisarle que tiene una nueva venta
 							
