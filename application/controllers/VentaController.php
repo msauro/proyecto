@@ -1134,7 +1134,6 @@ class VentaController extends Gabinando_Base{
 
 				
             	$venta = $ventaModel->getFullVenta($idVenta);
-            	// die(var_dump($venta));
 				// Start - Mail al cliente para avisarle que tiene una nueva VENTA  VER/TERMINAR
 				
 				$sender 	= new Application_Model_Mail_Sender();

@@ -4,10 +4,10 @@ class Application_Model_Mail_Sender {
 
     public $dispenser;
 
-    public function __construct(){
-        $dispenserModel     = new Application_Model_Dispenser();
-        $this->dispenser    = $dispenserModel->getDispenser("1");
-    }
+    // public function __construct(){
+    //     $dispenserModel     = new Application_Model_Dispenser();
+    //     $this->dispenser    = $dispenserModel->getDispenser("1");
+    // }
 
 	public function sendRecoveryPassword($email,$token){
 		$emailObj = new Greenleaf_Mail;
@@ -52,7 +52,7 @@ class Application_Model_Mail_Sender {
     }
 
     public function sendEmail($email,$subject,$message){
-        $emailObj = new Greenleaf_Mail;
+        $emailObj = new Gabinando_Mail;
         $emailObj->setRecipient($email);
         $emailObj->setTemplate('mails/general');
         $emailObj->setFromName($this->dispenser['name']);
