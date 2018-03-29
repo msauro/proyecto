@@ -223,7 +223,8 @@ $this->headTitle($this->title);
                                         <!--datos cliente-->
                                         <input type="hidden" id="form-cliente" name="id_cliente">
                                         <input type="hidden" id="form-descuento" name="descuento">
-                                        <input type="hidden" id="form-envio" name="envio">
+                                        <input type="hidden" id="form-envio" name="envio">envio_hidden
+                                        <input type="hidden" id="envio_hidden" name="envio_hidden">
                                         <input type="hidden" id="form-direccion" name="direccion">
                                         <input type="hidden" id="form-cuit" name="cuit">
                                         <input type="hidden" id="form-telefono" name="telefono">
@@ -781,7 +782,7 @@ function validateSteps(step) {
         }
         break;
         case "2":
-        if( form_data[15]['value']=="0.00" ){
+        if( form_data[10]['value']=="0.00" ){
             status = false;
             $('.wizard').smartWizard('showMessage','Selecciona los productos y haga click en "Siguiente".');
             $('.wizard').smartWizard('setError',{stepnum:step,iserror:true});         
@@ -791,10 +792,9 @@ function validateSteps(step) {
         }
         break;
         case "3":
-        console.log(form_data);
-        if( form_data[2]['value']=="" ){
+        if( form_data[15]['value']=="0" ){
             status = false;
-            $('.wizard').smartWizard('showMessage','Verifique los datos y haga click en "Finalizar".');
+            $('.wizard').smartWizard('showMessage','Seleccione una forma de pago y haga click en "Finalizar".');
             $('.wizard').smartWizard('setError',{stepnum:step,iserror:true});         
         }else{
             $('.wizard').smartWizard('hideMessage');
@@ -850,8 +850,7 @@ function getProducts(){
     if (params.page < 0) { params.page = 1; };
 
     panelAjax("/producto/getproductos/",params, function(data){
-        console.log('data');
-        console.log(data);
+       
         $(".products tbody").html('');
         $.each(data.productos, function( index, value ){
             item = "<tr id='id_producto' value='"+ value.id +"'>" +
@@ -863,11 +862,8 @@ function getProducts(){
             "<td id='imagen_url' class='hidden'>" + value.imagen_url + "</td>" +
             "<td id='precio'>" + value.precio + "</td>";
             var disable;
-            console.log('value.cantidad');
             var cant_real = parseInt(value.cantidad);
             var pto_pedido = parseInt(value.punto_pedido);
-        console.log('value.punto_pedido');
-        console.log(value.punto_pedido);
                 //Mido nivel de Stock
                 item = item + "</td>" + "<td>";
 
@@ -1101,23 +1097,7 @@ var resumen = function(){
     }
 
 
-    console.log('forma_pago');
-    console.log(forma_pago);
-    console.log('resumen_total');
-    console.log(resumen_total);
-    console.log('resumen_descuento');
-    console.log(resumen_descuento);
-    console.log('resumen_subtotal');
-    console.log(resumen_subtotal);
-    console.log('resumen_envio');
-    console.log(resumen_envio);
-    console.log('resumen_iva');
-    console.log(resumen_iva);
-    console.log('resumen_efectivo');
-    console.log(resumen_efectivo);
-    //si es true ctacte es pq no paga
-    console.log('ctacte');
-    console.log(ctacte);
+   
 }
 
 

@@ -1052,8 +1052,7 @@ class VentaController extends Gabinando_Base{
 			try{
 
 				$ventaModel= new Application_Model_Venta();
-
-				$forma_entrega = ($params['data']['envio'] != 0) ? 'delivery' : 'retira';
+				$forma_entrega = ($params['data']['envio'][0] != 0) ? 'delivery' : 'retira';
 				$ventaObj = array(
 						'id_cliente' 		=> $params['data']['id_cliente'],
 						'fecha' 			=> date('Y-m-d H:i:s'),
