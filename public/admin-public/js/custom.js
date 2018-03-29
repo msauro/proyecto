@@ -62,7 +62,7 @@ function panelAjax(url,params,callback) {
 						alert(data.message);
 				} else {
 					$(".page-content .message-box-admin").remove();
-					$(".page-content .x-navigation-panel").after('<div class="message-box-admin"><div class="col-lg-12"><div class="alert alert-success"><i class="fa fa-info-circle"></i> '+data.message+'</div></div></div>');
+					// $(".page-content .x-navigation-panel").after('<div class="message-box-admin"><div class="col-lg-12"><div class="alert alert-success"><i class="fa fa-info-circle"></i> '+data.message+'</div></div></div>');
 				}
 
 				return callback(data.data);

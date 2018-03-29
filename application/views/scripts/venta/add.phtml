@@ -223,8 +223,8 @@ $this->headTitle($this->title);
                                         <!--datos cliente-->
                                         <input type="hidden" id="form-cliente" name="id_cliente">
                                         <input type="hidden" id="form-descuento" name="descuento">
-                                        <input type="hidden" id="form-envio" name="envio">envio_hidden
-                                        <input type="hidden" id="envio_hidden" name="envio_hidden">
+                                        <input type="hidden" id="form-envio" name="envio">
+                                        <!-- <input type="hidden" id="envio_hidden" name="envio_hidden"> -->
                                         <input type="hidden" id="form-direccion" name="direccion">
                                         <input type="hidden" id="form-cuit" name="cuit">
                                         <input type="hidden" id="form-telefono" name="telefono">
@@ -280,7 +280,7 @@ $this->headTitle($this->title);
                                                 <span id="tot_donation" class="label label-success label-form tot_donation" style="width: 100%;"></span>
                                                 <input id="forma_pago_hidden" name="forma_pago" type="hidden" value="0">
                                                 <input id="resumen_efectivo_hidden" name="efectivo" type="hidden" value="0">
-                                                <input id="resumen_envio_hidden" name="envio" type="hidden" value="0">
+                                                <!-- <input id="resumen_envio_hidden" name="envio" type="hidden" value="0"> -->
 
                                                 <input id="iva_hidden" name="iva" type="hidden" value="0">
                                                 <input id="ctacte_hidden" name="ctacte_hidden" type="hidden" value="0">
@@ -1028,14 +1028,14 @@ var calculateTotal = function(){
     if ($('#switch-envio').val() == 'false') {
         enviototal = 0;
         $("#envio").html("<span style='float:left'>Envio:</span><span style='float:right;padding-right: 22px;'>$0</span>");
-        $('#envio_hidden').val(0);
+        // $('#envio_hidden').val(0);
         $('#form-envio').val(enviototal);
 
     }else{
         enviototal = 50;
         $("#envio").html("<span style='float:left'>Envío:</span><span style='float:right;padding-right: 22px;'>$"+enviototal.toFixed(2)+"</span>");
         $("#envio").show();
-        $('#envio_hidden').val(enviototal);
+        // $('#envio_hidden').val(enviototal);
         $('#form-envio').val(enviototal);
     }
 
@@ -1074,7 +1074,7 @@ var resumen = function(){
         $('#ctacte_hidden').val(false);
         $('#forma_pago_hidden').val($('#payment-methods').val());
         $('#resumen_efectivo_hidden').val($('#cashamount').val());
-        $('#resumen_envio_hidden').val($('#envio_hidden').val());
+        // $('#resumen_envio_hidden').val($('#envio_hidden').val());
 
     }else{
         $('#ctacte_hidden').val(true);
