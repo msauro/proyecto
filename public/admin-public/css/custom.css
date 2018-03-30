@@ -212,6 +212,10 @@ tr .icheckbox_minimal-grey, .iradio_minimal-grey { display: block; }
 }
 #arranged_time{padding:6px 6px;}
 
+.btn-delete a{
+  color: #a43f3e
+}
+
 /*
 body.page-container-boxed {
     background: url("../img/bg-cesped.jpg") repeat!important;
@@ -269,3 +273,31 @@ body.page-container-boxed {
 .panel-ctacte{
   padding-bottom: 30px;
 }
+
+/*Inicio Detalle de factura*/
+.invoice-title h2, .invoice-title h3 {
+    display: inline-block;
+}
+
+.table > tbody > tr > .no-line {
+    border-top: none;
+}
+
+.table > thead > tr > .no-line {
+    border-bottom: none;
+}
+
+.table > tbody > tr > .thick-line {
+    border-top: 2px solid;
+}
+#factura{
+  display: inline;
+  background-color: grey;
+  font-size: 40px;
+  margin-left: 32%;
+  background-size: 50px 50px;
+}
+#fact{
+  margin-left: 32%;
+}
+/*Fin Detalle de factura*/

@@ -6,9 +6,10 @@ class Application_Model_Venta extends Application_Model_Base
 	protected $_name = 'ventas';
 
 	public function getList(){
-    	$query = $this->select()
+    	$query = $this->select()->setIntegrityCheck(false)
             ->from($this, array('*'))
-            ->where('eliminado = ?', 0);
+           	->join('clientes', 'clientes.id = ventas.id_cliente', array('nombre','apellido','telefono','cuit','direccion','razon_social'))
+            ->where('ventas.eliminado = ?', 0);
 
         $rows = $this->fetchAll($query);
 
