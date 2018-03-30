@@ -300,4 +300,7 @@ body.page-container-boxed {
 #fact{
   margin-left: 32%;
 }
+.center{
+  text-align: center;
+}
 /*Fin Detalle de factura*/

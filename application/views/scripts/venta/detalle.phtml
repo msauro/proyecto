@@ -5,7 +5,7 @@ $this->headTitle($this->title);
 <!-- START BREADCRUMB -->
 <ul class="breadcrumb">
     <li><a href="/">Panel Principal</a></li>
-    <li><a href="/proveedor/list">Venta</a></li>
+    <li><a href="/venta/detalle">Venta</a></li>
     <li class="active">Detalle</li>
 </ul>
 <!-- END BREADCRUMB -->
@@ -20,12 +20,11 @@ $this->headTitle($this->title);
                     <div class="panel-heading">
                         <h3 class="panel-title"><strong>Detalle</strong> de factura</h3>
                     </div>
-
                     <div class="panel-body">
                             <div class="row">
                                 <div class="col-xs-12">
                                     <div class="invoice-title">
-                                       <img src="/resources/logo.png"> <spam id="factura">A</spam> <h3 class="pull-right">Factura N°: #<?php echo $data['id']; ?> </h3>
+                                       <img src="/resources/logo.png"> <spam id="factura">A</spam> <h3 class="pull-right">Factura N°: #<?php echo $this->venta['id']; ?> </h3>
                                     </div>
                                     <hr>
                                     <div class="row">
@@ -41,12 +40,15 @@ $this->headTitle($this->title);
                                         </div>
                                         <div class="col-xs-6 text-right">
                                             <address>
-                                            <strong>Cliente:</strong><br>
-                                            <?php if ($data ["razon_social"])  : ?>
-                                                Razón social: Taller medina<br>
+                                            <strong>Datos del cliente</strong><br>
+                                            <?php if ($this->venta["razon_social"])  : ?>
+                                                Razón social: <?php echo $this->venta["razon_social"]?><br>
                                             <?php endif ?>
-                                                IVA: Jane Smith<br>
-                                                Urquiza 1400, Rosario<br>
+                                            <?php if ($this->venta["nombre"])  : ?>
+                                                Cliente: <?php echo $this->venta["nombre"].' '.$this->venta["nombre"]?><br>
+                                            <?php endif ?>
+                                                CUIT: <?php echo $this->venta["cuit"]?><br>
+                                                <?php echo $this->venta["direccion"]?><br>
                                                 Cuit: 30-14704868-0
                                             </address>
                                         </div>
@@ -55,15 +57,33 @@ $this->headTitle($this->title);
                                     <div class="row">
                                         <div class="col-xs-6">
                                             <address>
-                                                <strong>Forma de pago:</strong><br>
-                                                Visa ending **** 4242<br>
-                                                jsmith@email.com
+                                                <strong>Forma de pago</strong><br>
+                                                <?php switch ($this->venta["forma_pago"]) {
+                                                    case 'ctacte':
+                                                        echo "Cuenta Corriente";
+                                                        break;
+                                                    case 'efectivo':
+                                                        echo "Efectivo";
+                                                        break;
+                                                    case 'amex':
+                                                        echo "Tarjeta: American Express";
+                                                        break;
+                                                    case 'visa':
+                                                        echo "Tarjeta: Visa";
+                                                        break;
+                                                    case 'master':
+                                                        echo "Tarjeta: Master Card";
+                                                        break;
+                                                }
+                                        // echo "<pre>";   die(var_dump($this->venta['detalle'])); 
+                                                 ?>
+                                                    
                                             </address>
                                         </div>
                                         <div class="col-xs-6 text-right">
                                             <address>
                                                 <strong>Fecha:</strong><br>
-                                                March 7, 2014<br><br>
+                                                <?php echo date("d/m/Y h:i:s", strtotime($this->venta["fecha"])); ?><br><br>
                                             </address>
                                         </div>
                                     </div>
@@ -82,6 +102,7 @@ $this->headTitle($this->title);
                                                     <thead>
                                                         <tr>
                                                             <td><strong>Código</strong></td>
+                                                            <td class="text-center"><strong>Descripción</strong></td>
                                                             <td class="text-center"><strong>Precio unitario</strong></td>
                                                             <td class="text-center"><strong>Cantidad</strong></td>
                                                             <td class="text-right"><strong>Total</strong></td>
@@ -89,47 +110,50 @@ $this->headTitle($this->title);
                                                     </thead>
                                                     <tbody>
                                                         <!-- foreach ($order->lineItems as $line) or some such thing here -->
+                                                    <?php foreach ($this->venta["detalle"] as $detalle) { ?>
                                                         <tr>
-                                                            <td>BS-200</td>
-                                                            <td class="text-center">$10.99</td>
-                                                            <td class="text-center">1</td>
-                                                            <td class="text-right">$10.99</td>
+                                                            <td><?php echo  $detalle['codigo'] ?></td>
+                                                            <td class="center"><?php echo  $detalle['descripcion'] ?></td>
+                                                            <td class="text-center">$<?php echo  $detalle['precio'] ?></td>
+                                                            <td class="text-center"><?php echo  $detalle['cantidad'] ?></td>
+                                                            <td class="text-right">$<?php echo ($detalle['precio']*$detalle['cantidad'])?></td>
                                                         </tr>
+                                                    <?php } ?>
+                                                       
                                                         <tr>
-                                                            <td>BS-400</td>
-                                                            <td class="text-center">$20.00</td>
-                                                            <td class="text-center">3</td>
-                                                            <td class="text-right">$60.00</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>BS-1000</td>
-                                                            <td class="text-center">$600.00</td>
-                                                            <td class="text-center">1</td>
-                                                            <td class="text-right">$600.00</td>
-                                                        </tr>
-                                                        <tr>
+                                                            <td class="thick-line"></td>
                                                             <td class="thick-line"></td>
                                                             <td class="thick-line"></td>
                                                             <td class="thick-line text-center"><strong>Subtotal</strong></td>
-                                                            <td class="thick-line text-right">$670.99</td>
+                                                            <td class="thick-line text-right">$<?php echo  $this->venta['subtotal'] ?></td>
                                                         </tr>
                                                         <tr>
                                                             <td class="no-line"></td>
                                                             <td class="no-line"></td>
-                                                            <td class="no-line text-center"><strong>Envío</strong></td>
-                                                            <td class="no-line text-right">$15</td>
+                                                            <td class="no-line"></td>
+                                                            <td class="no-line text-center"><strong>Descuento (<?php echo ($this->venta['descuento'])?>%)</strong></td>
+                                                            <td class="no-line text-right">-$<?php echo ($this->venta['subtotal'] *$this->venta['descuento']/100)?></td>
                                                         </tr>
                                                         <tr>
+                                                            <td class="no-line"></td>
                                                             <td class="no-line"></td>
                                                             <td class="no-line"></td>
                                                             <td class="no-line text-center"><strong>IVA (21%)</strong></td>
-                                                            <td class="no-line text-right">$15.22</td>
+                                                            <td class="no-line text-right">$<?php echo  $this->venta['iva_calculado'] ?></td>
                                                         </tr>
                                                         <tr>
                                                             <td class="no-line"></td>
                                                             <td class="no-line"></td>
+                                                            <td class="no-line"></td>
+                                                            <td class="no-line text-center"><strong>Envío</strong></td>
+                                                            <td class="no-line text-right">$<?php echo  $this->venta['envio'] ?></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="no-line"></td>
+                                                            <td class="no-line"></td>
+                                                            <td class="no-line"></td>
                                                             <td class="no-line text-center"><strong>Total</strong></td>
-                                                            <td class="no-line text-right">$685.99</td>
+                                                            <td class="no-line text-right">$<?php echo  $this->venta['total'] ?></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>

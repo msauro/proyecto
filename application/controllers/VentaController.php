@@ -483,58 +483,63 @@ class VentaController extends Gabinando_Base{
 
     public function detalleAction() {
 		if($this->getRequest()->isPost()){
-			$params = $this->getRequest()->getPost();
-			$params['id'] = $this->getRequest()->getParam('id');
+			// $params = $this->getRequest()->getPost();
+			// $params['id'] = $this->getRequest()->getParam('id');
 
-			$proveedor = new Application_Model_Proveedor();
-			$prov = $proveedor->getProveedorById($params['id']);
+			// $proveedor = new Application_Model_Proveedor();
+			// $prov = $proveedor->getProveedorById($params['id']);
 
-			$error = null;
-			if ($prov['cuit'] != $params['cuit']) {
-				$alreadyRegistered = $proveedor->getProveedorByCuit($params['cuit']);
-				if(!is_null($alreadyRegistered)){
-					$error = 'Existe un proveedor con ese CUIT';
-				} 
-			}
+			// $error = null;
+			// if ($prov['cuit'] != $params['cuit']) {
+			// 	$alreadyRegistered = $proveedor->getProveedorByCuit($params['cuit']);
+			// 	if(!is_null($alreadyRegistered)){
+			// 		$error = 'Existe un proveedor con ese CUIT';
+			// 	} 
+			// }
 
-			if ($prov['email'] != $params['email']) {
-				$alreadyRegistered = $proveedor->getProveedorByEmail($params['email']);
-				if(!is_null($alreadyRegistered)){
-					$error = 'Existe un proveedor con ese Email';
-				}
-			}
+			// if ($prov['email'] != $params['email']) {
+			// 	$alreadyRegistered = $proveedor->getProveedorByEmail($params['email']);
+			// 	if(!is_null($alreadyRegistered)){
+			// 		$error = 'Existe un proveedor con ese Email';
+			// 	}
+			// }
 
-			if(!is_null($error)){
-                Gabinando_Base::addError($error);
-                $this->_redirect('/proveedor/edit/id/'.$params['id']);
-            }else{
-				$result = $proveedor->edit($params['id'], $params);
-				if($result instanceof Exception){
-	                Gabinando_Base::addError($result->getMessage());
-	                $this->_redirect('/proveedor/edit');
-            	}
+			// if(!is_null($error)){
+   //              Gabinando_Base::addError($error);
+   //              $this->_redirect('/proveedor/edit/id/'.$params['id']);
+    //         }else{
+				// $result = $proveedor->edit($params['id'], $params);
+				// if($result instanceof Exception){
+	   //              Gabinando_Base::addError($result->getMessage());
+	   //              $this->_redirect('/proveedor/edit');
+    //         	}
             	
-            	Gabinando_Base::addSuccess('Proveedor editado correctamente');
-	            $this->_redirect('/proveedor/list');
+    //         	Gabinando_Base::addSuccess('Proveedor editado correctamente');
+	   //          $this->_redirect('/proveedor/list');
 
-            }
+    //         }
 		}
 		else{
 			$id = $this->getRequest()->getParam('id');
 			if($id){
 				$ventaModel = new Application_Model_Venta();
+				$ventaDetalleModel = new Application_Model_VentaDetalle();
+				$detalleVenta =$ventaDetalleModel->getDetalleVentaById($id);
 				$venta = $ventaModel->getFullVenta($id);
-echo "<pre>"; die(var_dump($venta));
+// echo "<pre>"; die(var_dump($venta));
+				$subDesc = $venta['subtotal'] - ($venta['subtotal'] *$venta['descuento']/100);
+				$venta['iva_calculado'] = (round($subDesc*0.21,2));
 				if($venta){
+					$venta['detalle'] = $detalleVenta;
 					$this->view->venta = $venta;
 				}
 				else{
 					$this->_redirect('/venta/list');
 				}
 			}
-			else{
-				$this->_redirect('/venta/list');
-			}
+			// else{
+			// 	$this->_redirect('/venta/list');
+			// }
 		}
     }
 

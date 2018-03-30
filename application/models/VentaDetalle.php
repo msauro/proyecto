@@ -6,11 +6,12 @@ class Application_Model_VentaDetalle extends Application_Model_Base
 
 	public function getDetalleVentaById($id){
 		try{
-            $query = $this->select()
+            $query = $this->select()->setIntegrityCheck(false)
 	            ->from($this, array('*'))
+            	->join('productos', 'ventas_detalles.id_producto = productos.id', array('*'))
 	            ->where('id_venta = ?', $id);
 
-            $row = $this->fetchRow($query);
+            $row = $this->fetchAll($query);
 
 			if(!$row) {
 				return null;
