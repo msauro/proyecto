@@ -127,6 +127,7 @@ $this->headTitle($this->title);
                                                             <td class="thick-line text-center"><strong>Subtotal</strong></td>
                                                             <td class="thick-line text-right">$<?php echo  $this->venta['subtotal'] ?></td>
                                                         </tr>
+                                                        <?php if ($this->venta['descuento'] > 0) { ?>
                                                         <tr>
                                                             <td class="no-line"></td>
                                                             <td class="no-line"></td>
@@ -134,6 +135,7 @@ $this->headTitle($this->title);
                                                             <td class="no-line text-center"><strong>Descuento (<?php echo ($this->venta['descuento'])?>%)</strong></td>
                                                             <td class="no-line text-right">-$<?php echo ($this->venta['subtotal'] *$this->venta['descuento']/100)?></td>
                                                         </tr>
+                                                        <?php } ?>
                                                         <tr>
                                                             <td class="no-line"></td>
                                                             <td class="no-line"></td>
@@ -141,6 +143,7 @@ $this->headTitle($this->title);
                                                             <td class="no-line text-center"><strong>IVA (21%)</strong></td>
                                                             <td class="no-line text-right">$<?php echo  $this->venta['iva_calculado'] ?></td>
                                                         </tr>
+                                                        <?php if ($this->venta['envio'] > 0) { ?>
                                                         <tr>
                                                             <td class="no-line"></td>
                                                             <td class="no-line"></td>
@@ -148,12 +151,13 @@ $this->headTitle($this->title);
                                                             <td class="no-line text-center"><strong>Envío</strong></td>
                                                             <td class="no-line text-right">$<?php echo  $this->venta['envio'] ?></td>
                                                         </tr>
+                                                        <?php } ?>
                                                         <tr>
                                                             <td class="no-line"></td>
                                                             <td class="no-line"></td>
                                                             <td class="no-line"></td>
                                                             <td class="no-line text-center"><strong>Total</strong></td>
-                                                            <td class="no-line text-right">$<?php echo  $this->venta['total'] ?></td>
+                                                            <td class="no-line text-right"><strong>$<?php echo  $this->venta['total'] ?></strong></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>

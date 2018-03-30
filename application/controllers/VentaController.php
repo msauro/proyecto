@@ -527,8 +527,13 @@ class VentaController extends Gabinando_Base{
 				$detalleVenta =$ventaDetalleModel->getDetalleVentaById($id);
 				$venta = $ventaModel->getFullVenta($id);
 // echo "<pre>"; die(var_dump($venta));
-				$subDesc = $venta['subtotal'] - ($venta['subtotal'] *$venta['descuento']/100);
-				$venta['iva_calculado'] = (round($subDesc*0.21,2));
+				if ($venta['descuento']>0) {
+					$subDesc = $venta['subtotal'] - ($venta['subtotal'] *$venta['descuento']/100);
+					$venta['iva_calculado'] = (round($subDesc*0.21,2));
+				}else{
+					$venta['iva_calculado'] = (round($venta['subtotal'] * 0.21,2));
+				}
+
 				if($venta){
 					$venta['detalle'] = $detalleVenta;
 					$this->view->venta = $venta;
