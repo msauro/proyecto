@@ -15,14 +15,16 @@ class UsuarioController extends Gabinando_Base {
 			(isset($params["administrador"])) ? $params["administrador"] = 1 : $params["administrador"] = 0;
 				
 			$file = $_FILES['avatar_url'];
+			if ($file['size'] > 0) {
 			
-			$img = $this->uploadImage(self::UPLOADPATHAVATAR,$file,$params['email']);
+				$img = $this->uploadImage(self::UPLOADPATHAVATAR,$file,$params['email']);
 
-			if($img['status'] == 'error'){
-				die($img['message']);
+				if($img['status'] == 'error'){
+					die($img['message']);
+				}
+
+				$params['avatar_url'] = $img['message'];
 			}
-
-			$params['avatar_url'] = $img['message'];
 		
 			$params["password"]	= base64_encode(pack("H*",sha1(utf8_encode($params["password"]))));
 

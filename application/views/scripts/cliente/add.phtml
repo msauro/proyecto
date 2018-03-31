@@ -49,7 +49,17 @@ $this->headTitle($this->title);
                             <div class="col-sm-6 col-xs-12">                                            
                                 <div class="input-group">
                                     <span class="input-group-addon"><span class="fa fa-list"></span></span>
-                                    <input name="cuit" id="cuit" type="text" class="form-control"/>
+                                    <input name="cuit" id="cuit" type="number" class="form-control"/>
+                                </div> 
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 col-xs-12 control-label">Razón social</label>
+                            <div class="col-sm-6 col-xs-12">                                            
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-list"></span></span>
+                                    <input name="razon_social" id="razon_social" type="text" class="form-control"/>
                                 </div> 
                             </div>
                         </div>
@@ -59,7 +69,7 @@ $this->headTitle($this->title);
                             <div class="col-sm-6 col-xs-12">                                            
                                 <div class="input-group">
                                     <span class="input-group-addon"><span class="fa fa-list"></span></span>
-                                    <input name="email" id="email" type="text" class="form-control"/>
+                                    <input name="email" id="email" type="email" class="form-control"/>
                                 </div> 
                             </div>
                         </div>
@@ -147,6 +157,7 @@ $this->headTitle($this->title);
 <script type="text/javascript" src="/admin-public/js/plugins/bootstrap/bootstrap-select.js"></script>   
 <script type=“text/javascript” src=“/js/plugins/jquery-validation/jquery.validate.js”></script>
 
+
 <!-- END THIS PAGE PLUGINS -->
 
 <script>
@@ -159,6 +170,7 @@ $this->headTitle($this->title);
    var regexp = /^\d+(\,\d{1,2})?$/;
    var validator;
    $().ready(function() {
+   
     validator = $("#add-form").validate({
         ignore: '',
         rules: {
@@ -169,6 +181,10 @@ $this->headTitle($this->title);
             precio: {
                 required: true,
                 validarprecio: true
+            },
+            cuit: {
+                required: true,
+                validarcuit: true
             },
             fecha: "required"
         },
@@ -190,9 +206,14 @@ $this->headTitle($this->title);
 
         }
     });
+
 });
    $.validator.addMethod("validarprecio", function (value, element) {
     var regex = new RegExp(regexp);
     return regex.test(value);
-});
+    });
+   $.validator.addMethod('validarcuit', function (value, element) {
+            return this.optional(element) || /^\d{11}$/.test(value);
+    }, "El formato debe ser (00-00000000-0). No ingrese los guiones");
+
 </script>

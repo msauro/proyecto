@@ -14,6 +14,23 @@ function minimized(){
 	})
 }
 */
+
+$.fn.serializeObject = function() {
+	var o = {};
+	var a = this.serializeArray();
+	$.each(a, function() {
+		if (o[this.name]) {
+			if (!o[this.name].push) {
+				o[this.name] = [o[this.name]];
+			}
+			o[this.name].push(this.value || '');
+		} else {
+			o[this.name] = this.value || '';
+		}
+	});
+	return o;
+};
+
 function getRandomColor() {
     var letters = '0123456789ABCDEF'.split('');
     var color = '#';
@@ -37,7 +54,6 @@ function panelAjax(url,params,callback) {
 				//$('#load').html('<img src="/resources/img/load-ajax.gif">');
 			},
 			success: function(data) {
-				console.log(data);
 				setTimeout(function() { $.mpb('destroy') }, 3000);
 				if(data.error){
 					$(".page-content .message-box-admin").remove();
@@ -46,7 +62,7 @@ function panelAjax(url,params,callback) {
 						alert(data.message);
 				} else {
 					$(".page-content .message-box-admin").remove();
-					$(".page-content .x-navigation-panel").after('<div class="message-box-admin"><div class="col-lg-12"><div class="alert alert-success"><i class="fa fa-info-circle"></i> '+data.message+'</div></div></div>');
+					$(".page-content .x-navigation-panel").after('<div class="message-box-admin"><div class="col-lg-12"><div class="alert alert-success hidden"><i class="fa fa-info-circle"></i> '+data.message+'</div></div></div>');
 				}
 
 				return callback(data.data);
@@ -86,7 +102,6 @@ function messageAjax(url) {
 				$.mpb('show',{value: [0,100],speed: 10});
 			},
 			success: function(data,callback) {
-				console.log(data);
 				setTimeout(function() { $.mpb('destroy') }, 3000);
 				if(data.type != ""){
 					$("#message-box-" + data.type).children(".mb-container").children(".mb-middle").children(".mb-title").html(data.title);
@@ -116,10 +131,8 @@ function noticeAjax(url) {
 					$.mpb('show',{value: [0,100],speed: 10});
 				},
 				success: function(data) {
-					console.log(data);
 					setTimeout(function() { $.mpb('destroy') }, 3000);
 					data.forEach(function(entry) {
-					    console.log(entry);
 						switch (entry.type){
 							case "success": 
 						    	noty({text: entry.message, layout: 'topRight', type: 'success'})

@@ -28,6 +28,16 @@ class ProveedorController extends Gabinando_Base {
             	Gabinando_Base::addSuccess('Proveedor agregado correctamente');
             	$this->_redirect('/proveedor/list');
             }
+		}else{
+			// $paisModel 		= new Application_Model_Pais();
+			// $provinciaModel = new Application_Model_Provincia();
+			// $ciudadModel 	= new Application_Model_Ciudad();
+
+			// $listadoPaises 		= $paisModel->getList();
+			// $listadoProvincias 	= $provinciaModel->getList();
+			// $listadoCiudades 	= $ciudadModel->getList();
+
+			$this->view->listadoMarcas = $listadoMarcas;
 		}
 	}
 
