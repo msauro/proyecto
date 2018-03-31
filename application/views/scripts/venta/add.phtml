@@ -792,8 +792,9 @@ function validateSteps(step) {
         }
         break;
         case "3":
-        if( form_data[15]['value']=="0" || form_data[19]['value'] == 'null' || form_data[19]['value'] == '0'){
+        if( form_data[15]['value']== "0" || form_data[19]['value'] == 'null' || form_data[19]['value'] == '0'){
             status = false;
+            
             $('.wizard').smartWizard('showMessage','Seleccione una forma de pago y haga click en "Finalizar".');
             $('.wizard').smartWizard('setError',{stepnum:step,iserror:true});         
         }else{

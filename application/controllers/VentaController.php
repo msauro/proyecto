@@ -102,175 +102,7 @@ class VentaController extends Gabinando_Base{
 		// $this->view->discount = $discount;		
 	}
 
-	// public function editstatusAction(){
-	// 	if($this->getRequest()->isPost()){
-	// 		$params = $this->getRequest()->getPost();
- //    		if (empty($params["status"])) {
-	// 			return $this->sendErrorResponse("No status selected.");
-	// 		}
-	// 		if (empty($params["content"])) {
-	// 			return $this->sendErrorResponse("No reason for changing.");
-	// 		}
-
-	// 		$ventaModel= new Application_Model_Venta();
-
-	// 		$beforeDonation = $ventaModel->getVenta($params['id_donation']);
-
- //           	if ($beforeDonation['final_time']=='0000-00-00 00:00:00') {
-	// 			$donationParams = array(
-	// 				'status' => $params["status"],
-	// 				'final_time' => date('Y-m-d H:i:s')
-	// 			);
- //           	}else{
-	// 			$donationParams = array(
-	// 				'status' => $params["status"]
-	// 			);
-           		
- //           	}
-
- //           	$donationPaymentsModel = new Application_Model_Donationpayments();
-
- //           	if((isset($params['cc_amount']) && (float)$params['cc_amount'] > 0) || (isset($params['cash_amount']) && (float)$params['cash_amount'] > 0))
- //           		$donationPaymentsModel->remove('id_donation',$params['id_donation']);
-
-			
-
-			
-	// 		if(isset($params['cc_amount']) && (float)$params['cc_amount'] > 0){
-
-	// 			$donationPaymentsModel->add(array(
-	// 				'id_donation'		=> $params['id_donation'],
-	// 				'amount'			=> $params['cc_amount'],
-	// 				'method'			=> 'ccre'
-	// 			));
-	// 		}
-
-	// 		if(isset($params['cash_amount']) && (float)$params['cash_amount'] > 0){
-
-	// 			$donationPaymentsModel->add(array(
-	// 				'id_donation'		=> $params['id_donation'],
-	// 				'amount'			=> $params['cash_amount'],
-	// 				'method'			=> 'cash'
-	// 			));
-	// 		}
-
-	// 		if($params["status"] == "cancel"){
-	// 			$donationParams['amount'] = 0;
-	// 			$donationParams['discount'] = 0;
-	// 			$donationParams['subtotal'] = 0;
- //            }
-
- //            $donationParams['service_type'] = "delivery";
-
-	// 		if (!empty($params["amount"])){
-	// 			$donationParams["amount"] = (float)$params["amount"];
-	// 			if($beforeDonation['amount'] != $params['amount']){				
-	// 				$donationParams['discount'] = 0;
-	// 				$donationParams['points'] = 0;
-	// 			}
-	// 		}
-
-		
-	// 		$result = $ventaModel->edit('id_donation', $params['id_donation'], $donationParams);
-
-	// 		if($result instanceof Exception){
-	// 			return $this->sendErrorResponse($result->getMessage());
-	// 		}else{
-	// 			$notificationModel = $this->getPushNotificationModel();
-	//             $dispenserModel = new Application_Model_Dispenser();
-	//             $dispenser = $dispenserModel->getDispenser();
-	//             $donation = $ventaModel->getFullVenta($params['id_donation']);				
-	// 			$patientModel = new Application_Model_Patient();
-				
-	// 			if($params["status"]=="cancel"){
-
-	// 				//Start - Actualiza los points del paciente cuando la donacion se cancela
-	// 				$points = $this->getPointsbyAmount($donation['amount']);
-	// 				$where	= "id_patient = {$donation['patient']['id_patient']}";
-	// 				$data 	= array('points' => new Zend_Db_Expr("points - {$points}"));
-	//             	$edit 	= $patientModel->editWithConditions($data,$where);
-	// 				//End - Actualiza los points del paciente cuando la donacion se cancela
-					
-	// 				//Start - Actualiza inventario si tiene productos
-	// 				$inventoryDriverModel	= new Application_Model_Productinventorydriver();
-	// 				if($donation['products'] && $donation['driver']['id_driver']){
-	// 					foreach ($donation['products'] as $key => $_prod) {
-	// 			           	$where	= "id_driver = {$donation['driver']['id_driver']} AND id_product = {$_prod['id_product']}";
-	// 		            	$cant 	= $_prod['quantity'];
-	// 						$data 	= array('cant' => new Zend_Db_Expr("cant + {$cant}")); 
-	// 		            	$edit 	= $inventoryDriverModel->editWithConditions($data,$where);
-	// 		            	if($edit instanceof Exception) $this->sendErrorResponse($edit->getMessage());		            	
-	// 					}
-	// 				}
-	// 				//End - Actualiza inventario si tiene productos
-
-	//             	// Send a Push to Driver and updateRoute
-				
-	// 				// Recalcula todos los tiempos posteriores a la $donationId
-	// 				$apiRoute 	= new Application_Model_Api_Route();
-	// 				$apiRoute->updateRoute($donation['driver']['id_driver']);
-	            	
-	//             	// Start - Push al Driver para avisarle que tiene una nueva Donation
-	//             	$message = "Hey {$donation['driver']['first_name']}! Donation #{$donation['id_donation']} was cancelled by the dispatcher.";
-	//             	$data = array(
-	// 	                'title'     => $dispenser['name'],
-	// 	                'body'      =>  $message,
-	// 	                'token'		=> 	$donation['driver']['parse_token'],
-	// 	                'icon'      => 'icon',
-	// 	                'sound'     => 'default',
-	// 	                'color'     => '#66AB30',
-	// 	                'type'		=> 'CANCEL_DONATION'
-	// 	            );					
-
-	// 				$result = $notificationModel->sendPush($data);
-	// 				// End - Push al Driver para avisarle que tiene una nueva Donation
-
-	// 			}
-
-	// 			$arrayEvent = array(
-	// 				'event_type' 	=> 'admincancel',
-	// 				'content' 		=> $params['content'],
-	// 				'date'			=> date('Y-m-d H:i:s'),
-	// 				'id_donation'	=> $params['id_donation'],
-	// 				'id_admin'		=> $this->admin_session->admin['id_admin']
-	// 			);
-	// 			if($params["status"] == "success"){
-					
-	// 				//Start - Actualiza los points del paciente cuando la donacion se cambia a succcess
-	// 				$points = $this->getPointsbyAmount($donation['amount']);
-	// 				$where	= "id_patient = {$donation['patient']['id_patient']}";
-	// 				$data 	= array('points' => new Zend_Db_Expr("points + {$points}")); 
-	//             	$edit 	= $patientModel->editWithConditions($data,$where);
-	// 				//End - Actualiza los points del paciente cuando la donacion se cambia a succcess
-
-	// 				$message = "{$donation['patient']['first_name']} thank you for your donation! Rate the driver and help us improve our services.";
-	// 				$data = array
-	// 	            (
-	// 	                'title'     => $dispenser['name'],
-	// 	                'body'      =>  $message,
-	// 	                'token'		=> 	$donation['patient']['parse_token'],
-	// 	                'icon'      => 'icon',
-	// 	                'sound'     => 'default',
-	// 	                'color'     => '#66AB30',
-	// 	                'type'		=> 'SUCCESS_DONATION'
-	// 	            );			
-				
-	// 				$result = $notificationModel->sendPush($data);
-	// 				$arrayEvent["event_type"] = "adminsetamount";					
-				
-	// 			}
-
-	// 			$donationEventsModel = new Application_Model_Donationevents();
-	// 			$result = $donationEventsModel->add($arrayEvent);
-
-	// 			if($result instanceof Exception){
-	// 				return $this->sendErrorResponse($result->getMessage());
-	// 			}else{
-	// 				$this->sendSuccessResponse($params["status"],"Status successfully changed.");
-	// 			}
-	// 		}
-	// 	}
-	// }
+	
 
 	public function viewAction(){
 		$id_donation = $this->getRequest()->getParam('id');
@@ -394,7 +226,7 @@ class VentaController extends Gabinando_Base{
 				$ventas_detalleModel = new Application_Model_VentaDetalle();
 				$productoModel	= new Application_Model_Producto();
 				$existenciaModel	= new Application_Model_Existencia();
-
+// die(var_dump($productos));
 				if ($productos['simple'] == true) {
 					$id_producto = $productos['id_producto'];
 					$productoMaxExistencia = $existenciaModel->getUltimaExistencia($id_producto);
@@ -448,7 +280,7 @@ class VentaController extends Gabinando_Base{
 		
 		
 
-				
+				// die(var_dump($result));
             	// $venta = $ventaModel->getFullVenta($idVenta);
 
 				// Start - Mail al cliente para avisarle que tiene una nueva VENTA  VER/TERMINAR
@@ -467,7 +299,7 @@ class VentaController extends Gabinando_Base{
 	            }			
 
 				return $this->sendSuccessResponse(true,"Venta guardada y stock actualizado");
-
+die('ver pq no devulve o redirige');
 			}catch(Exception $e){
 				return $this->sendErrorResponse($e->getMessage('error'));
 			}
@@ -527,7 +359,6 @@ class VentaController extends Gabinando_Base{
 				$ventaDetalleModel = new Application_Model_VentaDetalle();
 				$detalleVenta =$ventaDetalleModel->getDetalleVentaById($id);
 				$venta = $ventaModel->getFullVenta($id);
-// echo "<pre>"; die(var_dump($venta));
 				if ($venta['descuento']>0) {
 					$subDesc = $venta['subtotal'] - ($venta['subtotal'] *$venta['descuento']/100);
 					$venta['iva_calculado'] = (round($subDesc*0.21,2));
@@ -543,9 +374,6 @@ class VentaController extends Gabinando_Base{
 					$this->_redirect('/venta/list');
 				}
 			}
-			// else{
-			// 	$this->_redirect('/venta/list');
-			// }
 		}
     }
 
