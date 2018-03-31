@@ -449,7 +449,7 @@ class VentaController extends Gabinando_Base{
 		
 
 				
-            	$venta = $ventaModel->getFullVenta($idVenta);
+            	// $venta = $ventaModel->getFullVenta($idVenta);
 
 				// Start - Mail al cliente para avisarle que tiene una nueva VENTA  VER/TERMINAR
 
@@ -463,14 +463,15 @@ class VentaController extends Gabinando_Base{
                 	Gabinando_Base::addError($result->getMessage());
 	            }else{
 	            	Gabinando_Base::addSuccess('Venta guardada y stock actualizado');
-	            	// $this->_redirect('/producto/list');
+	            	$this->_redirect('/venta/list');
 	            }			
 
-				// $this->sendSuccessResponse(true,"Venta guardada y stock actualizado");
+				return $this->sendSuccessResponse(true,"Venta guardada y stock actualizado");
 
 			}catch(Exception $e){
 				return $this->sendErrorResponse($e->getMessage('error'));
 			}
+	        $this->_redirect('/venta/list');
 		}
 	}
 
