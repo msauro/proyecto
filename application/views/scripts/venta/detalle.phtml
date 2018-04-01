@@ -41,15 +41,17 @@ $this->headTitle($this->title);
                                         <div class="col-xs-6 text-right">
                                             <address>
                                             <strong>Datos del cliente</strong><br>
-                                            <?php if ($this->venta["razon_social"])  : ?>
+                                            <?php if ($this->venta["razon_social"])    : ?>
                                                 Razón social: <?php echo $this->venta["razon_social"]?><br>
                                             <?php endif ?>
                                             <?php if ($this->venta["nombre"])  : ?>
-                                                Cliente: <?php echo $this->venta["nombre"].' '.$this->venta["nombre"]?><br>
+                                                <?php echo $this->venta["nombre"].' '.$this->venta["apellido"]?><br>
                                             <?php endif ?>
+                                            <?php if ($this->venta["cuit"] != 0)  : ?>
+
                                                 CUIT: <?php echo $this->venta["cuit"]?><br>
                                                 <?php echo $this->venta["direccion"]?><br>
-                                                Cuit: 30-14704868-0
+                                            <?php endif ?>
                                             </address>
                                         </div>
                                     </div>

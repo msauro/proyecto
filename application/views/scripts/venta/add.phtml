@@ -792,15 +792,38 @@ function validateSteps(step) {
         }
         break;
         case "3":
-        if( form_data[15]['value']== "0" || form_data[19]['value'] == 'null' || form_data[19]['value'] == '0'){
-            status = false;
+        var condicion = false; //condicion de que haya seleccionado la forma de pago
+        var variable = false;  //variable que determina que si es consumidor final no puede ser ctacta
+        console.log(form_data.length);
+        if (form_data.length > 19) {
+            if(form_data[8]['value'] == 'Consumidor Final' && form_data[19]['value'] == 'ctacte'){
+                variable = true;
+            }
+            condicion = form_data[15]['value'] == "0" || form_data[19]['value'] == 'null' || form_data[19]['value'] == '0';
+        }else{
+            if (form_data[8]['value'] == 'Consumidor Final' && form_data[15]['value'] == 'ctacte') {
+                variable = true;
+            }
+            if (form_data[15]['value'] == "0" || form_data[15]['value'] == "null") {
+                condicion = true;
+            }
+
             
-            $('.wizard').smartWizard('showMessage','Seleccione una forma de pago y haga click en "Finalizar".');
+        }
+        if(variable == true || condicion == true){
+            status = false;
+            if (variable) {
+                $('.wizard').smartWizard('showMessage','El consumidor final no tiene cuenta corriente.');
+
+            }else{
+                $('.wizard').smartWizard('showMessage','Seleccione una forma de pago y haga click en "Finalizar".');
+            }
             $('.wizard').smartWizard('setError',{stepnum:step,iserror:true});         
         }else{
             $('.wizard').smartWizard('hideMessage');
             $('.wizard').smartWizard('setError',{stepnum:step,iserror:false});
         }
+           
         break;
         
         default:
