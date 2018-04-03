@@ -82,7 +82,7 @@ class Application_Model_Existencia extends Application_Model_Base
 
     public function getCantPtoPedido(){
         try{
-die('ARREGLAR CONSULTA DEL INNER JOIN, preguntar por widgets con movimiento');
+die('ARREGLAR CONSULTA DEL INNER JOIN');
             $query = "SELECT COUNT(p.id), id,  punto_pedido FROM productos p
                     INNER JOIN ( 
                         SELECT MAX(e.id) as maxid, id_producto, cantidad 
