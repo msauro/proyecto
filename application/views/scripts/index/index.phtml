@@ -20,17 +20,17 @@ $(".xn-icon-button").fadeIn();
         <div class="widget widget-default widget-carousel">
           <div class="owl-carousel" id="owl-example">
               <div>           
-              <div class="widget-title">Donations</div>
+              <div class="widget-title">Total Clientes</div>
               <div class="widget-subtitle"><?php echo date('m-d-Y') ?></div>
               <div class="widget-int"><?php echo $this->storefront_donationsCount['total'] ?></div>
           </div>
           <div>                                    
-              <div class="widget-title">Donations</div>
+              <div class="widget-title">Clientes con deudas</div>
               <div class="widget-subtitle">Successful</div>
               <div class="widget-int"><?php echo $this->storefront_donationsCount['successful'] ?></div>
           </div>
           <div>                                    
-              <div class="widget-title">Donations</div>
+              <div class="widget-title">Clientes sin deudas</div>
               <div class="widget-subtitle">Cancelled</div>
               <div class="widget-int"><?php echo $this->storefront_donationsCount['cancelled'] ?></div>
           </div>
@@ -39,31 +39,32 @@ $(".xn-icon-button").fadeIn();
           <div class="widget-controls"></div>
         </div> 
       </div>
+      <!-- 5 Productos mas vendidos -->
       <div class="col-md-3">   
         <div class="widget widget-default widget-carousel ">
           <div class="owl-carousel" id="owl-example">
               <div>                                    
-                  <div class="widget-title">Total Donations</div>                                                                        
+                  <div class="widget-title">Producto 1</div>                                                                        
                   <div class="widget-subtitle"><?php echo date('m-d-Y') ?></div>
                   <div class="widget-int"><?php echo $this->donationsCount['total'] ?></div>
               </div>
               <div>                                    
-                  <div class="widget-title">Donations</div>
+                  <div class="widget-title">Producto 1</div>
                   <div class="widget-subtitle">Successful</div>
                   <div class="widget-int"><?php echo $this->donationsCount['success'] ?></div>
               </div>
               <div>                                    
-                  <div class="widget-title">Donations</div>
+                  <div class="widget-title">Producto 2</div>
                   <div class="widget-subtitle">Pending</div>
                   <div class="widget-int"><?php echo $this->donationsCount['pending'] ?></div>
               </div>
               <div>                                    
-                  <div class="widget-title">Donations</div>
+                  <div class="widget-title">Producto 3</div>
                   <div class="widget-subtitle">Cancelled</div>
                   <div class="widget-int"><?php echo $this->donationsCount['cancel'] ?></div>
               </div>
               <div>                                    
-                  <div class="widget-title">Donations</div>
+                  <div class="widget-title">Producto 4</div>
                   <div class="widget-subtitle">Future</div>
                   <div class="widget-int"><?php echo $this->futureDonationsCount ?></div>
               </div>
@@ -71,31 +72,32 @@ $(".xn-icon-button").fadeIn();
           <div class="widget-controls"></div>
         </div>  
       </div>  
+      <!-- Ventas por tipo de cliente x mes -->
       <div class="col-md-3">   
         <div class="widget widget-default widget-carousel ">
           <div class="owl-carousel" id="owl-example">
               <div>                                    
-                  <div class="widget-title">Total Donations</div>                                                                        
+                  <div class="widget-title">Ventas x mes</div>                                                                        
                   <div class="widget-subtitle"><?php echo date('m-d-Y') ?></div>
                   <div class="widget-int"><?php echo $this->donationsCount['total'] ?></div>
               </div>
               <div>                                    
-                  <div class="widget-title">Donations</div>
+                  <div class="widget-title">Talleres</div>
                   <div class="widget-subtitle">Successful</div>
                   <div class="widget-int"><?php echo $this->donationsCount['success'] ?></div>
               </div>
               <div>                                    
-                  <div class="widget-title">Donations</div>
+                  <div class="widget-title">Particulares</div>
                   <div class="widget-subtitle">Pending</div>
                   <div class="widget-int"><?php echo $this->donationsCount['pending'] ?></div>
               </div>
               <div>                                    
-                  <div class="widget-title">Donations</div>
+                  <div class="widget-title">Consumidor Final</div>
                   <div class="widget-subtitle">Cancelled</div>
                   <div class="widget-int"><?php echo $this->donationsCount['cancel'] ?></div>
               </div>
               <div>                                    
-                  <div class="widget-title">Donations</div>
+                  <div class="widget-title">Mayorista</div>
                   <div class="widget-subtitle">Future</div>
                   <div class="widget-int"><?php echo $this->futureDonationsCount ?></div>
               </div>
@@ -103,31 +105,32 @@ $(".xn-icon-button").fadeIn();
           <div class="widget-controls"></div>
         </div>  
       </div> 
+      <!-- Ventas por tipo de cliente -->
       <div class="col-md-3">   
         <div class="widget widget-default widget-carousel ">
           <div class="owl-carousel" id="owl-example">
               <div>                                    
-                  <div class="widget-title">Total Donations</div>                                                                        
+                  <div class="widget-title">Total Ventas</div>                                                                        
                   <div class="widget-subtitle"><?php echo date('m-d-Y') ?></div>
                   <div class="widget-int"><?php echo $this->donationsCount['total'] ?></div>
               </div>
               <div>                                    
-                  <div class="widget-title">Donations</div>
+                  <div class="widget-title">Talleres</div>
                   <div class="widget-subtitle">Successful</div>
                   <div class="widget-int"><?php echo $this->donationsCount['success'] ?></div>
               </div>
               <div>                                    
-                  <div class="widget-title">Donations</div>
+                  <div class="widget-title">Particulares</div>
                   <div class="widget-subtitle">Pending</div>
                   <div class="widget-int"><?php echo $this->donationsCount['pending'] ?></div>
               </div>
               <div>                                    
-                  <div class="widget-title">Donations</div>
+                  <div class="widget-title">Consumidor Final</div>
                   <div class="widget-subtitle">Cancelled</div>
                   <div class="widget-int"><?php echo $this->donationsCount['cancel'] ?></div>
               </div>
               <div>                                    
-                  <div class="widget-title">Donations</div>
+                  <div class="widget-title">MAyoristas</div>
                   <div class="widget-subtitle">Future</div>
                   <div class="widget-int"><?php echo $this->futureDonationsCount ?></div>
               </div>
