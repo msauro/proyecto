@@ -16,6 +16,125 @@ $(".xn-icon-button").fadeIn();
   <div class="page-content-wrap">
   <!-- ROW 1 / WIDGETS -->
     <div class="row">
+      <div class="col-md-3">   
+        <div class="widget widget-default widget-carousel">
+          <div class="owl-carousel" id="owl-example">
+              <div>           
+              <div class="widget-title">Donations</div>
+              <div class="widget-subtitle"><?php echo date('m-d-Y') ?></div>
+              <div class="widget-int"><?php echo $this->storefront_donationsCount['total'] ?></div>
+          </div>
+          <div>                                    
+              <div class="widget-title">Donations</div>
+              <div class="widget-subtitle">Successful</div>
+              <div class="widget-int"><?php echo $this->storefront_donationsCount['successful'] ?></div>
+          </div>
+          <div>                                    
+              <div class="widget-title">Donations</div>
+              <div class="widget-subtitle">Cancelled</div>
+              <div class="widget-int"><?php echo $this->storefront_donationsCount['cancelled'] ?></div>
+          </div>
+          
+          </div>                            
+          <div class="widget-controls"></div>
+        </div> 
+      </div>
+      <div class="col-md-3">   
+        <div class="widget widget-default widget-carousel ">
+          <div class="owl-carousel" id="owl-example">
+              <div>                                    
+                  <div class="widget-title">Total Donations</div>                                                                        
+                  <div class="widget-subtitle"><?php echo date('m-d-Y') ?></div>
+                  <div class="widget-int"><?php echo $this->donationsCount['total'] ?></div>
+              </div>
+              <div>                                    
+                  <div class="widget-title">Donations</div>
+                  <div class="widget-subtitle">Successful</div>
+                  <div class="widget-int"><?php echo $this->donationsCount['success'] ?></div>
+              </div>
+              <div>                                    
+                  <div class="widget-title">Donations</div>
+                  <div class="widget-subtitle">Pending</div>
+                  <div class="widget-int"><?php echo $this->donationsCount['pending'] ?></div>
+              </div>
+              <div>                                    
+                  <div class="widget-title">Donations</div>
+                  <div class="widget-subtitle">Cancelled</div>
+                  <div class="widget-int"><?php echo $this->donationsCount['cancel'] ?></div>
+              </div>
+              <div>                                    
+                  <div class="widget-title">Donations</div>
+                  <div class="widget-subtitle">Future</div>
+                  <div class="widget-int"><?php echo $this->futureDonationsCount ?></div>
+              </div>
+          </div>                            
+          <div class="widget-controls"></div>
+        </div>  
+      </div>  
+      <div class="col-md-3">   
+        <div class="widget widget-default widget-carousel ">
+          <div class="owl-carousel" id="owl-example">
+              <div>                                    
+                  <div class="widget-title">Total Donations</div>                                                                        
+                  <div class="widget-subtitle"><?php echo date('m-d-Y') ?></div>
+                  <div class="widget-int"><?php echo $this->donationsCount['total'] ?></div>
+              </div>
+              <div>                                    
+                  <div class="widget-title">Donations</div>
+                  <div class="widget-subtitle">Successful</div>
+                  <div class="widget-int"><?php echo $this->donationsCount['success'] ?></div>
+              </div>
+              <div>                                    
+                  <div class="widget-title">Donations</div>
+                  <div class="widget-subtitle">Pending</div>
+                  <div class="widget-int"><?php echo $this->donationsCount['pending'] ?></div>
+              </div>
+              <div>                                    
+                  <div class="widget-title">Donations</div>
+                  <div class="widget-subtitle">Cancelled</div>
+                  <div class="widget-int"><?php echo $this->donationsCount['cancel'] ?></div>
+              </div>
+              <div>                                    
+                  <div class="widget-title">Donations</div>
+                  <div class="widget-subtitle">Future</div>
+                  <div class="widget-int"><?php echo $this->futureDonationsCount ?></div>
+              </div>
+          </div>                            
+          <div class="widget-controls"></div>
+        </div>  
+      </div> 
+      <div class="col-md-3">   
+        <div class="widget widget-default widget-carousel ">
+          <div class="owl-carousel" id="owl-example">
+              <div>                                    
+                  <div class="widget-title">Total Donations</div>                                                                        
+                  <div class="widget-subtitle"><?php echo date('m-d-Y') ?></div>
+                  <div class="widget-int"><?php echo $this->donationsCount['total'] ?></div>
+              </div>
+              <div>                                    
+                  <div class="widget-title">Donations</div>
+                  <div class="widget-subtitle">Successful</div>
+                  <div class="widget-int"><?php echo $this->donationsCount['success'] ?></div>
+              </div>
+              <div>                                    
+                  <div class="widget-title">Donations</div>
+                  <div class="widget-subtitle">Pending</div>
+                  <div class="widget-int"><?php echo $this->donationsCount['pending'] ?></div>
+              </div>
+              <div>                                    
+                  <div class="widget-title">Donations</div>
+                  <div class="widget-subtitle">Cancelled</div>
+                  <div class="widget-int"><?php echo $this->donationsCount['cancel'] ?></div>
+              </div>
+              <div>                                    
+                  <div class="widget-title">Donations</div>
+                  <div class="widget-subtitle">Future</div>
+                  <div class="widget-int"><?php echo $this->futureDonationsCount ?></div>
+              </div>
+          </div>                            
+          <div class="widget-controls"></div>
+        </div>  
+      </div>
       <!-- COLUMN 1 / SUCCESSFUL REQUEST WIDGET -->
       <div class="col-md-3">   
           <div class="widget widget-default widget-item-icon">
@@ -60,6 +179,7 @@ $(".xn-icon-button").fadeIn();
             </div>
         </div>
       </div>
+
     <!-- COLUMN 2 / PENDING REQUESTS WIDGET -->
       <div class="col-md-3">
          <div class="widget widget-default widget-item-icon">
@@ -76,7 +196,7 @@ $(".xn-icon-button").fadeIn();
                     <?php echo $this->widgetsData['Pending']; ?> 
                 </div>
                 <div class="widget-title">
-                    Pagos pendientes
+                    Pagos por cobrar
                 </div>
                 <?php } ?>
             </div>
@@ -98,7 +218,7 @@ $(".xn-icon-button").fadeIn();
                       <?php echo $this->widgetsData['Waiting']; ?> 
                   </div>
                   <div class="widget-title">
-                      WAITING REQUESTS
+                      DATOS
                   </div>
                   <?php } ?>
               </div>
@@ -381,5 +501,6 @@ $(".xn-icon-button").fadeIn();
   </script>
   <script type='text/javascript' src='/admin-public/js/request.js'></script>
   <script type='text/javascript' src='/admin-public/js/requests_table.js'></script>
+  <script type="text/javascript" src="/admin-public/js/plugins/owl/owl.carousel.min.js"></script>                 
 
 

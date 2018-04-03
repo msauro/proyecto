@@ -32,7 +32,7 @@ class IndexController extends Gabinando_Base{
         //widget cantidad de productos en punto de pedido o menor
         $ventasModel = new Application_Model_Existencia();
         $cantPtoPedido = $ventasModel->getCantPtoPedido();
-die(var_dump($cantPtoPedido));
+// die(var_dump($cantPtoPedido));
 
         if($result instanceof Exception){
             Gabinando_Base::addError($result->getMessage());

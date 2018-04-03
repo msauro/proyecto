@@ -26,7 +26,7 @@ class Application_Model_Existencia extends Application_Model_Base
 	    	//$stmt = new Zend_Db_Statement_Mysqli($db, $sql);
 	    	 
 	    	//$stmt->execute();
-die($query);
+// die($query);
 	    	$db = Zend_Db_Table_Abstract::getDefaultAdapter();
         
         	$stmt = $db->query($query);
@@ -82,7 +82,7 @@ die($query);
 
     public function getCantPtoPedido(){
         try{
-die('ARREGLAR CONSULTA DEL INNER JOIN, preguntar por widgets con movimiento');
+// die('ARREGLAR CONSULTA DEL INNER JOIN, preguntar por widgets con movimiento');
             $query = "SELECT COUNT(p.id), id,  punto_pedido FROM productos p
                     INNER JOIN ( 
                         SELECT MAX(e.id) as maxid, id_producto, cantidad 
@@ -91,7 +91,7 @@ die('ARREGLAR CONSULTA DEL INNER JOIN, preguntar por widgets con movimiento');
                             GROUP BY id
                         ) AS t2 ON t2.id_producto = p.id
                     WHERE  cantidad < punto_pedido ";
-             die($query);       
+             // die($query);       
             $db = Zend_Db_Table_Abstract::getDefaultAdapter();
             $stmt = $db->query($query);
             $cantPtoPedido =  $stmt->fetch();
