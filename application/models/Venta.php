@@ -16,6 +16,18 @@ class Application_Model_Venta extends Application_Model_Base
         return $rows->toArray();
     }
 
+    public function getCantVentasRango($desde,$hasta){
+    	$query = "SELECT COUNT(id)
+				FROM ventas
+				WHERE  ventas.fecha > '$desde' AND ventas.fecha < '$hasta'";
+
+        $db = Zend_Db_Table_Abstract::getDefaultAdapter();
+        $stmt = $db->query($query);
+        $cantVentas =  $stmt->fetch();
+        
+        return $cantVentas;
+    }
+
 	public function getVentaById($id){
 		try{
             $query = $this->select()

@@ -20,19 +20,19 @@ $(".xn-icon-button").fadeIn();
       <div class="col-md-3">   
           <div class="widget widget-default widget-item-icon">
             <div class="widget-item-left">
-                <span class="fa fa-remove"></span>
+                <span class="fa fa-shopping-cart"></span>
             </div>                             
             <div class="widget-data">
-              <?php if(!isset($this->widgetsData['Successful'])) {?>
+              <?php if(!isset($this->cantVentas)) {?>
               <div class="widget-title" style="position:relative;top:35px;">
                   No data
               </div>
               <?php } else { ?>
               <div id="widget_successful" class="widget-int num-count" style="font-size:25px;">
-                  <?php echo $this->widgetsData['Successful']; ?> 
+                  <?php echo $this->cantVentas["COUNT(id)"]; ?> 
               </div>
               <div class="widget-title">
-                  Productos sin stock
+                  Ventas en el mes
               </div>
               <?php } ?>
             </div>
@@ -42,7 +42,7 @@ $(".xn-icon-button").fadeIn();
       <div class="col-md-3">   
           <div class="widget widget-default widget-item-icon">
             <div class="widget-item-left">
-                <span class="fa fa-remove"></span>
+                <span class="fa fa-info-circle"></span>
             </div>                             
             <div class="widget-data">
               <?php if(!isset($this->widgetsData['Cancelled'])) {?>
@@ -54,7 +54,7 @@ $(".xn-icon-button").fadeIn();
                   <?php echo $this->widgetsData['Cancelled']; ?> 
               </div>
               <div class="widget-title">
-                  Deudas de clientes
+                Clientes con deudas
               </div>
               <?php } ?>
             </div>

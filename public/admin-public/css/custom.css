@@ -304,3 +304,6 @@ body.page-container-boxed {
   text-align: center;
 }
 /*Fin Detalle de factura*/
+.profile .profile-image img{
+  height: 100px;
+}

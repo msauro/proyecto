@@ -111,4 +111,27 @@ class Application_Model_Cliente extends Application_Model_Base
 
         return $rows->toArray();
     }
+
+    public function getClientesMasVentas($mesActualDesde,$mesActualHasta){
+
+        $query = "SELECT * FROM clientes c
+                    INNER JOIN ( 
+                        SELECT COUNT(id) AS cant_compras, id_cliente, fecha
+                            FROM ventas 
+                            WHERE fecha > '$mesActualDesde' AND fecha < '$mesActualHasta'
+
+                            GROUP BY id_cliente
+                            ORDER BY cant_compras DESC
+                        ) AS t2 
+                    WHERE id_cliente = c.id
+                    LIMIT 10
+                    ";
+        $db = Zend_Db_Table_Abstract::getDefaultAdapter();
+        $stmt = $db->query($query);
+        $clientesMasVentas =  $stmt->fetch();
+            // die($clientesMasVentas);
+        return $clientesMasVentas;
+    }
+
+
 }

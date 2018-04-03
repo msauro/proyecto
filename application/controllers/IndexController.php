@@ -9,64 +9,67 @@ class IndexController extends Gabinando_Base{
 
     public function indexAction() {
         
-        // Get requests list and set into the view
-        // $request = new Application_Model_Request();
-        // $result = $request->getList();
+    //  rando de fechas del dia de HOY
+        $desde = date('Y-m-d 00:00:01');
+        $hasta = date('Y-m-d 23:59:59');
+    //  
+        $mesActualDesde = date('Y-m-01 00:00:01');
+        $mesActualHasta = date('Y-m-31 23:59:59');
 
-        // if($result instanceof Exception){
-        //     Gabinando_Base::addError($result->getMessage());
-        // }
-        // else{
-        //     $assistanceList = array();
-        //     $requestList = array();
+        // die(var_dump($mesActual));
+        // strtotime($hasta);
+         // date('Y-m-d H:i:s', $hasta);
+        
+        //widget Cantidad de ventas del día de hoy (OK)
+        $ventasModel = new Application_Model_Venta();
+        $cantVentas = $ventasModel->getCantVentasRango($desde,$hasta);
 
-        //     foreach ($result['requests'] as $key => $request) {
-        //         // Set current waiting time for each request
-        //         if(isset($request['waitingSince'])){
-        //             $waitingTime = date("H:i:s", strtotime(date('00:00:00')) + strtotime(date('H:i:s')) - strtotime($request['waitingSince']));
-                                        
-        //             $splitedTime = split(":", $waitingTime);
+        //widget clientes con mas compras en el mes (OK)
+        $ventasModel = new Application_Model_Cliente();
+        $clientesMasVentas = $ventasModel->getClientesMasVentas($mesActualDesde,$mesActualHasta);
+// echo "<pre>"; die(var_dump($clientesMasVentas));
 
-        //             $request['waitingMin'] = $splitedTime[1];
-        //             $request['waitingSec'] = $splitedTime[2];
-        //         }else{
-        //             $request['waitingMin'] = '00';
-        //             $request['waitingSec'] = '00';
-        //         }
+        //widget cantidad de productos en punto de pedido o menor
+        $ventasModel = new Application_Model_Existencia();
+        $cantPtoPedido = $ventasModel->getCantPtoPedido();
+die(var_dump($cantPtoPedido));
 
-        //         // Clasify request depending its type
-        //         if($request['type'] == 'Assistance'){
-        //             array_push($assistanceList, $request); 
-        //         }else{
-        //             array_push($requestList, $request);
-        //         }
-        //     }
-        //     $this->view->assistanceList = $assistanceList;
-        //     $this->view->requestList = $requestList;
+        if($result instanceof Exception){
+            Gabinando_Base::addError($result->getMessage());
+        }
+        else{
 
-        //     $widgetsData['Pending'] = 0;
-        //     $widgetsData['Cancelled'] = 0;
-        //     $widgetsData['Successful'] = 0;
-        //     $widgetsData['Waiting'] = 0;
+          
+            $this->view->cantVentas = $cantVentas;
+            $this->view->clientesMasVentas = $clientesMasVentas;
+            $this->view->cantPtoPedido = $cantPtoPedido;
 
-        //     foreach ($result['requests'] as $request){
-        //         switch($request['status']){
-        //             case 'Pending':
-        //                 $widgetsData['Pending']++;
-        //                 break;
-        //             case 'Cancelled':
-        //                 $widgetsData['Cancelled']++;
-        //                 break;
-        //             case 'Successful':
-        //                 $widgetsData['Successful']++;
-        //                 break;
-        //             case 'Waiting':
-        //                 $widgetsData['Waiting']++;
-        //                 break;
-        //         }
-        //     }
-        //     $this->view->widgetsData = $widgetsData;
-        // }
+
+            $this->view->requestList = $requestList;
+
+            $widgetsData['Pending'] = 0;
+            $widgetsData['Cancelled'] = 0;
+            $widgetsData['Successful'] = 0;
+            $widgetsData['Waiting'] = 0;
+
+            foreach ($result['requests'] as $request){
+                switch($request['status']){
+                    case 'Pending':
+                        $widgetsData['Pending']++;
+                        break;
+                    case 'Cancelled':
+                        $widgetsData['Cancelled']++;
+                        break;
+                    case 'Successful':
+                        $widgetsData['Successful']++;
+                        break;
+                    case 'Waiting':
+                        $widgetsData['Waiting']++;
+                        break;
+                }
+            }
+            $this->view->widgetsData = $widgetsData;
+        }
     }
 
 
