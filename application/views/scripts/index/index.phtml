@@ -39,35 +39,19 @@ $(".xn-icon-button").fadeIn();
           <div class="widget-controls"></div>
         </div> 
       </div>
-      <!-- 5 Productos mas vendidos -->
+      <!-- 5 Clientes con mas ventas por mes -->
       <div class="col-md-3">   
         <div class="widget widget-default widget-carousel ">
           <div class="owl-carousel" id="owl-example">
+            <?php foreach ($this->clientesMasVentas as $clienteMasVenta) { ?>
               <div>                                    
-                  <div class="widget-title">Producto 1</div>                                                                        
-                  <div class="widget-subtitle"><?php echo date('m-d-Y') ?></div>
-                  <div class="widget-int"><?php echo $this->donationsCount['total'] ?></div>
+                  <div class="widget-title"><?php echo ($clienteMasVenta['razon_social']) ?  $clienteMasVenta['razon_social'] :  $clienteMasVenta['nombre'].' ' .$clienteMasVenta['apellido'];  ?></div>                                                                        
+                  <div class="widget-subtitle">Cantidad de compras del mes</div>
+                  <div class="widget-int"><?php echo $clienteMasVenta['cant_compras'] ?></div>
               </div>
-              <div>                                    
-                  <div class="widget-title">Producto 1</div>
-                  <div class="widget-subtitle">Successful</div>
-                  <div class="widget-int"><?php echo $this->donationsCount['success'] ?></div>
-              </div>
-              <div>                                    
-                  <div class="widget-title">Producto 2</div>
-                  <div class="widget-subtitle">Pending</div>
-                  <div class="widget-int"><?php echo $this->donationsCount['pending'] ?></div>
-              </div>
-              <div>                                    
-                  <div class="widget-title">Producto 3</div>
-                  <div class="widget-subtitle">Cancelled</div>
-                  <div class="widget-int"><?php echo $this->donationsCount['cancel'] ?></div>
-              </div>
-              <div>                                    
-                  <div class="widget-title">Producto 4</div>
-                  <div class="widget-subtitle">Future</div>
-                  <div class="widget-int"><?php echo $this->futureDonationsCount ?></div>
-              </div>
+
+            <?php } ?>
+              
           </div>                            
           <div class="widget-controls"></div>
         </div>  

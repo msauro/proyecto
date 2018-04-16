@@ -124,12 +124,14 @@ class Application_Model_Cliente extends Application_Model_Base
                             ORDER BY cant_compras DESC
                         ) AS t2 
                     WHERE id_cliente = c.id
-                    LIMIT 10
+                    ORDER BY cant_compras DESC 
+                    LIMIT 5
                     ";
         $db = Zend_Db_Table_Abstract::getDefaultAdapter();
         $stmt = $db->query($query);
-        $clientesMasVentas =  $stmt->fetch();
-            // die($clientesMasVentas);
+
+        $clientesMasVentas =  $stmt->fetchAll();
+        // die(var_dump($clientesMasVentas));
         return $clientesMasVentas;
     }
 

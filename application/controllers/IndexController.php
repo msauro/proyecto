@@ -29,46 +29,46 @@ class IndexController extends Gabinando_Base{
         $clientesMasVentas = $ventasModel->getClientesMasVentas($mesActualDesde,$mesActualHasta);
 // echo "<pre>"; die(var_dump($clientesMasVentas));
 
+            $this->view->clientesMasVentas = $clientesMasVentas;
         //widget cantidad de productos en punto de pedido o menor
         $ventasModel = new Application_Model_Existencia();
         $cantPtoPedido = $ventasModel->getCantPtoPedido();
 // die(var_dump($cantPtoPedido));
 
-        if($result instanceof Exception){
+        if($cantPtoPedido instanceof Exception){
             Gabinando_Base::addError($result->getMessage());
         }
         else{
 
           
             $this->view->cantVentas = $cantVentas;
-            $this->view->clientesMasVentas = $clientesMasVentas;
             $this->view->cantPtoPedido = $cantPtoPedido;
 
 
-            $this->view->requestList = $requestList;
+            // $this->view->requestList = $requestList;
 
-            $widgetsData['Pending'] = 0;
-            $widgetsData['Cancelled'] = 0;
-            $widgetsData['Successful'] = 0;
-            $widgetsData['Waiting'] = 0;
+            // $widgetsData['Pending'] = 0;
+            // $widgetsData['Cancelled'] = 0;
+            // $widgetsData['Successful'] = 0;
+            // $widgetsData['Waiting'] = 0;
 
-            foreach ($result['requests'] as $request){
-                switch($request['status']){
-                    case 'Pending':
-                        $widgetsData['Pending']++;
-                        break;
-                    case 'Cancelled':
-                        $widgetsData['Cancelled']++;
-                        break;
-                    case 'Successful':
-                        $widgetsData['Successful']++;
-                        break;
-                    case 'Waiting':
-                        $widgetsData['Waiting']++;
-                        break;
-                }
-            }
-            $this->view->widgetsData = $widgetsData;
+            // foreach ($result['requests'] as $request){
+            //     switch($request['status']){
+            //         case 'Pending':
+            //             $widgetsData['Pending']++;
+            //             break;
+            //         case 'Cancelled':
+            //             $widgetsData['Cancelled']++;
+            //             break;
+            //         case 'Successful':
+            //             $widgetsData['Successful']++;
+            //             break;
+            //         case 'Waiting':
+            //             $widgetsData['Waiting']++;
+            //             break;
+            //     }
+            // }
+            // $this->view->widgetsData = $widgetsData;
         }
     }
 
