@@ -94,8 +94,8 @@ class Application_Model_Venta extends Application_Model_Base
 		try{
             $query = $this->select()->setIntegrityCheck(false)
 	            ->from($this, array('*'))
-            	// ->join('ventas_detalles', 'ventas_detalles.id_venta = ventas.id', array('*'))
             	->join('clientes', 'clientes.id = ventas.id_cliente', array('*'))
+            	// ->join('tipo_empresa', 'tipo_empresa.id = clientes.id_tipo_empresa', array('tipo_empresa.nombre'))
 	            ->where('ventas.id = ?', $id);
 
             $row = $this->fetchRow($query);

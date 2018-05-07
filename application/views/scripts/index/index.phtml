@@ -43,15 +43,19 @@ $(".xn-icon-button").fadeIn();
       <div class="col-md-3">   
         <div class="widget widget-default widget-carousel ">
           <div class="owl-carousel" id="owl-example">
-            <?php foreach ($this->clientesMasVentas as $clienteMasVenta) { ?>
-              <div>                                    
-                  <div class="widget-title"><?php echo ($clienteMasVenta['razon_social']) ?  $clienteMasVenta['razon_social'] :  $clienteMasVenta['nombre'].' ' .$clienteMasVenta['apellido'];  ?></div>                                                                        
-                  <div class="widget-subtitle">Cantidad de compras del mes</div>
-                  <div class="widget-int"><?php echo $clienteMasVenta['cant_compras'] ?></div>
-              </div>
-
-            <?php } ?>
-              
+            <?php if ($this->clientesMasVentas) { ?>
+              <?php foreach ($this->clientesMasVentas as $clienteMasVenta) { ?>
+                <div>                                    
+                    <div class="widget-title"><?php echo ($clienteMasVenta['razon_social']) ?  $clienteMasVenta['razon_social'] :  $clienteMasVenta['nombre'].' ' .$clienteMasVenta['apellido'];  ?></div>                                                                        
+                    <div class="widget-subtitle">Cantidad de compras del mes</div>
+                    <div class="widget-int"><?php echo $clienteMasVenta['cant_compras'] ?></div>
+                </div>
+              <?php } ?>
+              <?php }else{ ?>
+                <div>                                    
+                    <div class="widget-title">No hubo ventas en el mes</div>
+                </div>
+              <?php } ?>
           </div>                            
           <div class="widget-controls"></div>
         </div>  
@@ -131,7 +135,7 @@ $(".xn-icon-button").fadeIn();
             <div class="widget-data">
               <?php if(!isset($this->cantVentas)) {?>
               <div class="widget-title" style="position:relative;top:35px;">
-                  No data
+                  No hubo ventas en el mes
               </div>
               <?php } else { ?>
               <div id="widget_successful" class="widget-int num-count" style="font-size:25px;">

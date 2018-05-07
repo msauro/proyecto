@@ -49,7 +49,7 @@ $this->headTitle($this->title);
                             <div class="col-sm-6 col-xs-12">                                            
                                 <div class="input-group">
                                     <span class="input-group-addon"><span class="fa fa-list"></span></span>
-                                    <input name="cuit" id="cuit" type="number" class="form-control"/>
+                                    <input name="cuit" id="cuit" type="number" min="11" max="11" class="form-control"/>
                                 </div> 
                             </div>
                         </div>
@@ -60,6 +60,37 @@ $this->headTitle($this->title);
                                 <div class="input-group">
                                     <span class="input-group-addon"><span class="fa fa-list"></span></span>
                                     <input name="razon_social" id="razon_social" type="text" class="form-control"/>
+                                </div> 
+                            </div>
+                        </div>
+
+                        <div class="form-group"  >
+                            <label class="col-sm-3 col-xs-12 control-label">Tipo de empresa</label>
+                            <div class="col-sm-6 col-xs-12">                                            
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-suitcase"></span></span>
+                                    <select name="id_tipo_empresa" id="id_tipo_empresa" type="text" class="form-control select">
+                                        <option value="">Selecciona Tipo</option>
+                                        <?php 
+                                        foreach ($this->listadoTipoempresa as $key => $tipo): ?>
+                                        <option <?php echo $this->data['id'] == $tipo['id'] ? "selected" : '' ; ?> value=<?php echo  $tipo['id'] ?>><?php echo $tipo['nombre']?></option>
+                                        
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div> 
+                            </div>
+                        </div>
+
+                        <div class="form-group"  >
+                            <label class="col-sm-3 col-xs-12 control-label">Exento</label>
+                            <div class="col-sm-6 col-xs-12">                                            
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-suitcase"></span></span>
+                                    <select name="exento" id="exento" type="text" class="form-control select">
+                                        <option value="0">No</option>
+                                        <option value="1">Si</option>
+                                        
+                                    </select>
                                 </div> 
                             </div>
                         </div>
@@ -94,7 +125,7 @@ $this->headTitle($this->title);
                             </div>
                         </div>
 
-                        <div class="form-group" id="form-group-estado" >
+                       <!--  <div class="form-group"  >
                             <label class="col-sm-3 col-xs-12 control-label">Estado</label>
                             <div class="col-sm-6 col-xs-12">                                            
                                 <div class="input-group">
@@ -109,9 +140,9 @@ $this->headTitle($this->title);
                                     </select>
                                 </div> 
                             </div>
-                        </div> 
+                        </div>  -->
 
-                        <div class="form-group" id="form-group-estado" >
+                        <div class="form-group"  >
                             <label class="col-sm-3 col-xs-12 control-label">Tipo de cliente</label>
                             <div class="col-sm-6 col-xs-12">                                            
                                 <div class="input-group">
@@ -128,7 +159,7 @@ $this->headTitle($this->title);
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group" >
                             <label class="col-sm-3 col-xs-12 control-label">Imagen</label>
                             <div class="col-sm-6 col-xs-12">               
                                 <input name="imagen_url" id="imagen_url" type="file" class="fileinput btn-primary" accept="image/*" />
@@ -170,37 +201,44 @@ $this->headTitle($this->title);
    var regexp = /^\d+(\,\d{1,2})?$/;
    var validator;
    $().ready(function() {
-   
+    
     validator = $("#add-form").validate({
         ignore: '',
         rules: {
-            id_producto: {
+            nombre: {
                 required: true
             },
-            id_estado: "required",
-            precio: {
-                required: true,
-                validarprecio: true
+            apellido: "required",
+            id_tipo_empresa: "required",
+            cuit: {required: true,
+                   minlength: 11,
+                   maxlength: 11,
             },
-            cuit: {
-                required: true,
-                validarcuit: true
+            exento: "required",
+            id_tipo_cliente: {
+                required: true
             },
-            fecha: "required"
+            direccion: {
+                required: true
+            },
+            telefono: "required"
         },
         errorPlacement: function(error, element) {
             error.insertAfter(element.parent());
         },
         messages: {
-            precio: {
+            nombre: {
                 required: "Campo requerido",
-                validarprecio: "Deben ser numeros del tipo 30 o 30,55."
             },
-            id_estado: "required",
-            fecha: {
+            id_tipo_cliente: "Campo requerido",
+            apellido: "Campo requerido",
+            exento: "Campo requerido",
+            id_tipo_empresa: "Campo requerido",
+            cuit: "Campo requerido, debe tener 11 números sin guiones ni espacios",
+            telefono: {
                 required: "Campo requerido"
             },
-            id_producto: {
+            direccion: {
                 required: "Campo requerido"
             }
 
@@ -208,12 +246,5 @@ $this->headTitle($this->title);
     });
 
 });
-   $.validator.addMethod("validarprecio", function (value, element) {
-    var regex = new RegExp(regexp);
-    return regex.test(value);
-    });
-   $.validator.addMethod('validarcuit', function (value, element) {
-            return this.optional(element) || /^\d{11}$/.test(value);
-    }, "El formato debe ser (00-00000000-0). No ingrese los guiones");
 
 </script>

@@ -82,20 +82,27 @@ class Application_Model_Existencia extends Application_Model_Base
 
     public function getCantPtoPedido(){
         try{
-// die('ARREGLAR CONSULTA DEL INNER JOIN');
-            $query = "SELECT COUNT(p.id), id,  punto_pedido FROM productos p
+// die('ARREGLAR CONSULTA ');
+            $query = "SELECT COUNT(p.id) as cantPtoPedido, p.id, punto_pedido, m.nombre, t2.maxid, t1.cantidad FROM productos p
                     INNER JOIN ( 
-                        SELECT MAX(e.id) as maxid, id_producto, cantidad 
+                        SELECT MAX(e.id) as maxid, id_producto as id_prod
                             FROM existencias e
-
-                            GROUP BY id
-                        ) AS t2 ON t2.id_producto = p.id
-                    WHERE  cantidad < punto_pedido ";
+                            GROUP BY id_producto
+                        ) AS t2 ON t2.id_prod = p.id
+                    INNER JOIN ( 
+                        SELECT id, id_producto, cantidad 
+                            FROM existencias ex
+                            GROUP BY ex.id_producto
+                        ) AS t1 ON t2.maxid = t1.id
+                    INNER JOIN marcas m 
+                    ON p.id_marca = m.id
+                    WHERE  t1.cantidad < punto_pedido 
+                    GROUP BY m.nombre";
              // die($query);       
             $db = Zend_Db_Table_Abstract::getDefaultAdapter();
             $stmt = $db->query($query);
             $cantPtoPedido =  $stmt->fetch();
-            
+    // die(var_dump($query));
             return $cantPtoPedido;
 
         }

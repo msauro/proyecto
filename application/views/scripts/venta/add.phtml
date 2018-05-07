@@ -80,7 +80,7 @@ $this->headTitle($this->title);
                                         </div>
                                         <div class="col-md-3" style="padding:0px;">
                                             <div class="input-group">
-                                                <div class="col-md-12" style="position:relative;top:-9px;width:220px;">
+                                                <div class="col-md-12" style="position:relative;top:-9px;width:250px;">
                                                     <ul class="pagination pagination-sm pull-right push-down-10 push-up-10" style="width: 100%;display:none;">
                                                         <span id='back-patient' class='btn btn-default'>« anterior</span>
                                                         <span id='back-patient-disabled' class='btn btn-default' style='display:none;background-color: #DDD;cursor:no-drop;'>« anterior</span>
@@ -553,6 +553,12 @@ $this->headTitle($this->title);
             if(!$("#cliente-seleccionado").closest('li').hasClass("fa-check-square-o"))
                 $("#cliente-seleccionado").closest('li').toggleClass('fa-square-o fa-check-square-o');
             $("#cliente-seleccionado").text(params.nombre);
+
+            if (params.nombre == 'Consumidor Final *') {
+                $("#switch-ctacte").prop('disabled', true);
+            }else{
+                $("#switch-ctacte").prop('disabled', false);
+            }
 
             //lleno el formulario con datos del cliente
             $("#form-cliente").val(params.id);

@@ -163,6 +163,7 @@ echo $this->doctype(); ?>
                                 <li <?php if($controller == 'cliente' && $action == 'list') echo 'class="active"' ?>><a href="/tipocliente/list"><span class="fa fa-file-text-o" aria-hidden="true"></span> Listado</a></li>
                             </ul>
                         </li>
+
                         <li id="modules-settings" class="xn-openable">
                             <a href="javascript:void(0);">
                                 <div data-step="12" data-intro="Acá podrás generar o ver los pedidos" data-position="right"><span class="fa fa-archive" aria-hidden="true"></span><span class="xn-text">Pedidos</span></div>
@@ -179,6 +180,15 @@ echo $this->doctype(); ?>
                             <ul>
                                 <li <?php if($controller == 'venta' && $action == 'add') echo 'class="active"' ?>><a href="/venta/add"><span class="fa fa-group"></span> Nueva venta</a></li>
                                 <li <?php if($controller == 'venta' && $action == 'list') echo 'class="active"' ?>><a href="/venta/list"><span class="fa fa-file-text-o" aria-hidden="true"></span> Listado</a></li>
+                            </ul>
+                        </li>
+                        <li id="modules-settings" class="xn-openable">
+                            <a href="javascript:void(0);">
+                                <div data-step="12" data-intro="Acá podrás gestionar los tipos de empresa" data-position="right"><span class="fa fa-user" aria-hidden="true"></span><span class="xn-text">Tipos de empresas</span></div>
+                            </a>
+                            <ul>
+                                <li <?php if($controller == 'tipoempresa' && $action == 'add') echo 'class="active"' ?>><a href="/tipoempresa/add"><span class="fa fa-group"></span> Agregar tipo de empresa</a></li>
+                                <li <?php if($controller == 'tipoempresa' && $action == 'list') echo 'class="active"' ?>><a href="/tipoempresa/list"><span class="fa fa-file-text-o" aria-hidden="true"></span> Listado</a></li>
                             </ul>
                         </li>
                 <!-- DEFINE MORE SECTIONS -->

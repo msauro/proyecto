@@ -24,7 +24,7 @@ $this->headTitle($this->title);
                             <div class="row">
                                 <div class="col-xs-12">
                                     <div class="invoice-title">
-                                       <img src="/resources/logo.png"> <spam id="factura">A</spam> <h3 class="pull-right">Factura N°: #<?php echo $this->venta['id']; ?> </h3>
+                                       <img src="/resources/logo.png"> <spam id="factura"><?php echo $this->venta['tipo']; ?></spam> <h3 class="pull-right">Factura N°: #<?php echo $this->venta['id']; ?> </h3>
                                     </div>
                                     <hr>
                                     <div class="row">

@@ -20,6 +20,12 @@ class ClienteController extends Gabinando_Base {
 					die($img['message']);
 				}
 			}
+			//si es monotributista, no es Resp. Inscripto, por lo tanto sería como exento
+			if ($params['id_tipo_empresa'] == 1) {
+				$params['exento'] = 1;
+			}
+
+			$params['estado'] = 1;
 
 			$params['imagen_url'] = $img['message'];
             $params['eliminado'] = 0;
@@ -47,6 +53,10 @@ class ClienteController extends Gabinando_Base {
 			$listadoEstados = $estadoModel->getList();
 			$listadoTiposClientes = $tiposclientesModel->getList();
 
+			$tipoempresa = new Application_Model_TipoEmpresa();
+			$listadoTipoempresa = $tipoempresa->getList();
+			
+			$this->view->listadoTipoempresa = $listadoTipoempresa;
 			$this->view->listadoEstados = $listadoEstados;
 			$this->view->listadoTiposClientes = $listadoTiposClientes;
 		}

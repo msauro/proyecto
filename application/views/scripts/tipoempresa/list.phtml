@@ -1,0 +1,99 @@
+<?php         
+$this->title = "Lista de Tipos de empresa";
+$this->headTitle($this->title);
+?>
+
+<script>
+$(".xn-icon-button").fadeIn();
+</script>
+
+<!-- BREADCRUMB -->
+    <ul class="breadcrumb">
+        <li><a href="/">Panel Principal</a></li>
+        <li><a href="#">Tipos de empresa</a></li>
+        <li class="active">Listado</li>
+    </ul>
+
+<!-- PAGE CONTENT WRAPPER -->
+    <div class="row">    
+        <div class="col-sm-12">
+            <div class="page-content-wrap">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="panel-title-box">
+                            <h3>Lista de tipos de empresa</h3>
+                        </div> 
+                        <button class="btn btn-primary pull-right" onclick="agregarTipoempresa()" data-toggle="dropdown"><span class="fa fa-plus" ></span> Nuevo</button> 
+                    </div>
+                        
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table datatable table-striped">
+                                <thead>
+                                    <tr>
+                                        <th width="50">ID</th>
+                                        <th>Nombre</th>
+                                       <!--  <th>Descripción</th>
+                                        <th>Tipoempresa</th>
+                                        <th>Rubro</th> -->
+                                        <th width="150" class="no-sortable text-center">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($this->listadoTipoempresa as $tipo): ?>
+                                    <tr id="<?php echo $tipo['id'] ?>" class="element-id">
+                                        <td class="text-center"><?php echo $tipo['id'] ?></td>
+                                        <td><?php echo $tipo['nombre'] ?></td>
+                                        <td class="text-center">
+                                            <button class="btn btn-default btn-rounded btn-condensed btn-sm" onclick="editarTipoempresas(<?php echo $tipo['id'] ?>)"><span class="fa fa-pencil"></span></button>
+                                            <button class="btn btn-danger btn-rounded btn-condensed btn-sm btn-delete" id="<?php echo $tipo['id'] ?>"><span class="fa fa-trash-o" data-toggle="modal" data-target="#delete_modal"></span></button>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL ALERT -->
+    <div class="modal animated fadeIn" id="delete_modal" tabindex="-1" role="dialog" aria-labelledby="smallModalHead" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Confirmación</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Desea eliminar el tipo de empresa?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                    <button type="button" class="btn btn-primary" id="btnYes">Si</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            
+            var id = 0;
+
+            $(".btn-delete").click(function(event){
+                id = $(this).attr('id');
+            });
+
+            $("#btnYes").click(function(){
+                window.location.href = "/tipoempresa/remove/id/" + id;
+            })
+
+        });
+    var editarTipoempresa = function(id){
+        window.location.href = "/tipoempresa/edit/id/" + id;
+    }
+    var agregarTipoempresa

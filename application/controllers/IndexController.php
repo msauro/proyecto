@@ -9,16 +9,12 @@ class IndexController extends Gabinando_Base{
 
     public function indexAction() {
         
-    //  rando de fechas del dia de HOY
+    //  rango de fechas del dia de HOY
         $desde = date('Y-m-d 00:00:01');
         $hasta = date('Y-m-d 23:59:59');
-    //  
+
         $mesActualDesde = date('Y-m-01 00:00:01');
         $mesActualHasta = date('Y-m-31 23:59:59');
-
-        // die(var_dump($mesActual));
-        // strtotime($hasta);
-         // date('Y-m-d H:i:s', $hasta);
         
         //widget Cantidad de ventas del día de hoy (OK)
         $ventasModel = new Application_Model_Venta();
@@ -27,12 +23,12 @@ class IndexController extends Gabinando_Base{
         //widget clientes con mas compras en el mes (OK)
         $ventasModel = new Application_Model_Cliente();
         $clientesMasVentas = $ventasModel->getClientesMasVentas($mesActualDesde,$mesActualHasta);
-// echo "<pre>"; die(var_dump($clientesMasVentas));
+        $this->view->clientesMasVentas = $clientesMasVentas;
 
-            $this->view->clientesMasVentas = $clientesMasVentas;
-        //widget cantidad de productos en punto de pedido o menor
+        //widget cantidad de productos en punto de pedido o menor por marca
         $ventasModel = new Application_Model_Existencia();
         $cantPtoPedido = $ventasModel->getCantPtoPedido();
+        
 // die(var_dump($cantPtoPedido));
 
         if($cantPtoPedido instanceof Exception){

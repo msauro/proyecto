@@ -63,6 +63,7 @@ class Application_Model_Cliente extends Application_Model_Base
         try{
             $query = $this->select()->setIntegrityCheck(false)
             ->from($this, array('*'))
+            ->join('tipo_cliente', 'tipo_cliente.id = clientes.id_tipo_cliente', array('tipo_cliente.nombre AS nom_tipo'))
             ->where('clientes.eliminado= ?', 0)
             ->where('clientes.id= ?', $id);
 
@@ -131,7 +132,7 @@ class Application_Model_Cliente extends Application_Model_Base
         $stmt = $db->query($query);
 
         $clientesMasVentas =  $stmt->fetchAll();
-        // die(var_dump($clientesMasVentas));
+        // die(var_dump($query));
         return $clientesMasVentas;
     }
 

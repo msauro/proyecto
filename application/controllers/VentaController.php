@@ -203,7 +203,7 @@ class VentaController extends Gabinando_Base{
 			$productos = $params['productos'];
 			$clienteModel  	= new Application_Model_Cliente();
 			$cliente	   	= $clienteModel->getClienteById($params['data']['id_cliente']);
-
+			
 			try{
 				$ventaModel= new Application_Model_Venta();
 				$forma_entrega = ($params['data']['envio'][0] != 0) ? 'delivery' : 'retira';
@@ -218,6 +218,15 @@ class VentaController extends Gabinando_Base{
 						'iva'				=> $params['data']['iva'],
 						'forma_entrega'		=> $forma_entrega
 				);
+				if ($cliente['nom_tipo'] == 'Monotributista') {
+					$ventaObj['tipo'] = 'B';
+				}elseif ($cliente['exento'] == 0) {
+					$ventaObj['tipo'] = 'A';
+					
+				}else{
+					$ventaObj['tipo'] = 'B';
+
+				};
 
 				// Start - Crea la donation
 				$idVenta = $ventaModel->add($ventaObj);	
@@ -357,8 +366,10 @@ die('ver pq no devulve o redirige');
 			if($id){
 				$ventaModel = new Application_Model_Venta();
 				$ventaDetalleModel = new Application_Model_VentaDetalle();
+
 				$detalleVenta =$ventaDetalleModel->getDetalleVentaById($id);
 				$venta = $ventaModel->getFullVenta($id);
+			// die(var_dump($venta));
 				if ($venta['descuento']>0) {
 					$subDesc = $venta['subtotal'] - ($venta['subtotal'] *$venta['descuento']/100);
 					$venta['iva_calculado'] = (round($subDesc*0.21,2));
