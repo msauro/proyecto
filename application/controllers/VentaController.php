@@ -319,7 +319,6 @@ die('ver pq no devulve o redirige');
 	public function listAction() {
 		$ventaModel = new Application_Model_Venta();
 		$listadoVentas = $ventaModel->getList();
-	// echo "<pre>";	die(var_dump($listadoVentas));
 		$this->view->listadoVentas = $listadoVentas;
     }
 

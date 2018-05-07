@@ -9,8 +9,8 @@ class Application_Model_Venta extends Application_Model_Base
     	$query = $this->select()->setIntegrityCheck(false)
             ->from($this, array('*'))
            	->join('clientes', 'clientes.id = ventas.id_cliente', array('nombre','apellido','telefono','cuit','direccion','razon_social'))
-            ->where('ventas.eliminado = ?', 0);
-
+            ->where('ventas.eliminado = ?', 0)
+            ->order('ventas.id DESC') ;
         $rows = $this->fetchAll($query);
 
         return $rows->toArray();
