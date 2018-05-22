@@ -11,6 +11,7 @@ class ProductoController extends Gabinando_Base {
     public function addAction(){
 		if($this->getRequest()->isPost()){
 			$params = $this->getRequest()->getPost();
+
 			$file = $_FILES['imagen_url'];
 			if ($file['size'] > 0) {
 
@@ -21,10 +22,13 @@ class ProductoController extends Gabinando_Base {
 				}
 
 				$params['imagen_url'] = $img['message'];
+			}else{
+				$img['message'] = NULL;
 			}
            // $params['eliminado'] = 0;
 			
 			$producto = new Application_Model_Producto();
+			$productoEquivalenteModel = new Application_Model_ProductoEquivalente();
 			$stock = new Application_Model_Existencia();
 			$precioModel = new Application_Model_Precio();
 			$productoExistente = $producto->getProductosByParams($params['codigo'], $params['id_marca']);
@@ -74,6 +78,24 @@ class ProductoController extends Gabinando_Base {
 	                Gabinando_Base::addError($result->getMessage());
             	}
 
+            	$id_producto = $result;
+
+				if (sizeof($params['id_original']) > 1) {
+					foreach ($params['id_original'] as $id_original) {
+		            	$paramsEquivalente = array(
+							"id_original" 	=> $id_original,
+							"id_producto" 	=> $params['codigo']
+						);
+						$resultEquivalentes = $productoEquivalenteModel->add($paramsEquivalente);
+					}
+				}
+
+				
+
+				if($resultStock instanceof Exception){
+	                Gabinando_Base::addError($result->getMessage());
+            	}
+
 
             	Gabinando_Base::addSuccess('Producto agregado correctamente');
             	$this->_redirect('/producto/list');
@@ -84,10 +106,13 @@ class ProductoController extends Gabinando_Base {
         	$this->_redirect('/producto/add');
 		}else{
 			$marcaModel = new Application_Model_Marca();
+			$originalModel = new Application_Model_ProductoOriginal();
 
 			$listadoMarcas = $marcaModel->getList();
+			$listadoOriginal = $originalModel->getList();
 
 			$this->view->listadoMarcas = $listadoMarcas;
+			$this->view->listadoOriginal = $listadoOriginal;
 		}
 	}
 
@@ -181,7 +206,8 @@ class ProductoController extends Gabinando_Base {
 
 				$productoModel = new Application_Model_Producto();
 				$producto = $productoModel->getProductoById($id);
-// die(var_dump($producto));
+				$producto['equivalente'] = $productoModel->getProductoEquivalenteById($producto['codigo']);
+// echo "<pre>"; die(var_dump($producto['equivalente']));
 				$this->view->listadoMarcas = $listadoMarcas;
 
 				if($producto){
@@ -237,7 +263,7 @@ class ProductoController extends Gabinando_Base {
 			$this->sendErrorResponse($productoList->getMessage());
 
 		$pages = ceil(count($productoPager) / $paginate['per_page']);
-
+// die(var_dump(count($productoPager)));
 		$this->sendSuccessResponse(array(
 				'search' 		=> $search,
 				'productos' 	=> $productos,
@@ -253,6 +279,8 @@ class ProductoController extends Gabinando_Base {
 		$params 	 = $params = $this->getRequest()->getParams();
 		//die(var_dump($id));
 	}
+
+
 		
 		
 		

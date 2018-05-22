@@ -1,0 +1,255 @@
+<?php         
+$this->title = "Detalle de factura";
+$this->headTitle($this->title);
+?>
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+    <li><a href="/">Panel Principal</a></li>
+    <li><a href="/venta/detalle">Venta</a></li>
+    <li class="active">Detalle</li>
+</ul>
+<!-- END BREADCRUMB -->
+
+<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap">
+    <div class="row">
+        <div class="col-sm-12">
+        <!-- EDIT FORM -->
+            <form id="edit-form" class="form-horizontal" method="post" enctype="multipart/form-data">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><strong>Detalle</strong> de factura</h3>
+                    </div>
+                    <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="invoice-title">
+                                       <img src="/resources/logo.png"> <spam id="factura"><?php echo $this->venta['tipo']; ?></spam> <h3 class="pull-right">Factura N°: #<?php echo $this->venta['id']; ?> </h3>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <address>
+                                            <strong>GABINANDO S.R.L</strong><br>
+                                                Santiago 1569<br>
+                                                2000 - Rosario<br>
+                                                IVA Responsable Inscripto<br>
+                                                CUIT: 30-33301419-0<br>
+                                                Inicio Actividades: 05/04/1966
+                                            </address>
+                                        </div>
+                                        <div class="col-xs-6 text-right">
+                                            <address>
+                                            <strong>Datos del cliente</strong><br>
+                                            <?php if ($this->venta["razon_social"])    : ?>
+                                                Razón social: <?php echo $this->venta["razon_social"]?><br>
+                                            <?php endif ?>
+                                            <?php if ($this->venta["nombre"])  : ?>
+                                                <?php echo $this->venta["nombre"].' '.$this->venta["apellido"]?><br>
+                                            <?php endif ?>
+                                            <?php if ($this->venta["cuit"] != 0)  : ?>
+
+                                                CUIT: <?php echo $this->venta["cuit"]?><br>
+                                                <?php echo $this->venta["direccion"]?><br>
+                                            <?php endif ?>
+                                            </address>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <address>
+                                                <strong>Forma de pago</strong><br>
+                                                <?php switch ($this->venta["forma_pago"]) {
+                                                    case 'ctacte':
+                                                        echo "Cuenta Corriente";
+                                                        break;
+                                                    case 'efectivo':
+                                                        echo "Efectivo";
+                                                        break;
+                                                    case 'amex':
+                                                        echo "Tarjeta: American Express";
+                                                        break;
+                                                    case 'visa':
+                                                        echo "Tarjeta: Visa";
+                                                        break;
+                                                    case 'master':
+                                                        echo "Tarjeta: Master Card";
+                                                        break;
+                                                }
+                                        // echo "<pre>";   die(var_dump($this->venta['detalle'])); 
+                                                 ?>
+                                                    
+                                            </address>
+                                        </div>
+                                        <div class="col-xs-6 text-right">
+                                            <address>
+                                                <strong>Fecha:</strong><br>
+                                                <?php echo date("d/m/Y h:i:s", strtotime($this->venta["fecha"])); ?><br><br>
+                                            </address>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title"><strong>Resumen</strong></h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-condensed">
+                                                    <thead>
+                                                        <tr>
+                                                            <td><strong>Código</strong></td>
+                                                            <td class="text-center"><strong>Descripción</strong></td>
+                                                            <td class="text-center"><strong>Precio unitario</strong></td>
+                                                            <td class="text-center"><strong>Cantidad</strong></td>
+                                                            <td class="text-right"><strong>Total</strong></td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <!-- foreach ($order->lineItems as $line) or some such thing here -->
+                                                    <?php foreach ($this->venta["detalle"] as $detalle) { ?>
+                                                        <tr>
+                                                            <td><?php echo  $detalle['codigo'] ?></td>
+                                                            <td class="center"><?php echo  $detalle['descripcion'] ?></td>
+                                                            <td class="text-center">$<?php echo  $detalle['precio'] ?></td>
+                                                            <td class="text-center"><?php echo  $detalle['cantidad'] ?></td>
+                                                            <td class="text-right">$<?php echo ($detalle['precio']*$detalle['cantidad'])?></td>
+                                                        </tr>
+                                                    <?php } ?>
+                                                       
+                                                        <tr>
+                                                            <td class="thick-line"></td>
+                                                            <td class="thick-line"></td>
+                                                            <td class="thick-line"></td>
+                                                            <td class="thick-line text-center"><strong>Subtotal</strong></td>
+                                                            <td class="thick-line text-right">$<?php echo  $this->venta['subtotal'] ?></td>
+                                                        </tr>
+                                                        <?php if ($this->venta['descuento'] > 0) { ?>
+                                                        <tr>
+                                                            <td class="no-line"></td>
+                                                            <td class="no-line"></td>
+                                                            <td class="no-line"></td>
+                                                            <td class="no-line text-center"><strong>Descuento (<?php echo ($this->venta['descuento'])?>%)</strong></td>
+                                                            <td class="no-line text-right">-$<?php echo ($this->venta['subtotal'] *$this->venta['descuento']/100)?></td>
+                                                        </tr>
+                                                        <?php } ?>
+                                                        <tr>
+                                                            <td class="no-line"></td>
+                                                            <td class="no-line"></td>
+                                                            <td class="no-line"></td>
+                                                            <td class="no-line text-center"><strong>IVA (21%)</strong></td>
+                                                            <td class="no-line text-right">$<?php echo  $this->venta['iva_calculado'] ?></td>
+                                                        </tr>
+                                                        <?php if ($this->venta['envio'] > 0) { ?>
+                                                        <tr>
+                                                            <td class="no-line"></td>
+                                                            <td class="no-line"></td>
+                                                            <td class="no-line"></td>
+                                                            <td class="no-line text-center"><strong>Envío</strong></td>
+                                                            <td class="no-line text-right">$<?php echo  $this->venta['envio'] ?></td>
+                                                        </tr>
+                                                        <?php } ?>
+                                                        <tr>
+                                                            <td class="no-line"></td>
+                                                            <td class="no-line"></td>
+                                                            <td class="no-line"></td>
+                                                            <td class="no-line text-center"><strong>Total</strong></td>
+                                                            <td class="no-line text-right"><strong>$<?php echo  $this->venta['total'] ?></strong></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
+
+                        
+
+                    </div>
+                    <div class="panel-footer">
+                        <button class="btn btn-default" type="button" onclick="history.back()">Volver</button>
+                        <button class="btn btn-primary pull-right">Guardar</button>
+                    </div>
+                </div>
+            </form>
+            
+        </div>
+    </div>                    
+    
+</div>
+<!-- END PAGE CONTENT WRAPPER -->                                                
+
+
+<!-- THIS PAGE PLUGINS -->
+<script type="text/javascript" src="/admin-public/js/plugins/bootstrap/bootstrap-file-input.js"></script>
+<script type="text/javascript" src="/admin-public/js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="/admin-public/js/plugins/bootstrap/bootstrap-datepicker.js"></script> 
+<script type="text/javascript" src="/admin-public/js/plugins/bootstrap/bootstrap-select.js"></script>   
+<script type=“text/javascript” src=“/js/plugins/jquery-validation/jquery.validate.js”></script>              
+
+<!-- END THIS PAGE PLUGINS -->
+
+<script>
+
+var regexp = /^\d+(\,\d{1,2})?$/;
+var validator;
+$().ready(function() {
+    validator = $("#add-form").validate({
+        ignore: '',
+        rules: {
+            razon_social: {
+                required: true
+            },
+            apellido: {
+                required: true
+            },
+            direccion: {
+                required: true,
+            },
+            telefono: {
+                required: true,
+            },
+            cuit: {
+                required: true,
+                validarcuit: true
+            },
+            email: "required"
+        },
+        errorPlacement: function(error, element) {
+            error.insertAfter(element.parent());
+        },
+        messages: {
+            razon_social: {
+                required: "Campo requerido",
+            },
+            direccion: {
+                required: "Campo requerido"
+            },
+            telefono: {
+                required: "Campo requerido"
+            },
+            cuit: {
+                required: "Campo requerido"
+            },
+            email: {
+                required: "Campo requerido"
+            }
+
+        }
+    });
+});
+$.validator.addMethod("validarprecio", function (value, element) {
+    var regex = new RegExp(regexp);
+    return regex.test(value);
+});
+$.validator.addMethod('validarcuit', function (value, element) {
+        return this.optional(element) || /^\d{11}$/.test(value);
+}, "El formato debe ser (00-00000000-0). No ingrese los guiones");
+</script>

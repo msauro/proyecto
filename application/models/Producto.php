@@ -10,7 +10,6 @@ class Application_Model_Producto extends Application_Model_Base
             ->from($this, array('*'))
             ->join('marcas', 'marcas.id = productos.id_marca', array('marcas.nombre AS nom_marca'))
             ->where('productos.eliminado = ?', 0);
-
         $rows = $this->fetchAll($query);
         return $rows->toArray();
     }
@@ -33,6 +32,18 @@ class Application_Model_Producto extends Application_Model_Base
 		catch(Exception $e){
             return $e;
         }
+    }
+
+    public function getProductoEquivalenteById($codigo){
+
+        $query = "SELECT ep.id_original, ep2.id_producto AS id_producto_equivalente FROM producto_equivalente AS ep
+                LEFT JOIN producto_equivalente AS ep2 ON ep.id_original = ep2.id_original
+                WHERE ep.id_producto = '$codigo'";
+        $db = Zend_Db_Table_Abstract::getDefaultAdapter();
+        $stmt = $db->query($query);
+        $cantVentas =  $stmt->fetchAll();
+        
+        return $cantVentas;
     }
 
     public function getListPrecios($tipoCliente,$hoy){
@@ -94,7 +105,7 @@ class Application_Model_Producto extends Application_Model_Base
                 AND (productos.eliminado = 0) 
                 AND (marcas.eliminado = 0) 
                 AND (precios.eliminado = 0) 
-                -- AND ('productos.codigo LIKE %$search%' OR 'productos.nombre LIKE %$search%' OR 'productos.descripcion LIKE %$search%') GROUP BY `productos`.`id`
+                -- AND ('productos.codigo LIKE %$search% OR productos.nombre LIKE %$search% OR productos.descripcion LIKE %$search%')
                 GROUP BY `productos`.`id`";
         
         if ($paginate)
@@ -105,5 +116,17 @@ class Application_Model_Producto extends Application_Model_Base
         return $productos;
         
     }
+
+
+
+
+    // SELECT ep.id_original, ep2.id_producto AS id_producto_equivalente FROM equivalencias_productos AS ep
+    // LEFT JOIN equivalencias_productos AS ep2 ON ep.id_original = ep2.id_original
+    // WHERE ep.id_producto = 960
+
+    // es mas, incluso le podes sacar del select el ep.id_original y al otro lo pones un “DISTINCT()”
+    // para q no te traiga repetidos
+    // y so vo
+
 
 }

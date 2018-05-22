@@ -90,6 +90,23 @@ $this->headTitle($this->title);
                             </div>
                         </div>
 
+                        <div class="form-group" id="form-group-original" >
+                            <label class="col-sm-3 col-xs-12 control-label">Códigos originales</label>
+                            <div class="col-sm-6 col-xs-12">                                            
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="fa fa-suitcase"></span></span>
+                                    <select name="id_original[]" id="id_original" type="text" class="form-control select" data-live-search="true" multiple title="Selecciona el/los nros originales">
+                                        <?php 
+                                           foreach ($this->listadoOriginal as $key => $original): ?>
+                                                <option <?php echo $this->data['id_original'] == $original['id'] ? "selected" : '' ; ?> value=<?php echo  $original['id_original'] ?>><?php echo $original['id_original']?></option>
+                                            
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div> 
+                            </div>
+                        </div>
+
+
 
                         <div class="text-center" id="user_image">
                             <img src="<?php echo $this->data['imagen_url'] ?>" class="img-thumbnail" width="200px">

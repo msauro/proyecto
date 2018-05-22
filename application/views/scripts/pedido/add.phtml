@@ -1,12 +1,12 @@
 <?php         
-$this->title = "Nueva venta";
+$this->title = "Nuevo pedido";
 $this->headTitle($this->title);
 ?>
 <!-- START BREADCRUMB -->
 <ul class="breadcrumb">
     <li><a href="/">Panel Principal</a></li>
-    <li><a href="/venta/list">Venta</a></li>
-    <li class="active">Nueva</li>
+    <li><a href="/venta/list">Pedido</a></li>
+    <li class="active">Nuevo</li>
 </ul>
 <!-- END BREADCRUMB -->
 
@@ -24,13 +24,13 @@ $this->headTitle($this->title);
             <!-- START WIZARD WITH VALIDATION -->
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <h3>Nueva venta</h3>                                
+                    <h3>Nuevo pedido</h3>                                
                     <div class="wizard show-submit form-horizontal">
                         <ul>
                             <li>
                                 <a href="#step-1" class="step-1">
                                     <span class="stepNumber">1</span>
-                                    <span class="stepDesc">Seleccionar<br /><small>Cliente</small></span>
+                                    <span class="stepDesc">Seleccionar<br /><small>Proveedor o Marca</small></span>
                                 </a>
                             </li>
 
@@ -43,7 +43,7 @@ $this->headTitle($this->title);
                             <li>
                                 <a href="#step-3" class="step-3">
                                     <span class="stepNumber">3</span>
-                                    <span class="stepDesc">Forma de pago<br /><small>Venta</small></span>
+                                    <span class="stepDesc">Fin del<br /><small>Pedido</small></span>
                                 </a>
                             </li>
 
@@ -52,26 +52,89 @@ $this->headTitle($this->title);
 
                         <div id="step-1">
                             <!-- START STRIPED TABLE SAMPLE -->
-                            <div class="panel panel-default">
+                            <div class="form-group">  
+                                <select id="proveedor-marca" class="col-md-9 form-control select">
+                                    <option value="null" data-thumbnail="images/icon-chrome.png">Seleccionar marca o proveedor</option>
+                                    <option value="marca"><i class="fa fa-credit-card" aria-hidden="true"></i>Marca</option>
+                                    <option value="proveedor"><i class="fa fa-credit-card" aria-hidden="true"></i>Proveedor</option>
+                                </select>
+                            </div>
+                            <!-- PROVEEDORES -->
+                            <div class="panel panel-default proveedor" style="display:none;" id="proveedor">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title">Clientes</h3>
+                                    <h3 class="panel-title">Proveedores</h3>
                                     <div class="col-md-2" style="float:right;">
                                         <button class="btn btn-success btn-block">
-                                            <a href="/cliente/add"><span class="fa fa-plus"></span> Nuevo</a>
+                                            <a href="/proveedor/add"><span class="fa fa-plus"></span> Nuevo</a>
                                         </button>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="panel-body">
-                                        <p>Buscar cliente</p>
+                                        <p>Buscar proveedor</p>
                                         <div class="col-md-6" style="padding-left:0px;">
                                             <div class="input-group">
                                                 <div class="input-group-addon">
                                                     <span class="fa fa-search"></span>
                                                 </div>
-                                                <input id="buscar-cliente" name="search" type="text" class="form-control" placeholder="Buscar Cliente" value="<?= $this->patient; ?>"/>
+                                                <input id="buscar-cliente" name="search" type="text" class="form-control" placeholder="Buscar" value="<?= $this->patient; ?>"/>
                                                 <div class="input-group-btn">
-                                                    <button class="btn btn-primary btn-buscar-cliente">Buscar</button>
+                                                    <button class="btn btn-primary btn-buscar-proveedor">Buscar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3" style="padding-left:0px;padding-right:0px;padding-top:6px;width:110px;">
+                                            <div class="result-search-proveedor"></div>
+                                        </div>
+                                        <div class="col-md-3" style="padding:0px;">
+                                            <div class="input-group">
+                                                <div class="col-md-12" style="position:relative;top:-9px;width:250px;">
+                                                    <ul class="pagination pagination-sm pull-right push-down-10 push-up-10" style="width: 100%;display:none;">
+                                                        <span id='back-patient' class='btn btn-default'>« anterior</span>
+                                                        <span id='back-patient-disabled' class='btn btn-default' style='display:none;background-color: #DDD;cursor:no-drop;'>« anterior</span>
+                                                        <span id='next-patient' class='btn btn-default'>siguiente »</span>
+                                                        <span id='next-patient-disabled' class='btn btn-default' style='display:none;background-color: #DDD;cursor:no-drop;'>siguiente »</span>
+                                                        <span class='pagination-data' style='position:relative;margin-left:5px;'></span>
+                                                        <span id='page-patient' rel='1'></span>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="list-proveedor" class="col-md-12">
+                                    <?php if( count($this->proveedores) == 0) : ?>
+                                        <div class="col-md-12">
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    <p style="text-align:center;">Buscar proveedor</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                            <!-- MARCAS -->
+                            <div class="panel panel-default marca" style="display:none;" id="marca">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Marcas</h3>
+                                    <div class="col-md-2" style="float:right;">
+                                        <button class="btn btn-success btn-block">
+                                            <a href="/marca/add"><span class="fa fa-plus"></span> Nuevo</a>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="panel-body">
+                                        <p>Buscar marca</p>
+                                        <div class="col-md-6" style="padding-left:0px;">
+                                            <div class="input-group">
+                                                <div class="input-group-addon">
+                                                    <span class="fa fa-search"></span>
+                                                </div>
+                                                <input id="buscar-marca" name="search" type="text" class="form-control" placeholder="Buscar" value="<?= $this->patient; ?>"/>
+                                                <div class="input-group-btn">
+                                                    <button class="btn btn-primary btn-buscar-marca">Buscar</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -94,22 +157,21 @@ $this->headTitle($this->title);
                                         </div>
                                     </div>
                                 </div>
-
                                 <div id="list-cliente" class="col-md-12">
-                                    <?php if( count($this->clientes) == 0) : ?>
+                                    <?php if( count($this->marcas) == 0) : ?>
                                         <div class="col-md-12">
                                             <div class="panel panel-default">
                                                 <div class="panel-body">
-                                                    <p style="text-align:center;">Buscar cliente</p>
+                                                    <p style="text-align:center;">Buscar marca</p>
                                                 </div>
                                             </div>
                                         </div>
                                     <?php endif; ?>
                                 </div>
-
                             </div>
                             <!-- END STRIPED TABLE SAMPLE -->
                         </div>
+
 
                         <div id="step-2">
                             <!-- START STRIPED TABLE SAMPLE -->
@@ -119,9 +181,6 @@ $this->headTitle($this->title);
                                 </div>
                                 <div class="panel-body">
                                     <p>
-                                       <div class="col-md-3" style="padding-right:0px;padding-right:0px;padding-top:6px;width:110px;">
-                                            <div class="result-search-products"></div>
-                                        </div>
                                         <div class="form-group">
                                             <div class="col-md-3">
                                                 <input id="buscar-productos" class="form-control" placeholder="Buscar productos"/>
@@ -173,7 +232,7 @@ $this->headTitle($this->title);
                             <!-- START STRIPED TABLE SAMPLE -->
                             <div class="panel panel-default ">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title">Forma de pago</h3>
+                                    <h3 class="panel-title">Resumen del pedido</h3>
                                 </div>
                                 <div class="panel-body">
                                        <div class="panel-ctate col-md-12" >
@@ -365,6 +424,59 @@ $this->headTitle($this->title);
    // });
 
     $(document).ready(function(){
+
+    $("#proveedor-marca").on('change', function() {
+        var seleccionado = document.getElementById("proveedor-marca").value;
+        if (seleccionado == 'proveedor'){ 
+            $("#proveedor").show();
+            $("#marca").hide();
+        }else{ 
+            $("#proveedor").hide();
+            $("#marca").show();
+        }
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
         var  descuento;
     //Inicializo los switch en false
     $('#switch-descuento').val(false);
@@ -629,24 +741,6 @@ $this->headTitle($this->title);
         $("#tax_exempt").html("Tax Exempt");
     });
 
-    $(".products tbody").on( "click", "tr .equivalente-producto", function() {
-        producto_id = $(this).closest("tr").find("#id").text();
-        producto_codigo = $(this).closest("tr").find("#codigo").text();
-
-            var params = {
-                id_producto: producto_id,
-                producto_codigo: producto_codigo,
-            }
-
-        panelAjax("/venta/equivalentes",params, function(data){   
-          
-
-            params.data = $("#crear-venta").serializeObject();
-        });
-          
-
-    });
-
     $("#selected-products tbody").on( "click", "tr .fa-trash-o", function() {
         // Remove Product
         id_producto = $(this).closest("tr").find("input[name='id_producto[]']").val();
@@ -697,6 +791,16 @@ $this->headTitle($this->title);
 
     $('.btn-buscar-producto').click(function() {
         getProducts();
+    });
+
+    $('.btn-buscar-proveedor').click(function() {
+        var search = $('#buscar-proveedor').val();
+        getProveedores(search);
+    });
+
+    $('.btn-buscar-marca').click(function() {
+        var search = $('#buscar-marca').val();
+        getMarcas(search);
     });
 
     $('.btn-buscar-cliente').click(function() {
@@ -894,8 +998,6 @@ function resetForm(step){
 }
 
 //Obtengo los productos para el PASO 2
-
-/////////////////////////
 function getProducts(){
     var params = {};
     params.search        = $('#buscar-productos').val();;
@@ -903,44 +1005,9 @@ function getProducts(){
     if (params.page < 0) { params.page = 1; };
 
     panelAjax("/producto/getproductos/",params, function(data){
-       console.log(data);
-        console.log(data);
-        $("#list-cliente").html('');
-        $(".result-search-product").html(data.productos.length + ' de ' + data.total + ' clientes');
-        if (data.productos.length == 0) {
-            $('.pagination').fadeOut(500);
-            var item = "<div class='col-md-12'>" +
-            "<div class='panel panel-default'>" +
-            "<div class='panel-body'>" +
-            "<p style='text-align:center;'>No se encontraron clientes</p>" + 
-            "</div>" +
-            "</div>" +
-            "</div>";
-            $("#list-producto").append(item);
-        }else{
-            pager = data.page + " de " + data.pages + "</span>";
-
-            if (data.page == 1) {
-                $("#back-product").hide();
-                $("#back-product-disabled").show();
-                $("#next-product").show();
-                $("#next-product-disabled").hide();
-            }
-            $(".pagination-data").html(pager);
-            if (data.page < data.pages) {
-                $('.pagination').fadeIn(500);
-                if (data.page > 1) {
-                    $("#back-product").show();
-                    $("#next-product").show();
-                    $("#back-product-disabled").hide();
-                    $("#next-product-disabled").hide();
-                };
-            }else if(data.page == data.pages){
-                $("#next-product").hide();
-                $("#next-product-disabled").show();
-            }
-
-            $.each(data.productos, function( index, value ) {
+       
+        $(".products tbody").html('');
+        $.each(data.productos, function( index, value ){
             item = "<tr id='id_producto' value='"+ value.id +"'>" +
             "<td id='id' class='hidden'>" + value.id + "</td>" +
             "<td id='codigo'>" + value.codigo + "</td>" +
@@ -966,115 +1033,61 @@ function getProducts(){
                     item = item + "<span class='label label-warning'>Punto de pedido</span>";
 
                 }
-            
+                // if (value.cantidad <= 0 || value.cantidad == null) {
+                // }
+                // if (true) {}
+                // else{
+                //     if(cant_real < pto_pedido ){
+                //         item = item + "<span class='label label-warning'>Punto de pedido</span>";
+                //     }else{
+                //         item = item + "<span class='label label-success'>En Stock</span>";
+                //     }
+                // } 
                 item = item + "</td>" + 
                 "<td style='margin:0px;padding:0px;'>" +
                 "<div class='btn-group' role='group'>"+
                 "<button type='button' class='btn btn-sm btn-default select-product "+disable+"'><span style='margin-right:0px' class='fa fa-plus'></span></button>"+
-                "<button type='button' class='btn btn-sm btn-default equivalente-producto'><span style='margin-right:0px' class='fa fa-eye'></span></button>"+ 
+                // "<button type='button' class='btn btn-sm btn-default ver-producto'><span style='margin-right:0px' class='fa fa-eye'></span></button>"+ 
                 "</div>"              
                 "</td>" +
                 "</tr>";
                 $("#productList").append(item);
-        });
-}
-
-        // $(".products tbody").html('');
-        // $(".result-search-products").html(data.productos.length + ' de ' + data.total + ' clientes');
-        // pager = data.page + " de " + data.pages + "</span>";
-
-        //     if (data.page == 1) {
-        //         $("#back-product").hide();
-        //         $("#back-product-disabled").show();
-        //         $("#next-product").show();
-        //         $("#next-product-disabled").hide();
-        //     }
-        //     $(".pagination-data").html(pager);
-        //     if (data.page < data.pages) {
-        //         $('.pagination').fadeIn(500);
-        //         if (data.page > 1) {
-        //             $("#back-product").show();
-        //             $("#next-product").show();
-        //             $("#back-product-disabled").hide();
-        //             $("#next-product-disabled").hide();
-        //         };
-        //     }else if(data.page == data.pages){
-        //         $("#next-product").hide();
-        //         $("#next-product-disabled").show();
-        //     }
-
-        // $.each(data.productos, function( index, value ){
-        //     item = "<tr id='id_producto' value='"+ value.id +"'>" +
-        //     "<td id='id' class='hidden'>" + value.id + "</td>" +
-        //     "<td id='codigo'>" + value.codigo + "</td>" +
-        //     "<td id='nombre'>" + value.nombre + "</td>" +
-        //     "<td id='marca'>" + value.nom_marca + "</td>" +
-        //     "<td id='existencia'>" + value.cantidad + "</td>" +
-        //     "<td id='imagen_url' class='hidden'>" + value.imagen_url + "</td>" +
-        //     "<td id='precio'>" + value.precio + "</td>";
-        //     var disable;
-        //     var cant_real = parseInt(value.cantidad);
-        //     var pto_pedido = parseInt(value.punto_pedido);
-        //         //Mido nivel de Stock
-        //         item = item + "</td>" + "<td>";
-
-        //         if(cant_real > pto_pedido ){
-        //             item = item + "<span class='label label-success'>En Stock</span>";
-                    
-        //         }else if(cant_real <= 0 || cant_real == null){
-        //             item = item + "<span class='label label-danger'>Sin stock</span>";
-        //             disable = 'disabled';
-
-        //         }else{
-        //             item = item + "<span class='label label-warning'>Punto de pedido</span>";
-
-        //         }
-            
-        //         item = item + "</td>" + 
-        //         "<td style='margin:0px;padding:0px;'>" +
-        //         "<div class='btn-group' role='group'>"+
-        //         "<button type='button' class='btn btn-sm btn-default select-product "+disable+"'><span style='margin-right:0px' class='fa fa-plus'></span></button>"+
-        //         "<button type='button' class='btn btn-sm btn-default equivalente-producto'><span style='margin-right:0px' class='fa fa-eye'></span></button>"+ 
-        //         "</div>"              
-        //         "</td>" +
-        //         "</tr>";
-        //         $("#productList").append(item);
-        // });
+            });
     });
 }
 
 
-$("#next-product").click(function() {
-    var val     = $('#page-product').attr('rel');
+$("#next-patient").click(function() {
+    var val     = $('#page-patient').attr('rel');
     val         = parseInt(val) + parseInt(1);
-    $('#page-product').attr('rel',val);
-    search      = $('#buscar-productos').val();
-    getProductos(search);
+    $('#page-patient').attr('rel',val);
+    search      = $('#buscar-cliente').val();
+    getClientes(search);
 });
 
-$("#back-product").click(function() {
-    var val     = $('#page-product').attr('rel');
+$("#back-patient").click(function() {
+    var val     = $('#page-patient').attr('rel');
     if (val > 1) {
         val         = parseInt(val) - parseInt(1);
-        $('#page-product').attr('rel',val);
-        search      = $('#buscar-productos').val();
-        getProductos(search);
+        $('#page-patient').attr('rel',val);
+        search      = $('#buscar-cliente').val();
+        getClientes(search);
     }
 });
 
-//al hacer click en buscar, muestra los clientes
-function getClientes(search){
+//al hacer click en buscar, muestra los proveedores
+function getProveedores(search){
 
     $("div#spinner").fadeIn("fast");
-    $("#list-cliente").hide();
+    $("#list-proveedor").hide();
     var params = {};
     params.search   = search;
     params.page     = $('#page-patient').attr('rel');
     if (params.page < 0) { params.page = 1; };
-    panelAjax("/cliente/getClientes/",params, function(data){
-        console.log(data);
-        $("#list-cliente").html('');
-        $(".result-search-patient").html(data.clientes.length + ' de ' + data.total + ' clientes');
+    
+    panelAjax("/proveedor/getProveedores/",params, function(data){
+        $("#list-proveedor").html('');
+        $(".result-search-proveedor").html(data.clientes.length + ' de ' + data.total + ' proveedores');
         if (data.clientes.length == 0) {
             $('.pagination').fadeOut(500);
             var item = "<div class='col-md-12'>" +
@@ -1084,7 +1097,7 @@ function getClientes(search){
             "</div>" +
             "</div>" +
             "</div>";
-            $("#list-cliente").append(item);
+            $("#list-proveedor").append(item);
         }else{
             pager = data.page + " de " + data.pages + "</span>";
 
@@ -1138,13 +1151,108 @@ function getClientes(search){
             "</div>" +
             "<!-- END CONTACT ITEM -->" + 
             "</div>";            
-            $("#list-cliente").append(item);
+            $("#list-proveedor").append(item);
         });
         }
     });
     $("div#spinner").fadeOut("fast");
-    $("#list-cliente").show();
+    $("#list-proveedor").show();
 }
+
+//al hacer click en buscar, muestra las marcas
+function getMarcas(search){
+
+    $("div#spinner").fadeIn("fast");
+    $("#list-marca").hide();
+    var params = {};
+    params.search   = search;
+    params.page     = $('#page-patient').attr('rel');
+    if (params.page < 0) { params.page = 1; };
+    
+    panelAjax("/marca/getMarcas/",params, function(data){
+        $("#list-marca").html('');
+        $(".result-search-marca").html(data.clientes.length + ' de ' + data.total + ' marcas');
+        if (data.clientes.length == 0) {
+            $('.pagination').fadeOut(500);
+            var item = "<div class='col-md-12'>" +
+            "<div class='panel panel-default'>" +
+            "<div class='panel-body'>" +
+            "<p style='text-align:center;'>No se encontraron marcas</p>" + 
+            "</div>" +
+            "</div>" +
+            "</div>";
+            $("#list-marca").append(item);
+        }else{
+            pager = data.page + " de " + data.pages + "</span>";
+
+            if (data.page == 1) {
+                $("#back-patient").hide();
+                $("#back-patient-disabled").show();
+                $("#next-patient").show();
+                $("#next-patient-disabled").hide();
+            }
+            $(".pagination-data").html(pager);
+            if (data.page < data.pages) {
+                $('.pagination').fadeIn(500);
+                if (data.page > 1) {
+                    $("#back-patient").show();
+                    $("#next-patient").show();
+                    $("#back-patient-disabled").hide();
+                    $("#next-patient-disabled").hide();
+                };
+            }else if(data.page == data.pages){
+                $("#next-patient").hide();
+                $("#next-patient-disabled").show();
+            }
+
+            $.each(data.clientes, function( index, value ) {
+               var item = "<div id='" + value.id + "'title='" + value.nombre + " " + value.apellido + "' rel='" + value.id + "'attr-direccion='"+ value.direccion +"'   class='select-patient col-md-4' style='cursor:pointer;'>" +
+               "<!-- CONTACT ITEM -->" + 
+               "<div class='panel panel-default'>" +
+               "<div class='profile-control-left'>" + 
+               "<div class='panel-body profile'>" + 
+               "<div class='profile-image'>" +
+               "<img src='" + value.imagen_url + "' alt='" + value.cuit + "'" +
+               "</div>" + 
+               "<div class='profile-data'>" +
+               "<div class='profile-data-name'>" + value.nombre + " " + value.apellido + "</div>" +
+               "<div class='profile-data-direccion'>" + value.direccion + "</div>" + 
+               "<div class='profile-data-cuit'>Cuit: " + value.cuit + "</div>" + 
+               "<div class='profile-data-tipo_cliente'>" + value.tipo_cliente + "</div>" + 
+               "<div class='profile-data-descuento hidden'>" + value.descuento + "</div>" + 
+               "<div class='profile-data-telefono'> Tel: " + value.telefono + "</div>" + 
+               "<div class='profile-data-email'> " + value.email + "</div>" + 
+               "</div>" +
+               "<div class='profile-controls'>";
+               if(value.nom_estado == 'Deudor') {
+                item = item + "<a class='profile-control-right-up' style='font-size:26px;border-color:#FF4D4D;right: 10px; top:13px;'>" +
+                "<span class='fa fa-exclamation-circle' data-toggle='tooltip' data-original-title='El cliente posee una deuda.'></span>" + 
+                "</a>";
+            }
+            item = item + "</div>" +
+            "</div>" +
+            "</div>" +
+            "</div>" +
+            "<!-- END CONTACT ITEM -->" + 
+            "</div>";            
+            $("#list-marca").append(item);
+        });
+        }
+    });
+    $("div#spinner").fadeOut("fast");
+    $("#list-marca").show();
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 //Calcula total con descuento, envío e iva

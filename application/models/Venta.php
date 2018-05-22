@@ -111,4 +111,31 @@ class Application_Model_Venta extends Application_Model_Base
             return $e;
         }
 	}
+
+	public function ultimasVentas($id_cliente){
+		try{
+            $query = $this->select()->setIntegrityCheck(false)
+	            ->from($this, array('*'))
+            	->join('clientes', 'clientes.id = ventas.id_cliente', array('clientes.nombre as nom_cli','clientes.apellido as ap_cli','clientes.razon_social'))
+            	->join('ventas_detalles', 'ventas_detalles.id_venta = ventas.id', array('precio','cantidad'))
+            	->join('productos', 'productos.id = ventas_detalles.id_producto', array('productos.codigo','productos.nombre','descripcion'))
+            	// ->join('tipo_empresa', 'tipo_empresa.id = clientes.id_tipo_empresa', array('tipo_empresa.nombre'))
+	            ->where('ventas.id_cliente = ?', $id_cliente);
+
+	        $query = $query->order('ventas.fecha DESC');
+       		$query = $query->limit(10);
+// die($query);
+            $row = $this->fetchAll($query);
+
+			if(!$row) {
+				return null;
+			}
+
+			return $row->toArray();
+			
+        }
+		catch(Exception $e){
+            return $e;
+        }
+	}
 }

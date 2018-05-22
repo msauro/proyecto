@@ -56,6 +56,7 @@ $(".xn-icon-button").fadeIn();
                                         <td><?php echo $cliente['telefono'] ?></td>
                                         <td><?php echo $cliente['email'] ?></td>
                                         <td class="text-center">
+                                            <button class="btn btn-default btn-rounded btn-condensed btn-sm" onclick="ultimascomprasCliente(<?php echo $cliente['id'] ?>)"><span class="fa fa-eye"></span></button>
                                             <button class="btn btn-default btn-rounded btn-condensed btn-sm" onclick="editarCliente(<?php echo $cliente['id'] ?>)"><span class="fa fa-pencil"></span></button>
                                             <button class="btn btn-danger btn-rounded btn-condensed btn-sm btn-delete" id="<?php echo $cliente['id'] ?>"><span class="fa fa-trash-o" data-toggle="modal" data-target="#delete_modal"></span></button>
                                         </td>
@@ -90,6 +91,29 @@ $(".xn-icon-button").fadeIn();
         </div>
     </div>
 
+    <!-- <div class="modal animated fadeIn" id="modal_ultimas_compras" tabindex="-1" role="dialog" aria-labelledby="smallModalHead" aria-hidden="true"></div> -->
+<div class="modal fade" id="modal_ultimas_compras" tabindex="-1" role="dialog" aria-labelledby="smallModalHead" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Últimas 5 ordenes</h4>
+                </div>
+                <div class="modal-body " id="orders">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    <!-- <a type="button" class="btn btn-primary" id="btnYes">Si</a> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/admin-public/js/plugins/datatables/datatables.min.js"></script>          
+<script type="text/javascript" src="/admin-public/js/plugins/datatables/dataTables.bootstrap.min.js"></script>
+
     <script>
         $(document).ready(function(){
             
@@ -103,10 +127,37 @@ $(".xn-icon-button").fadeIn();
                 window.location.href = "/cliente/remove/id/" + id;
             })
 
+            $(".btn-view-orders").click(function(event){
+                $("#modal_ultimas_compras").html();
+                var params = {};
+                params. id = $(this).attr('id');
+
+                panelAjax("/cliente/id",params, function(data){
+                    $("#orders").html('');
+                    $("#orders").html(data);           
+                    $('#modal_ultimas_compras').modal('show');
+                })
+
+                // $('#btnView').attr('href', 'callcenter_manager/view/franchise/'+franchise+'/id/'+id_client);
+               
+            });
+
+            var table = $("#modal_ultimas_compras").DataTable({
+                "order": [[3 , "desc" ],[5 , "desc" ]],
+                "language":{
+                    url : "/admin-public/js/plugins/datatables/Spanish.json"
+                }                
+            });
+
+            table.draw();
+
         });
         var editarCliente = function(id){
             window.location.href = "/cliente/edit/id/" + id;
         }
+        // var ultimascomprasCliente = function(id){
+        //     window.location.href = "/cliente/ultimascompras/id/" + id;
+        // }
         var agregarCliente = function(){
             window.location.href = "/cliente/add/";
         }

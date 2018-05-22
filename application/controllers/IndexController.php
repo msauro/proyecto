@@ -21,14 +21,18 @@ class IndexController extends Gabinando_Base{
         $cantVentas = $ventasModel->getCantVentasRango($desde,$hasta);
 
         //widget clientes con mas compras en el mes (OK)
-        $ventasModel = new Application_Model_Cliente();
-        $clientesMasVentas = $ventasModel->getClientesMasVentas($mesActualDesde,$mesActualHasta);
+        $clientesModel = new Application_Model_Cliente();
+        $clientesMasVentas = $clientesModel->getClientesMasVentas($mesActualDesde,$mesActualHasta);
         $this->view->clientesMasVentas = $clientesMasVentas;
 
+        //widget cantidad de clientes con/sin deudas
+        $clientesModel = new Application_Model_Cliente();
+        $clientesDeudas = $clientesModel->getClientesDeudas();
+
         //widget cantidad de productos en punto de pedido o menor por marca
-        $ventasModel = new Application_Model_Existencia();
-        $cantPtoPedido = $ventasModel->getCantPtoPedido();
-        
+        $existenciaModel = new Application_Model_Existencia();
+        $cantPtoPedido = $existenciaModel->getCantPtoPedido();
+
 // die(var_dump($cantPtoPedido));
 
         if($cantPtoPedido instanceof Exception){

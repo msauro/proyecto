@@ -1,0 +1,56 @@
+<div class="modal-dialog">
+        <div class="modal-content">
+            <form id="form-add-credits">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 class="modal-title">Equivalencias de: <?= $this->data['user_name'].' '. $this->data['user_lastname'] ?> </h3>
+                <h4>Número de orden: #<?= $this->data['id_order'] ?></h4>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="credits">Monto:</label>
+                <input class="form-control" rows="5" name="credits" id="credits" type="number"  placeholder="Por favor, ingrese el monto del crédito."></input>
+              </div> 
+
+              <div class="form-group">
+                <label for="credits-comment">Comentario:</label>
+                <textarea class="form-control" rows="5" name="credits-comment" id="credits-comment" placeholder="Por favor, ingrese un comentario que informe al Revisor sobre el motivo del crédito."></textarea>
+              </div>               
+            </div>
+            
+            <div class="modal-footer">
+              <button class="btn btn-primary btn-close" data-dismiss="modal">Cerrar</button>
+              <button type="submit" class="btn btn-primary btn-credits">Enviar</button>
+            </div>
+            </form>
+        </div>
+    </div>
+
+
+<script>
+  $(document).ready(function(){
+    $("#form-add-credits").validate({
+        rules: {            
+            "credits": "required",             
+            "credits-comment": "required"             
+        },     
+        submitHandler: function(form){
+            var params = {};
+            params.franchise = franchise;
+            params.id_order = id_order;
+            params.id_user = id_user;
+            params.credits = $("#credits").val();
+            params.comment = $("#credits-comment").val();
+            panelAjax("/callcenter_credits/addcredit",params, function(data){
+                $('#modal_to_review').modal('hide');
+                setTimeout(function(){location.reload()},1500);
+            })
+        },
+        errorPlacement: function(error, element) {
+            error.insertAfter(element.parent());
+        }, 
+    })
+
+
+  });
+</script>

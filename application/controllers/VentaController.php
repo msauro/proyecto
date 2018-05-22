@@ -64,42 +64,11 @@ class VentaController extends Gabinando_Base{
 		$ventasModel	= new Application_Model_Venta();
 		$productosModel	= new Application_Model_Producto();
 		
-	
 		$ventas = $ventasModel->getList();
-		
 		$clientestypeList = $clientesModel->getListType();
-		// $productospreciosList = $productosModel->getListPrecios($tipoCliente,$hoy);
-
-		// $drivers = $driver->getDriversWithAreaWork();
-		// $patientList = $patient->getAllowedList($this->admin_session->admin['id_dispenser'],6);
-
-		// foreach ($drivers as $key => $driver) {
-		// 	$driver_donations = $ventaModel->getPendingNotFixedDonationsForDriver($driver['id_driver'],'delivery');
-		// 	$today_donations = $ventaModel->getTodayDonationsForDriver($driver['id_driver'],'delivery');
-		// 	$drivers[$key]['pending'] = count($driver_donations);
-		// 	$drivers[$key]['queue'] = count($today_donations);
-		// 	$donation = end($driver_donations);
-
-		// 	$eta = strtotime(date("Y-m-d h:i a", strtotime("+30 minutes")));
-		// 	$don_eta = 0;
-		// 	if ($donation) $don_eta = strtotime($donation['arrival_time']) + ($donation['service_time']*60) + (30*60);
-		// 	if ($eta > $don_eta) $drivers[$key]['eta'] = date("h:i a", $eta); else $drivers[$key]['eta'] = date("h:i a", $don_eta);
-		// }
 		
-		//$this->view->patients = $patientList;
-
-		// $rewardModel = new Application_Model_Reward();
-		// $reward = $rewardModel->getListbyValue();
-		
-		// $this->view->dispenser = $dispenserModel->getDispenser($this->admin_session->admin['id_dispenser']);	
-		// $this->view->patients = array();
 		$this->view->clientes = $clientestypeList;
-		// $this->view->drivers = $drivers;
-		// $this->view->productos = $productospreciosList;
-
-		// $this->view->reward = $reward;
-		// $this->view->tax = $this->getConfig("tax");	
-		// $this->view->discount = $discount;		
+				
 	}
 
 	
@@ -235,7 +204,6 @@ class VentaController extends Gabinando_Base{
 				$ventas_detalleModel = new Application_Model_VentaDetalle();
 				$productoModel	= new Application_Model_Producto();
 				$existenciaModel	= new Application_Model_Existencia();
-// die(var_dump($productos));
 				if ($productos['simple'] == true) {
 					$id_producto = $productos['id_producto'];
 					$productoMaxExistencia = $existenciaModel->getUltimaExistencia($id_producto);
@@ -289,8 +257,7 @@ class VentaController extends Gabinando_Base{
 		
 		
 
-				// die(var_dump($result));
-            	// $venta = $ventaModel->getFullVenta($idVenta);
+		
 
 				// Start - Mail al cliente para avisarle que tiene una nueva VENTA  VER/TERMINAR
 
@@ -300,15 +267,11 @@ class VentaController extends Gabinando_Base{
 				// $result 	= $sender->sendEmail($venta['email'],"Nueva compra",$message);
 				// End - Mail al cliente para avisarle que tiene una nueva venta
 
-				if($result instanceof Exception){
-                	Gabinando_Base::addError($result->getMessage());
-	            }else{
-	            	Gabinando_Base::addSuccess('Venta guardada y stock actualizado');
-	            	$this->_redirect('/venta/list');
-	            }			
+				
+	      
+	           			
 
 				return $this->sendSuccessResponse(true,"Venta guardada y stock actualizado");
-die('ver pq no devulve o redirige');
 			}catch(Exception $e){
 				return $this->sendErrorResponse($e->getMessage('error'));
 			}
@@ -385,6 +348,31 @@ die('ver pq no devulve o redirige');
 				}
 			}
 		}
+    }
+
+     public function equivalentesAction() {
+        $params = $this->getRequest()->getParams();
+        $id_producto = $params['id_producto'];
+
+        //Obtengo los ID 'originales de fabrica'
+		$productoEquivalenteModel = new Application_Model_ProductoEquivalente();
+		// $id_original =$productoEquivalenteModel->getIdOriginal($id_producto);
+      
+        //Con los ID 'originales de fabrica', busco todos los productos equivalentes
+//TENGO QUE HACER UN FOR EACH???
+		$response =$productoEquivalenteModel->getEquivalentes($id_producto);
+die(var_dump($response));
+
+
+        if($response instanceof Exception){
+            $this->addError("Error al mostrar los productos equivalentes.");
+        }else{
+            $this->view->equivalentes = $response;
+        }
+
+            $render = $this->view->render('/callcenter/clients/modal_orders_clients.phtml');
+            return $this->sendSuccessResponse($render);
+
     }
 
 }
