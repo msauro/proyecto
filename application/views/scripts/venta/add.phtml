@@ -119,9 +119,6 @@ $this->headTitle($this->title);
                                 </div>
                                 <div class="panel-body">
                                     <p>
-                                       <div class="col-md-3" style="padding-right:0px;padding-right:0px;padding-top:6px;width:110px;">
-                                            <div class="result-search-products"></div>
-                                        </div>
                                         <div class="form-group">
                                             <div class="col-md-3">
                                                 <input id="buscar-productos" class="form-control" placeholder="Buscar productos"/>
@@ -313,6 +310,26 @@ $this->headTitle($this->title);
     </div>                    
     
 </div>
+
+<div class="modal fade" id="modal_ver_equivalentes" tabindex="-1" role="dialog" aria-labelledby="smallModalHead" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title">Productos Equivalentes</h4>
+                    </div>
+                    <div class="modal-body " id="equivalen">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        <!-- <a type="button" class="btn btn-primary" id="btnYes">Si</a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 <!-- END PAGE CONTENT WRAPPER -->                                                
 <!-- <div id="spinner">        
 </div> -->
@@ -462,6 +479,20 @@ $this->headTitle($this->title);
         resumen();
     });
 
+   
+ $(".products tbody").on( "click", "tr .equivalente-producto", function() {
+    $("#modal_ver_equivalentes").html();
+    var params = {};
+    params.codigo = $(this).closest("tr").find("#codigo").text();
+
+        panelAjax("/venta/verequivalentes",params, function(data){
+            $("#equivalen").html('');
+            $("#equivalen").html(data);           
+            $('#modal_ver_equivalentes').modal('show');
+        })
+          
+
+    });
 });
 
     $(function() {
@@ -629,23 +660,23 @@ $this->headTitle($this->title);
         $("#tax_exempt").html("Tax Exempt");
     });
 
-    $(".products tbody").on( "click", "tr .equivalente-producto", function() {
-        producto_id = $(this).closest("tr").find("#id").text();
-        producto_codigo = $(this).closest("tr").find("#codigo").text();
+    // $(".products tbody").on( "click", "tr .equivalente-producto", function() {
+    //     producto_id = $(this).closest("tr").find("#id").text();
+    //     producto_codigo = $(this).closest("tr").find("#codigo").text();
 
-            var params = {
-                id_producto: producto_id,
-                producto_codigo: producto_codigo,
-            }
+    //         var params = {
+    //             id_producto: producto_id,
+    //             producto_codigo: producto_codigo,
+    //         }
 
-        panelAjax("/venta/equivalentes",params, function(data){   
+    //     panelAjax("/venta/equivalentes",params, function(data){   
           
 
-            params.data = $("#crear-venta").serializeObject();
-        });
+    //         params.data = $("#crear-venta").serializeObject();
+    //     });
           
 
-    });
+    // });
 
     $("#selected-products tbody").on( "click", "tr .fa-trash-o", function() {
         // Remove Product

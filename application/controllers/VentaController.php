@@ -350,29 +350,30 @@ class VentaController extends Gabinando_Base{
 		}
     }
 
-     public function equivalentesAction() {
-        $params = $this->getRequest()->getParams();
-        $id_producto = $params['id_producto'];
+	public function verequivalentesAction(){
+		if($this->getRequest()->isPost()){
+			$params = $this->getRequest()->getPost();
+			$codigo = $params['codigo'];
+		
+			$productoEquivalenteModel = new Application_Model_ProductoEquivalente();
+			$listadoEquivalentes = $productoEquivalenteModel->getEquivalentes($codigo);
+		// die(var_dump($listadoEquivalentes));
+		$arrayEquivalente= [];
+			
+		// 	$a = array_unique($listadoEquivalentes['id_producto_equivalente']);
+			foreach ($listadoEquivalentes as $equivalente) {
 
-        //Obtengo los ID 'originales de fabrica'
-		$productoEquivalenteModel = new Application_Model_ProductoEquivalente();
-		// $id_original =$productoEquivalenteModel->getIdOriginal($id_producto);
-      
-        //Con los ID 'originales de fabrica', busco todos los productos equivalentes
-//TENGO QUE HACER UN FOR EACH???
-		$response =$productoEquivalenteModel->getEquivalentes($id_producto);
-die(var_dump($response));
+				
+				$arrayEquivalente[] = $equivalente['id_producto_equivalente'];
+				$arrayEquivalente[] = $equivalente['id_original'];
+			}
+		$arrayEquivalente = array_unique($arrayEquivalente);
 
 
-        if($response instanceof Exception){
-            $this->addError("Error al mostrar los productos equivalentes.");
-        }else{
-            $this->view->equivalentes = $response;
-        }
-
-            $render = $this->view->render('/callcenter/clients/modal_orders_clients.phtml');
+			$this->view->listadoEquivalentes =  $arrayEquivalente;
+			$render = $this->view->render('/venta/modal_prod_equivalente.phtml');
             return $this->sendSuccessResponse($render);
-
-    }
+		}
+	}
 
 }

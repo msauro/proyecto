@@ -51,7 +51,7 @@ $(".xn-icon-button").fadeIn();
                                         <td><?php echo $producto['punto_pedido'] ?></td>
                                         <td><?php echo $producto['nom_marca'] ?></td>
                                         <td class="text-center">
-                                            <button class="btn btn-default btn-rounded btn-condensed btn-sm btn-equivalente" id="<?php echo $producto['id'] ?>"><span class="fa fa-eye" data-toggle="modal" data-target="#equivalente_modal"></span></button>
+                                            <button data-id="<?= $producto['codigo'] ?>" class="btn btn-default btn-rounded btn-condensed btn-sm btn-ver-equivalentes"><span class="fa fa-eye"></span></button>
                                             <button class="btn btn-default btn-rounded btn-condensed btn-sm" onclick="editarProducto(<?php echo $producto['id'] ?>)"><span class="fa fa-pencil"></span></button>
                                             <button class="btn btn-danger btn-rounded btn-condensed btn-sm btn-delete" id="<?php echo $producto['id'] ?>"><span class="fa fa-trash-o" data-toggle="modal" data-target="#delete_modal"></span></button>
                                         </td>
@@ -86,6 +86,28 @@ $(".xn-icon-button").fadeIn();
         </div>
     </div>
 
+    <!-- MODAL EQUIVALENT -->
+
+    <div class="modal fade" id="modal_ver_equivalentes" tabindex="-1" role="dialog" aria-labelledby="smallModalHead" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title">Productos Equivalentes</h4>
+                    </div>
+                    <div class="modal-body " id="equivalen">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                        <!-- <a type="button" class="btn btn-primary" id="btnYes">Si</a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         $(document).ready(function(){
             
@@ -97,7 +119,22 @@ $(".xn-icon-button").fadeIn();
 
             $("#btnYes").click(function(){
                 window.location.href = "/producto/remove/id/" + id;
-            })
+            });
+
+            $(".btn-ver-equivalentes").click(function(event){
+                $("#modal_ver_equivalentes").html();
+                var params = {};
+                params.codigo = $(this).attr('data-id');
+
+                panelAjax("/producto/verequivalentes",params, function(data){
+                    $("#equivalen").html('');
+                    $("#equivalen").html(data);           
+                    $('#modal_ver_equivalentes').modal('show');
+                })
+
+                // $('#btnView').attr('href', 'callcenter_manager/view/franchise/'+franchise+'/id/'+id_client);
+           
+            });
 
         });
         var editarProducto = function(id){
@@ -105,6 +142,9 @@ $(".xn-icon-button").fadeIn();
         }
         var agregarProducto = function(){
             window.location.href = "/producto/add/";
+        }
+         var getEquivalentes  = function(codigo){
+            window.location.href = "/producto/edit/id/" + id;
         }
 
     </script>

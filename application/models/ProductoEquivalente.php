@@ -63,7 +63,7 @@ class Application_Model_ProductoEquivalente extends Application_Model_Base
 
     public function getEquivalentes($id_producto){
         
-        $query = "SELECT pe.id_original, pe2.id_producto AS id_producto_equivalente 
+        $query = "SELECT DISTINCT pe.id_original, pe2.id_producto AS id_producto_equivalente
                 FROM producto_equivalente AS pe
                 LEFT JOIN producto_equivalente AS pe2 
                 ON pe.id_original = pe2.id_original
@@ -77,6 +77,4 @@ class Application_Model_ProductoEquivalente extends Application_Model_Base
             
     }
 
-    
-   
 }

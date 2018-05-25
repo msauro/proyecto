@@ -153,6 +153,7 @@ class ProductoController extends Gabinando_Base {
 			}
 
 			$producto = new Application_Model_Producto();
+
 			$productoExistente = $producto->getProductosByParams($params['codigo'], $params['id_marca'], $params['id']);
 			
 			if($productoExistente instanceof Exception){
@@ -179,6 +180,24 @@ class ProductoController extends Gabinando_Base {
 
 				$resultProducto = $producto->edit($params['id'], $paramsProducto);
            		$resultStock = $stock->edit($params['id'], $paramsStock);
+
+				$productoEquivalenteModel = new Application_Model_ProductoEquivalente();
+
+				// elimino los equivalentes
+				$resultEquivalentes = $productoEquivalenteModel->remove('$id_producto',$params['codigo']);
+
+				// vuelvo a crear los equivalentes
+
+   				if (sizeof($params['id_original']) > 1) {
+					foreach ($params['id_original'] as $id_original) {
+		            	$paramsEquivalente = array(
+							"id_original" 	=> $id_original,
+							"id_producto" 	=> $params['codigo']
+						);
+						$resultEquivalentes = $productoEquivalenteModel->add($paramsEquivalente);
+					}
+				}
+
 
 				if($result instanceof Exception){
 	                Gabinando_Base::addError($result->getMessage());
@@ -207,7 +226,12 @@ class ProductoController extends Gabinando_Base {
 				$productoModel = new Application_Model_Producto();
 				$producto = $productoModel->getProductoById($id);
 				$producto['equivalente'] = $productoModel->getProductoEquivalenteById($producto['codigo']);
-// echo "<pre>"; die(var_dump($producto['equivalente']));
+
+				$originalModel = new Application_Model_ProductoOriginal();
+				$listadoOriginal = $originalModel->getList();
+
+				$this->view->listadoOriginal = $listadoOriginal;
+				$this->view->listadoEquivalente = $producto['equivalente'];
 				$this->view->listadoMarcas = $listadoMarcas;
 
 				if($producto){
@@ -280,6 +304,31 @@ class ProductoController extends Gabinando_Base {
 		//die(var_dump($id));
 	}
 
+	public function verequivalentesAction(){
+		if($this->getRequest()->isPost()){
+			$params = $this->getRequest()->getPost();
+			$codigo = $params['codigo'];
+		
+			$productoEquivalenteModel = new Application_Model_ProductoEquivalente();
+			$listadoEquivalentes = $productoEquivalenteModel->getEquivalentes($codigo);
+		// die(var_dump($listadoEquivalentes));
+		$arrayEquivalente= [];
+			
+		// 	$a = array_unique($listadoEquivalentes['id_producto_equivalente']);
+			foreach ($listadoEquivalentes as $equivalente) {
+
+				
+				$arrayEquivalente[] = $equivalente['id_producto_equivalente'];
+				$arrayEquivalente[] = $equivalente['id_original'];
+			}
+		$arrayEquivalente = array_unique($arrayEquivalente);
+
+
+			$this->view->listadoEquivalentes =  $arrayEquivalente;
+			$render = $this->view->render('/producto/modal_productos_equivalentes.phtml');
+            return $this->sendSuccessResponse($render);
+		}
+	}
 
 		
 		
