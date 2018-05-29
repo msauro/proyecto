@@ -90,12 +90,12 @@ $this->headTitle($this->title);
                                             <div class="input-group">
                                                 <div class="col-md-12" style="position:relative;top:-9px;width:250px;">
                                                     <ul class="pagination pagination-sm pull-right push-down-10 push-up-10" style="width: 100%;display:none;">
-                                                        <span id='back-patient' class='btn btn-default'>« anterior</span>
-                                                        <span id='back-patient-disabled' class='btn btn-default' style='display:none;background-color: #DDD;cursor:no-drop;'>« anterior</span>
-                                                        <span id='next-patient' class='btn btn-default'>siguiente »</span>
-                                                        <span id='next-patient-disabled' class='btn btn-default' style='display:none;background-color: #DDD;cursor:no-drop;'>siguiente »</span>
+                                                        <span id='back-proveedor' class='btn btn-default'>« anterior</span>
+                                                        <span id='back-proveedor-disabled' class='btn btn-default' style='display:none;background-color: #DDD;cursor:no-drop;'>« anterior</span>
+                                                        <span id='next-proveedor' class='btn btn-default'>siguiente »</span>
+                                                        <span id='next-proveedor-disabled' class='btn btn-default' style='display:none;background-color: #DDD;cursor:no-drop;'>siguiente »</span>
                                                         <span class='pagination-data' style='position:relative;margin-left:5px;'></span>
-                                                        <span id='page-patient' rel='1'></span>
+                                                        <span id='page-proveedor' rel='1'></span>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -157,7 +157,7 @@ $this->headTitle($this->title);
                                         </div>
                                     </div>
                                 </div>
-                                <div id="list-cliente" class="col-md-12">
+                                <div id="list-marca" class="col-md-12">
                                     <?php if( count($this->marcas) == 0) : ?>
                                         <div class="col-md-12">
                                             <div class="panel panel-default">
@@ -188,22 +188,8 @@ $this->headTitle($this->title);
                                             <div class="col-md-2">
                                                 <button class="btn btn-buscar-producto"><i class="glyphicon glyphicon-search"></i></button>
                                             </div>
-                                            <label class="col-md-2 control-label" style="width:auto; text-align:left;">Descuento</label>
-                                            <div class="col-md-2">
-                                                <label class="switch">
-                                                  <input id="switch-descuento" type="checkbox" data-size="mini">
-                                                  <span class="slider round"></span>
-                                              </label>
-                                            </div>
-                                          <label class="col-md-2 control-label" style="width:auto; text-align:left;">Enviar</label>
-                                          <div class="col-md-2">
-                                            <label class="switch">
-                                              <input id="switch-envio" type="checkbox" data-size="mini">
-                                              <span class="slider round"></span>
-                                          </label>
-                                      </div>
-                                  </div>
-                              </p>
+                                        </div>
+                                    </p>
                               <div class="table-responsive products">
                                 <table class="table table-striped">
                                     <thead>
@@ -211,6 +197,7 @@ $this->headTitle($this->title);
                                             <th>Código</th>
                                             <th>Nombre</th>
                                             <th>Marca</th>
+                                            <th>Cód. Proveedor</th>
                                             <th>Stock</th>
                                             <th>Precio ($)</th>
                                             <th>Estado</th>
@@ -278,31 +265,20 @@ $this->headTitle($this->title);
                             <!-- START STRIPED TABLE SAMPLE -->
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title">Forma de pago</h3>
+                                    <h3 class="panel-title">Resumen</h3>
                                 </div>
                                 <div class="panel-body">
-                                    <form id="crear-venta" role="form" class="form-horizontal">
-                                        <!--datos cliente-->
-                                        <input type="hidden" id="form-cliente" name="id_cliente">
-                                        <input type="hidden" id="form-descuento" name="descuento">
-                                        <input type="hidden" id="form-envio" name="envio">
-                                        <!-- <input type="hidden" id="envio_hidden" name="envio_hidden"> -->
+                                    <form id="crear-pedido" role="form" class="form-horizontal">
+                                        <!--datos proveedor-->
+                                        <input type="hidden" id="form-proveedor" name="id_proveedor">
+                                        <input type="hidden" id="form-razon_social" name="razon_social">
                                         <input type="hidden" id="form-direccion" name="direccion">
                                         <input type="hidden" id="form-cuit" name="cuit">
                                         <input type="hidden" id="form-telefono" name="telefono">
-                                        <input type="hidden" id="form-nombre" name="nombre">
                                         <input type="hidden" id="form-email" name="email">
-                                        <input type="hidden" id="form-tipo_cliente" name="tipo_cliente">
+
                                         <!--datos productos-->
-
-
-
-                                        <!-- <input type="hidden" id="form-location" name="id_location"> -->
-                                        <!-- <input type="hidden" id="form-time" name="time"> -->
-                                        <!-- <input type="hidden" id="form-timeset" name="timeset"> -->
-                                        <!-- <input type="hidden" id="form-donation_note" name="donation_note"> -->
-                                        <!-- <input type="hidden" id="form-points" name="points"> -->
-                                        <!-- <input type="hidden" id="form-id_discount" name="id_discount"> -->
+                                        
                                         <!-- <input type="hidden" id="form-reason" name="reason"> -->
                                         <!-- <input type="hidden" id="form-special-discount" name="special-discount"> -->
                                         <!-- <input type="hidden" id="form-coupon" name="id_coupon"> -->
@@ -310,7 +286,10 @@ $this->headTitle($this->title);
                                         <!-- <input type="hidden" id="form-future_deliveries" name="future_deliveries"> -->
                                         <ul style="padding:0px;">
                                             <li class="fa fa-square-o">
-                                                <span class="stepDesc">Cliente seleccionado: <span id="cliente-seleccionado"></span> </span>
+                                                <span class="stepDesc">Proveedor seleccionado: <span id="proveedor-seleccionado"></span> </span>
+                                            </li>
+                                            <li class="fa fa-square-o">
+                                                <span class="stepDesc">Marca seleccionada: <span id="marca-seleccionada"></span> </span>
                                             </li>
                                             <li id="selected-products" class="fa fa-square-o">
                                                 <span class="stepDesc">Productos seleccionados:</span>
@@ -321,7 +300,8 @@ $this->headTitle($this->title);
                                                                 <th>Cant</th>
                                                                 <th>Código</th>
                                                                 <th>Marca</th>
-                                                                <th>Sub-Total</th>
+                                                                <th>Cod. Prov.</th>
+                                                                <th>$</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -334,11 +314,6 @@ $this->headTitle($this->title);
 
                                                 <input id="total_cost_hidden" name="total" type="hidden" value="0">
                                                 <input id="subtotal_cost_hidden" name="subtotal_products" type="hidden" value="0">
-                                                <span id="tot_discount" class="label label-default label-form tot_discount" style="width: 100%;"></span>
-                                                <span id="tot_iva" class="label label-danger label-form tot_iva" style="width: 100%;"></span>
-                                                <span id="envio" class="label label-primary label-form" style="width: 100%;"></span>
-                                                 <span id="envio_hidden" class="label label-primary label-form"></span>
-                                                <span id="tipo_cliente_hidden" class="label label-primary label-form" ></span>
                                                 <span id="tot_donation" class="label label-success label-form tot_donation" style="width: 100%;"></span>
                                                 <input id="forma_pago_hidden" name="forma_pago" type="hidden" value="0">
                                                 <input id="resumen_efectivo_hidden" name="efectivo" type="hidden" value="0">
@@ -477,39 +452,6 @@ $this->headTitle($this->title);
     
 
 
-        var  descuento;
-    //Inicializo los switch en false
-    $('#switch-descuento').val(false);
-    $('#switch-envio').val(false);
-    $('#switch-ctacte').val(false);
-
-    //Cuando cambia el switch del descuento tomo el valor y calculo el total
-    $(document).on('change','#switch-descuento' ,function(e) {
-        if(this.checked) $('#switch-descuento').val(true);
-        else $('#switch-descuento').val(false);
-        calculateTotal();
-    });
-
-    //Cuando cambia el switch del envio tomo el valor y calculo el total
-    $(document).on('change','#switch-envio' ,function(e) {
-        if(this.checked) $('#switch-envio').val(true);
-        else $('#switch-envio').val(false);
-        calculateTotal();
-    });
-
-    //Cuando cambia el switch de cta cte tomo el valor y calculo el total
-    $(document).on('change','#switch-ctacte' ,function(e) {
-        if(this.checked){
-            $('#switch-ctacte').val(true);
-            $('#methods').hide();
-            $('#methods').css("display", "none");
-        }else {
-            $('#switch-ctacte').val(false);
-            $('#methods').show();
-            $('#methods').css("display", "block");
-        }
-        resumen();
-    });
 
 
 
@@ -565,9 +507,9 @@ $this->headTitle($this->title);
         resumen();
     });
 
-    if ($("#tipo_cliente_hidden").val() != 'Particular') {
-        $(".panel-ctate").show();
-    }
+    // if ($("#tipo_cliente_hidden").val() != 'Particular') {
+    //     $(".panel-ctate").show();
+    // }
 
     $('#cashamount').on('change', function(){
         cashamount = $('cashamount').val();
@@ -591,7 +533,7 @@ $this->headTitle($this->title);
                 var params = {};
                 var productos = [];
 
-                params.data = $("#crear-venta").serializeObject();
+                params.data = $("#crear-pedido").serializeObject();
         
                 if (typeof params.data['cant[]'] == 'string') {
                     var productos = {
@@ -648,42 +590,33 @@ $this->headTitle($this->title);
 
     $(".actionBar .btn-default.pull-right").addClass("disabled");
 
-    //Selecciono el cliente
-    $("#list-cliente").on( "click", ".select-patient", function(slideEvt) {
+    //Selecciono el proveedor
+    $("#list-proveedor").on( "click", ".select-proveedor", function(slideEvt) {
         if($(this).attr('id') != ""){
 
             var params = {};
             params.direccion = $(this).find('.profile-data-direccion').text();
-            params.tipo_cliente = $(this).find('.profile-data-tipo_cliente').text();
             params.telefono = $(this).find('.profile-data-telefono').text();
             params.email = $(this).find('.profile-data-email').text();
             params.cuit = $(this).find('.profile-data-cuit').text();
-            params.descuento = $(this).find('.profile-data-descuento').text();
             params.id = $(this).attr('id');
-            params.nombre = $(this).attr('title');
+            params.razon_social = $(this).attr('title');
 
-            $("#tipo_cliente_hidden").val(params.tipo_cliente);
+            // $("#tipo_cliente_hidden").val(params.tipo_cliente);
             $(this).toggleClass('selected');
             $(this).siblings().removeClass('selected');
-            if(!$("#cliente-seleccionado").closest('li').hasClass("fa-check-square-o"))
-                $("#cliente-seleccionado").closest('li').toggleClass('fa-square-o fa-check-square-o');
-            $("#cliente-seleccionado").text(params.nombre);
+            if(!$("#proveedor-seleccionado").closest('li').hasClass("fa-check-square-o"))
+                $("#proveedor-seleccionado").closest('li').toggleClass('fa-square-o fa-check-square-o');
+            $("#proveedor-seleccionado").text(params.razon_social);
 
-            if (params.nombre == 'Consumidor Final *') {
-                $("#switch-ctacte").prop('disabled', true);
-            }else{
-                $("#switch-ctacte").prop('disabled', false);
-            }
 
-            //lleno el formulario con datos del cliente
-            $("#form-cliente").val(params.id);
-            $("#form-descuento").val(params.descuento);
+            //lleno el formulario con datos del proveedor
+            $("#form-proveedor").val(params.id);
+            $("#form-razon_social").val(params.razon_social);
             $("#form-direccion").val(params.direccion);
             $("#form-cuit").val(params.cuit);
             $("#form-telefono").val(params.telefono);
-            $("#form-nombre").val(params.nombre);
             $("#form-email").val(params.email);
-            $("#form-tipo_cliente").val(params.tipo_cliente);
             $('.buttonNext').click();
 
             descuento = params.descuento;
@@ -726,6 +659,7 @@ $this->headTitle($this->title);
             '<td><input name="cant[]" value="1" aria-invalid="false" class="cantidad"></td>'+
             '<td>'+producto_codigo+'</td>'+
             '<td>'+producto_marca+'</td>'+
+            '<td>'+producto_codigo+'</td>'+
             '<td>$'+producto_precio+'</td>'+
             '<th><span class="fa fa-trash-o"></span></th>'+
             '</tr>');
@@ -777,7 +711,7 @@ $this->headTitle($this->title);
     $('#buscar-productos').keyup(function() {
         clearTimeout(timeoutID);
         var $target = $(this);
-        var id_cliente = $("#form-cliente").val();
+        var id_proveedor = $("#form-proveedor").val();
         timeoutID = setTimeout(function() { getProducts(); }, 500); 
     });
 
@@ -813,7 +747,7 @@ $this->headTitle($this->title);
         val         = parseInt(val) + parseInt(1);
         page        = $('#page').attr('rel',val);
         search      = $('#buscar-productos').val();
-        id_cliente  = $("#form-cliente").val();
+        id_cliente  = $("#form-proveedor").val();
         getProducts();
     });
 
@@ -823,7 +757,7 @@ $this->headTitle($this->title);
             val         = parseInt(val) - parseInt(1);
             page        = $('#page').attr('rel',val);
             search      = $('#buscar-productos').val();
-            id_cliente  = $("#form-cliente").val();
+            id_cliente  = $("#form-proveedor").val();
 
             getProducts();
         }
@@ -900,7 +834,7 @@ var totalSum = function(prices){
 function validateSteps(step) {
     var status = true;
     var form_data = {};
-    form_data = $("#crear-venta").serializeArray();
+    form_data = $("#crear-pedido").serializeArray();
     switch(step) {
         case "1":
         if( form_data[0]['value']=="" ){
@@ -1000,8 +934,9 @@ function resetForm(step){
 //Obtengo los productos para el PASO 2
 function getProducts(){
     var params = {};
-    params.search        = $('#buscar-productos').val();;
+    params.search        = $('#buscar-productos').val();
     params.page          = $('#page').attr('rel');
+    params.id_proveedor  = $("#form-proveedor").val();
     if (params.page < 0) { params.page = 1; };
 
     panelAjax("/producto/getproductos/",params, function(data){
@@ -1013,6 +948,7 @@ function getProducts(){
             "<td id='codigo'>" + value.codigo + "</td>" +
             "<td id='nombre'>" + value.nombre + "</td>" +
             "<td id='marca'>" + value.nom_marca + "</td>" +
+            "<td id='codigo_proveedor'>" + value.nombre + "</td>" +
             "<td id='existencia'>" + value.cantidad + "</td>" +
             "<td id='imagen_url' class='hidden'>" + value.imagen_url + "</td>" +
             "<td id='precio'>" + value.precio + "</td>";
@@ -1085,15 +1021,16 @@ function getProveedores(search){
     params.page     = $('#page-patient').attr('rel');
     if (params.page < 0) { params.page = 1; };
     
-    panelAjax("/proveedor/getProveedores/",params, function(data){
+    panelAjax("/proveedor/getproveedores/",params, function(data){
+    console.log(data);
         $("#list-proveedor").html('');
-        $(".result-search-proveedor").html(data.clientes.length + ' de ' + data.total + ' proveedores');
-        if (data.clientes.length == 0) {
+        $(".result-search-proveedor").html(data.proveedores.length + ' de ' + data.total + ' proveedores');
+        if (data.proveedores.length == 0) {
             $('.pagination').fadeOut(500);
             var item = "<div class='col-md-12'>" +
             "<div class='panel panel-default'>" +
             "<div class='panel-body'>" +
-            "<p style='text-align:center;'>No se encontraron clientes</p>" + 
+            "<p style='text-align:center;'>No se encontraron proveedores</p>" + 
             "</div>" +
             "</div>" +
             "</div>";
@@ -1102,27 +1039,27 @@ function getProveedores(search){
             pager = data.page + " de " + data.pages + "</span>";
 
             if (data.page == 1) {
-                $("#back-patient").hide();
-                $("#back-patient-disabled").show();
-                $("#next-patient").show();
-                $("#next-patient-disabled").hide();
+                $("#back-proveedor").hide();
+                $("#back-proveedor-disabled").show();
+                $("#next-proveedor").show();
+                $("#next-proveedor-disabled").hide();
             }
             $(".pagination-data").html(pager);
             if (data.page < data.pages) {
                 $('.pagination').fadeIn(500);
                 if (data.page > 1) {
-                    $("#back-patient").show();
-                    $("#next-patient").show();
-                    $("#back-patient-disabled").hide();
-                    $("#next-patient-disabled").hide();
+                    $("#back-proveedor").show();
+                    $("#next-proveedor").show();
+                    $("#back-proveedor-disabled").hide();
+                    $("#next-proveedor-disabled").hide();
                 };
             }else if(data.page == data.pages){
-                $("#next-patient").hide();
-                $("#next-patient-disabled").show();
+                $("#next-proveedor").hide();
+                $("#next-proveedor-disabled").show();
             }
 
-            $.each(data.clientes, function( index, value ) {
-               var item = "<div id='" + value.id + "'title='" + value.nombre + " " + value.apellido + "' rel='" + value.id + "'attr-direccion='"+ value.direccion +"'   class='select-patient col-md-4' style='cursor:pointer;'>" +
+            $.each(data.proveedores, function( index, value ) {
+               var item = "<div id='" + value.id + "'title='" + value.razon_social + "' rel='" + value.id + "'attr-direccion='"+ value.direccion +"'   class='select-proveedor col-md-4' style='cursor:pointer;'>" +
                "<!-- CONTACT ITEM -->" + 
                "<div class='panel panel-default'>" +
                "<div class='profile-control-left'>" + 
@@ -1131,11 +1068,11 @@ function getProveedores(search){
                "<img src='" + value.imagen_url + "' alt='" + value.cuit + "'" +
                "</div>" + 
                "<div class='profile-data'>" +
-               "<div class='profile-data-name'>" + value.nombre + " " + value.apellido + "</div>" +
+               "<div class='profile-data-name'>" + value.razon_social + "</div>" +
                "<div class='profile-data-direccion'>" + value.direccion + "</div>" + 
                "<div class='profile-data-cuit'>Cuit: " + value.cuit + "</div>" + 
-               "<div class='profile-data-tipo_cliente'>" + value.tipo_cliente + "</div>" + 
-               "<div class='profile-data-descuento hidden'>" + value.descuento + "</div>" + 
+               // "<div class='profile-data-tipo_cliente'>" + value.tipo_cliente + "</div>" + 
+               // "<div class='profile-data-descuento hidden'>" + value.descuento + "</div>" + 
                "<div class='profile-data-telefono'> Tel: " + value.telefono + "</div>" + 
                "<div class='profile-data-email'> " + value.email + "</div>" + 
                "</div>" +
@@ -1166,13 +1103,13 @@ function getMarcas(search){
     $("#list-marca").hide();
     var params = {};
     params.search   = search;
-    params.page     = $('#page-patient').attr('rel');
+    params.page     = $('#page-marca').attr('rel');
     if (params.page < 0) { params.page = 1; };
     
-    panelAjax("/marca/getMarcas/",params, function(data){
+    panelAjax("/marca/getmarcas/",params, function(data){
         $("#list-marca").html('');
-        $(".result-search-marca").html(data.clientes.length + ' de ' + data.total + ' marcas');
-        if (data.clientes.length == 0) {
+        $(".result-search-marca").html(data.marcas.length + ' de ' + data.total + ' marcas');
+        if (data.marcas.length == 0) {
             $('.pagination').fadeOut(500);
             var item = "<div class='col-md-12'>" +
             "<div class='panel panel-default'>" +
@@ -1186,27 +1123,27 @@ function getMarcas(search){
             pager = data.page + " de " + data.pages + "</span>";
 
             if (data.page == 1) {
-                $("#back-patient").hide();
-                $("#back-patient-disabled").show();
-                $("#next-patient").show();
-                $("#next-patient-disabled").hide();
+                $("#back-marca").hide();
+                $("#back-marca-disabled").show();
+                $("#next-marca").show();
+                $("#next-marca-disabled").hide();
             }
             $(".pagination-data").html(pager);
             if (data.page < data.pages) {
                 $('.pagination').fadeIn(500);
                 if (data.page > 1) {
-                    $("#back-patient").show();
-                    $("#next-patient").show();
-                    $("#back-patient-disabled").hide();
-                    $("#next-patient-disabled").hide();
+                    $("#back-marca").show();
+                    $("#next-marca").show();
+                    $("#back-marca-disabled").hide();
+                    $("#next-marca-disabled").hide();
                 };
             }else if(data.page == data.pages){
-                $("#next-patient").hide();
-                $("#next-patient-disabled").show();
+                $("#next-marca").hide();
+                $("#next-marca-disabled").show();
             }
 
-            $.each(data.clientes, function( index, value ) {
-               var item = "<div id='" + value.id + "'title='" + value.nombre + " " + value.apellido + "' rel='" + value.id + "'attr-direccion='"+ value.direccion +"'   class='select-patient col-md-4' style='cursor:pointer;'>" +
+            $.each(data.marcas, function( index, value ) {
+               var item = "<div id='" + value.id + "'title='" + value.nombre + "' rel='" + value.id + "'  class='select-patient col-md-4' style='cursor:pointer;'>" +
                "<!-- CONTACT ITEM -->" + 
                "<div class='panel panel-default'>" +
                "<div class='profile-control-left'>" + 
@@ -1215,20 +1152,10 @@ function getMarcas(search){
                "<img src='" + value.imagen_url + "' alt='" + value.cuit + "'" +
                "</div>" + 
                "<div class='profile-data'>" +
-               "<div class='profile-data-name'>" + value.nombre + " " + value.apellido + "</div>" +
-               "<div class='profile-data-direccion'>" + value.direccion + "</div>" + 
-               "<div class='profile-data-cuit'>Cuit: " + value.cuit + "</div>" + 
-               "<div class='profile-data-tipo_cliente'>" + value.tipo_cliente + "</div>" + 
-               "<div class='profile-data-descuento hidden'>" + value.descuento + "</div>" + 
-               "<div class='profile-data-telefono'> Tel: " + value.telefono + "</div>" + 
-               "<div class='profile-data-email'> " + value.email + "</div>" + 
+               "<div class='profile-data-name'>" + value.nombre + "</div>" +
                "</div>" +
                "<div class='profile-controls'>";
-               if(value.nom_estado == 'Deudor') {
-                item = item + "<a class='profile-control-right-up' style='font-size:26px;border-color:#FF4D4D;right: 10px; top:13px;'>" +
-                "<span class='fa fa-exclamation-circle' data-toggle='tooltip' data-original-title='El cliente posee una deuda.'></span>" + 
-                "</a>";
-            }
+               
             item = item + "</div>" +
             "</div>" +
             "</div>" +
@@ -1259,43 +1186,44 @@ function getMarcas(search){
 var calculateTotal = function(){
     var tot_discount, enviototal, total;
     total = parseFloat($("#subtotal_cost_hidden").val()); 
+    subtotal = total;
     // tot_discount = parseFloat($('#rdiscount_hidden').val());
 
 
-    if ($('#switch-descuento').val() == 'false') {
-        subtotal = total;
-        $("#tot_discount").html("<span style='float:left'>Descuento:</span><span style='float:right;padding-right: 22px;'>0 %</span>");
-        $('#tot_discount').val(0);
-        $("#form-descuento").val(0);
+    // if ($('#switch-descuento').val() == 'false') {
+    //     subtotal = total;
+    //     $("#tot_discount").html("<span style='float:left'>Descuento:</span><span style='float:right;padding-right: 22px;'>0 %</span>");
+    //     $('#tot_discount').val(0);
+    //     $("#form-descuento").val(0);
 
-    }else{
-        disc = descuento * total / 100;
-        subtotal = (total - disc);
-        $("#tot_discount").html("<span style='float:left'>Descuento:</span><span style='float:right;padding-right: 22px;'>"+descuento+" %</span>");
-        $('#tot_discount').val(disc);
-        $("#form-descuento").val(descuento);
-    }
+    // }else{
+    //     disc = descuento * total / 100;
+    //     subtotal = (total - disc);
+    //     $("#tot_discount").html("<span style='float:left'>Descuento:</span><span style='float:right;padding-right: 22px;'>"+descuento+" %</span>");
+    //     $('#tot_discount').val(disc);
+    //     $("#form-descuento").val(descuento);
+    // }
 
-    if ($('#switch-envio').val() == 'false') {
-        enviototal = 0;
-        $("#envio").html("<span style='float:left'>Envio:</span><span style='float:right;padding-right: 22px;'>$0</span>");
-        // $('#envio_hidden').val(0);
-        $('#form-envio').val(enviototal);
+    // if ($('#switch-envio').val() == 'false') {
+    //     enviototal = 0;
+    //     $("#envio").html("<span style='float:left'>Envio:</span><span style='float:right;padding-right: 22px;'>$0</span>");
+    //     // $('#envio_hidden').val(0);
+    //     $('#form-envio').val(enviototal);
 
-    }else{
-        enviototal = 50;
-        $("#envio").html("<span style='float:left'>Envío:</span><span style='float:right;padding-right: 22px;'>$"+enviototal.toFixed(2)+"</span>");
-        $("#envio").show();
-        // $('#envio_hidden').val(enviototal);
-        $('#form-envio').val(enviototal);
-    }
+    // }else{
+    //     enviototal = 50;
+    //     $("#envio").html("<span style='float:left'>Envío:</span><span style='float:right;padding-right: 22px;'>$"+enviototal.toFixed(2)+"</span>");
+    //     $("#envio").show();
+    //     // $('#envio_hidden').val(enviototal);
+    //     $('#form-envio').val(enviototal);
+    // }
 
-    iva  = 21 * subtotal / 100;+
-    $('#iva_hidden').val(21);
+    // iva  = 21 * subtotal / 100;+
+    // $('#iva_hidden').val(21);
 
     if (subtotal >= 0) {
         $(".buttonNext").removeClass('buttonDisabled');
-        total = subtotal + iva + enviototal;
+        total = subtotal ;
         total = total.toFixed(2); 
     }else{
         $(".buttonNext").addClass('buttonDisabled');
@@ -1344,10 +1272,10 @@ var resumen = function(){
     }else if (ctacte == 'true'){
         forma_pago = 'ctacte';
     }
+}
 
 
    
-}
 
 
 </script>

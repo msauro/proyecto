@@ -53,5 +53,21 @@ class Application_Model_Marca extends Application_Model_Base
         }
     }
 
+    public function getListFiltered($search,$paginate=NULL){
+        $search['search'] = $search['search'];
+        $query = $this->select()->setIntegrityCheck(false)
+            ->from($this, array('*'))
+            ->where('marcas.eliminado = 0')
+            ->where("(marcas.id LIKE '%{$search['search']}%' OR marcas.nombre LIKE '%{$search['search']}%')")
+            ->group('marcas.id');
+
+            if ($paginate)
+                $query->limit($paginate['per_page'],$paginate['start_from']);
+           
+        $rows = $this->fetchAll($query);
+
+        return $rows->toArray();
+    }
+
    
 }

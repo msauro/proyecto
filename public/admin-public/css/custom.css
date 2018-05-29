@@ -307,3 +307,16 @@ body.page-container-boxed {
 .profile .profile-image img{
   height: 100px;
 }
+
+#summary-pedido{
+  width: 32%;
+}
+.wizard #step-1-pedido{
+  width: 67%;
+}
+.wizard #step-2-pedido{
+  width: 67%;
+}
+.wizard #step-3-pedido{
+  width: 67%;
+}

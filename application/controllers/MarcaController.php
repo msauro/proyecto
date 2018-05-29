@@ -117,6 +117,51 @@ class MarcaController extends Gabinando_Base {
 		}
     }
 
+    public function getmarcasAction(){
+		$marcaModel = new Application_Model_Marca();		
+		$params 	 = $params = $this->getRequest()->getParams();
+		if( isset($params['search']) ){
+			$search 	 = array(
+				'search' => $params['search'],
+				'filter' => 'active'
+			);
+		}else{
+			$search 	 = array(
+				'search' => ''
+			);
+		}
+
+		if (isset($params['page']) AND $params['page']) {
+			$paginate['page']  	= $params['page'];
+		} else {
+			$paginate['page'] 	= 1;
+		}
+
+		$paginate['per_page'] 	= 15;
+
+		$paginate['start_from'] = ($paginate['page']-1) * $paginate['per_page'];
+
+		$marca = $marcaModel->getListFiltered($search,$paginate);
+		if($marca instanceof Exception)
+			$this->sendErrorResponse($marca->getMessage());
+		$marcaPager = $marcaModel->getListFiltered($search);
+		if($marcaPager instanceof Exception)
+			$this->sendErrorResponse($marcaPager->getMessage());
+
+		$marcaList = $marcaModel->getList($search);
+		if($marcaList instanceof Exception)
+			$this->sendErrorResponse($marcaList->getMessage());
+
+		$pages = ceil(count($marcaPager) / $paginate['per_page']);
+		$this->sendSuccessResponse(array(
+				'search' 		=> $search,
+				'marcas'	 	=> $marca,
+				'total' 		=> count($marcaList),
+				'pages' 		=> $pages,
+				'page' 			=> $paginate['page']
+			));
+
+	}
 		
 		
 	

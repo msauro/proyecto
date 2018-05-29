@@ -250,6 +250,11 @@ class ProductoController extends Gabinando_Base {
     public function getproductosAction(){
 		$producto = new Application_Model_Producto();		
 		$params 	 = $params = $this->getRequest()->getParams();
+		if ($params["id_proveedor"]) {
+			$id_proveedor = $params["id_proveedor"];
+		}else{
+			$id_proveedor = NULL;
+		}
 	// die(var_dump($params));
 		if( isset($params['search']) ){
 			$search 	 = array(
@@ -274,11 +279,11 @@ class ProductoController extends Gabinando_Base {
 
 		$paginate['start_from'] = ($paginate['page']-1) * $paginate['per_page'];
 
-		$productos = $producto->getListFiltered($search,$paginate);
+		$productos = $producto->getListFiltered($search,$paginate,$id_proveedor);
 	//die(var_dump($productos));
 		if($productos instanceof Exception)
 			$this->sendErrorResponse($productos->getMessage());
-		$productoPager = $producto->getListFiltered($search);
+		$productoPager = $producto->getListFiltered($search,NULL,$id_proveedor);
 		if($productoPager instanceof Exception)
 			$this->sendErrorResponse($productoPager->getMessage());
 
@@ -330,6 +335,7 @@ class ProductoController extends Gabinando_Base {
 		}
 	}
 
+	    
 		
 		
 		
