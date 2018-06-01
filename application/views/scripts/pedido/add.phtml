@@ -939,7 +939,7 @@ function getProducts(){
     params.id_proveedor  = $("#form-proveedor").val();
     if (params.page < 0) { params.page = 1; };
 
-    panelAjax("/producto/getproductos/",params, function(data){
+    panelAjax("/productoproveedor/getproductos/",params, function(data){
        
         $(".products tbody").html('');
         $.each(data.productos, function( index, value ){

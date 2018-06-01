@@ -58,13 +58,12 @@ class PedidoController extends Gabinando_Base{
 		if (isset($params['patient'])) {
 			$this->view->patient = $params['patient'];
 		}
-
 		// $patient = new Application_Model_Patient();
 		$clientesModel = new Application_Model_Cliente();
 		$ventasModel	= new Application_Model_Venta();
-		$productosModel	= new Application_Model_Producto();
+		$productosProveedorModel	= new Application_Model_ProductoProveedor();
 		
-	
+		
 		$ventas = $ventasModel->getList();
 		
 		$clientestypeList = $clientesModel->getListType();
@@ -340,19 +339,7 @@ class PedidoController extends Gabinando_Base{
 			// }
 
 			// if(!is_null($error)){
-   //              Gabinando_Base::addError($error);
-   //              $this->_redirect('/proveedor/edit/id/'.$params['id']);
-    //         }else{
-				// $result = $proveedor->edit($params['id'], $params);
-				// if($result instanceof Exception){
-	   //              Gabinando_Base::addError($result->getMessage());
-	   //              $this->_redirect('/proveedor/edit');
-    //         	}
-            	
-    //         	Gabinando_Base::addSuccess('Proveedor editado correctamente');
-	   //          $this->_redirect('/proveedor/list');
-
-    //         }
+  
 		}
 		else{
 			$id = $this->getRequest()->getParam('id');

@@ -265,6 +265,7 @@ class VentaController extends Gabinando_Base{
 				// $message 	= "Hola ".$venta['nombre']." ".$venta['apellido']."! Gracias por tu compra. Total:".$venta['total']." <br><br> Fecha: " . date('d-m-Y h:i a',strtotime($venta['fecha'])) ;
 
 				// $result 	= $sender->sendEmail($venta['email'],"Nueva compra",$message);
+				
 				// End - Mail al cliente para avisarle que tiene una nueva venta
 
 				

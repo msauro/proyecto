@@ -167,98 +167,38 @@ class ProveedorController extends Gabinando_Base {
 			if($this->getRequest()->isPost()){
 				$params = $this->getRequest()->getPost();
 
-				$file = $_FILES['imagen_url'];
-				if ($file['size'] > 0) {
+				$productoproveedorModel = new Application_Model_ProductoProveedor();
+				$productoExistente = $productoproveedorModel->getProductosByParams($params['codigo_proveedor'], $params['id_marca']);
 
-					$img = $this->uploadImage(self::UPLOADPATHAVATAR,$file,$params['nombre']);
-
-					if($img['status'] == 'error'){
-						die($img['message']);
-					}
-
-					$params['imagen_url'] = $img['message'];
-				}else{
-					$img['message'] = NULL;
-				}
-	           // $params['eliminado'] = 0;
-				
-				$producto = new Application_Model_Producto();
-				$productoEquivalenteModel = new Application_Model_ProductoEquivalente();
-				$stock = new Application_Model_Existencia();
-				$precioModel = new Application_Model_Precio();
-				$productoExistente = $producto->getProductosByParams($params['codigo'], $params['id_marca']);
 				
 				if($productoExistente instanceof Exception){
 	                Gabinando_Base::addError($productoExistente->getMessage());
-	                $this->_redirect('/producto/add');
+	                $this->_redirect('/proveedor/addproducts');
 	            // si el producto no fue agregado anteriormente -> agrego nuevo producto
 	            }elseif($productoExistente == null){
 	            	$paramsProducto = array(
-					    "codigo" 		=> $params['codigo'],
-					    "id_marca" 		=> $params['id_marca'],
-					    "nombre"		=> $params['nombre'],
-					    "eliminado"		=> 0,
-					    "imagen_url"	=> $img['message'],
-					    "punto_pedido"	=> $params['punto_pedido'],
-					    "descripcion"	=> $params['descripcion']
+					    "id_proveedor"			=> $params['id_proveedor'],
+					    "codigo_proveedor" 		=> $params['codigo_proveedor'],
+					    "descripcion"			=> $params['descripcion'],
+					    "descuento"				=> $params['descuento'],
+					    "precio"				=> $params['precio'],
+					    "fecha"					=> $params['fecha'],
+					    "id_marca" 				=> $params['id_marca']
 					);
 					
-	           		$result = $producto->add($paramsProducto);
+	           		$result = $productoproveedorModel->add($paramsProducto);
 
 	           		if($result instanceof Exception){
 		                Gabinando_Base::addError($result->getMessage());
 	            	}
 	           		
-	           		$paramsStock = array(
-					    "id_producto" 	=> $result,
-					    "cantidad" 		=> $params['cantidad'],
-						'fecha' 		=> date('Y-m-d H:i:s')
-
-					);
-
-
-	           		$resultStock = $stock->add($paramsStock);
-					if($resultStock instanceof Exception){
-		                Gabinando_Base::addError($result->getMessage());
-	            	}
-
-					$paramsPrecio = array(
-						"id_producto" 	=> $result,
-						"precio" 	=> $params['precio'],
-						'fecha' 		=> date('Y-m-d H:i:s')
-					);
-
-					$resultPrecio = $precioModel->add($paramsPrecio);
-					if($resultStock instanceof Exception){
-		                Gabinando_Base::addError($result->getMessage());
-	            	}
-
-	            	$id_producto = $result;
-
-					if (sizeof($params['id_original']) > 1) {
-						foreach ($params['id_original'] as $id_original) {
-			            	$paramsEquivalente = array(
-								"id_original" 	=> $id_original,
-								"id_producto" 	=> $params['codigo']
-							);
-							$resultEquivalentes = $productoEquivalenteModel->add($paramsEquivalente);
-						}
-					}
-
-					
-
-					if($resultStock instanceof Exception){
-		                Gabinando_Base::addError($result->getMessage());
-	            	}
-
-
-	            	Gabinando_Base::addSuccess('Producto agregado correctamente');
-	            	$this->_redirect('/producto/list');
+	            	Gabinando_Base::addSuccess('Producto del proveedor agregado correctamente');
+	            	$this->_redirect('/proveedor/listproducts');
 	            }else{
 
 	            	Gabinando_Base::addError('Ya existe un producto con ese código para esa marca.');
 	            }
-	        	$this->_redirect('/producto/add');
+	        	$this->_redirect('/proveedor/addproducts');
 			}else{
 				$productoModel = new Application_Model_Producto();
 				$marcaModel = new Application_Model_Marca();
@@ -274,7 +214,7 @@ class ProveedorController extends Gabinando_Base {
 				$this->view->listadoMarcas = $listadoMarcas;
 				$this->view->listadoOriginal = $listadoOriginal;
 			}
-		}
+	}
 	
 }
 

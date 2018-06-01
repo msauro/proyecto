@@ -934,7 +934,7 @@ function getProducts(){
     if (params.page < 0) { params.page = 1; };
 
     panelAjax("/producto/getproductos/",params, function(data){
-       console.log(data);
+       console.log('data');
         console.log(data);
         $("#list-cliente").html('');
         $(".result-search-product").html(data.productos.length + ' de ' + data.total + ' clientes');

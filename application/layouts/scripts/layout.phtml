@@ -124,8 +124,9 @@ echo $this->doctype(); ?>
                             </a>
                             <ul>
                                 <li <?php if($controller == 'proveedor' && $action == 'add') echo 'class="active"' ?>><a href="/proveedor/add"><span class="fa fa-group"></span> Agregar proveedor</a></li>
-                                <li <?php if($controller == 'proveedor' && $action == 'addProducts') echo 'class="active"' ?>><a href="/proveedor/addProducts"><span class="fa fa-group"></span>Producto proveedor</a></li>
-                                <li <?php if($controller == 'proveedor' && $action == 'list') echo 'class="active"' ?>><a href="/proveedor/list"><span class="fa fa-file-text-o" aria-hidden="true"></span> Listado</a></li>
+                                <li <?php if($controller == 'productoproveedor' && $action == 'list') echo 'class="active"' ?>><a href="/productoproveedor/list"><span class="fa fa-group"></span>Productos proveedor</a></li>
+                                <li <?php if($controller == 'productoproveedor' && $action == 'costo') echo 'class="active"' ?>><a href="/productoproveedor/costo"><span class="fa fa-group"></span>Precio proveedor</a></li>
+                                <li <?php if($controller == 'productoproveedor' && $action == 'list') echo 'class="active"' ?>><a href="/proveedor/list"><span class="fa fa-file-text-o" aria-hidden="true"></span> Listado</a></li>
                             </ul>
                         </li>
                         <li id="modules-settings" class="xn-openable">

@@ -1,11 +1,11 @@
 <?php         
-$this->title = "Agregar nuevo producto";
+$this->title = "Agregar nuevo producto del proveedor";
 $this->headTitle($this->title);
 ?>
 <!-- BREADCRUMB -->
     <ul class="breadcrumb">
         <li><a href="/">Panel Principal</a></li>
-        <li><a href="/producto/list">Producto Proveedor</a></li>
+        <li><a href="/productoproveedor/list">Producto Proveedor</a></li>
         <li class="active">Nuevo</li>
     </ul>
 
@@ -24,16 +24,23 @@ $this->headTitle($this->title);
 
                     <div class="panel-body">
 
-                        <div class="form-group">
-                            <label class="col-sm-3 col-xs-12 control-label">Nombre</label>
+                        <div class="form-group" >
+                            <label class="col-sm-3 col-xs-12 control-label">Proveedor</label>
                             <div class="col-sm-6 col-xs-12">                                            
                                 <div class="input-group">
-                                    <span class="input-group-addon"><span class="fa fa-list"></span></span>
-                                    <input name="nombre" id="nombre" type="text" class="form-control"/>
+                                    <span class="input-group-addon"><span class="fa fa-suitcase"></span></span>
+                                    <select name="id_proveedor" id="id_proveedor" type="text" class="form-control select">
+                                        <option value="">Selecciona Proveedor</option>
+                                        <?php 
+                                           foreach ($this->listadoProveedores as $key => $proveedor): ?>
+                                                <option <?php echo $this->data['id_proveedor'] == $proveedor['id'] ? "selected" : '' ; ?> value=<?php echo  $proveedor['id'] ?>><?php echo $proveedor['razon_social']?></option>
+                                            
+                                        <?php endforeach; ?>
+                                    </select>
                                 </div> 
                             </div>
                         </div>
-                        
+
                         <div class="form-group" id="form-group-marca" >
                             <label class="col-sm-3 col-xs-12 control-label">Marca</label>
                             <div class="col-sm-6 col-xs-12">                                            
@@ -53,11 +60,11 @@ $this->headTitle($this->title);
 
 
                         <div class="form-group">
-                            <label class="col-sm-3 col-xs-12 control-label">Código</label>
+                            <label class="col-sm-3 col-xs-12 control-label">Código producto proveedor</label>
                             <div class="col-sm-6 col-xs-12">                                            
                                 <div class="input-group">
                                     <span class="input-group-addon"><span class="fa fa-list"></span></span>
-                                    <input name="codigo" id="codigo" type="text" class="form-control"/>
+                                    <input name="cod_proveedor" id="cod_proveedor" type="text" class="form-control"/>
                                 </div> 
                             </div>
                         </div>
@@ -84,47 +91,33 @@ $this->headTitle($this->title);
 
 
                         <div class="form-group">
-                            <label class="col-sm-3 col-xs-12 control-label">Punto de pedido</label>
+                            <label class="col-sm-3 col-xs-12 control-label">Descuento</label>
                             <div class="col-sm-6 col-xs-12">                                            
                                 <div class="input-group">
                                     <span class="input-group-addon"><span class="fa fa-list"></span></span>
-                                    <input name="punto_pedido" id="punto_pedido" type="number" class="form-control"/>
+                                    <input name="descuento" id="descuento" type="number" class="form-control"/>
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group ">                                        
+                            <label class="col-md-3 col-xs-12 control-label ">Fecha</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                    <input name="fecha" id="fecha" value="<?= $this->data['fecha']?>" type="text" class="form-control datepicker" />
+                                </div>            
+                            </div>
+                        </div>
 
-                        <div class="form-group">
-                            <label class="col-sm-3 col-xs-12 control-label">Cantidad</label>
+                        <!-- <div class="form-group">
+                            <label class="col-sm-3 col-xs-12 control-label">Fecha</label>
                             <div class="col-sm-6 col-xs-12">                                            
                                 <div class="input-group">
                                     <span class="input-group-addon"><span class="fa fa-list"></span></span>
-                                    <input name="cantidad" id="cantidad" type="number" class="form-control"/>
+                                    <input name="fecha" id="fecha" type="date" class="form-control"/>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="form-group" id="form-group-original" >
-                            <label class="col-sm-3 col-xs-12 control-label">Código original</label>
-                            <div class="col-sm-6 col-xs-12">                                            
-                                <div class="input-group">
-                                    <span class="input-group-addon"><span class="fa fa-suitcase"></span></span>
-                                    <select name="id_original[]" id="id_original" type="text" class="form-control select" data-live-search="true" multiple title="Selecciona el/los nros originales">
-                                        <?php 
-                                           foreach ($this->listadoOriginal as $key => $original): ?>
-                                                <option <?php echo $this->data['id_producto_original'] == $original['id'] ? "selected" : '' ; ?> value=<?php echo  $original['id_producto_original'] ?>><?php echo $original['id_producto_original']?></option>
-                                            
-                                        <?php endforeach; ?>
-                                    </select>
-                                </div> 
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-3 col-xs-12 control-label">Imagen</label>
-                            <div class="col-sm-6 col-xs-12">               
-                                <input name="imagen_url" id="imagen_url" type="file" class="fileinput btn-primary" accept="image/*" />
-                            </div>
-                        </div>
+                        </div> -->
                         
                     </div>
                     <div class="panel-footer">
@@ -151,14 +144,18 @@ $this->headTitle($this->title);
 
 <script>
 $().ready(function() {
-
+    $('#fecha').datepicker({
+        format: "dd/mm/yyyy"
+        
+    });  
     $("#add-form").validate({
         ignore: '',
         rules: {
-            nombre: "required",
-            codigo: "required",
+            id_proveedor: "required",
+            codigo_proveedor: "required",
             descripcion: "required",
             id_marca: "required",
+            fecha: "required",
             punto_pedido: "required"
         },
         errorPlacement: function(error, element) {
@@ -166,7 +163,7 @@ $().ready(function() {
         },
         messages: {
 
-            imagen_url: {
+            id_proveedor: {
                 required: "Campo requerido"
             },
             descripcion: {
@@ -175,16 +172,17 @@ $().ready(function() {
             id_marca: {
                 required: "Campo requerido"
             },
-            nombre: {
+            codigo_proveedor: {
                 required: "Campo requerido"
             },
-            codigo: {
+            precio: {
                 required: "Campo requerido"
             },
-            punto_pedido: {
+            fecha: {
                 required: "Campo requerido"
             }
         }
     });
 });
+ 
 </script>
