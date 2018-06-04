@@ -11,7 +11,6 @@ class ProductoProveedorController extends Gabinando_Base {
 				$params = $this->getRequest()->getPost();
 				$productoproveedorModel = new Application_Model_ProductoProveedor();
 				$productoExistente = $productoproveedorModel->getProductosByParams($params['cod_producto_proveedor']);
-
 				
 				if($productoExistente instanceof Exception){
 	                Gabinando_Base::addError($productoExistente->getMessage());
@@ -50,32 +49,26 @@ class ProductoProveedorController extends Gabinando_Base {
 	public function costoAction(){
 			if($this->getRequest()->isPost()){
 				$params = $this->getRequest()->getPost();
-				$productoproveedorModel = new Application_Model_ProductoProveedor();
-				$productoExistente = $productoproveedorModel->getProductosByParams($params['cod_producto_proveedor']);
+				$costoproductoproveedorModel = new Application_Model_ProductoProveedorPrecio();
+				$fecha = date("Y-m-d", strtotime($params['fecha']));
+				// die(var_dump($fecha));
 
-				
-				if($productoExistente instanceof Exception){
-	                Gabinando_Base::addError($productoExistente->getMessage());
-	                $this->_redirect('/productoproveedor/add');
-	            // si el producto no fue agregado anteriormente -> agrego nuevo producto
-	            }elseif($productoExistente == null){
-	            	$paramsProducto = array(
-					    "id_proveedor"				=> $params['id_proveedor'],
-					    "codigo_producto_proveedor" 	=> $params['cod_producto_proveedor'],
-					    "codigo_producto"				=> $params['cod_producto'],
-					);
-	           		$result = $productoproveedorModel->add($paramsProducto);
-	           		if($result instanceof Exception){
-		                Gabinando_Base::addError($result->getMessage());
-	            	}
-	           		
-	            	Gabinando_Base::addSuccess('Producto del proveedor agregado correctamente');
-	            	$this->_redirect('/productoproveedor/list');
-	            }else{
+            	$paramsProducto = array(
+				    "id_proveedor"				=> $params['id_proveedor'],
+				    "codigo_producto_proveedor" 	=> $params['codigo_producto_proveedor'],
+				    "fecha"				=> $fecha,
+				    "descuento"				=> $params['descuento'],
+				    "precio"				=> $params['precio']
+				);
 
-	            	Gabinando_Base::addError('Ya existe un producto con ese código para esa marca.');
-	            }
-	        	$this->_redirect('/productoproveedor/add');
+           		$result = $costoproductoproveedorModel->add($paramsProducto);
+           		if($result instanceof Exception){
+	                Gabinando_Base::addError($result->getMessage());
+            	}
+           		
+            	Gabinando_Base::addSuccess('Costo del producto del proveedor agregado correctamente');
+	            
+	        	$this->_redirect('/productoproveedor/costo');
 			}else{
 				$productoproveedorModel = new Application_Model_ProductoProveedor();
 				$proveedorModel = new Application_Model_Proveedor();
@@ -148,6 +141,34 @@ class ProductoProveedorController extends Gabinando_Base {
 			));
 
 	}
+
+	public function getcodigosproveedorAction(){
+		if($this->getRequest()->isPost()){
+			$params = $params = $this->getRequest()->getParams();
+			$producto = new Application_Model_ProductoProveedor();
+			$listadoProductos = $producto->getProductosByProveedor($params["id_proveedor"]);
+			// die(var_dump($listadoProductos));
+			$this->sendSuccessResponse(array(
+				'listadoProductos' 		=> $listadoProductos
+				// 'pages' 		=> $pages,
+				// 'page' 			=> $paginate['page']
+			));
+
+			// die('TERMINAR SELECT, SI ELIJO UN PROVEEDOR, SOLO ME MUESTRA LOS PRODUCTOS DEL SELECCIONADO');
+			// $this->view->listadoProductospByProv = $listadoProductos;
+
+
+		}
+	}
+
+	public function verequivalentes(){
+		if($this->getRequest()->isPost()){
+			$params = $this->getRequest()->getPost();
+
+
+		}
+	}
+
 
 
 }
