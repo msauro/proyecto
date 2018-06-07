@@ -84,6 +84,7 @@ class ProductoProveedorController extends Gabinando_Base {
 	public function listAction() {
 		$producto = new Application_Model_ProductoProveedor();
 		$listadoProductos = $producto->getList();
+
 		$this->view->listadoProductos = $listadoProductos;
     }
 
@@ -92,7 +93,6 @@ class ProductoProveedorController extends Gabinando_Base {
 		$id_proveedor = NULL;
 		$params["id_proveedor"] = NULL;
 		$params 	 = $params = $this->getRequest()->getParams();
-		
 		if ($params["id_proveedor"]) {
 			$id_proveedor = $params["id_proveedor"];
 		}
@@ -123,11 +123,13 @@ class ProductoProveedorController extends Gabinando_Base {
 		$productos = $productoproveedorModel->getListFiltered($search,$paginate,$id_proveedor);
 		if($productos instanceof Exception)
 			$this->sendErrorResponse($productos->getMessage());
-		$productoPager = $producto->getListFiltered($search,NULL);
+
+		$productoPager = $productoproveedorModel->getListFiltered($search,NULL,NULL);
+	die(var_dump($productoPager));
 		if($productoPager instanceof Exception)
 			$this->sendErrorResponse($productoPager->getMessage());
 
-		$productoList = $producto->getList($search);
+		$productoList = $productoproveedorModel->getList($search);
 		if($productoList instanceof Exception)
 			$this->sendErrorResponse($productoList->getMessage());
 
@@ -161,10 +163,10 @@ class ProductoProveedorController extends Gabinando_Base {
 		}
 	}
 
-	public function verequivalentes(){
+	public function compararcostoAction(){
 		if($this->getRequest()->isPost()){
 			$params = $this->getRequest()->getPost();
-
+die(var_dump($params));
 
 		}
 	}

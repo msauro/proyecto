@@ -41,9 +41,9 @@ class Application_Model_Producto extends Application_Model_Base
                 WHERE ep.id_producto = '$codigo'";
         $db = Zend_Db_Table_Abstract::getDefaultAdapter();
         $stmt = $db->query($query);
-        $cantVentas =  $stmt->fetchAll();
+        $equivalentes =  $stmt->fetchAll();
         
-        return $cantVentas;
+        return $equivalentes;
     }
 
     public function getListPrecios($tipoCliente,$hoy){

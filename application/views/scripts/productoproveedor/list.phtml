@@ -128,7 +128,7 @@ $(".xn-icon-button").fadeIn();
                 var params = {};
                 params.codigo = $(this).attr('data-id');
 
-                panelAjax("/productoproveedor/verequivalentes",params, function(data){
+                panelAjax("/productoproveedor/compararcosto",params, function(data){
                     $("#equivalen").html('');
                     $("#equivalen").html(data);           
                     $('#modal_ver_equivalentes').modal('show');

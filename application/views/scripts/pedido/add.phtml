@@ -940,7 +940,7 @@ function getProducts(){
     if (params.page < 0) { params.page = 1; };
 
     panelAjax("/productoproveedor/getproductos/",params, function(data){
-       
+       console.log(data);
         $(".products tbody").html('');
         $.each(data.productos, function( index, value ){
             item = "<tr id='id_producto' value='"+ value.id +"'>" +

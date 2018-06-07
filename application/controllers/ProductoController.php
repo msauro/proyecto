@@ -226,9 +226,13 @@ class ProductoController extends Gabinando_Base {
 				$productoModel = new Application_Model_Producto();
 				$producto = $productoModel->getProductoById($id);
 				$producto['equivalente'] = $productoModel->getProductoEquivalenteById($producto['codigo']);
-
+				
 				$originalModel = new Application_Model_ProductoOriginal();
 				$listadoOriginal = $originalModel->getList();
+				
+				if (!$producto['equivalente']) {
+					$producto['equivalente'] = $listadoOriginal;
+				}
 
 				$this->view->listadoOriginal = $listadoOriginal;
 				$this->view->listadoEquivalente = $producto['equivalente'];
