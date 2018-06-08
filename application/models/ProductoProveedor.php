@@ -83,7 +83,7 @@ class Application_Model_ProductoProveedor extends Application_Model_Base
         $search= $search['search'];
         if ($id_proveedor) {
              $query = 
-                "SELECT `producto_proveedor`.*, `marcas`.`nombre` AS `nom_marca`, `existencias`.`cantidad`, `producto_proveedor_precio`.*
+                "SELECT `productos`.*, `producto_proveedor`.*, `marcas`.`nombre` AS `nom_marca`, `existencias`.`cantidad`, `producto_proveedor_precio`.*
                 FROM `producto_proveedor`
                 INNER JOIN `productos` ON productos.codigo = producto_proveedor.codigo_producto
                 INNER JOIN `marcas` ON marcas.id = productos.id_marca
@@ -104,34 +104,32 @@ class Application_Model_ProductoProveedor extends Application_Model_Base
                 AND (productos.eliminado = 0) 
                 AND (marcas.eliminado = 0) 
                 GROUP BY `productos`.`id`";
+        }else{
+            $query = 
+                "SELECT `productos`.*,  `marcas`.`nombre` AS `nom_marca`, `existencias`.`cantidad`
+                FROM `producto_proveedor`
+                INNER JOIN `productos` ON productos.codigo = producto_proveedor.codigo_producto
+                INNER JOIN `marcas` ON marcas.id = productos.id_marca
+                INNER JOIN (
+                    SELECT MAX(id) AS maxid, id_producto
+                        FROM existencias
+                        GROUP BY id_producto
+                ) AS t2 ON t2.id_producto = productos.id
+                INNER JOIN `existencias` ON existencias.id = t2.maxid
+                WHERE (existencias.eliminado = 0) 
+                AND (productos.eliminado = 0) 
+                AND (marcas.eliminado = 0) 
+                -- AND ('productos.codigo LIKE %$search% OR productos.nombre LIKE %$search% OR productos.descripcion LIKE %$search%')
+                GROUP BY `productos`.`id`";
         }
-        // else{
-        //     $query = 
-        //         "SELECT `productos`.*, `precios`.`precio`, `marcas`.`nombre` AS `nom_marca`, `existencias`.`cantidad`
-        //         FROM `productos`
-        //         INNER JOIN `precios` ON precios.id_producto = productos.id
-        //         INNER JOIN `marcas` ON marcas.id = productos.id_marca
-        //         INNER JOIN (
-        //             SELECT MAX(id) AS maxid, id_producto
-        //                 FROM existencias
-        //                 GROUP BY id_producto
-        //         ) AS t2 ON t2.id_producto = productos.id
-        //         INNER JOIN `existencias` ON existencias.id = t2.maxid
-        //         WHERE (existencias.eliminado = 0) 
-        //         AND (productos.eliminado = 0) 
-        //         AND (marcas.eliminado = 0) 
-        //         AND (precios.eliminado = 0) 
-        //         -- AND ('productos.codigo LIKE %$search% OR productos.nombre LIKE %$search% OR productos.descripcion LIKE %$search%')
-        //         GROUP BY `productos`.`id`";
-        // }
 
         if ($paginate)
             $query.= "LIMIT ".$paginate['per_page']." OFFSET ". $paginate['start_from'];
 
-
         $db = Zend_Db_Table_Abstract::getDefaultAdapter();
         $stmt = $db->query($query);
         $productos =  $stmt->fetchAll();
+
         return $productos;
         
     }

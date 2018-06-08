@@ -30,7 +30,7 @@ $this->headTitle($this->title);
                             <li>
                                 <a href="#step-1" class="step-1">
                                     <span class="stepNumber">1</span>
-                                    <span class="stepDesc">Seleccionar<br /><small>Proveedor o Marca</small></span>
+                                    <span class="stepDesc">Seleccionar<br /><small> Proveedor</small></span>
                                 </a>
                             </li>
 
@@ -43,7 +43,7 @@ $this->headTitle($this->title);
                             <li>
                                 <a href="#step-3" class="step-3">
                                     <span class="stepNumber">3</span>
-                                    <span class="stepDesc">Fin del<br /><small>Pedido</small></span>
+                                    <span class="stepDesc">Fin del<br /><small> Pedido</small></span>
                                 </a>
                             </li>
 
@@ -52,15 +52,15 @@ $this->headTitle($this->title);
 
                         <div id="step-1">
                             <!-- START STRIPED TABLE SAMPLE -->
-                            <div class="form-group">  
+                            <!-- <div class="form-group">  
                                 <select id="proveedor-marca" class="col-md-9 form-control select">
                                     <option value="null" data-thumbnail="images/icon-chrome.png">Seleccionar marca o proveedor</option>
                                     <option value="marca"><i class="fa fa-credit-card" aria-hidden="true"></i>Marca</option>
                                     <option value="proveedor"><i class="fa fa-credit-card" aria-hidden="true"></i>Proveedor</option>
                                 </select>
-                            </div>
+                            </div> -->
                             <!-- PROVEEDORES -->
-                            <div class="panel panel-default proveedor" style="display:none;" id="proveedor">
+                            <div class="panel panel-default proveedor"  id="proveedor">
                                 <div class="panel-heading">
                                     <h3 class="panel-title">Proveedores</h3>
                                     <div class="col-md-2" style="float:right;">
@@ -115,7 +115,7 @@ $this->headTitle($this->title);
                                 </div>
                             </div>
                             <!-- MARCAS -->
-                            <div class="panel panel-default marca" style="display:none;" id="marca">
+                            <!-- <div class="panel panel-default marca" style="display:none;" id="marca">
                                 <div class="panel-heading">
                                     <h3 class="panel-title">Marcas</h3>
                                     <div class="col-md-2" style="float:right;">
@@ -168,7 +168,7 @@ $this->headTitle($this->title);
                                         </div>
                                     <?php endif; ?>
                                 </div>
-                            </div>
+                            </div> -->
                             <!-- END STRIPED TABLE SAMPLE -->
                         </div>
 
@@ -195,7 +195,7 @@ $this->headTitle($this->title);
                                     <thead>
                                         <tr>
                                             <th>Código</th>
-                                            <th>Nombre</th>
+                                            <th>Descripción</th>
                                             <th>Marca</th>
                                             <th>Cód. Proveedor</th>
                                             <th>Stock</th>
@@ -221,41 +221,171 @@ $this->headTitle($this->title);
                                 <div class="panel-heading">
                                     <h3 class="panel-title">Resumen del pedido</h3>
                                 </div>
-                                <div class="panel-body">
-                                       <div class="panel-ctate col-md-12" >
-                                        <label class="col-md-2 control-label" style="width:auto; text-align:left;">Cuenta Corriente</label>
-                                            <div class="col-md-2">
-                                                <label class="switch">
-                                                  <input id="switch-ctacte" type="checkbox" data-size="mini">
-                                                  <span class="slider round"></span>
-                                              </label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 " id="methods" >
-                                            <div class="form-group">  
-                                                <select id="payment-methods" class="col-md-9 form-control select">
-                                                    <option value="null" data-thumbnail="images/icon-chrome.png">Seleccionar forma de pago</option>
-                                                    <option value="efectivo"><i class="fa fa-credit-card" aria-hidden="true"></i>Efectivo</option>
-                                                  <optgroup data-subtext="<i class='fa fa-credit-card'></i>" label="Tarjetas">
-                                                    <option id="amex-card" value="amex" data-subtext="<i class='fa fa-cc-amex fa-2x'></i>" >American Express<span class="caret"></span></option>
-                                                    <option value="master" data-subtext="<i class='fa fa-cc-mastercard fa-2x'></i>">Master Card<span class="caret"></span></option>
-                                                    <option value="visa" data-subtext="<i class='fa fa-cc-visa fa-2x'></i>">Visa<span class="caret"></span></option>
-                                                    <!--<option value="clave" data-subtext="<i class='fa fa-credit-card fa-2x'></i>">Clave<span class="caret"></span></option> -->
-                                                  </optgroup>
-                                                </select>
-                                            </div>
-                                            <div  id="type-cash" style="display:none;">
-                                                <div class="form-group">                                    
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon"><span class="fa fa fa-money"></span></span>
-                                                        <input class="form-control" type="number" placeholder="Ingrese el monto en efectivo" id="cashamount">
-                                                        <span class="input-group-addon"><attr data-toggle="tooltip" title="Si no abona la totalidad el resto pasará a la cuenta corriente"><span class="fa fa-info-circle fa-lg info"></span></attr></span>
-                                                    </div>                                               
-                                                </div>
-                                            </div>
-                                        </div>
+                                 <div class="row">
+                                         <div class="col-sm-12">
+                                         <!-- EDIT FORM -->
+                                             <form id="edit-form" class="form-horizontal" method="post" enctype="multipart/form-data">
+                                                     <div class="panel-body">
+                                                         <div class="row">
+                                                             <div class="col-xs-12">
+                                                                 <div class="invoice-title">
+                                                                    <img src="/resources/logo.png"> <spam id="factura">N.P.</spam> <h3 class="pull-right">Pedido N°: #<?php echo $this->venta['id']; ?> </h3>
+                                                                 </div>
+                                                                 <hr>
+                                                                 <div class="row">
+                                                                     <div class="col-xs-6">
+                                                                         <address>
+                                                                         <strong>GABINANDO S.R.L</strong><br>
+                                                                             Santiago 1569<br>
+                                                                             2000 - Rosario<br>
+                                                                             IVA Responsable Inscripto<br>
+                                                                             CUIT: 30-33301419-0<br>
+                                                                             Inicio Actividades: 05/04/1966
+                                                                         </address>
+                                                                     </div>
+                                                                     <div class="col-xs-6 text-right">
+                                                                         <address>
+                                                                         <strong>Datos del proveedor</strong><br>
+                                                                         <?php if ($this->venta["razon_social"])    : ?>
+                                                                             Razón social: <?php echo $this->venta["razon_social"]?><br>
+                                                                         <?php endif ?>
+                                                                         <?php if ($this->venta["nombre"])  : ?>
+                                                                             <?php echo $this->venta["nombre"].' '.$this->venta["apellido"]?><br>
+                                                                         <?php endif ?>
+                                                                         <?php if ($this->venta["cuit"] != 0)  : ?>
 
-                                    </div>
+                                                                             CUIT: <?php echo $this->venta["cuit"]?><br>
+                                                                             <?php echo $this->venta["direccion"]?><br>
+                                                                         <?php endif ?>
+                                                                         </address>
+                                                                     </div>
+                                                                 </div>
+                                                                 <hr>
+                                                                 <div class="row">
+                                                                     <div class="col-xs-6">
+                                                                         <address>
+                                                                             <strong>Forma de pago</strong><br>
+                                                                             <?php switch ($this->venta["forma_pago"]) {
+                                                                                 case 'ctacte':
+                                                                                     echo "Cuenta Corriente";
+                                                                                     break;
+                                                                                 case 'efectivo':
+                                                                                     echo "Efectivo";
+                                                                                     break;
+                                                                                 case 'amex':
+                                                                                     echo "Tarjeta: American Express";
+                                                                                     break;
+                                                                                 case 'visa':
+                                                                                     echo "Tarjeta: Visa";
+                                                                                     break;
+                                                                                 case 'master':
+                                                                                     echo "Tarjeta: Master Card";
+                                                                                     break;
+                                                                             }
+                                                                  
+                                                                             ?>
+                                                                         </address>
+                                                                     </div>
+                                                                     <div class="col-xs-6 text-right">
+                                                                         <address>
+                                                                             <strong>Fecha:</strong><br>
+                                                                             <?php echo date("d/m/Y h:i:s", strtotime($this->venta["fecha"])); ?><br><br>
+                                                                         </address>
+                                                                     </div>
+                                                                 </div>
+                                                             </div>
+                                                         </div>
+                                                             
+                                                         <div class="row">
+                                                             <div class="col-md-12">
+                                                                 <div class="panel panel-default">
+                                                                     <div class="panel-heading">
+                                                                         <h3 class="panel-title"><strong>Resumen</strong></h3>
+                                                                     </div>
+                                                                     <div class="panel-body">
+                                                                         <div class="table-responsive">
+                                                                             <table class="table table-condensed">
+                                                                                 <thead>
+                                                                                     <tr>
+                                                                                         <td><strong>Código</strong></td>
+                                                                                         <td class="text-center"><strong>Descripción</strong></td>
+                                                                                         <td class="text-center"><strong>Precio unitario</strong></td>
+                                                                                         <td class="text-center"><strong>Cantidad</strong></td>
+                                                                                         <td class="text-right"><strong>Total</strong></td>
+                                                                                     </tr>
+                                                                                 </thead>
+                                                                                 <tbody>
+                                                                                     <!-- foreach ($order->lineItems as $line) or some such thing here -->
+                                                                                 <?php foreach ($this->venta["detalle"] as $detalle) { ?>
+                                                                                     <tr>
+                                                                                         <td><?php echo  $detalle['codigo'] ?></td>
+                                                                                         <td class="center"><?php echo  $detalle['descripcion'] ?></td>
+                                                                                         <td class="text-center">$<?php echo  $detalle['precio'] ?></td>
+                                                                                         <td class="text-center"><?php echo  $detalle['cantidad'] ?></td>
+                                                                                         <td class="text-right">$<?php echo ($detalle['precio']*$detalle['cantidad'])?></td>
+                                                                                     </tr>
+                                                                                 <?php } ?>
+                                                                                    
+                                                                                     <tr>
+                                                                                         <td class="thick-line"></td>
+                                                                                         <td class="thick-line"></td>
+                                                                                         <td class="thick-line"></td>
+                                                                                         <td class="thick-line text-center"><strong>Subtotal</strong></td>
+                                                                                         <td class="thick-line text-right">$<?php echo  $this->venta['subtotal'] ?></td>
+                                                                                     </tr>
+                                                                                     <?php if ($this->venta['descuento'] > 0) { ?>
+                                                                                     <tr>
+                                                                                         <td class="no-line"></td>
+                                                                                         <td class="no-line"></td>
+                                                                                         <td class="no-line"></td>
+                                                                                         <td class="no-line text-center"><strong>Descuento (<?php echo ($this->venta['descuento'])?>%)</strong></td>
+                                                                                         <td class="no-line text-right">-$<?php echo ($this->venta['subtotal'] *$this->venta['descuento']/100)?></td>
+                                                                                     </tr>
+                                                                                     <?php } ?>
+                                                                                     <tr>
+                                                                                         <td class="no-line"></td>
+                                                                                         <td class="no-line"></td>
+                                                                                         <td class="no-line"></td>
+                                                                                         <td class="no-line text-center"><strong>IVA (21%)</strong></td>
+                                                                                         <td class="no-line text-right">$<?php echo  $this->venta['iva_calculado'] ?></td>
+                                                                                     </tr>
+                                                                                     <?php if ($this->venta['envio'] > 0) { ?>
+                                                                                     <tr>
+                                                                                         <td class="no-line"></td>
+                                                                                         <td class="no-line"></td>
+                                                                                         <td class="no-line"></td>
+                                                                                         <td class="no-line text-center"><strong>Envío</strong></td>
+                                                                                         <td class="no-line text-right">$<?php echo  $this->venta['envio'] ?></td>
+                                                                                     </tr>
+                                                                                     <?php } ?>
+                                                                                     <tr>
+                                                                                         <td class="no-line"></td>
+                                                                                         <td class="no-line"></td>
+                                                                                         <td class="no-line"></td>
+                                                                                         <td class="no-line text-center"><strong>Total</strong></td>
+                                                                                         <td class="no-line text-right"><strong>$<?php echo  $this->venta['total'] ?></strong></td>
+                                                                                     </tr>
+                                                                                 </tbody>
+                                                                             </table>
+                                                                         </div>
+                                                                     </div>
+                                                                 </div>
+                                                             </div>
+                                                         </div>
+                                                         
+
+                                                         
+
+                                                     </div>
+                                                     <div class="panel-footer">
+                                                         <button class="btn btn-default" type="button" onclick="history.back()">Volver</button>
+                                                         <button class="btn btn-primary pull-right">Guardar</button>
+                                                     </div>
+                                                 
+                                             </form>
+                                             
+                                         </div>
+                                     </div> 
                             </div>
                             
                         </div>
@@ -288,9 +418,9 @@ $this->headTitle($this->title);
                                             <li class="fa fa-square-o">
                                                 <span class="stepDesc">Proveedor seleccionado: <span id="proveedor-seleccionado"></span> </span>
                                             </li>
-                                            <li class="fa fa-square-o">
+                                            <!-- <li class="fa fa-square-o">
                                                 <span class="stepDesc">Marca seleccionada: <span id="marca-seleccionada"></span> </span>
-                                            </li>
+                                            </li> -->
                                             <li id="selected-products" class="fa fa-square-o">
                                                 <span class="stepDesc">Productos seleccionados:</span>
                                                 <div class="table-responsive" style="margin-top:10px;">
@@ -637,9 +767,10 @@ $this->headTitle($this->title);
     $(".products tbody").on( "click", "tr .select-product", function() {
         // Add Product
         producto_id = $(this).closest("tr").find("#id").text();
-        producto_codigo = $(this).closest("tr").find("#codigo").text();
+        producto_codigo = $(this).closest("tr").find("#codigo_producto").text();
         producto_marca = $(this).closest("tr").find("#marca").text();
         producto_precio = $(this).closest("tr").find("#precio").text();
+        codigo_proveedor = $(this).closest("tr").find("#codigo_proveedor").text();
         producto_imagen = $(this).closest("tr").find("#imagen_url").text();
 
         if(jQuery.inArray( producto_id, products ) >= 0){
@@ -659,7 +790,7 @@ $this->headTitle($this->title);
             '<td><input name="cant[]" value="1" aria-invalid="false" class="cantidad"></td>'+
             '<td>'+producto_codigo+'</td>'+
             '<td>'+producto_marca+'</td>'+
-            '<td>'+producto_codigo+'</td>'+
+            '<td>'+codigo_proveedor+'</td>'+
             '<td>$'+producto_precio+'</td>'+
             '<th><span class="fa fa-trash-o"></span></th>'+
             '</tr>');
@@ -905,7 +1036,7 @@ function resetForm(step){
         $("#form-location").val('');
         $("#form-total").parent().removeClass('fa-check-square-o');
         $("#form-total").parent().addClass('fa-square-o');
-        $("#form-total").html('Forma de pago');
+        $("#form-total").html('Resumen del pedido');
         $("#form-driver").val('');
         $("#selected-products table tbody").empty();          
         $("#selected-products").removeClass("fa-check-square-o");
@@ -945,10 +1076,10 @@ function getProducts(){
         $.each(data.productos, function( index, value ){
             item = "<tr id='id_producto' value='"+ value.id +"'>" +
             "<td id='id' class='hidden'>" + value.id + "</td>" +
-            "<td id='codigo'>" + value.codigo + "</td>" +
-            "<td id='nombre'>" + value.nombre + "</td>" +
+            "<td id='codigo_producto'>" + value.codigo_producto + "</td>" +
+            "<td id='descripcion'>" + value.descripcion + "</td>" +
             "<td id='marca'>" + value.nom_marca + "</td>" +
-            "<td id='codigo_proveedor'>" + value.nombre + "</td>" +
+            "<td id='codigo_proveedor'>" + value.codigo_producto_proveedor + "</td>" +
             "<td id='existencia'>" + value.cantidad + "</td>" +
             "<td id='imagen_url' class='hidden'>" + value.imagen_url + "</td>" +
             "<td id='precio'>" + value.precio + "</td>";

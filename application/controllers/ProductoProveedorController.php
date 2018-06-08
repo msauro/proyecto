@@ -125,7 +125,6 @@ class ProductoProveedorController extends Gabinando_Base {
 			$this->sendErrorResponse($productos->getMessage());
 
 		$productoPager = $productoproveedorModel->getListFiltered($search,NULL,NULL);
-	die(var_dump($productoPager));
 		if($productoPager instanceof Exception)
 			$this->sendErrorResponse($productoPager->getMessage());
 
