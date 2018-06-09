@@ -320,3 +320,8 @@ body.page-container-boxed {
 .wizard #step-3-pedido{
   width: 67%;
 }
+#notapedido{
+  text-align: center;
+  font-size: 40px;
+  
+}

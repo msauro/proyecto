@@ -5,7 +5,7 @@ $this->headTitle($this->title);
 <!-- START BREADCRUMB -->
 <ul class="breadcrumb">
     <li><a href="/">Panel Principal</a></li>
-    <li><a href="/venta/list">Pedido</a></li>
+    <li><a href="/pedido/list">Pedido</a></li>
     <li class="active">Nuevo</li>
 </ul>
 <!-- END BREADCRUMB -->
@@ -114,7 +114,7 @@ $this->headTitle($this->title);
                                     <?php endif; ?>
                                 </div>
                             </div>
-                            <!-- MARCAS -->
+                            <!-- MARCAS LO DEJO COMENTADO YA QUE SOLO PIDO POR PROVEEDOR -->
                             <!-- <div class="panel panel-default marca" style="display:none;" id="marca">
                                 <div class="panel-heading">
                                     <h3 class="panel-title">Marcas</h3>
@@ -214,7 +214,7 @@ $this->headTitle($this->title);
                             </div>
                             <!-- END STRIPED TABLE SAMPLE -->
                         </div>
-                        <!-- //Finalizar venta -->
+                        <!-- //Finalizar pedido -->
                         <div id="step-3">
                             <!-- START STRIPED TABLE SAMPLE -->
                             <div class="panel panel-default ">
@@ -229,7 +229,7 @@ $this->headTitle($this->title);
                                                          <div class="row">
                                                              <div class="col-xs-12">
                                                                  <div class="invoice-title">
-                                                                    <img src="/resources/logo.png"> <spam id="factura">N.P.</spam> <h3 class="pull-right">Pedido N°: #<?php echo $this->venta['id']; ?> </h3>
+                                                                    <img src="/resources/logo.png">  <h3 class="pull-right">Nota de Pedido </h3>
                                                                  </div>
                                                                  <hr>
                                                                  <div class="row">
@@ -245,51 +245,20 @@ $this->headTitle($this->title);
                                                                      </div>
                                                                      <div class="col-xs-6 text-right">
                                                                          <address>
-                                                                         <strong>Datos del proveedor</strong><br>
-                                                                         <?php if ($this->venta["razon_social"])    : ?>
-                                                                             Razón social: <?php echo $this->venta["razon_social"]?><br>
-                                                                         <?php endif ?>
-                                                                         <?php if ($this->venta["nombre"])  : ?>
-                                                                             <?php echo $this->venta["nombre"].' '.$this->venta["apellido"]?><br>
-                                                                         <?php endif ?>
-                                                                         <?php if ($this->venta["cuit"] != 0)  : ?>
-
-                                                                             CUIT: <?php echo $this->venta["cuit"]?><br>
-                                                                             <?php echo $this->venta["direccion"]?><br>
-                                                                         <?php endif ?>
+                                                                             <strong>Datos del proveedor</strong><br>
+                                                                             <div id="datos-proveedor">
+                                                                             </div>
                                                                          </address>
                                                                      </div>
                                                                  </div>
                                                                  <hr>
                                                                  <div class="row">
                                                                      <div class="col-xs-6">
-                                                                         <address>
-                                                                             <strong>Forma de pago</strong><br>
-                                                                             <?php switch ($this->venta["forma_pago"]) {
-                                                                                 case 'ctacte':
-                                                                                     echo "Cuenta Corriente";
-                                                                                     break;
-                                                                                 case 'efectivo':
-                                                                                     echo "Efectivo";
-                                                                                     break;
-                                                                                 case 'amex':
-                                                                                     echo "Tarjeta: American Express";
-                                                                                     break;
-                                                                                 case 'visa':
-                                                                                     echo "Tarjeta: Visa";
-                                                                                     break;
-                                                                                 case 'master':
-                                                                                     echo "Tarjeta: Master Card";
-                                                                                     break;
-                                                                             }
-                                                                  
-                                                                             ?>
-                                                                         </address>
                                                                      </div>
                                                                      <div class="col-xs-6 text-right">
                                                                          <address>
                                                                              <strong>Fecha:</strong><br>
-                                                                             <?php echo date("d/m/Y h:i:s", strtotime($this->venta["fecha"])); ?><br><br>
+                                                                             <?php echo date("d/m/Y h:i:s"); ?><br><br>
                                                                          </address>
                                                                      </div>
                                                                  </div>
@@ -307,64 +276,12 @@ $this->headTitle($this->title);
                                                                              <table class="table table-condensed">
                                                                                  <thead>
                                                                                      <tr>
-                                                                                         <td><strong>Código</strong></td>
-                                                                                         <td class="text-center"><strong>Descripción</strong></td>
-                                                                                         <td class="text-center"><strong>Precio unitario</strong></td>
                                                                                          <td class="text-center"><strong>Cantidad</strong></td>
-                                                                                         <td class="text-right"><strong>Total</strong></td>
+                                                                                         <td class="text-center"><strong>Código Proveedor</strong></td>
+                                                                                         <td><strong>Código</strong></td>
                                                                                      </tr>
                                                                                  </thead>
-                                                                                 <tbody>
-                                                                                     <!-- foreach ($order->lineItems as $line) or some such thing here -->
-                                                                                 <?php foreach ($this->venta["detalle"] as $detalle) { ?>
-                                                                                     <tr>
-                                                                                         <td><?php echo  $detalle['codigo'] ?></td>
-                                                                                         <td class="center"><?php echo  $detalle['descripcion'] ?></td>
-                                                                                         <td class="text-center">$<?php echo  $detalle['precio'] ?></td>
-                                                                                         <td class="text-center"><?php echo  $detalle['cantidad'] ?></td>
-                                                                                         <td class="text-right">$<?php echo ($detalle['precio']*$detalle['cantidad'])?></td>
-                                                                                     </tr>
-                                                                                 <?php } ?>
-                                                                                    
-                                                                                     <tr>
-                                                                                         <td class="thick-line"></td>
-                                                                                         <td class="thick-line"></td>
-                                                                                         <td class="thick-line"></td>
-                                                                                         <td class="thick-line text-center"><strong>Subtotal</strong></td>
-                                                                                         <td class="thick-line text-right">$<?php echo  $this->venta['subtotal'] ?></td>
-                                                                                     </tr>
-                                                                                     <?php if ($this->venta['descuento'] > 0) { ?>
-                                                                                     <tr>
-                                                                                         <td class="no-line"></td>
-                                                                                         <td class="no-line"></td>
-                                                                                         <td class="no-line"></td>
-                                                                                         <td class="no-line text-center"><strong>Descuento (<?php echo ($this->venta['descuento'])?>%)</strong></td>
-                                                                                         <td class="no-line text-right">-$<?php echo ($this->venta['subtotal'] *$this->venta['descuento']/100)?></td>
-                                                                                     </tr>
-                                                                                     <?php } ?>
-                                                                                     <tr>
-                                                                                         <td class="no-line"></td>
-                                                                                         <td class="no-line"></td>
-                                                                                         <td class="no-line"></td>
-                                                                                         <td class="no-line text-center"><strong>IVA (21%)</strong></td>
-                                                                                         <td class="no-line text-right">$<?php echo  $this->venta['iva_calculado'] ?></td>
-                                                                                     </tr>
-                                                                                     <?php if ($this->venta['envio'] > 0) { ?>
-                                                                                     <tr>
-                                                                                         <td class="no-line"></td>
-                                                                                         <td class="no-line"></td>
-                                                                                         <td class="no-line"></td>
-                                                                                         <td class="no-line text-center"><strong>Envío</strong></td>
-                                                                                         <td class="no-line text-right">$<?php echo  $this->venta['envio'] ?></td>
-                                                                                     </tr>
-                                                                                     <?php } ?>
-                                                                                     <tr>
-                                                                                         <td class="no-line"></td>
-                                                                                         <td class="no-line"></td>
-                                                                                         <td class="no-line"></td>
-                                                                                         <td class="no-line text-center"><strong>Total</strong></td>
-                                                                                         <td class="no-line text-right"><strong>$<?php echo  $this->venta['total'] ?></strong></td>
-                                                                                     </tr>
+                                                                                 <tbody id="detalle">
                                                                                  </tbody>
                                                                              </table>
                                                                          </div>
@@ -373,9 +290,6 @@ $this->headTitle($this->title);
                                                              </div>
                                                          </div>
                                                          
-
-                                                         
-
                                                      </div>
                                                      <div class="panel-footer">
                                                          <button class="btn btn-default" type="button" onclick="history.back()">Volver</button>
@@ -389,7 +303,7 @@ $this->headTitle($this->title);
                             </div>
                             
                         </div>
-                        <!-- //Finalizar venta -->
+                        <!-- //Finalizar pedido -->
                         
                         <div id="summary">
                             <!-- START STRIPED TABLE SAMPLE -->
@@ -407,13 +321,6 @@ $this->headTitle($this->title);
                                         <input type="hidden" id="form-telefono" name="telefono">
                                         <input type="hidden" id="form-email" name="email">
 
-                                        <!--datos productos-->
-                                        
-                                        <!-- <input type="hidden" id="form-reason" name="reason"> -->
-                                        <!-- <input type="hidden" id="form-special-discount" name="special-discount"> -->
-                                        <!-- <input type="hidden" id="form-coupon" name="id_coupon"> -->
-                                        <!-- <input type="hidden" id="form-discount" name="discount"> -->
-                                        <!-- <input type="hidden" id="form-future_deliveries" name="future_deliveries"> -->
                                         <ul style="padding:0px;">
                                             <li class="fa fa-square-o">
                                                 <span class="stepDesc">Proveedor seleccionado: <span id="proveedor-seleccionado"></span> </span>
@@ -449,8 +356,8 @@ $this->headTitle($this->title);
                                                 <input id="resumen_efectivo_hidden" name="efectivo" type="hidden" value="0">
                                                 <!-- <input id="resumen_envio_hidden" name="envio" type="hidden" value="0"> -->
 
-                                                <input id="iva_hidden" name="iva" type="hidden" value="0">
-                                                <input id="ctacte_hidden" name="ctacte_hidden" type="hidden" value="0">
+                                                <!-- <input id="iva_hidden" name="iva" type="hidden" value="0"> -->
+                                                <!-- <input id="ctacte_hidden" name="ctacte_hidden" type="hidden" value="0"> -->
 
                                             </li>
                                             <li class="fa fa-square-o">
@@ -478,48 +385,16 @@ $this->headTitle($this->title);
     
 </div>
 <!-- END PAGE CONTENT WRAPPER -->                                                
-<!-- <div id="spinner">        
-</div> -->
-<!-- MODALS -->
-<!-- <div class="modal" id="modal_add_phone" tabindex="-1" role="dialog" aria-labelledby="defModalHead" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="smallModalHead">Create new phone number</h4>
-            </div>
-            <form id="addphone-modal-form" class="form-horizontal" action="/admin_patients/addphoneajax" method="post" enctype="multipart/form-data" novalidate="novalidate">
-                <div class="modal-body form-horizontal form-group-separated">                        
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Phone number</label>
-                        <div class="col-md-9">
-                            <input name="id_patient" id="id_patient" type="hidden" class="form-control">
-                            <input name="number" id="number" type="text" class="form-control" placeholder="Enter the phone number">
-                        </div>
-                    </div>
-                  
-                </div>
-                <div class="modal-footer">
-                    <button id="save-add" type="button" class="btn btn-success">Save</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div> -->
+
 <!-- END MODALS -->
 
 <!-- THIS PAGE PLUGINS -->
-<!-- <script type="text/javascript" src="/admin-public/js/plugins/moment.min.js"></script> -->
-<!-- <script type="text/javascript" src="/admin-public/js/plugins/bootstrap/bootstrap-datetimepicker.js"></script> -->
 <script type="text/javascript" src="/admin-public/js/plugins/bootstrap/bootstrap-file-input.js"></script>
 <script type="text/javascript" src="/admin-public/js/plugins/bootstrap/bootstrap-select.js"></script>
 <script type="text/javascript" src="/admin-public/js/jquery.validate.min.js"></script>
 <script type='text/javascript' src='/admin-public/js/plugins/icheck/icheck.min.js'></script>
 <script type="text/javascript" src="/admin-public/js/plugins/smartwizard/jquery.smartWizard-3.3.1.js"></script>
 <script type="text/javascript" src="/admin-public/js/plugins/jquery-validation/jquery.validate.js"></script>
-<!-- <script type="text/javascript" src="/admin-public/js/plugins/tagsinput/jquery.tagsinput.min.js"></script> -->
-<!-- <script type="text/javascript" src="/admin-public/js/additional-methods.min.js"></script> -->
 <!-- END THIS PAGE PLUGINS -->
 
 <script>
@@ -542,50 +417,6 @@ $this->headTitle($this->title);
     });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
     <?php if ( isset($this->patient) ) : ?>
         setTimeout(function(){
           $('.btn-buscar-cliente').click();
@@ -601,50 +432,50 @@ $this->headTitle($this->title);
         var action = $("#add-form").attr("action");
         result = panelAjax(action,params, function(data){
             if(data == true)
-               window.location.href = "/venta/add";
+               window.location.href = "/pedido/add";
        });
     });    
 
     $(".actionBar").insertBefore(".stepContainer")
 
-    $('#discount_options').on('change', function(){
-        var reason = $('option:selected', this).attr('attr-reason');
-        var amount = $('option:selected', this).attr('attr-amount');       
-        if(reason==1){
-            $('#reason').show();
-            $('#reason').css("display", "block");
-            $('#discount').attr('readonly', false);
-            $('#discount').val();
-        }else{
-            $('#reason').hide();
-            $('#reason').css("display", "none");
-            $('#discount').val(amount);
-            $('#discount').attr('readonly', true);
-            $('#reason_value').text('');
-        }      
-        $("#discount").trigger("keyup");     
-    }); 
+    // $('#discount_options').on('change', function(){
+    //     var reason = $('option:selected', this).attr('attr-reason');
+    //     var amount = $('option:selected', this).attr('attr-amount');       
+    //     if(reason==1){
+    //         $('#reason').show();
+    //         $('#reason').css("display", "block");
+    //         $('#discount').attr('readonly', false);
+    //         $('#discount').val();
+    //     }else{
+    //         $('#reason').hide();
+    //         $('#reason').css("display", "none");
+    //         $('#discount').val(amount);
+    //         $('#discount').attr('readonly', true);
+    //         $('#reason_value').text('');
+    //     }      
+    //     $("#discount").trigger("keyup");     
+    // }); 
 
      //si el tipo de pago en el select no es efectivo esconde el campo
-    $("#payment-methods").on('change', function() {
-        var type_cash = document.getElementById("payment-methods").value;
-        if (type_cash == 'efectivo'){ 
-            $("#type-cash").show();
-            $("#cashamount").val($('#total_cost_hidden').val());
-        }else{ 
-            $("#type-cash").hide();
-        }
-        resumen();
-    });
+    // $("#payment-methods").on('change', function() {
+    //     var type_cash = document.getElementById("payment-methods").value;
+    //     if (type_cash == 'efectivo'){ 
+    //         $("#type-cash").show();
+    //         $("#cashamount").val($('#total_cost_hidden').val());
+    //     }else{ 
+    //         $("#type-cash").hide();
+    //     }
+    //     resumen();
+    // });
 
     // if ($("#tipo_cliente_hidden").val() != 'Particular') {
     //     $(".panel-ctate").show();
     // }
 
-    $('#cashamount').on('change', function(){
-        cashamount = $('cashamount').val();
-        resumen();
-    });
+    // $('#cashamount').on('change', function(){
+    //     cashamount = $('cashamount').val();
+    //     resumen();
+    // });
 
 });
 
@@ -689,14 +520,14 @@ $this->headTitle($this->title);
                 }
                 params.productos = productos;
                 //params.futureDeliveries = futureDeliveries;
-                panelAjax("/venta/setventa",params, function(data){              
+                panelAjax("/pedido/setpedido",params, function(data){              
 
                     if(data){
                         if(is_ordered){                          
                             updateTimeDonations();                           
                         }
                         else{
-                            setTimeout(function(){ window.location.href = "/venta/add"; }, 2000);                               
+                            setTimeout(function(){ window.location.href = "/pedido/add"; }, 2000);                               
                         }
                     }else{
                         $(".buttonFinish").fadeIn();
@@ -786,6 +617,8 @@ $this->headTitle($this->title);
         $("#selected-products table tbody").append('<tr>'+
             '<input name="id_producto[]" type="hidden" value="'+producto_id+'">'+
             '<input name="precio[]" type="hidden" value="'+producto_precio+'">'+
+            '<input name="codigo_proveedor[]" type="hidden" value="'+codigo_proveedor+'">'+
+            '<input name="producto_codigo[]" type="hidden" value="'+producto_codigo+'">'+
             '<input name="subtotal[]" id="sub-res" type="hidden" value="'+producto_precio+'">'+
             '<td><input name="cant[]" value="1" aria-invalid="false" class="cantidad"></td>'+
             '<td>'+producto_codigo+'</td>'+
@@ -846,13 +679,13 @@ $this->headTitle($this->title);
         timeoutID = setTimeout(function() { getProducts(); }, 500); 
     });
 
-    $('#buscar-cliente').keyup(function(event) {
-        var search = $('#buscar-cliente').val();
-        if(search.length > 3 || event.keyCode == 13){
-            clearTimeout(timeoutID);
-            timeoutID = setTimeout(function() { getClientes(search); }, 500);
-        }
-    });
+    // $('#buscar-cliente').keyup(function(event) {
+    //     var search = $('#buscar-cliente').val();
+    //     if(search.length > 3 || event.keyCode == 13){
+    //         clearTimeout(timeoutID);
+    //         timeoutID = setTimeout(function() { getClientes(search); }, 500);
+    //     }
+    // });
 
     $('.btn-buscar-producto').click(function() {
         getProducts();
@@ -897,8 +730,8 @@ $this->headTitle($this->title);
     $(".buttonNext").click(function(){
         var step = $('.wizard').smartWizard('currentStep');
         switch(step){
-            case 6:
-            $('#summarydiscounts').show();
+            case 3:
+            resumen();
             break;           
         }      
     });
@@ -990,8 +823,9 @@ function validateSteps(step) {
         case "3":
         var condicion = false; //condicion de que haya seleccionado la forma de pago
         var variable = false;  //variable que determina que si es consumidor final no puede ser ctacta
-        console.log(form_data.length);
-        if (form_data.length > 19) {
+        console.log('form_data');
+        console.log(form_data.total);
+        if (form_data.total > 0) {
             if(form_data[8]['value'] == 'Consumidor Final' && form_data[19]['value'] == 'ctacte'){
                 variable = true;
             }
@@ -1006,19 +840,19 @@ function validateSteps(step) {
 
             
         }
-        if(variable == true || condicion == true){
-            status = false;
-            if (variable) {
-                $('.wizard').smartWizard('showMessage','El consumidor final no tiene cuenta corriente.');
+        // if(variable == true || condicion == true){
+        //     status = false;
+        //     if (variable) {
+        //         $('.wizard').smartWizard('showMessage','El consumidor final no tiene cuenta corriente.');
 
-            }else{
-                $('.wizard').smartWizard('showMessage','Seleccione una forma de pago y haga click en "Finalizar".');
-            }
-            $('.wizard').smartWizard('setError',{stepnum:step,iserror:true});         
-        }else{
-            $('.wizard').smartWizard('hideMessage');
-            $('.wizard').smartWizard('setError',{stepnum:step,iserror:false});
-        }
+        //     }else{
+        //         $('.wizard').smartWizard('showMessage','Seleccione una forma de pago y haga click en "Finalizar".');
+        //     }
+        //     $('.wizard').smartWizard('setError',{stepnum:step,iserror:true});         
+        // }else{
+        //     $('.wizard').smartWizard('hideMessage');
+        //     $('.wizard').smartWizard('setError',{stepnum:step,iserror:false});
+        // }
            
         break;
         
@@ -1227,79 +1061,79 @@ function getProveedores(search){
     $("#list-proveedor").show();
 }
 
-//al hacer click en buscar, muestra las marcas
-function getMarcas(search){
+//al hacer click en buscar, muestra las marcas (no se usa)
+// function getMarcas(search){
 
-    $("div#spinner").fadeIn("fast");
-    $("#list-marca").hide();
-    var params = {};
-    params.search   = search;
-    params.page     = $('#page-marca').attr('rel');
-    if (params.page < 0) { params.page = 1; };
+//     $("div#spinner").fadeIn("fast");
+//     $("#list-marca").hide();
+//     var params = {};
+//     params.search   = search;
+//     params.page     = $('#page-marca').attr('rel');
+//     if (params.page < 0) { params.page = 1; };
     
-    panelAjax("/marca/getmarcas/",params, function(data){
-        $("#list-marca").html('');
-        $(".result-search-marca").html(data.marcas.length + ' de ' + data.total + ' marcas');
-        if (data.marcas.length == 0) {
-            $('.pagination').fadeOut(500);
-            var item = "<div class='col-md-12'>" +
-            "<div class='panel panel-default'>" +
-            "<div class='panel-body'>" +
-            "<p style='text-align:center;'>No se encontraron marcas</p>" + 
-            "</div>" +
-            "</div>" +
-            "</div>";
-            $("#list-marca").append(item);
-        }else{
-            pager = data.page + " de " + data.pages + "</span>";
+//     panelAjax("/marca/getmarcas/",params, function(data){
+//         $("#list-marca").html('');
+//         $(".result-search-marca").html(data.marcas.length + ' de ' + data.total + ' marcas');
+//         if (data.marcas.length == 0) {
+//             $('.pagination').fadeOut(500);
+//             var item = "<div class='col-md-12'>" +
+//             "<div class='panel panel-default'>" +
+//             "<div class='panel-body'>" +
+//             "<p style='text-align:center;'>No se encontraron marcas</p>" + 
+//             "</div>" +
+//             "</div>" +
+//             "</div>";
+//             $("#list-marca").append(item);
+//         }else{
+//             pager = data.page + " de " + data.pages + "</span>";
 
-            if (data.page == 1) {
-                $("#back-marca").hide();
-                $("#back-marca-disabled").show();
-                $("#next-marca").show();
-                $("#next-marca-disabled").hide();
-            }
-            $(".pagination-data").html(pager);
-            if (data.page < data.pages) {
-                $('.pagination').fadeIn(500);
-                if (data.page > 1) {
-                    $("#back-marca").show();
-                    $("#next-marca").show();
-                    $("#back-marca-disabled").hide();
-                    $("#next-marca-disabled").hide();
-                };
-            }else if(data.page == data.pages){
-                $("#next-marca").hide();
-                $("#next-marca-disabled").show();
-            }
+//             if (data.page == 1) {
+//                 $("#back-marca").hide();
+//                 $("#back-marca-disabled").show();
+//                 $("#next-marca").show();
+//                 $("#next-marca-disabled").hide();
+//             }
+//             $(".pagination-data").html(pager);
+//             if (data.page < data.pages) {
+//                 $('.pagination').fadeIn(500);
+//                 if (data.page > 1) {
+//                     $("#back-marca").show();
+//                     $("#next-marca").show();
+//                     $("#back-marca-disabled").hide();
+//                     $("#next-marca-disabled").hide();
+//                 };
+//             }else if(data.page == data.pages){
+//                 $("#next-marca").hide();
+//                 $("#next-marca-disabled").show();
+//             }
 
-            $.each(data.marcas, function( index, value ) {
-               var item = "<div id='" + value.id + "'title='" + value.nombre + "' rel='" + value.id + "'  class='select-patient col-md-4' style='cursor:pointer;'>" +
-               "<!-- CONTACT ITEM -->" + 
-               "<div class='panel panel-default'>" +
-               "<div class='profile-control-left'>" + 
-               "<div class='panel-body profile'>" + 
-               "<div class='profile-image'>" +
-               "<img src='" + value.imagen_url + "' alt='" + value.cuit + "'" +
-               "</div>" + 
-               "<div class='profile-data'>" +
-               "<div class='profile-data-name'>" + value.nombre + "</div>" +
-               "</div>" +
-               "<div class='profile-controls'>";
+//             $.each(data.marcas, function( index, value ) {
+//                var item = "<div id='" + value.id + "'title='" + value.nombre + "' rel='" + value.id + "'  class='select-patient col-md-4' style='cursor:pointer;'>" +
+//                "<!-- CONTACT ITEM -->" + 
+//                "<div class='panel panel-default'>" +
+//                "<div class='profile-control-left'>" + 
+//                "<div class='panel-body profile'>" + 
+//                "<div class='profile-image'>" +
+//                "<img src='" + value.imagen_url + "' alt='" + value.cuit + "'" +
+//                "</div>" + 
+//                "<div class='profile-data'>" +
+//                "<div class='profile-data-name'>" + value.nombre + "</div>" +
+//                "</div>" +
+//                "<div class='profile-controls'>";
                
-            item = item + "</div>" +
-            "</div>" +
-            "</div>" +
-            "</div>" +
-            "<!-- END CONTACT ITEM -->" + 
-            "</div>";            
-            $("#list-marca").append(item);
-        });
-        }
-    });
-    $("div#spinner").fadeOut("fast");
-    $("#list-marca").show();
-}
+//             item = item + "</div>" +
+//             "</div>" +
+//             "</div>" +
+//             "</div>" +
+//             "<!-- END CONTACT ITEM -->" + 
+//             "</div>";            
+//             $("#list-marca").append(item);
+//         });
+//         }
+//     });
+//     $("div#spinner").fadeOut("fast");
+//     $("#list-marca").show();
+// }
 
 
 
@@ -1378,31 +1212,99 @@ var calculateTotal = function(){
 //Resumen y forma de pago
 var resumen = function(){
 
-    if ($('#switch-ctacte').val() == 'false') {
-        $('#ctacte_hidden').val(false);
-        $('#forma_pago_hidden').val($('#payment-methods').val());
-        $('#resumen_efectivo_hidden').val($('#cashamount').val());
-        // $('#resumen_envio_hidden').val($('#envio_hidden').val());
+    // if ($('#switch-ctacte').val() == 'false') {
+    //     $('#ctacte_hidden').val(false);
+    //     $('#forma_pago_hidden').val($('#payment-methods').val());
+    //     $('#resumen_efectivo_hidden').val($('#cashamount').val());
+    //     // $('#resumen_envio_hidden').val($('#envio_hidden').val());
+
+    // }else{
+    //     $('#ctacte_hidden').val(true);
+    //      $('#forma_pago_hidden').val('ctacte');
+    // }
+
+    // var resumen_total        = $('#total_cost_hidden').val();
+    // var resumen_descuento    = $('#tot_discount').val();
+    // var resumen_subtotal     = $('#subtotal_cost_hidden').val();
+    // var resumen_envio        = $('#envio_hidden').val();
+    // var resumen_iva          = $('#iva_hidden').val();
+    // var ctacte               = $('#ctacte_hidden').val();
+    // var forma_pago           = $('#payment-methods').val();
+    // var resumen_efectivo;
+
+    
+
+
+
+
+    var razon_social_p = $('#form-razon_social').val();
+    var direccion_p = $('#form-direccion').val();
+    var cuit_p = $('#form-cuit').val();
+    var telefono_p = $('#form-telefono').val();
+    var email_p = $('#form-email').val();
+
+    var item = "<br>"+razon_social_p+"<br>"+direccion_p+"<br>"+cuit_p+"<br>"+telefono_p+"<br>"+email_p+"<br>";
+    $("#datos-proveedor").append(item);
+
+    var params = {};
+    var productos = [];
+
+    params.data = $("#crear-pedido").serializeObject();
+
+    if (typeof params.data['cant[]'] == 'string') {
+
+        var resume = "<tr>"+
+                 "<td class='text-center'>"+ params.data['cant[]'] +"</td>"+
+                 "<td class='center'>"+ params.data['codigo_proveedor[]'] +"</td>"+
+                 "<td>"+ params.data['producto_codigo[]'] +"</td>"+
+             "</tr>";
+        $("#detalle").append(resume);
 
     }else{
-        $('#ctacte_hidden').val(true);
-         $('#forma_pago_hidden').val('ctacte');
-    }
+        params.data['id_producto[]'].forEach(function(e, i) {
+            var resumen = "<tr>"+
+                 "<td class='text-center'>"+ params.data['cant[]'][i] +"</td>"+
+                 "<td class='center'>"+ params.data['codigo_proveedor[]'][i] +"</td>"+
+                 "<td>"+ params.data['producto_codigo[]'][i] +"</td>"+
+             "</tr>";
+        $("#detalle").append(resumen);
 
-    var resumen_total        = $('#total_cost_hidden').val();
-    var resumen_descuento    = $('#tot_discount').val();
-    var resumen_subtotal     = $('#subtotal_cost_hidden').val();
-    var resumen_envio        = $('#envio_hidden').val();
-    var resumen_iva          = $('#iva_hidden').val();
-    var ctacte               = $('#ctacte_hidden').val();
-    var forma_pago           = $('#payment-methods').val();
-    var resumen_efectivo;
-
-    if((ctacte == 'false') && (forma_pago == "efectivo")){
-        resumen_efectivo      = $('#cashamount').val();
-    }else if (ctacte == 'true'){
-        forma_pago = 'ctacte';
+        });
     }
+    
+
+
+
+
+
+
+
+
+
+
+
+    //     var productos = {
+    //             id_producto: params.data['id_producto[]'],
+    //             precio: params.data['precio[]'],
+    //             cant: params.data['cant[]'],
+    //             subtotal: params.data['subtotal[]'],
+    //             simple: true,
+    //     }
+    // }else{
+    //     params.data['id_producto[]'].forEach(function(e, i) {
+    //         var producto = {
+    //             id_producto: e,
+    //             precio: params.data['precio[]'][i],
+    //             cant: params.data['cant[]'][i],
+    //             subtotal: params.data['subtotal[]'][i],
+    //             simple: false,
+    //         }
+
+    //         productos.push(producto);
+    //     })
+    // }
+    // params.productos = productos;
+
 }
 
 

@@ -196,9 +196,11 @@ class PedidoController extends Gabinando_Base{
 
 
 
-	public function setventaAction(){
+	public function setpedidoAction(){
 		if($this->getRequest()->isPost()){
 			$params 		= $this->getRequest()->getPost();
+		die(var_dump($params));
+			
 			$productos = $params['productos'];
 			$clienteModel  	= new Application_Model_Cliente();
 			$cliente	   	= $clienteModel->getClienteById($params['data']['id_cliente']);
