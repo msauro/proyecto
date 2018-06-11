@@ -23,7 +23,7 @@ $(".xn-icon-button").fadeIn();
                         <div class="panel-title-box">
                             <h3>Lista de pedidos</h3>
                         </div>  
-                        <button class="btn btn-primary pull-right" onclick="agregarProveedor()" data-toggle="dropdown"><span class="fa fa-plus" ></span> Nuevo</button>
+                        <button class="btn btn-primary pull-right" onclick="agregarPedido()" data-toggle="dropdown"><span class="fa fa-plus" ></span> Nuevo</button>
                     </div>
                         
                     <div class="panel-body">
@@ -44,7 +44,7 @@ $(".xn-icon-button").fadeIn();
                                 <tbody>
                                     <?php foreach ($this->listadoPedidos as $pedido): ?>
                                     <tr id="<?php echo $pedido['id'] ?>" class="element-id">
-                                        <td class="text-center"><?php echo $pedido['id'] ?></td>
+                                        <td class="text-center"><?php echo $pedido['id_ped'] ?></td>
                                         <td><?= ($pedido['razon_social'] != NULL) ? $pedido['razon_social'] :  $pedido['nombre'].' '. $pedido['apellido']?></td>
                                         <td><?php echo $pedido['cuit'] ?></td>
                                         <td><?php echo $pedido['direccion'] ?></td>
@@ -52,7 +52,7 @@ $(".xn-icon-button").fadeIn();
                                         <td><?php echo $pedido['email'] ?></td>
                                         <td><?php echo $pedido['fecha'] ?></td>
                                         <td class="text-center">
-                                            <button class="btn btn-default btn-rounded btn-condensed btn-sm" onclick="detallePedido(<?php echo $pedido['id'] ?>)"><span class="fa fa-eye"></span></button>
+                                            <button class="btn btn-default btn-rounded btn-condensed btn-sm" onclick="detallePedido(<?php echo $pedido['id_ped'] ?>)"><span class="fa fa-eye"></span></button>
                                             <button class="btn btn-danger btn-rounded btn-condensed btn-sm btn-delete" id="<?php echo $pedido['id'] ?>"><a href="#" data-toggle="tooltip" title="Nota de crédito"><span class="fa fa-remove" data-toggle="modal" data-target="#delete_modal"></span></a></button>
                                         </td>
                                     </tr>

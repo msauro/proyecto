@@ -100,7 +100,8 @@ class Application_Model_ProductoProveedor extends Application_Model_Base
                 ) AS maxpre ON maxpre.codigo_producto_proveedor =  producto_proveedor.codigo_producto_proveedor
                 INNER JOIN `producto_proveedor_precio` ON producto_proveedor_precio.id = maxpre.maxidprecio
                 -- INNER JOIN `producto_proveedor` ON producto_proveedor_precio.id_proveedor = producto_proveedor.id_proveedor
-                WHERE (existencias.eliminado = 0) 
+                WHERE (producto_proveedor.id_proveedor = '$id_proveedor')
+                AND (existencias.eliminado = 0) 
                 AND (productos.eliminado = 0) 
                 AND (marcas.eliminado = 0) 
                 GROUP BY `productos`.`id`";
@@ -136,6 +137,7 @@ class Application_Model_ProductoProveedor extends Application_Model_Base
 
     public function getProductosByProveedor($id_proveedor){
         try{
+            // die(var_dump($id_proveedor));
             $query = $this->select()
                 ->from($this, array('codigo_producto_proveedor as codigo_proveedor'))
                 ->where('producto_proveedor.id_proveedor = ?', $id_proveedor);

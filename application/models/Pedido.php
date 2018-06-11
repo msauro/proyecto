@@ -7,7 +7,7 @@ class Application_Model_Pedido extends Application_Model_Base
 
 	public function getList(){
     	$query = $this->select()->setIntegrityCheck(false)
-            ->from($this, array('*'))
+            ->from($this, array('pedidos.id as id_ped', '*'))
             ->join('pedidos_detalles', 'pedidos_detalles.id_pedido = pedidos.id', array('*'))
             ->join('productos', 'productos.id = pedidos_detalles.id_producto', array('*'))
             ->join('proveedores', 'proveedores.id = pedidos.id_proveedor', array('*'))
@@ -41,7 +41,7 @@ class Application_Model_Pedido extends Application_Model_Base
     public function getFullPedido($id){
         try{
             $query = $this->select()->setIntegrityCheck(false)
-                ->from($this, array('*'))
+                ->from($this, array('pedidos.id as id_ped','*'))
                 ->join('proveedores', 'proveedores.id = pedidos.id_proveedor', array('*'))
                 // ->join('tipo_empresa', 'tipo_empresa.id = proveedores.id_tipo_empresa', array('tipo_empresa.nombre'))
                 ->where('pedidos.id = ?', $id);

@@ -96,7 +96,6 @@ class ProductoProveedorController extends Gabinando_Base {
 		if ($params["id_proveedor"]) {
 			$id_proveedor = $params["id_proveedor"];
 		}
-
 		if( isset($params['search']) ){
 			$search 	 = array(
 				'search' => $params['search'],

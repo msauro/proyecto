@@ -5,7 +5,7 @@ $this->headTitle($this->title);
 <!-- START BREADCRUMB -->
 <ul class="breadcrumb">
     <li><a href="/">Panel Principal</a></li>
-    <li><a href="/pedido/detalle">Pedido</a></li>
+    <li><a href="/pedido/list">Pedido</a></li>
     <li class="active">Detalle</li>
 </ul>
 <!-- END BREADCRUMB -->
@@ -19,12 +19,16 @@ $this->headTitle($this->title);
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title"><strong>Detalle</strong> de pedido</h3>
+                        <?php ($this->pedido["recibido"] == 0) ? $disabled = ''  : $disabled = 'disabled' ?>
+                            <button class="btn btn-primary pull-right <?php echo $disabled; ?> ">Pedido recibido completo</button>
+
                     </div>
+
                     <div class="panel-body">
                             <div class="row">
                                 <div class="col-xs-12">
                                     <div class="invoice-title">
-                                       <img src="/resources/logo.png"> <h3 class="pull-right">Pedido N°: #<?php echo $this->pedido['id']; ?> </h3>
+                                       <img src="/resources/logo.png"> <h3 class="pull-right">Pedido N°: #<?php  echo $this->pedido['id_ped']; ?> </h3>
                                     </div>
                                     <hr>
                                     <div class="row">
