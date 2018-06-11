@@ -92,7 +92,7 @@ class ProductoProveedorController extends Gabinando_Base {
 		$productoproveedorModel = new Application_Model_ProductoProveedor();		
 		$id_proveedor = NULL;
 		$params["id_proveedor"] = NULL;
-		$params 	 = $params = $this->getRequest()->getParams();
+		$params = $this->getRequest()->getParams();
 		if ($params["id_proveedor"]) {
 			$id_proveedor = $params["id_proveedor"];
 		}
@@ -123,7 +123,6 @@ class ProductoProveedorController extends Gabinando_Base {
 		$productos = $productoproveedorModel->getListFiltered($search,$paginate,$id_proveedor);
 		if($productos instanceof Exception)
 			$this->sendErrorResponse($productos->getMessage());
-
 		$productoPager = $productoproveedorModel->getListFiltered($search,NULL,NULL);
 		if($productoPager instanceof Exception)
 			$this->sendErrorResponse($productoPager->getMessage());

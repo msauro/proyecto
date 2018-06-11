@@ -199,90 +199,73 @@ class PedidoController extends Gabinando_Base{
 	public function setpedidoAction(){
 		if($this->getRequest()->isPost()){
 			$params 		= $this->getRequest()->getPost();
-		die(var_dump($params));
-			
 			$productos = $params['productos'];
-			$clienteModel  	= new Application_Model_Cliente();
-			$cliente	   	= $clienteModel->getClienteById($params['data']['id_cliente']);
+			$proveedorModel  	= new Application_Model_Proveedor();
+			$proveedor	   	= $proveedorModel->getProveedorById($params['data']['id_proveedor']);
 			
 			try{
-				$ventaModel= new Application_Model_Venta();
-				$forma_entrega = ($params['data']['envio'][0] != 0) ? 'delivery' : 'retira';
-				$ventaObj = array(
-						'id_cliente' 		=> $params['data']['id_cliente'],
-						'fecha' 			=> date('Y-m-d H:i:s'),
-						'forma_pago'		=> $params['data']['forma_pago'],
-						'descuento'			=> $params['data']['descuento'],
-						'total'      		=> $params['data']['total'],
-						'subtotal' 			=> $params['data']['subtotal_products'],
-						'envio' 			=> $params['data']['envio'],
-						'iva'				=> $params['data']['iva'],
-						'forma_entrega'		=> $forma_entrega
-				);
-				if ($cliente['nom_tipo'] == 'Monotributista') {
-					$ventaObj['tipo'] = 'B';
-				}elseif ($cliente['exento'] == 0) {
-					$ventaObj['tipo'] = 'A';
+				$pedidoModel= new Application_Model_Pedido();
+				$pedidoObj = array(
+						'id_proveedor' 		=> $params['data']['id_proveedor'],
+						'fecha' 			=> date('Y-m-d H:i:s')
 					
-				}else{
-					$ventaObj['tipo'] = 'B';
+				);
+				
 
-				};
+				// Start - Crea el pedido al proveedor
+				$idPedido = $pedidoModel->add($pedidoObj);	
+				// End - Crea el pedido al proveedor
 
-				// Start - Crea la donation
-				$idVenta = $ventaModel->add($ventaObj);	
-				// End - Crea la donation
-
-				$ventas_detalleModel = new Application_Model_VentaDetalle();
+				$pedidos_detalleModel = new Application_Model_PedidoDetalle();
 				$productoModel	= new Application_Model_Producto();
-				$existenciaModel	= new Application_Model_Existencia();
-				if ($productos['simple'] == true) {
+
+				if ($params['data']['simple'] == 'true') {
 					$id_producto = $productos['id_producto'];
-					$productoMaxExistencia = $existenciaModel->getUltimaExistencia($id_producto);
 						
-					$nuevaCantidad = $productoMaxExistencia['cantidad'] - $productos['cant'];
-					// Start - Crea linea de venta
+					// Start - Crea linea de pedido
 					$dProductsObj = array(
-							'id_producto'	=> $productos['id_producto'],
-							'cantidad'		=> $productos['cant'],
-							'precio'		=> $productos['precio'],
-							'id_venta'		=> $idVenta
+							'id_producto'	=> (int)$productos['id_producto'],
+							'cantidad'		=> (float)$productos['cant'],
+							'id_pedido'		=> (int)$idPedido
 					);
 
-					$ventas_detalleModel->add($dProductsObj);
-					$actualizarStock = array(
-						'id_producto'	=> $id_producto,
-						'cantidad'		=> $nuevaCantidad,
-						'fecha' 		=> date('Y-m-d H:i:s')
-					);
+					$pedidos_detalleModel->add($dProductsObj);
+
+					//ACTUALIZA STOCK
+					// $actualizarStock = array(
+					// 	'id_producto'	=> $id_producto,
+					// 	'cantidad'		=> $nuevaCantidad,
+					// 	'fecha' 		=> date('Y-m-d H:i:s')
+					// );
+
 					//disminuye el stock en la existencia
-					$result = $existenciaModel->add($actualizarStock);
+					// $result = $existenciaModel->add($actualizarStock);
 	            	// End Inventario
+
 				}else{
 					foreach ($productos as $prod) {
 						$id_producto = $prod['id_producto'];
-						$productoMaxExistencia = $existenciaModel->getUltimaExistencia($id_producto);
 						
-						$nuevaCantidad = $productoMaxExistencia['cantidad'] - $prod['cant'];
+						// $productoMaxExistencia = $existenciaModel->getUltimaExistencia($id_producto);
+						// $nuevaCantidad = $productoMaxExistencia['cantidad'] - $prod['cant'];
 
-						// Start - Crea linea de venta
+						// Start - Crea linea de pedido
 						$dProductsObj = array(
-								'id_producto'	=> $prod['id_producto'],
-								'cantidad'		=> $prod['cant'],
-								'precio'		=> $prod['precio'],
-								'id_venta'		=> $idVenta
+								'id_producto'	=> (int)$prod['id_producto'],
+								'cantidad'		=> (float)$prod['cant'],
+								// 'precio'		=> $prod['precio'],
+								'id_pedido'		=> (int)$idPedido
 						);
-
-						$ventas_detalleModel->add($dProductsObj);
+						$pedidos_detalleModel->add($dProductsObj);
 						
 						// Start descontar stock Inventario 
-						$actualizarStock = array(
-							'id_producto'	=> $id_producto,
-							'cantidad'		=> $nuevaCantidad,
-							'fecha' 		=> date('Y-m-d H:i:s')
-						);
+						// $actualizarStock = array(
+						// 	'id_producto'	=> $id_producto,
+						// 	'cantidad'		=> $nuevaCantidad,
+						// 	'fecha' 		=> date('Y-m-d H:i:s')
+						// );
 						//disminuye el stock en la existencia
-						$result = $existenciaModel->add($actualizarStock);
+						// $result = $existenciaModel->add($actualizarStock);
 		            	// End Inventario
 					}
 				}
@@ -291,7 +274,7 @@ class PedidoController extends Gabinando_Base{
 
 		
 
-				// Start - Mail al cliente para avisarle que tiene una nueva VENTA  VER/TERMINAR
+				// Start - Mail al proveedor para enviar el pedido
 
 				// $sender 	= new Application_Model_Mail_Sender();
 				// $message 	= "Hola ".$venta['nombre']." ".$venta['apellido']."! Gracias por tu compra. Total:".$venta['total']." <br><br> Fecha: " . date('d-m-Y h:i a',strtotime($venta['fecha'])) ;
@@ -303,68 +286,40 @@ class PedidoController extends Gabinando_Base{
 	      
 	           			
 
-				return $this->sendSuccessResponse(true,"Venta guardada y stock actualizado");
+				return $this->sendSuccessResponse(true,"Pedido guardado");
 			}catch(Exception $e){
 				return $this->sendErrorResponse($e->getMessage('error'));
 			}
-	        $this->_redirect('/venta/list');
+	        $this->_redirect('/pedido/list');
 		}
 	}
 
 	public function listAction() {
-		$ventaModel = new Application_Model_Venta();
-		$listadoVentas = $ventaModel->getList();
-		$this->view->listadoVentas = $listadoVentas;
+		$pedidoModel = new Application_Model_Pedido();
+		$listadoPedidos = $pedidoModel->getList();
+		$this->view->listadoPedidos = $listadoPedidos;
     }
 
     public function detalleAction() {
 		if($this->getRequest()->isPost()){
-			// $params = $this->getRequest()->getPost();
-			// $params['id'] = $this->getRequest()->getParam('id');
-
-			// $proveedor = new Application_Model_Proveedor();
-			// $prov = $proveedor->getProveedorById($params['id']);
-
-			// $error = null;
-			// if ($prov['cuit'] != $params['cuit']) {
-			// 	$alreadyRegistered = $proveedor->getProveedorByCuit($params['cuit']);
-			// 	if(!is_null($alreadyRegistered)){
-			// 		$error = 'Existe un proveedor con ese CUIT';
-			// 	} 
-			// }
-
-			// if ($prov['email'] != $params['email']) {
-			// 	$alreadyRegistered = $proveedor->getProveedorByEmail($params['email']);
-			// 	if(!is_null($alreadyRegistered)){
-			// 		$error = 'Existe un proveedor con ese Email';
-			// 	}
-			// }
-
-			// if(!is_null($error)){
   
 		}
 		else{
 			$id = $this->getRequest()->getParam('id');
 			if($id){
-				$ventaModel = new Application_Model_Venta();
-				$ventaDetalleModel = new Application_Model_VentaDetalle();
+				$pedidoModel = new Application_Model_Pedido();
+				$pedidoDetalleModel = new Application_Model_PedidoDetalle();
 
-				$detalleVenta =$ventaDetalleModel->getDetalleVentaById($id);
-				$venta = $ventaModel->getFullVenta($id);
-			// die(var_dump($venta));
-				if ($venta['descuento']>0) {
-					$subDesc = $venta['subtotal'] - ($venta['subtotal'] *$venta['descuento']/100);
-					$venta['iva_calculado'] = (round($subDesc*0.21,2));
-				}else{
-					$venta['iva_calculado'] = (round($venta['subtotal'] * 0.21,2));
-				}
+				$detallePedido =$pedidoDetalleModel->getDetallePedidoById($id);
+			// die(var_dump($detallePedido));
+				$pedido = $pedidoModel->getFullPedido($id);
 
-				if($venta){
-					$venta['detalle'] = $detalleVenta;
-					$this->view->venta = $venta;
+				if($pedido){
+					$pedido['detalle'] = $detallePedido;
+					$this->view->pedido = $pedido;
 				}
 				else{
-					$this->_redirect('/venta/list');
+					$this->_redirect('/pedido/list');
 				}
 			}
 		}

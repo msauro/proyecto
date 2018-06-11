@@ -353,7 +353,7 @@ $this->headTitle($this->title);
                                                 <input id="subtotal_cost_hidden" name="subtotal_products" type="hidden" value="0">
                                                 <span id="tot_donation" class="label label-success label-form tot_donation" style="width: 100%;"></span>
                                                 <input id="forma_pago_hidden" name="forma_pago" type="hidden" value="0">
-                                                <input id="resumen_efectivo_hidden" name="efectivo" type="hidden" value="0">
+                                                <input id="simple" name="simple" type="hidden" value="0">
                                                 <!-- <input id="resumen_envio_hidden" name="envio" type="hidden" value="0"> -->
 
                                                 <!-- <input id="iva_hidden" name="iva" type="hidden" value="0"> -->
@@ -908,8 +908,8 @@ function getProducts(){
        console.log(data);
         $(".products tbody").html('');
         $.each(data.productos, function( index, value ){
-            item = "<tr id='id_producto' value='"+ value.id +"'>" +
-            "<td id='id' class='hidden'>" + value.id + "</td>" +
+            item = "<tr id='id_producto' value='"+ value.id_prod +"'>" +
+            "<td id='id' class='hidden'>" + value.id_prod + "</td>" +
             "<td id='codigo_producto'>" + value.codigo_producto + "</td>" +
             "<td id='descripcion'>" + value.descripcion + "</td>" +
             "<td id='marca'>" + value.nom_marca + "</td>" +
@@ -1252,7 +1252,7 @@ var resumen = function(){
     params.data = $("#crear-pedido").serializeObject();
 
     if (typeof params.data['cant[]'] == 'string') {
-
+        $('#simple').val(true);
         var resume = "<tr>"+
                  "<td class='text-center'>"+ params.data['cant[]'] +"</td>"+
                  "<td class='center'>"+ params.data['codigo_proveedor[]'] +"</td>"+
@@ -1261,6 +1261,8 @@ var resumen = function(){
         $("#detalle").append(resume);
 
     }else{
+        $('#simple').val(false);
+
         params.data['id_producto[]'].forEach(function(e, i) {
             var resumen = "<tr>"+
                  "<td class='text-center'>"+ params.data['cant[]'][i] +"</td>"+

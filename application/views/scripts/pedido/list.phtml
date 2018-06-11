@@ -10,7 +10,7 @@ $(".xn-icon-button").fadeIn();
 <!-- BREADCRUMB -->
     <ul class="breadcrumb">
         <li><a href="/">Panel Principal</a></li>
-        <li><a href="#">Ventas</a></li>
+        <li><a href="#">Pedidos</a></li>
         <li class="active">Listado</li>
     </ul>
 
@@ -21,7 +21,7 @@ $(".xn-icon-button").fadeIn();
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <div class="panel-title-box">
-                            <h3>Lista de ventas</h3>
+                            <h3>Lista de pedidos</h3>
                         </div>  
                         <button class="btn btn-primary pull-right" onclick="agregarProveedor()" data-toggle="dropdown"><span class="fa fa-plus" ></span> Nuevo</button>
                     </div>
@@ -32,26 +32,28 @@ $(".xn-icon-button").fadeIn();
                                 <thead>
                                     <tr>
                                         <th width="50">ID</th>
-                                        <th>Cliente</th>
+                                        <th>Proveedor</th>
                                         <th>Cuit</th>
                                         <th>Dirección</th>
                                         <th>Teléfono</th>
-                                        <th>Total venta</th>
+                                        <th>Email</th>
+                                        <th>Fecha</th>
                                         <th width="150" class="no-sortable text-center">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($this->listadoVentas as $venta): ?>
-                                    <tr id="<?php echo $venta['id'] ?>" class="element-id">
-                                        <td class="text-center"><?php echo $venta['id'] ?></td>
-                                        <td><?= ($venta['razon_social'] != NULL) ? $venta['razon_social'] :  $venta['nombre'].' '. $venta['apellido']?></td>
-                                        <td><?php echo $venta['cuit'] ?></td>
-                                        <td><?php echo $venta['direccion'] ?></td>
-                                        <td><?php echo $venta['telefono'] ?></td>
-                                        <td>$<?php echo $venta['total'] ?></td>
+                                    <?php foreach ($this->listadoPedidos as $pedido): ?>
+                                    <tr id="<?php echo $pedido['id'] ?>" class="element-id">
+                                        <td class="text-center"><?php echo $pedido['id'] ?></td>
+                                        <td><?= ($pedido['razon_social'] != NULL) ? $pedido['razon_social'] :  $pedido['nombre'].' '. $pedido['apellido']?></td>
+                                        <td><?php echo $pedido['cuit'] ?></td>
+                                        <td><?php echo $pedido['direccion'] ?></td>
+                                        <td><?php echo $pedido['telefono'] ?></td>
+                                        <td><?php echo $pedido['email'] ?></td>
+                                        <td><?php echo $pedido['fecha'] ?></td>
                                         <td class="text-center">
-                                            <button class="btn btn-default btn-rounded btn-condensed btn-sm" onclick="detalleVenta(<?php echo $venta['id'] ?>)"><span class="fa fa-eye"></span></button>
-                                            <button class="btn btn-danger btn-rounded btn-condensed btn-sm btn-delete" id="<?php echo $venta['id'] ?>"><a href="#" data-toggle="tooltip" title="Nota de crédito"><span class="fa fa-remove" data-toggle="modal" data-target="#delete_modal"></span></a></button>
+                                            <button class="btn btn-default btn-rounded btn-condensed btn-sm" onclick="detallePedido(<?php echo $pedido['id'] ?>)"><span class="fa fa-eye"></span></button>
+                                            <button class="btn btn-danger btn-rounded btn-condensed btn-sm btn-delete" id="<?php echo $pedido['id'] ?>"><a href="#" data-toggle="tooltip" title="Nota de crédito"><span class="fa fa-remove" data-toggle="modal" data-target="#delete_modal"></span></a></button>
                                         </td>
                                     </tr>
                                     <?php endforeach; ?>
@@ -98,11 +100,11 @@ $(".xn-icon-button").fadeIn();
             })
 
         });
-    var detalleVenta = function(id){
-        window.location.href = "/venta/detalle/id/" + id;
+    var detallePedido = function(id){
+        window.location.href = "/pedido/detalle/id/" + id;
     }
-    var agregarVenta = function(){
-        window.location.href = "/venta/add";
+    var agregarPedido = function(){
+        window.location.href = "/pedido/add";
     }
     </script>
 
