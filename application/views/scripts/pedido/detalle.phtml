@@ -20,8 +20,8 @@ $this->headTitle($this->title);
                     <div class="panel-heading">
                         <h3 class="panel-title"><strong>Detalle</strong> de pedido</h3>
                         <?php ($this->pedido["recibido"] == 0) ? $disabled = ''  : $disabled = 'disabled' ?>
-                            <button class="btn btn-primary pull-right <?php echo $disabled; ?> ">Pedido recibido completo</button>
-
+                            <a class="btn btn-primary btn-pedido-recibido pull-right <?php echo $disabled; ?> ">Pedido recibido completo</a>
+                            <input name="id_pedido" id="id_pedido" type="hidden" value="<?php  echo $this->pedido['id_ped']; ?> ">
                     </div>
 
                     <div class="panel-body">
@@ -120,7 +120,25 @@ $this->headTitle($this->title);
     
 </div>
 <!-- END PAGE CONTENT WRAPPER -->                                                
+<!-- <div class="modal fade" id="modal_pedido_recibido" tabindex="-1" role="dialog" aria-labelledby="smallModalHead" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Productos Equivalentes</h4>
+                </div>
+                <div class="modal-body " id="equivalen">
 
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    <!-- <a type="button" class="btn btn-primary" id="btnYes">Si</a> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
 
 <!-- THIS PAGE PLUGINS -->
 <script type="text/javascript" src="/admin-public/js/plugins/bootstrap/bootstrap-file-input.js"></script>
@@ -132,59 +150,30 @@ $this->headTitle($this->title);
 <!-- END THIS PAGE PLUGINS -->
 
 <script>
-
-var regexp = /^\d+(\,\d{1,2})?$/;
-var validator;
-$().ready(function() {
-    validator = $("#add-form").validate({
-        ignore: '',
-        rules: {
-            razon_social: {
-                required: true
-            },
-            apellido: {
-                required: true
-            },
-            direccion: {
-                required: true,
-            },
-            telefono: {
-                required: true,
-            },
-            cuit: {
-                required: true,
-                validarcuit: true
-            },
-            email: "required"
-        },
-        errorPlacement: function(error, element) {
-            error.insertAfter(element.parent());
-        },
-        messages: {
-            razon_social: {
-                required: "Campo requerido",
-            },
-            direccion: {
-                required: "Campo requerido"
-            },
-            telefono: {
-                required: "Campo requerido"
-            },
-            cuit: {
-                required: "Campo requerido"
-            },
-            email: {
-                required: "Campo requerido"
-            }
-
-        }
+    $().ready(function() {
+        
     });
-});
-$.validator.addMethod("validarprecio", function (value, element) {
-    var regex = new RegExp(regexp);
-    return regex.test(value);
-});
-$.validator.addMethod('validarcuit', function (value, element) {
-        return this.optional(element) || /^\d{11}$/.test(value);
-}, "El formato debe ser (00-00000000-0). No ingrese los guiones");
+        $(".btn-pedido-recibido").click(function(event){
+            $("#modal_pedido_recibido").html();
+            var params = {};
+            params.id_pedido = $('#id_pedido').val();
+
+            panelAjax("/pedido/recibido",params, function(data){
+                if (data) {
+                    location.reload();
+                    
+                }
+                $("#equivalen").html('');
+                $("#equivalen").html(data);           
+                $('#modal_pedido_recibido').modal('show');
+            })
+
+
+            // $('#btnView').attr('href', 'callcenter_manager/view/franchise/'+franchise+'/id/'+id_client);
+
+        });
+   
+
+
+
 </script>

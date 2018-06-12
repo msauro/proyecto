@@ -311,8 +311,8 @@ class PedidoController extends Gabinando_Base{
 				$pedidoDetalleModel = new Application_Model_PedidoDetalle();
 
 				$detallePedido =$pedidoDetalleModel->getDetallePedidoById($id);
-			// die(var_dump($detallePedido));
 				$pedido = $pedidoModel->getFullPedido($id);
+			// die(var_dump($pedido));
 
 				if($pedido){
 					$pedido['detalle'] = $detallePedido;
@@ -324,5 +324,56 @@ class PedidoController extends Gabinando_Base{
 			}
 		}
     }
+
+    public function recibidoAction(){
+		$params = $this->getRequest()->getPost();
+        $actualiza['recibido'] = 1;
+		
+		$pedidoModel = new Application_Model_Pedido();
+        $result = $pedidoModel->edit($params["id_pedido"], $actualiza);
+        if($result instanceof Exception){
+            return $this->sendErrorResponse('Error al poner el pedido como recibido');
+        }
+
+		$existenciaModel = new Application_Model_Existencia();
+		$detallepedidoModel = new Application_Model_PedidoDetalle();
+        $lineasDetalle = $detallepedidoModel->getDetallePedidoById($params["id_pedido"]);
+
+        foreach ($lineasDetalle as $lineaDetalle) {
+			$productoMaxExistencia = $existenciaModel->getUltimaExistencia($lineaDetalle["id_producto"]);
+			$nuevaCantidad = $productoMaxExistencia['cantidad'] + $lineaDetalle['cantidad'];
+
+			$actualizarStock = array(
+				'id_producto'	=> $lineaDetalle["id_producto"],
+				'cantidad'		=> $nuevaCantidad,
+				'fecha' 		=> date('Y-m-d H:i:s')
+			);
+
+			//disminuye el stock en la existencia
+			$result = $existenciaModel->add($actualizarStock);
+        	// End Inventario
+
+        	// $actualizaStock['recibido'] = 1;
+        	// $actualizaStock['recibido'] = 1;
+        	// $actualizaStock['recibido'] = 1;
+        	// $actualizaStock['recibido'] = 1;
+
+        	// $result = $existenciasModel->edit($params["id_pedido"], $actualizaStock);
+        	
+        }
+
+
+
+
+        if($result instanceof Exception){
+            return $this->sendErrorResponse('Error al poner el pedido como recibido');
+        }else{
+           return $this->sendSuccessResponse($result);
+        }
+    }
+
+
+
+
 
 }
