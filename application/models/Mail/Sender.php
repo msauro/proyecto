@@ -4,10 +4,12 @@ class Application_Model_Mail_Sender {
 
     public $dispenser;
 
-    // public function __construct(){
-    //     $dispenserModel     = new Application_Model_Dispenser();
-    //     $this->dispenser    = $dispenserModel->getDispenser("1");
-    // }
+    public function __construct(){
+        $this->dispenser    = array(
+            'name' => 'Gabinando',
+            'email' => 'gabi@nando.com'
+        );
+    }
 
 	public function sendRecoveryPassword($email,$token){
 		$emailObj = new Greenleaf_Mail;

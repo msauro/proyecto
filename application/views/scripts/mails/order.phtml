@@ -1,0 +1,263 @@
+<html>
+	<head>
+		<title>KFC</title>
+	</head>
+	<body>
+		<p style='text-align:center;width:100%;'>
+			<img src='<?php echo $this->baseUrl(); ?>/index-public/img/logo_mail.png' style="background:#ffd672" width="200px">
+		</p>
+
+		<table style="width:100%;border-collapse:collapse" border="0" cellpadding="0" cellspacing="0" align="center">
+			<tbody>
+				<tr>
+					<td style="background-color:#555;border-radius:3px 3px 0px 0px;">
+						<table style="width:100%">
+							<tbody>
+								<tr>
+									<td style="text-align:center;color:#ffffff;padding-top:25px"> Gracias, <?= $this->data['user']['first_name'] ?>. Tu orden va a estar lista para <?= $this->data['order_type']=='take_away'? "RETIRAR " : "SER ENTREGADA" ?> aproximadamente a las </td>
+								</tr>
+								<tr>
+									<td style="text-align:center;font-size:34pt;color:#ffffff;text-transform:uppercase;padding-bottom:25px">
+										<a href="#m_-6512448715351400496_" style="color:#ffffff;text-decoration:none"><?= date("g:i a",strtotime ( '+35 minute' , strtotime($this->data['created_at'] )));// March 10, 5:16 pm ?></a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+				</tr>
+
+				<?php if( $this->data['order_type']!='take_away' && $this->data['user']['id_user']!=23 ) : ?>
+				<tr>
+					<td style="text-align:center;padding-top:15px;text-decoration:none">
+						<a href="<?= front_uri ?>/index/micuenta?utm_source=Rastrear-Orden&amp;utm_medium=Email&amp;utm_campaign=Email" style="text-align:center;text-decoration:none" target="_blank">
+							<img border="0" src="<?= front_uri ?>/resources/rastrear_orden.jpg" class="CToWUd" width="250px">
+						</a>
+					</td>
+				</tr>
+				<?php endif; ?>
+
+				<?php if(isset($this->data['store'])) : ?>
+				<tr>
+					<td style="padding-top:25px;padding-bottom:10px">
+						<table style="width:100%">
+							<tbody>
+								<tr>
+									<td style="text-align:center;color:#000;line-height:125%;width:100%">
+										<table align="center" style="margin-bottom:10px">
+											<tbody>
+												<tr>
+													<td style="color:#000;font-size:14pt;font-weight:bold;text-transform:uppercase">Tu KFC: <?= $this->data['store']['name'] ?></td>
+												</tr>
+											</tbody>
+										</table>
+										<?= $this->data['store']['street'] ?> <em><?= $this->data['store']['reference'] ?></em><br>
+										<span style="color:#000"><b><?= $this->data['store']['phone'] ?></b></span>
+										<p>&nbsp;</p>
+										<table align="center" style="margin-bottom:10px">
+											<tbody>
+												<tr>
+													<td style="color:#000;font-size:14pt;font-weight:bold;text-transform:uppercase">
+														<a href="http://maps.google.com/?q=<?= $this->data['store']['lat'] ?>,<?= $this->data['store']['lon'] ?>" target="_blank">
+															<img border="0" src="<?= front_uri ?>/resources/location.jpg" class="CToWUd" width="80px">
+														</a>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+				</tr>
+				<?php endif; ?>
+
+				<tr>
+					<td style="padding:15px 30px">
+						<table style="width:100%">
+							<tbody>
+								<tr>
+									<td style="border:1px solid #555;padding:10px"><b>ORDEN - </b>
+										<span style="color:red"> #<?= $this->data['id_order'] ?> </span><br>
+										Realizada el <span style="text-decoration:none;color:#000"><?= date("j",strtotime($this->data['created_at'])) . " de " . date("F",strtotime($this->data['created_at'])) . " a las " . date("g:i a",strtotime($this->data['created_at'])); ?></span>
+									</td>
+								</tr>
+								<tr>
+									<td style="border-right:1px solid #555;border-left:1px solid #555;font-family:Arial,sans-serif!important;font-size:12pt!important;padding:10px">
+										<table width="100%" cellspacing="0" cellpadding="0">
+											<tbody>
+												
+												<?php if(isset($this->data['items'])) : foreach ($this->data['items'] as $key => $_item) : ?>
+
+												<tr valign="top">
+													<td width="100%" style="font-family:Verdana,Geneva,sans-serif;font-size:11px">
+
+													<?php
+													if(isset($_item['product'][0])){
+														echo 'Pizza Mitad y Mitad ('.$_item["qty"].')<br>';
+														echo '<i>'.$_item["product"][0]["config_components"][0]["values"][0]["name"].', '.$_item["product"][0]["config_components"][0]["values"][1]["name"].'.</i><br>';
+														$count = 1;
+														$total = count($_item['product']);
+														
+														foreach ($_item['product'] as $key => $_product) {
+															echo $_product['name'];
+															if($count < $total){
+																echo ', ';
+															}else{
+																echo '.';
+															}
+															$count++;
+														}
+													echo '</br></br>';
+													}else{
+														echo $_item['product']['name'].' ('.$_item["qty"].')<br>';
+														if(isset($_item['product']['values'])){
+															$count = 1;
+															$total = count($_item['product']['values']);
+															foreach ($_item['product']['values'] as $attr) {
+																if($count < $total){
+																	echo $attr['name'].', ';
+																}else{
+																	echo $attr['name'].'.';
+																}
+																$count++;
+															}
+															echo '</br>';
+														}
+														echo '</br>';
+													}
+
+													?>
+
+													</td>
+												</tr>
+												<tr>
+													<td height="8"></td>
+												</tr>
+												<?php endforeach; endif; ?>
+
+												<?php
+												if(isset($this->data['creations'])) : foreach ($this->data['creations'] as $creation) : ?>
+												<tr valign="top">
+													<td width="100%" style="font-family:Verdana,Geneva,sans-serif;font-size:11px">
+													
+													<?= 'Pizza Personalizada'.' ('.$creation["qty"].')<br>' . $creation['description'] . '</br></br>'; ?>
+
+													</td>
+												</tr>
+												<tr>
+													<td height="8"></td>
+												</tr>
+												<?php endforeach; endif; ?>
+									            
+									            <?php
+												if(isset($this->data['promotions'])) : foreach ($this->data['promotions'] as $promotions) : ?>
+												<tr valign="top">
+													<td width="100%" style="font-family:Verdana,Geneva,sans-serif;font-size:11px">
+
+									                <?= 'Promoción: '. $promotions["name"] . ' ('.$promotions["qty"].')<br></br></br>'; ?>
+													
+													</td>
+												</tr>
+												<tr>
+													<td height="8"></td>
+												</tr>
+												<?php endforeach; endif; ?>
+
+											</tbody>
+										</table>
+									</td>
+								</tr>
+								<tr>
+									<td style="border:1px solid #555;padding:10px">
+										<b>Total: </b> <span style="color:#fed75f;font-size:16px;"><b>$<?= $this->data['total'] ?> </b></span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td style="padding:25px 40px">
+						<table style="width:100%">
+							<tbody>
+								<tr>
+									<td><b>Método de pago: </b>
+										<span style="color:red">
+											<?php
+											if($this->data['payment_method']=="cash") :
+												echo "<b>Efectivo. </b><em>Paga con $ {$this->data['cash']}</em>";
+											elseif ($this->data['payment_method']=="ccpresential") :
+												switch ($this->data['payment_card']) {
+													case 'amex':
+														$tarjeta = 'American Express';
+														break;
+													case 'master':
+														$tarjeta = 'Master';
+														break;
+													case 'visa':
+														$tarjeta = 'Visa';
+														break;
+													case 'clave':
+														$tarjeta = 'Clave';
+														break;
+													
+													default:
+														$tarjeta = 'No especificada';
+														break;
+												}
+												echo "<b>Tarjeta de Crédito: ${tarjeta}</b>";
+											else :
+												echo "<b>Tarjeta Hut. </b>";
+												if ($this->data['ph_used_credit']!=0) :
+													echo "Puntos utilizados de la Tarjeta Hut: ${$this->data['ph_used_credit']}";
+												endif;
+												echo "<br>";
+												if ($this->data['cc_amount']!=0) :
+													echo "Monto cancelado con Tarjeta de Crédito: ${$this->data['cc_amount']}";
+												endif;
+												echo "<br>";
+												if(!empty($this->data['cash'])) :
+													echo "<em>Monto cancelado en efectivo ${$this->data['cash']}</em>";
+												endif;	
+											endif;
+											?><br>
+										</span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<table style="height:34px;margin-top:10px;text-align:left;width:100%;">
+			<tbody>
+				<tr>
+					<td bgcolor="#252523" style="color:rgb(255,255,255);font-size:10pt;padding:25px 30px;text-align:left;border-radius:0px 0px 3px 3px">
+					Nota: el tiempo estimado está generado automáticamente para determinar cuando aproximadamente estará lista tu orden. Si necesitas mayor exactitud en la estimación, te recomendamos llamar directamente a la sucursal de KFC: <b><?= $this->data['store']['phone'] ?></b>
+					</td>
+				</tr>
+				<tr>
+					<td style="color:#000;padding-top:25px;padding-bottom:25px;padding-left:30px;padding-right:30px;text-align:center;font-size:10px;">
+						<em>
+							Esta cuenta fue creada usando <span style="color:#666666;text-decoration:none"><a href="mailto:<?= $this->data['user']['email'] ?>" target="_blank"><?= $this->data['user']['email'] ?></a></span> y está sujeta a los términos de uso y políticas de privacidad de KFC. Para más información sobre tu cuenta o si sientes que estas recibiendo este mail por error, por favor contactese con nosotros usando los links debajo. <br>
+							El Logo de KFC, logo y marcas relacionadas, son marcas registradas de KFC Inc.
+						</em>
+						<div style="color:#fed75f;margin-top:30px;font-size:12px;">
+							<a href="<?= front_uri ?>/index/politicas" style="color:red;text-decoration:underline" target="_blank">Privacidad</a> |
+							<a href="<?= front_uri ?>/index/terminos" style="color:red;text-decoration:underline" target="_blank">Términos de uso</a>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<p style='text-align:center;width:100%;'>
+			<span style='text-align:center;width:100%;'>
+				<img border="0" src="<?= front_uri ?>/resources/footer-mail.png" class="CToWUd">
+			</span>
+		</p>
+	</body>
+</html>

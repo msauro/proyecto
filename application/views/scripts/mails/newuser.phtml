@@ -1,0 +1,48 @@
+<html>
+	<head>
+		<title>KFC</title>
+	</head>
+	<body>
+		<p style='text-align:center;width:100%;'>
+			<img src='<?php echo $this->baseUrl(); ?>/index-public/img/logo_mail.png' width="400px">
+		</p>
+		<table style='text-align:center;width:100%;margin-top:50px;margin-bottom:50px;'>
+			<tbody>
+				<tr>
+					<td style="text-align:center;color:#000;padding-top:25px;line-height:130%;font-size:14px;">
+						<b>Gracias <?= $this->data['first_name'] ?>, por crear tu nueva cuenta en <span class="il">KFC Panamá</span><span class="il"></span>.</b><br><br>
+						Ahora puedes realizar de forma más rápida, guarda tus pedidos favoritos y recibir ofertas especiales!
+						</b><br><br>
+						Tus datos de login:<br>
+						Email: <?= $this->data['email'] ?><br>
+						Contraseña: <?= $this->data['pwd_plana'] ?><br>
+					</td> 
+				</tr>
+				<tr>
+					<td style="text-align:center;padding-top:15px;text-decoration:none">
+						<a href="<?= front_uri ?>?utm_source=Registration-Confirmation&amp;utm_medium=Email&amp;utm_campaign=Email" style="text-align:center;text-decoration:none" target="_blank">
+							<img border="0" src="<?= front_uri ?>/resources/inicie-orden.jpg" class="CToWUd" width="250px">
+						</a>
+					</td>
+				</tr>
+				<tr>
+					<td style="color:#000;padding-top:25px;padding-bottom:25px;padding-left:30px;padding-right:30px;text-align:center;font-size:10px;">
+						<em>
+							Esta cuenta fue creada usando <span style="color:#666666;text-decoration:none"><a href="mailto:<?= $this->data['email'] ?>" target="_blank"><?= $this->data['email'] ?></a></span> y está sujeta a los términos de uso y políticas de privacidad de KFC. Para más información sobre tu cuenta o si sientes que estas recibiendo este mail por error, por favor contactese con nosotros usando los links debajo. <br>
+							El Logo de KFC, logo y marcas relacionadas, son marcas registradas de KFC Inc.
+						</em>
+						<div style="color:#fed75f;margin-top:30px;font-size:12px;">
+							<a href="<?= front_uri ?>/index/politicas" style="color:red;text-decoration:underline" target="_blank">Privacidad</a> |
+							<a href="<?= front_uri ?>/index/terminos" style="color:red;text-decoration:underline" target="_blank">Términos de uso</a>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<p style='text-align:center;width:100%;'>
+			<span style='text-align:center;width:100%;'>
+				<img border="0" src="<?= front_uri ?>/resources/footer-mail.png" class="CToWUd">
+			</span>
+		</p>
+	</body>
+</html>

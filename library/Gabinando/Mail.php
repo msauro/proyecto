@@ -26,10 +26,8 @@ class Gabinando_Mail {
     protected $sendgrid_apikey;
 
     public function __construct (){
-        $this->zendMail = new Zend_Mail();
-
-        $settingsModel = new Application_Model_Setting();        
-        $this->sendgrid_apikey = $settingsModel->getSetting('sendgrid_apikey',1)["value"];    
+        $this->zendMail = new Zend_Mail();     
+        $this->sendgrid_apikey = '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';
     }
 
     public function __set ($name, $value){

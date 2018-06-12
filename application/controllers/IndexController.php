@@ -8,7 +8,7 @@ class IndexController extends Gabinando_Base{
 
 
     public function indexAction() {
-        
+
     //  rango de fechas del dia de HOY
         $desde = date('Y-m-d 00:00:01');
         $hasta = date('Y-m-d 23:59:59');
