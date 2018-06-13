@@ -297,6 +297,8 @@ class PedidoController extends Gabinando_Base{
 	public function listAction() {
 		$pedidoModel = new Application_Model_Pedido();
 		$listadoPedidos = $pedidoModel->getList();
+// echo "<pre>"; die(var_dump($listadoPedidos));
+
 		$this->view->listadoPedidos = $listadoPedidos;
     }
 
@@ -372,6 +374,18 @@ class PedidoController extends Gabinando_Base{
         }
     }
 
+    public function removeAction(){
+    	$id_pedido = $this->getRequest()->getParam('id');
+    	$pedidoModel = new Application_ModelPedido();
+		$result = $pedidoModel->remove('id',$id_pedido);
+		if($result instanceof Exception){
+			Gabinando_Base::addError($result->getMessage());
+		}else{
+			Gabinando_Base::addSuccess('Pedido cancelado');
+		}
+		$this->_redirect('pedido/list');
+
+	}
 
 
 

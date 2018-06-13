@@ -257,14 +257,15 @@ class VentaController extends Gabinando_Base{
 		
 		
 
+				// Start - Mail al cliente para avisarle que tiene una nueva VENTA 
 		
+				if ($params['data']['email'] != 'consumidor@final.com') {
+					$sender 	= new Application_Model_Mail_Sender();
+					$message 	= "Hola ".$params['data']['nombre']."! Gracias por tu compra por un total de:".$params['data']['total'].". <br>Forma de pago:".$params['data']["forma_pago"]." <br><br> Fecha: " . date('d-m-Y h:i a') ;
 
-				// Start - Mail al cliente para avisarle que tiene una nueva VENTA  VER/TERMINAR
-
-				$sender 	= new Application_Model_Mail_Sender();
-				$message 	= "Hola ".$venta['nombre']." ".$venta['apellido']."! Gracias por tu compra. Total:".$venta['total']." <br><br> Fecha: " . date('d-m-Y h:i a',strtotime($venta['fecha'])) ;
-
-				$result 	= $sender->sendEmail($venta['email'],"Nueva compra",$message);
+					$result 	= $sender->sendEmail($params['data']['email'],"Nueva compra",$message);
+				
+				}
 				
 				// End - Mail al cliente para avisarle que tiene una nueva venta
 
@@ -375,6 +376,19 @@ class VentaController extends Gabinando_Base{
 			$render = $this->view->render('/venta/modal_prod_equivalente.phtml');
             return $this->sendSuccessResponse($render);
 		}
+	}
+
+	public function removeAction(){
+    	$id_venta = $this->getRequest()->getParam('id');
+    	$ventaModel = new Application_ModelVenta();
+		$result = $ventaModel->remove('id',$id_venta);
+		if($result instanceof Exception){
+			Gabinando_Base::addError($result->getMessage());
+		}else{
+			Gabinando_Base::addSuccess('Nota de crédito realizada correctamente');
+		}
+		$this->_redirect('venta/list');
+
 	}
 
 }

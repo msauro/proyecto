@@ -1,5 +1,5 @@
 <?php         
-$this->title = "Lista de ventas";
+$this->title = "Lista depedidos";
 $this->headTitle($this->title);
 ?>
 
@@ -53,7 +53,7 @@ $(".xn-icon-button").fadeIn();
                                         <td><?php echo $pedido['fecha'] ?></td>
                                         <td class="text-center">
                                             <button class="btn btn-default btn-rounded btn-condensed btn-sm" onclick="detallePedido(<?php echo $pedido['id_ped'] ?>)"><span class="fa fa-eye"></span></button>
-                                            <button class="btn btn-danger btn-rounded btn-condensed btn-sm btn-delete" id="<?php echo $pedido['id'] ?>"><a href="#" data-toggle="tooltip" title="Nota de crédito"><span class="fa fa-remove" data-toggle="modal" data-target="#delete_modal"></span></a></button>
+                                            <button class="btn btn-danger btn-rounded btn-condensed btn-sm btn-delete" id="<?php echo $pedido['id'] ?>"><a href="#" data-toggle="tooltip" title="Cancelar pedido"><span class="fa fa-remove" data-toggle="modal" data-target="#delete_modal"></span></a></button>
                                         </td>
                                     </tr>
                                     <?php endforeach; ?>
@@ -76,7 +76,7 @@ $(".xn-icon-button").fadeIn();
                     <h4 class="modal-title">Confirmación</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Desea anular la factura?</p>
+                    <p>Desea anular el pedido?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
@@ -96,7 +96,7 @@ $(".xn-icon-button").fadeIn();
             });
 
             $("#btnYes").click(function(){
-                window.location.href = "/proveedor/remove/id/" + id;
+                window.location.href = "/pedido/remove/id/" + id;
             })
 
         });

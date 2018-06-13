@@ -7,7 +7,7 @@ class Application_Model_Mail_Sender {
     public function __construct(){
         $this->dispenser    = array(
             'name' => 'Gabinando',
-            'email' => 'gabi@nando.com'
+            'email' => 'contacto@gabinandosrl.com'
         );
     }
 
@@ -65,6 +65,7 @@ class Application_Model_Mail_Sender {
         $emailObj->setSubject($subject);
         $emailObj->setVariables($dataArray);
         $emailObj->send();
+        // die(var_dump($emailObj));
     }
 
 }

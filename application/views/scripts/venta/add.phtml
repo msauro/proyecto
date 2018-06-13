@@ -330,6 +330,22 @@ $this->headTitle($this->title);
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="modal_order_number" tabindex="-1" role="dialog" aria-labelledby="defModalHead" aria-hidden="true"> 
+    <div class="modal-dialog"> 
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Cerrar</span></button>
+            <h4 class="modal-title" id="smallModalHead">Venta Generada correctamente</h4>
+        </div>   
+        <div >
+            <div class="widget widget-default widget-item-icon">
+                <!-- <div class="widget-data"> -->
+                <div class="widget-int num-count num-ord">Número de Factura #<span id="order_number"></span></div>                                                
+                <!-- </div> -->
+            </div>
+        </div>
+    </div>
+</div>
 <!-- END PAGE CONTENT WRAPPER -->                                                
 <!-- <div id="spinner">        
 </div> -->
@@ -540,7 +556,8 @@ $this->headTitle($this->title);
 
                     if(data){
                         if(is_ordered){                          
-                            updateTimeDonations();                           
+                            updateTimeDonations();   
+                            setTimeout(function(){ window.location.href = "/venta/add"; }, 2000);                               
                         }
                         else{
                             setTimeout(function(){ window.location.href = "/venta/add"; }, 2000);                               

@@ -23,7 +23,7 @@ $(".xn-icon-button").fadeIn();
                         <div class="panel-title-box">
                             <h3>Lista de ventas</h3>
                         </div>  
-                        <button class="btn btn-primary pull-right" onclick="agregarProveedor()" data-toggle="dropdown"><span class="fa fa-plus" ></span> Nuevo</button>
+                        <button class="btn btn-primary pull-right" onclick="agregarVenta()" data-toggle="dropdown"><span class="fa fa-plus" ></span> Nuevo</button>
                     </div>
                         
                     <div class="panel-body">
@@ -94,7 +94,7 @@ $(".xn-icon-button").fadeIn();
             });
 
             $("#btnYes").click(function(){
-                window.location.href = "/proveedor/remove/id/" + id;
+                window.location.href = "/venta/remove/id/" + id;
             })
 
         });
