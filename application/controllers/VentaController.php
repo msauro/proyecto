@@ -185,6 +185,7 @@ class VentaController extends Gabinando_Base{
 						'subtotal' 			=> $params['data']['subtotal_products'],
 						'envio' 			=> $params['data']['envio'],
 						'iva'				=> $params['data']['iva'],
+						'eliminado'			=> 0,
 						'forma_entrega'		=> $forma_entrega
 				);
 				if ($cliente['nom_tipo'] == 'Monotributista') {
@@ -225,6 +226,8 @@ class VentaController extends Gabinando_Base{
 					);
 					//disminuye el stock en la existencia
 					$result = $existenciaModel->add($actualizarStock);
+					// die(var_dump($result));
+
 	            	// End Inventario
 				}else{
 					foreach ($productos as $prod) {
@@ -249,6 +252,7 @@ class VentaController extends Gabinando_Base{
 							'cantidad'		=> $nuevaCantidad,
 							'fecha' 		=> date('Y-m-d H:i:s')
 						);
+						// die(var_dump($actualizarStock));
 						//disminuye el stock en la existencia
 						$result = $existenciaModel->add($actualizarStock);
 		            	// End Inventario
@@ -264,16 +268,15 @@ class VentaController extends Gabinando_Base{
 					$message 	= "Hola ".$params['data']['nombre']."! Gracias por tu compra por un total de:".$params['data']['total'].". <br>Forma de pago:".$params['data']["forma_pago"]." <br><br> Fecha: " . date('d-m-Y h:i a') ;
 
 					$result 	= $sender->sendEmail($params['data']['email'],"Nueva compra",$message);
-				
+				// die(var_dump($result));
 				}
 				
 				// End - Mail al cliente para avisarle que tiene una nueva venta
 
 				
 	      
-	           			
-
-				return $this->sendSuccessResponse(true,"Venta guardada y stock actualizado");
+				$this->view->idVenta = $idVenta;
+				return $this->sendSuccessResponse($idVenta,"Venta guardada y stock actualizado");
 			}catch(Exception $e){
 				return $this->sendErrorResponse($e->getMessage('error'));
 			}

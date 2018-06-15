@@ -231,17 +231,6 @@ class PedidoController extends Gabinando_Base{
 
 					$pedidos_detalleModel->add($dProductsObj);
 
-					//ACTUALIZA STOCK
-					// $actualizarStock = array(
-					// 	'id_producto'	=> $id_producto,
-					// 	'cantidad'		=> $nuevaCantidad,
-					// 	'fecha' 		=> date('Y-m-d H:i:s')
-					// );
-
-					//disminuye el stock en la existencia
-					// $result = $existenciaModel->add($actualizarStock);
-	            	// End Inventario
-
 				}else{
 					foreach ($productos as $prod) {
 						$id_producto = $prod['id_producto'];
@@ -258,35 +247,19 @@ class PedidoController extends Gabinando_Base{
 						);
 						$pedidos_detalleModel->add($dProductsObj);
 						
-						// Start descontar stock Inventario 
-						// $actualizarStock = array(
-						// 	'id_producto'	=> $id_producto,
-						// 	'cantidad'		=> $nuevaCantidad,
-						// 	'fecha' 		=> date('Y-m-d H:i:s')
-						// );
-						//disminuye el stock en la existencia
-						// $result = $existenciaModel->add($actualizarStock);
-		            	// End Inventario
 					}
 				}
-		
-		
-
 		
 
 				// Start - Mail al proveedor para enviar el pedido
 
-				// $sender 	= new Application_Model_Mail_Sender();
-				// $message 	= "Hola ".$venta['nombre']." ".$venta['apellido']."! Gracias por tu compra. Total:".$venta['total']." <br><br> Fecha: " . date('d-m-Y h:i a',strtotime($venta['fecha'])) ;
+				$sender 	= new Application_Model_Mail_Sender();
+				$message 	= "Hola ".$proveedor['razon_social']."! En breves le enviaremos un pedido de Gabinando S.R.L. <br><br> Fecha: " . date('Y-m-d H:i:s') ;
 
-				// $result 	= $sender->sendEmail($venta['email'],"Nueva compra",$message);
-				// End - Mail al cliente para avisarle que tiene una nueva venta
+				$result 	= $sender->sendEmail($proveedor['email'],"Nuevo pedido",$message);
+				// End - Mail al proveedor para avisarle que se le enviará un pedido
 
-				
-	      
-	           			
-
-				return $this->sendSuccessResponse(true,"Pedido guardado");
+				return $this->sendSuccessResponse($idPedido,"Pedido guardado");
 			}catch(Exception $e){
 				return $this->sendErrorResponse($e->getMessage('error'));
 			}
