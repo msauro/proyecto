@@ -207,51 +207,23 @@ class ClienteController extends Gabinando_Base {
 
 	public function ultimascomprasAction(){
         $params = $this->getRequest()->getParams();
-			// $params = $this->getRequest()->getPost();
-			// die(var_dump($params));
-			$params['id'] = $this->getRequest()->getParam('id');
-
 			$ventaModel = new Application_Model_Venta();
-			$ultimasCompras = $ventaModel->ultimasVentas($params['id']);
-			// die(var_dump($ultimasCompras));
+			$ultimasCompras = $ventaModel->ultimasVentas($params['id_client']);
 
 			if($ultimasCompras instanceof Exception){
-			    $this->addError("Error al mostrar las ordenes.");
+			    $this->addError("Error al mostrar las últimas compras.");
 			}else{
 			    $this->view->ultimasCompras = $ultimasCompras;
 			}
 
 
 		$render = $this->view->render('/cliente/modal_ultimas_compras.phtml');
-		// die(var_dump($render));
-		// die('ver porque no me levanta el modal');
         return $this->sendSuccessResponse($render);
 		
 
 	}
 
-	 // public function viewordersAction() {
-  //       $params = $this->getRequest()->getParams();
-  //       $id = $params['id_client'];
-  //       if ($params ["franchise"] == 'KFC') {
-  //           $kfcModel = new Application_Model_KFC_KFC();
-  //           $response = $kfcModel->viewOrdersUser($id); 
-  //       }elseif ($params ["franchise"] == 'PH') {
-  //           $phModel = new Application_Model_PizzaHut_PH();
-  //           $response = $phModel->viewOrdersUser($id); 
-  //           $params ["franchise"] = 'PizzaHut';
-  //       }
-  //       if($response instanceof Exception){
-  //           $this->addError("Error al mostrar las ordenes.");
-  //       }else{
-  //           $this->view->orders = $response['orders'];
-  //           $this->view->franchise = $params ["franchise"];
-  //       }
-
-  //           $render = $this->view->render('/callcenter/clients/modal_orders_clients.phtml');
-  //           return $this->sendSuccessResponse($render);
-
-  //   }
+	
 		
 	
 }

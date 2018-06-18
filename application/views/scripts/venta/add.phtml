@@ -200,7 +200,7 @@ $this->headTitle($this->title);
                                                     <div class="input-group">
                                                         <span class="input-group-addon"><span class="fa fa fa-money"></span></span>
                                                         <input class="form-control" type="number" placeholder="Ingrese el monto en efectivo" id="cashamount">
-                                                        <span class="input-group-addon"><attr data-toggle="tooltip" title="Si no abona la totalidad el resto pasará a la cuenta corriente"><span class="fa fa-info-circle fa-lg info"></span></attr></span>
+                                                        <span class="input-group-addon"><attr data-toggle="tooltip" title="Si no abona la totalidad, seleccione cuenta corriente"><span class="fa fa-info-circle fa-lg info"></span></attr></span>
                                                     </div>                                               
                                                 </div>
                                             </div>
@@ -480,6 +480,7 @@ $this->headTitle($this->title);
         if (type_cash == 'efectivo'){ 
             $("#type-cash").show();
             $("#cashamount").val($('#total_cost_hidden').val());
+            $("#cashamount").prop('disabled', true);
         }else{ 
             $("#type-cash").hide();
         }

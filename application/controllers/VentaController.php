@@ -176,6 +176,7 @@ class VentaController extends Gabinando_Base{
 			try{
 				$ventaModel= new Application_Model_Venta();
 				$forma_entrega = ($params['data']['envio'][0] != 0) ? 'delivery' : 'retira';
+				$pagado = ($params['data']['forma_pago'] != 'ctacte') ? '1' : '0';
 				$ventaObj = array(
 						'id_cliente' 		=> $params['data']['id_cliente'],
 						'fecha' 			=> date('Y-m-d H:i:s'),
@@ -184,6 +185,7 @@ class VentaController extends Gabinando_Base{
 						'total'      		=> $params['data']['total'],
 						'subtotal' 			=> $params['data']['subtotal_products'],
 						'envio' 			=> $params['data']['envio'],
+						'pagado' 			=> $pagado,
 						'iva'				=> $params['data']['iva'],
 						'eliminado'			=> 0,
 						'forma_entrega'		=> $forma_entrega
@@ -201,6 +203,11 @@ class VentaController extends Gabinando_Base{
 				// Start - Crea la donation
 				$idVenta = $ventaModel->add($ventaObj);	
 				// End - Crea la donation
+
+				if ($params['data']['forma_pago'] == 'ctacte') {
+					$ventas_detalleModel = new Application_Model_VentaDetalle();
+					
+				}
 
 				$ventas_detalleModel = new Application_Model_VentaDetalle();
 				$productoModel	= new Application_Model_Producto();

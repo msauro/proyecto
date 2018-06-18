@@ -123,7 +123,7 @@ class Application_Model_Venta extends Application_Model_Base
 	            ->where('ventas.id_cliente = ?', $id_cliente);
 
 	        $query = $query->order('ventas.fecha DESC');
-       		$query = $query->limit(10);
+       		$query = $query->limit(7);
 // die($query);
             $row = $this->fetchAll($query);
 

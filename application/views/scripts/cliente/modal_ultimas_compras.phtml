@@ -1,12 +1,13 @@
-<!-- <div class="table-responsive">
+<div class="table-responsive">
     <table class="table table-bordered table-striped table-actions datatable-sr">
         <thead>
             <tr>
                 <th># ID</th>
                 <th>Fecha</th>
-                <th>Forma Pago</th>
-                <th>Total</th>
-                <!-- <th>Ver</th> -->
+                <th>Forma de Pago</th>
+                <th>Monto</th>
+                <th>Estado</th>
+                <th>Ver</th>
             </tr>
         </thead>
         <tbody>
@@ -16,52 +17,10 @@
                 <td><?php echo $compra['fecha'] ?></td>
                 <td><?php echo $compra['forma_pago'] ?></td>
                 <td><?php echo $compra['total'] ?></td>
-                <!-- <td><a target="_blank" href="/view/venta/id/<?php echo  $compra['id'] ?>"  id="btnView" data-id="<?php echo  $compra['id'] ?>" class="btn btn-primary btn-rounded btn-condensed btn-sm btn-view-orders"><span class="fa fa-eye"></span></a></td>  -->
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-</div> -->
-
-////////////////////////////////////////////////////
-
-
-
-<div class="table-responsive">
-    <table class="table datatable-ultimas-compras table-striped">
-        <thead>
-            <tr>
-                <th>Orden</th>
-                <th>Fecha</th>
-                <th>Monto</th>
-                <th>Tipo</th>                                                                      
-            </tr>
-        </thead>
-        <tbody>
-            <?php  foreach ($this->orders as $order): ?>
-            <tr>
-                <td><?php echo $order['id_order'] ?></td>
-                <td><?php echo date("d-m-Y", strtotime($order['date'])); ?></td>
-                <td><?php echo $order['quantity'] ?></td>
-                <td><?php echo $order['tipo'] ?></td>
+                <td><?php $estado = ($compra['pagado'] == 1) ? 'Pagado' : 'Debe' ; echo $estado ?></td>
+                <td><a target="_blank" href="/venta/detalle/id/<?php echo  $compra['id'] ?>"  id="btnView" data-id="<?php echo  $compra['id'] ?>" class="btn btn-primary btn-rounded btn-condensed btn-sm btn-view-orders"><span class="fa fa-eye"></span></a></td> 
             </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
 </div>
-
-<script>
-    $(document).ready(function(){
-        var table = $(".datatable-ultimas-compras").DataTable({
-              "order": [[0 , "desc" ]],
-              "language":{
-                  url : "/admin-public/js/plugins/datatables/Spanish.json"
-              }                
-          });
-        table.draw();
-    });
-</script>
-
-
-<script type="text/javascript" src="/admin-public/js/plugins/datatables/datatables.min.js"></script>          
-<script type="text/javascript" src="/admin-public/js/plugins/datatables/dataTables.bootstrap.min.js"></script>
