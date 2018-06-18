@@ -5,7 +5,7 @@ $this->headTitle($this->title);
 <!-- START BREADCRUMB -->
 <ul class="breadcrumb">
     <li><a href="/">Panel Principal</a></li>
-    <li><a href="/venta/detalle">Venta</a></li>
+    <li><a href="/venta/list">Venta</a></li>
     <li class="active">Detalle</li>
 </ul>
 <!-- END BREADCRUMB -->
@@ -19,12 +19,15 @@ $this->headTitle($this->title);
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title"><strong>Detalle</strong> de factura</h3>
+                        <?php ($this->venta["pagado"] == 0) ? $disabled = ''  : $disabled = 'disabled' ?>
+                            <a class="btn btn-primary btn-pago pull-right <?php echo $disabled; ?> ">Pagó</a>
+                            <input name="id_venta" id="id_venta" type="hidden" value="<?php  echo $this->venta['venta_id']; ?> ">
                     </div>
                     <div class="panel-body">
                             <div class="row">
                                 <div class="col-xs-12">
                                     <div class="invoice-title">
-                                       <img src="/resources/logo.png"> <spam id="factura"><?php echo $this->venta['tipo']; ?></spam> <h3 class="pull-right">Factura N°: #<?php echo $this->venta['id']; ?> </h3>
+                                       <img src="/resources/logo.png"> <spam id="factura"><?php echo $this->venta['tipo']; ?></spam> <h3 class="pull-right">Factura N°: #<?php echo $this->venta['venta_id']; ?> </h3>
                                     </div>
                                     <hr>
                                     <div class="row">
@@ -252,4 +255,20 @@ $.validator.addMethod("validarprecio", function (value, element) {
 $.validator.addMethod('validarcuit', function (value, element) {
         return this.optional(element) || /^\d{11}$/.test(value);
 }, "El formato debe ser (00-00000000-0). No ingrese los guiones");
+
+$(".btn-pago").click(function(event){
+    var params = {};
+    params.id_venta = $('#id_venta').val();
+    panelAjax("/venta/pagado",params, function(data){
+        console.log(data);
+        console.log(data);
+        console.log(data);
+        console.log(data);
+        location.reload();
+        
+    })
+
+});
+
+
 </script>

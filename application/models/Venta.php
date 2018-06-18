@@ -93,7 +93,7 @@ class Application_Model_Venta extends Application_Model_Base
 	public function getFullVenta($id){
 		try{
             $query = $this->select()->setIntegrityCheck(false)
-	            ->from($this, array('*'))
+	            ->from($this, array('id as venta_id','*'))
             	->join('clientes', 'clientes.id = ventas.id_cliente', array('*'))
             	// ->join('tipo_empresa', 'tipo_empresa.id = clientes.id_tipo_empresa', array('tipo_empresa.nombre'))
 	            ->where('ventas.id = ?', $id);

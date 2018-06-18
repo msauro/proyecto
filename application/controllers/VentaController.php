@@ -401,4 +401,18 @@ class VentaController extends Gabinando_Base{
 
 	}
 
+	    public function pagadoAction(){
+			$params = $this->getRequest()->getPost();
+	        $actualiza['pagado'] = 1;
+			// die(var_dump($params));
+			$ventaModel = new Application_Model_Venta();
+	        $result = $ventaModel->edit($params["id_venta"], $actualiza);
+	        // die(var_dump($result));
+	        if($result instanceof Exception){
+	            return $this->sendErrorResponse('Error al poner la venta como pagada');
+	        }else{
+	           return $this->sendSuccessResponse($result);
+	        }
+	    }
+
 }

@@ -161,15 +161,9 @@ $this->headTitle($this->title);
             panelAjax("/pedido/recibido",params, function(data){
                 if (data) {
                     location.reload();
-                    
                 }
-                $("#equivalen").html('');
-                $("#equivalen").html(data);           
-                $('#modal_pedido_recibido').modal('show');
+                
             })
-
-
-            // $('#btnView').attr('href', 'callcenter_manager/view/franchise/'+franchise+'/id/'+id_client);
 
         });
    
