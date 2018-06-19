@@ -64,8 +64,14 @@ class ClienteController extends Gabinando_Base {
 
 	public function listAction() {
 		$cliente = new Application_Model_Cliente();
+		// $ventaModel = new Application_Model_Venta();
+
 		$listadoclientes = $cliente->getList();
+		// $deuda = $ventaModel->getDeuda($params['id']);
+// die(var_dump($deuda));
 		$this->view->listadoclientes = $listadoclientes;
+		$this->view->deuda = $deuda;
+
     }
 
     public function removeAction(){
@@ -223,9 +229,30 @@ class ClienteController extends Gabinando_Base {
 
 	}
 
+	public function resumenAction(){
+		$params = $this->getRequest()->getParams();
+
+		$ventaModel = new Application_Model_Venta();
+		$listadoPendientes = $ventaModel->getPendientes($params['id']);
+		$deuda = $ventaModel->getDeuda($params['id']);
+// die(var_dump($deuda));
+
+		if($listadoPendientes instanceof Exception){
+		    $this->addError("Error al mostrar las últimas compras.");
+		}else{
+		    $this->view->listadoPendientes = $listadoPendientes;
+		    $this->view->deuda = $deuda;
+		}
+
+
+	
+	}
+
 	
 		
-	
+
+
+
 }
 
 ?>

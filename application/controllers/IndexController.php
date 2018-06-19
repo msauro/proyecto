@@ -19,17 +19,32 @@ class IndexController extends Gabinando_Base{
         //widget Cantidad de ventas del día de hoy (OK)
         $ventasModel = new Application_Model_Venta();
         $cantVentas = $ventasModel->getCantVentasRango($desde,$hasta);
+        // die(var_dump($cantVentas));
+        $this->view->cantVentas = $cantVentas;
+
+        //widget Cantidad de ventas del mes (OK)
+        $ventasModel = new Application_Model_Venta();
+        $cantVentasMes = $ventasModel->getCantVentasRango($mesActualDesde,$mesActualHasta);
+        $this->view->cantVentasMes = $cantVentasMes;
+
 
         //widget clientes con mas compras en el mes (OK)
         $clientesModel = new Application_Model_Cliente();
         $clientesMasVentas = $clientesModel->getClientesMasVentas($mesActualDesde,$mesActualHasta);
         $this->view->clientesMasVentas = $clientesMasVentas;
 
-        //widget cantidad de clientes con/sin deudas
-        $clientesModel = new Application_Model_Cliente();
-        $clientesDeudas = $clientesModel->getClientesDeudas();
+        //widget total facturas por cobrar
+        $deudas = $ventasModel->getDeudas();
+        $this->view->deudas = $deudas['deuda'];
 
-        //widget cantidad de productos en punto de pedido o menor por marca
+        //widget total ($) facturas por cobrar
+        $totalDeuda = $ventasModel->getTotalDeudas();
+        $this->view->totalDeuda = number_format($totalDeuda['total'], 2, ',', ' ');
+
+
+
+
+        //widget cantidad de productos en punto de pedido o menor por marca TERMINAR
         $existenciaModel = new Application_Model_Existencia();
         $cantPtoPedido = $existenciaModel->getCantPtoPedido();
 
@@ -41,7 +56,6 @@ class IndexController extends Gabinando_Base{
         else{
 
           
-            $this->view->cantVentas = $cantVentas;
             $this->view->cantPtoPedido = $cantPtoPedido;
 
 

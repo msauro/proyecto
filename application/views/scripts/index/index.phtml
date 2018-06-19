@@ -16,31 +16,31 @@ $(".xn-icon-button").fadeIn();
   <div class="page-content-wrap">
   <!-- ROW 1 / WIDGETS -->
     <div class="row">
-      <div class="col-md-3">   
+      <div class="col-md-4">   
         <div class="widget widget-default widget-carousel">
           <div class="owl-carousel" id="owl-example">
               <div>           
-              <div class="widget-title">Total Clientes</div>
-              <div class="widget-subtitle"><?php echo date('m-d-Y') ?></div>
-              <div class="widget-int"><?php echo $this->storefront_donationsCount['total'] ?></div>
+              <div class="widget-title">Total ventas del mes</div>
+              <div class="widget-subtitle"><?php echo date('m-Y') ?></div>
+              <div class="widget-int"><?php echo $this->cantVentasMes['total'] ?></div>
           </div>
           <div>                                    
-              <div class="widget-title">Clientes con deudas</div>
-              <div class="widget-subtitle">Successful</div>
-              <div class="widget-int"><?php echo $this->storefront_donationsCount['successful'] ?></div>
+              <div class="widget-title">Total ventas de hoy</div>
+              <div class="widget-subtitle">Hoy</div>
+              <div class="widget-int"><?php echo $this->cantVentas['total'] ?></div>
           </div>
-          <div>                                    
+         <!--  <div>                                    
               <div class="widget-title">Clientes sin deudas</div>
               <div class="widget-subtitle">Cancelled</div>
               <div class="widget-int"><?php echo $this->storefront_donationsCount['cancelled'] ?></div>
-          </div>
+          </div> -->
           
           </div>                            
           <div class="widget-controls"></div>
         </div> 
       </div>
       <!-- 5 Clientes con mas ventas por mes -->
-      <div class="col-md-3">   
+      <div class="col-md-4">   
         <div class="widget widget-default widget-carousel ">
           <div class="owl-carousel" id="owl-example">
             <?php if ($this->clientesMasVentas) { ?>
@@ -61,7 +61,7 @@ $(".xn-icon-button").fadeIn();
         </div>  
       </div>  
       <!-- Ventas por tipo de cliente x mes -->
-      <div class="col-md-3">   
+      <div class="col-md-4">   
         <div class="widget widget-default widget-carousel ">
           <div class="owl-carousel" id="owl-example">
               <div>                                    
@@ -93,13 +93,13 @@ $(".xn-icon-button").fadeIn();
           <div class="widget-controls"></div>
         </div>  
       </div> 
-      <!-- Ventas por tipo de cliente -->
-      <div class="col-md-3">   
+      <!-- Productos con stock critico -->
+      <!-- <div class="col-md-3">   
         <div class="widget widget-default widget-carousel ">
           <div class="owl-carousel" id="owl-example">
               <div>                                    
-                  <div class="widget-title">Total Ventas</div>                                                                        
-                  <div class="widget-subtitle"><?php echo date('m-d-Y') ?></div>
+                  <div class="widget-title">Productos con stock crítico</div>                                                                        
+                  <div class="widget-subtitle">Total</div>
                   <div class="widget-int"><?php echo $this->donationsCount['total'] ?></div>
               </div>
               <div>                                    
@@ -125,9 +125,11 @@ $(".xn-icon-button").fadeIn();
           </div>                            
           <div class="widget-controls"></div>
         </div>  
-      </div>
-      <!-- COLUMN 1 / SUCCESSFUL REQUEST WIDGET -->
-      <div class="col-md-3">   
+      </div> -->
+
+
+      <!-- COLUMN 1 / VENTAS HOY -->
+      <div class="col-md-4">   
           <div class="widget widget-default widget-item-icon">
             <div class="widget-item-left">
                 <span class="fa fa-shopping-cart"></span>
@@ -135,66 +137,66 @@ $(".xn-icon-button").fadeIn();
             <div class="widget-data">
               <?php if(!isset($this->cantVentas)) {?>
               <div class="widget-title" style="position:relative;top:35px;">
-                  No hubo ventas en el mes
+                  No hubo ventas hoy
               </div>
               <?php } else { ?>
               <div id="widget_successful" class="widget-int num-count" style="font-size:25px;">
-                  <?php echo $this->cantVentas["COUNT(id)"]; ?> 
+                  <?php echo $this->cantVentas["total"]; ?> 
               </div>
               <div class="widget-title">
-                  Ventas en el mes
+                  Ventas de hoy
               </div>
               <?php } ?>
             </div>
         </div>
       </div>
-    <!-- COLUMN 2 / CANCELELD REQUEST WIDGET -->
-      <div class="col-md-3">   
+    <!-- COLUMN 2 / FACTURAS POR COBRAR OK -->
+      <div class="col-md-4">   
           <div class="widget widget-default widget-item-icon">
             <div class="widget-item-left">
                 <span class="fa fa-info-circle"></span>
             </div>                             
             <div class="widget-data">
-              <?php if(!isset($this->widgetsData['Cancelled'])) {?>
+              <?php if(!isset($this->deudas)) {?>
               <div class="widget-title" style="position:relative;top:35px;">
-                  No data
+                  No hay facturas por cobrar
               </div>
               <?php } else { ?>
               <div id="widget_cancelled" class="widget-int num-count" style="font-size:25px;">
-                  <?php echo $this->widgetsData['Cancelled']; ?> 
+                  <?php echo $this->deudas; ?> 
               </div>
               <div class="widget-title">
-                Clientes con deudas
+                Facturas por cobrar
               </div>
               <?php } ?>
             </div>
-        </div>
+          </div>
       </div>
 
-    <!-- COLUMN 2 / PENDING REQUESTS WIDGET -->
-      <div class="col-md-3">
+    <!-- COLUMN 2 / $$ FACTURAS POR COBRAR -->
+      <div class="col-md-4">
          <div class="widget widget-default widget-item-icon">
             <div class="widget-item-left">
-                <span class="fa fa-thumbs-o-up"></span>
+                <span class="fa fa-thumbs-o-down"></span>
             </div>                             
             <div class="widget-data">
-                <?php if(!isset($this->widgetsData['Pending'])) {?>
+                <?php if(!isset($this->totalDeuda)) {?>
                 <div class="widget-title" style="position:relative;top:35px;">
-                    No data
+                    Los clientes están al día
                 </div>
                 <?php } else { ?>
                 <div id="widget_pending" class="widget-int num-count" style="font-size:25px;">
-                    <?php echo $this->widgetsData['Pending']; ?> 
+                   $<?php echo $this->totalDeuda; ?> 
                 </div>
                 <div class="widget-title">
-                    Pagos por cobrar
+                    Total de facturas sin cobrar
                 </div>
                 <?php } ?>
             </div>
           </div>  
       </div>
     <!-- COLUMN 3 / WAITING REQUEST WIDGET -->
-      <div class="col-md-3">
+      <!-- <div class="col-md-3">
          <div class="widget widget-default widget-item-icon">
               <div class="widget-item-left">
                   <span class="fa fa-clock-o"></span>
@@ -214,218 +216,12 @@ $(".xn-icon-button").fadeIn();
                   <?php } ?>
               </div>
           </div>  
-      </div>
+      </div> -->
     </div>
   
-  <!-- ROW 2 / ASSISTANCE LIST -->
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <div class="panel-title-box">
-              <h3>Assistance Requests List</h3>
-              <span>Info about assistance requests</span>
-            </div> 
-          </div>
-          <div class="panel-heading">
-            <div class="col-xs-4 col-sm-2">
-                <div class="input-group">
-                    <span class="input-group-addon add-on"><span class="fa fa-calendar"></span></span>
-                    <input type="text" class="table_date_picker form-control datepicker" value="<?php echo date('Y-m-d'); ?>">
-                </div> 
-            </div>
-
-            <div class="col-sm-2">
-                <button class="table_filter btn btn-success btn-update"><span class="fa fa-refresh"></span> Filter </button>
-            </div>
-          </div>
-          <div class="panel-body">
-            <div class="table-responsive">
-              <table id="assistanceTable" class="table table-striped">
-                <thead>
-                  <tr>
-                    <th class="thPrint no-sortable text-center" style="padding-left: 20px;"><i class="fa fa-print" aria-hidden="true"></i></th>
-                    <th class="thRequestID text-center"></th>
-                    <th class="thDate text-center"></th>
-                    <th class="thTime text-center"></th>
-                    <th class="thRequestType text-center"></th>
-                    <th class="thUser text-center"></th>
-                    <th class="thPlace text-center"></th>
-                    <th class="thStatus text-center"></th>
-                    <th class="thTimer text-center"></th>
-                    <th class="thActions no-sortable text-center"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php foreach ($this->assistanceList as $request){ ?>
-                    <tr>
-                      <!-- PRINT BUTTON -->
-                      <td class="text-center">
-                        <button id="<?php echo $request['id']; ?>_btn_print" class="btn btn-default btn-rounded btn-condensed btn-sm btn-print <?php if($request['status'] == 'Pending') echo 'hidden'; ?>" id="<?= $request['id'] ?>">
-                           <span class="fa fa-file-text-o" data-toggle="modal" data-target="#modal_print"></span>
-                        </button>
-                      </td>
-                      <td class="text-center"><?php echo $request['id']; ?></td>
-                      <td class="text-center"><?php echo substr($request['date'], 0, 10); ?></td>
-                      <td class="text-center"><?php echo substr($request['date'], 11); ?></td>
-                      <td class="text-center"><?php echo $request['type']; ?></td>
-                      <td class="text-center">
-                        <?php if($request['user'] != 'Guest'){
-                          echo $request['user']['first_name'].' '.$request['user']['last_name'];
-                        }else{
-                          echo $request['user'];
-                        } ?></td>
-                      <td class="text-center"><?php echo $request['place']; ?></td>
-                      
-                      <td id="<?php echo $request['id']; ?>_status" class="text-center">
-                        <?php switch ($request['status']) {
-                              case 'Pending':
-                                  echo '<span class="label label-warning">Pending</span>';
-                                  break;
-                              case 'Waiting':
-                                  echo '<span class="label label-info">Waiting</span>';
-                                  break;
-                              case 'Cancelled':
-                                  echo '<span class="label label-danger">Cancelled</span>';
-                                  break;
-                              case 'Successful':
-                                  echo '<span class="label label-success">Successful</span>';
-                                  break;
-                          }?>
-                      </td>
-
-                    <!-- TIMER -->
-                      <td class="text-center">
-                        <label id="<?php echo $request['id']; ?>_minutes" class="<?php if(($request['status'] == 'Successful') OR ($request['status'] == 'Cancelled')) echo 'hidden'; ?>">
-                        <?php echo ($request['waitingMin'] . ' : ') ?></label>
-                        
-                        <label id="<?php echo $request['id']; ?>_seconds" class="<?php if(($request['status'] == 'Successful') OR ($request['status'] == 'Cancelled')) echo 'hidden'; ?>"> <?php echo $request['waitingSec'] ?></label>
-                      </td>
-
-                    <!-- BUTTONS -->
-                      <td class="text-center">
-                        <!-- WAITING STATUS BUTTON -->
-                        <button id="<?php echo $request['id']; ?>_btn_waiting" onclick="REQUEST.setRequestStatus(<?php echo $request['id'] ?>, 'Waiting', '<?php echo $request['pushToken'] ?>')" class="btn btn-info btn-rounded btn-condensed btn-sm btn-active <?php if($request['status'] != 'Pending') echo 'hidden'; ?>"><span class="fa fa-thumbs-o-up"></span>
-                        </button>
-
-                        <!-- CANCELLED STATUS BUTTON -->
-                        <button id="<?php echo $request['id']; ?>_btn_cancelled" onclick="REQUEST.setRequestStatus(<?php echo $request['id'] ?>, 'Cancelled', '<?php echo $request['pushToken'] ?>')" class="btn btn-danger btn-rounded btn-condensed btn-sm btn-active <?php if(($request['status'] == 'Successful') OR ($request['status'] == 'Cancelled')) echo 'hidden'; ?>"><span class="fa fa-remove"></span>
-                        </button>
-
-                        <!-- SUCCESSFUL STATUS BUTTON -->
-                        <button id="<?php echo $request['id']; ?>_btn_successful"onclick="REQUEST.setRequestStatus(<?php echo $request['id'] ?>, 'Successful', '<?php echo $request['pushToken'] ?>')" idRequest="<?php echo $request['id'] ?>" status='Successful' class="btn btn-success btn-rounded btn-condensed btn-sm btn-active <?php if($request['status'] != 'Waiting') echo 'hidden'; ?>"><span class="fa fa-check"></span>
-                        </button>
-                      </td>
-                    </tr>
-                  <?php } ?>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  
-  <!-- ROW 3 / REQUEST LIST -->
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <div class="panel-title-box">
-              <h3>Requests List</h3>
-              <span>Info about requests</span>
-            </div> 
-          </div>
-          <div class="panel-body">
-            <div class="table-responsive">
-              <table id="requestTable" class="table table-striped">
-                <thead>
-                  <tr>
-                    <th class="thPrint no-sortable text-center" style="padding-left: 20px;"><i class="fa fa-print" aria-hidden="true"></i></th>
-                    <th class="thRequestID text-center"></th>
-                    <th class="thDate text-center"></th>
-                    <th class="thTime text-center"></th>
-                    <th class="thRequestType text-center"></th>
-                    <th class="thUser text-center"></th>
-                    <th class="thPlace text-center"></th>
-                    <th class="thStatus text-center"></th>
-                    <th class="thTimer text-center"></th>
-                    <th class="thActions no-sortable text-center"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php foreach ($this->requestList as $request){ ?>
-                    <tr>
-                      <!-- PRINT BUTTON -->
-                      <td class="text-center">
-                        <button id="<?php echo $request['id']; ?>_btn_print" class="btn btn-default btn-rounded btn-condensed btn-sm btn-print <?php if($request['status'] == 'Pending') echo 'hidden'; ?>" id="<?= $request['id'] ?>">
-                           <span class="fa fa-file-text-o" data-toggle="modal" data-target="#modal_print"></span>
-                        </button>
-                      </td>
-                      <td class="text-center"><?php echo $request['id']; ?></td>
-                      <td class="text-center"><?php echo substr($request['date'], 0, 10); ?></td>
-                      <td class="text-center"><?php echo substr($request['date'], 11); ?></td>
-                      <td class="text-center"><?php echo $request['type']; ?></td>
-                      <td class="text-center">
-                        <?php if($request['user'] != 'Guest'){
-                          echo $request['user']['first_name'].' '.$request['user']['last_name'];
-                        }else{
-                          echo $request['user'];
-                        } ?></td>
-                      <td class="text-center"><?php echo $request['place']; ?></td>
-                      
-                      <td id="<?php echo $request['id']; ?>_status" class="text-center">
-                        <?php switch ($request['status']) {
-                              case 'Pending':
-                                  echo '<span class="label label-warning">Pending</span>';
-                                  break;
-                              case 'Waiting':
-                                  echo '<span class="label label-info">Waiting</span>';
-                                  break;
-                              case 'Cancelled':
-                                  echo '<span class="label label-danger">Cancelled</span>';
-                                  break;
-                              case 'Successful':
-                                  echo '<span class="label label-success">Successful</span>';
-                                  break;
-                          }?>
-                      </td>
-
-                    <!-- TIMER -->
-                      <td class="text-center">
-                        <label id="<?php echo $request['id']; ?>_minutes" class="<?php if(($request['status'] == 'Successful') OR ($request['status'] == 'Cancelled')) echo 'hidden'; ?>">
-                        <?php echo ($request['waitingMin'] . ' : ') ?></label>
-                        
-                        <label id="<?php echo $request['id']; ?>_seconds" class="<?php if(($request['status'] == 'Successful') OR ($request['status'] == 'Cancelled')) echo 'hidden'; ?>"> <?php echo $request['waitingSec'] ?></label>
-                      </td>
-
-                    <!-- BUTTONS -->
-                      <td class="text-center">
-                        <!-- WAITING STATUS BUTTON -->
-                        <button id="<?php echo $request['id']; ?>_btn_waiting" onclick="REQUEST.setRequestStatus(<?php echo $request['id'] ?>, 'Waiting', '<?php echo $request['pushToken'] ?>')" class="btn btn-info btn-rounded btn-condensed btn-sm btn-active <?php if($request['status'] != 'Pending') echo 'hidden'; ?>"><span class="fa fa-thumbs-o-up"></span>
-                        </button>
-
-                        <!-- CANCELLED STATUS BUTTON -->
-                        <button id="<?php echo $request['id']; ?>_btn_cancelled" onclick="REQUEST.setRequestStatus(<?php echo $request['id'] ?>, 'Cancelled', '<?php echo $request['pushToken'] ?>')" class="btn btn-danger btn-rounded btn-condensed btn-sm btn-active <?php if(($request['status'] == 'Successful') OR ($request['status'] == 'Cancelled')) echo 'hidden'; ?>"><span class="fa fa-remove"></span>
-                        </button>
-
-                        <!-- SUCCESSFUL STATUS BUTTON -->
-                        <button id="<?php echo $request['id']; ?>_btn_successful"onclick="REQUEST.setRequestStatus(<?php echo $request['id'] ?>, 'Successful', '<?php echo $request['pushToken'] ?>')" idRequest="<?php echo $request['id'] ?>" status='Successful' class="btn btn-success btn-rounded btn-condensed btn-sm btn-active <?php if($request['status'] != 'Waiting') echo 'hidden'; ?>"><span class="fa fa-check"></span>
-                        </button>
-                      </td>
-                    </tr>
-                  <?php } ?>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    </div>
 
 <!-- MODAL ALERT -->
-  <div id="modalAlert" class="modal fade">
+  <!-- <div id="modalAlert" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -439,57 +235,13 @@ $(".xn-icon-button").fadeIn();
             </div>
         </div>
     </div>
-  </div>
+  </div> -->
 
-<!-- MODAL PRINT -->
-  <div class="modal animated fadeIn" id="modal_print" tabindex="-1" role="dialog" aria-labelledby="smallModalHead" aria-hidden="true">
-     <div class="modal-dialog">
-         <div class="modal-content">
-             <div class="modal-header">
-                 <button type="button" class="close" data-dismiss="modal">
-                     <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-                 </button>
-                 <button type="button" class="close" style="margin-right:20px;">
-                     <span class="btn-print fa fa-print"></span>
-                 </button>
-                 <h4 class="modal-title" id="smallModalHead"></h4>
-             </div>                    
-             <div class="modal-body">
-                 <iframe id="print_iframe" src="" width="100%" height="700" frameborder="0"></iframe>
-             </div>
-         </div>
-     </div>
-  </div>
 
 <!-- THIS PAGE PLUGINS -->
   <script type="text/javascript" src="/admin-public/js/plugins/scrolltotop/scrolltopcontrol.js"></script>
   <script type="text/javascript" src="/admin-public/js/plugins/bootstrap/bootstrap-datepicker.js"></script>
-  <script type='text/javascript' src='/admin-public/js/plugins/custom/dataTables.rowsGroup.js'></script><script>
-
-    <?php 
-    
-      $waitingRequests = array();
-
-      // Store requests with 'Waiting' status
-      foreach ($this->requestList as $key => $request) {
-        if($request['status'] === 'Waiting'){
-          array_push($waitingRequests, $request['id']); 
-        }
-      }
-
-      foreach ($this->assistanceList as $key => $request) {
-        if($request['status'] === 'Waiting'){ 
-          array_push($waitingRequests, $request['id']); 
-        }
-      }
-
-    ?>
-
-    // Set waitingRequests in order
-    // to initialize timers for 'Waiting' requests
-    var waitingRequests = <?php echo json_encode($waitingRequests); ?>;
-
-  </script>
+  <script type='text/javascript' src='/admin-public/js/plugins/custom/dataTables.rowsGroup.js'></script>
   <script type='text/javascript' src='/admin-public/js/request.js'></script>
   <script type='text/javascript' src='/admin-public/js/requests_table.js'></script>
   <script type="text/javascript" src="/admin-public/js/plugins/owl/owl.carousel.min.js"></script>                 

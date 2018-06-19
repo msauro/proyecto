@@ -89,6 +89,8 @@ echo $this->doctype(); ?>
                             <ul>
                                 <li <?php if($controller == 'producto' && $action == 'add') echo 'class="active"' ?>><a href="/producto/add"><span class="fa fa-group"></span> Agregar producto</a></li>
                                 <li <?php if($controller == 'producto' && $action == 'list') echo 'class="active"' ?>><a href="/producto/list"><span class="fa fa-file-text-o" aria-hidden="true"></span> Listado</a></li>
+                                <li <?php if($controller == 'producto' && $action == 'addoriginal') echo 'class="active"' ?>><a href="/producto/addoriginal"><span class="fa fa-group"></span> Agregar producto original</a></li>
+                                 <li <?php if($controller == 'producto' && $action == 'listoriginal') echo 'class="active"' ?>><a href="/producto/listoriginal"><span class="fa fa-file-text-o" aria-hidden="true"></span> Listado originales</a></li>
                             </ul>
                         </li>
                         <li id="modules-settings" class="xn-openable">

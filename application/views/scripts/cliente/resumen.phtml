@@ -1,0 +1,89 @@
+<?php         
+$this->title = "Resumen del cliente";
+$this->headTitle($this->title);
+?>
+
+<script>
+$(".xn-icon-button").fadeIn();
+</script>
+
+<!-- BREADCRUMB -->
+    <ul class="breadcrumb">
+        <li><a href="/">Panel Principal</a></li>
+        <li><a href="/cliente/list">Clientes</a></li>
+        <li class="active">Resumen</li>
+    </ul>
+
+<!-- PAGE CONTENT WRAPPER -->
+    <div class="row">    
+        <div class="col-sm-12">
+            <div class="page-content-wrap">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="panel-title-box">
+                            <h3>Lista de facturas por cobrar</h3>
+                            <h3>Total de la deuda: $<?php echo number_format($this->deuda["deuda"], 2, ',', ' '); ?> </h3>
+                        </div>  
+                        <button class="btn btn-primary pull-right" onclick="agregarVenta()" data-toggle="dropdown"><span class="fa fa-plus" ></span> Nuevo</button>
+                    </div>
+                        
+                    <div class="panel-body">
+                    	<?php if ($this->deuda["deuda"] > 0) { ?>
+                    		<div class="table-responsive">
+                            	<table class="table datatable table-striped" id="lista_vta">
+                                <thead>
+                                    <tr>
+                                        <th width="50">Nro. Factura</th>
+                                        <th>Cliente</th>
+                                        <th>Fecha</th>
+                                        <th>Estado</th>
+                                        <th>Total venta</th>
+                                        <th width="150" class="no-sortable text-center">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php  foreach ($this->listadoPendientes as $venta): ?>
+                                    <tr id="<?php echo $venta['id'] ?>" class="element-id">
+                                        <td class="text-center"><?php echo $venta['id'] ?></td>
+                                        <td><?= ($venta['razon_social'] != NULL) ? $venta['razon_social'] :  $venta['nom_cli'].' '. $venta['ap_cli']?></td>
+                                        <td><?php echo date("d-m-Y H:i:s", strtotime($venta['fecha'])) ?></td>
+                                        <td><?= ($venta['razon_social'] != 0) ? 'pagado' : 'debe' ?></td>
+                                        <td>$<?php echo $venta['total'] ?></td>
+                                        <td class="text-center">
+                       						 <?php ($this->venta["pagado"] == 0) ? $disabled = ''  : $disabled = 'disabled' ?>
+                                            <a class="btn btn-default btn-rounded btn-condensed btn-sm btn-pago <?php echo $disabled; ?>" id="<?php echo $venta['id'] ?>" data-toggle="tooltip" title="Pagar factura" value="<?php echo $this->venta['id'] ?> "><span class="fa fa-check"></span></a>
+                                            <a class="btn btn-default btn-rounded btn-condensed btn-sm" onclick="detalleVenta(<?php echo $venta['id'] ?>)"><span class="fa fa-eye"></span></a>
+                                            <button class="btn btn-danger btn-rounded btn-condensed btn-sm btn-delete" id="<?php echo $venta['id'] ?>"><a href="#" data-toggle="tooltip" title="Nota de crédito"><span class="fa fa-remove" data-toggle="modal" data-target="#delete_modal"></span></a></button>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            	</table>
+                   			</div>
+
+                        </div>
+                    	<?php }else{ ?>
+                    		<p>El cliente no posee deudas!</p>
+                    	<?php } ?>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+	
+	$(".btn-pago").click(function(event){
+    var params = {};
+	    params.id_venta = $('.btn-pago').attr('id');
+	    panelAjax("/venta/pagado",params, function(data){
+	        location.reload();
+	        
+	    })
+
+	});
+
+
+
+</script>

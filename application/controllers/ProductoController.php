@@ -340,7 +340,99 @@ class ProductoController extends Gabinando_Base {
 		}
 	}
 
+	public function addoriginalAction(){
+		if($this->getRequest()->isPost()){
+			$params = $this->getRequest()->getPost();
+
+			$productoOriginalModel = new Application_Model_ProductoOriginal();
+			$productoOriginal = $productoOriginalModel->getProductosByParams($params['id_producto_original']);
+			
+			if($productoOriginal instanceof Exception){
+                Gabinando_Base::addError($productoOriginal->getMessage());
+                $this->_redirect('/producto/add');
+            // si el producto no fue agregado anteriormente -> agrego nuevo producto
+            }elseif($productoOriginal == null){
+            	$paramsProducto = array(
+				    "id_producto_original" 		=> $params['id_producto_original'],
+				    "descripcion"				=> $params['descripcion']
+				);
+				
+           		$result = $productoOriginalModel->add($paramsProducto);
+           		if($result instanceof Exception){
+            		Gabinando_Base::addError('Ya existe un producto original con ese código.');
+	                
+            	}
+
+            	Gabinando_Base::addSuccess('Producto agregado correctamente');
+            	$this->_redirect('/producto/listoriginal');
+            }
+        	$this->_redirect('/producto/addoriginal');
+		}
+	}
+
+	public function listoriginalAction() {
+		$productoOriginalModel = new Application_Model_ProductoOriginal();
+		$listadoProductos = $productoOriginalModel->getList();
+		$this->view->listadoProductos = $listadoProductos;
+    }
 	    
+	public function editoriginalAction() {
+		if($this->getRequest()->isPost()){
+			$params = $this->getRequest()->getPost();
+			$params['id'] = $this->getRequest()->getParam('id');
+			
+			$productoOriginalModel = new Application_Model_ProductoOriginal();
+
+			$productoExistente = $productoOriginalModel->getProductosByParams($params['id_producto_original'], $params['id']);
+			
+			if($productoExistente instanceof Exception){
+                Gabinando_Base::addError($productoExistente->getMessage());
+            // si el producto no fue agregado anteriormente -> edito producto
+            }elseif($productoExistente == null){
+            	$paramsProducto = array(
+				    "id_producto_original" 		=> $params['id_producto_original'],
+				    "descripcion"				=> $params['descripcion']
+				);
+			
+
+				$resultProducto = $productoOriginalModel->edit($params['id'], $paramsProducto);
+
+				
+
+				if($resultProducto instanceof Exception){
+	                Gabinando_Base::addError($result->getMessage());
+
+	            }else{
+	            	           		
+	            	Gabinando_Base::addSuccess('Producto actualizado correctamente');
+	            	$this->_redirect('/producto/listoriginal');
+	            }
+	        }else{
+
+            	Gabinando_Base::addError('Ya existe un producto con ese código.');
+                $this->_redirect('/producto/editoriginal/id/'.$params['id']);
+            	
+            }
+
+		}//si no es POST
+		else{
+			$id = $this->getRequest()->getParam('id');
+			if($id){
+
+				$productoOriginalModel = new Application_Model_ProductoOriginal();
+				$producto = $productoOriginalModel->getProductoById($id);
+				
+			// die(var_dump($producto));
+		
+				if($producto){
+					$this->view->data = $producto;
+				}
+			}
+	
+
+		}
+			// $this->_redirect('/producto/listoriginal');
+    }
 		
 		
 		
