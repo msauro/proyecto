@@ -90,7 +90,7 @@ class Application_Model_Producto extends Application_Model_Base
         $nuevafecha = date ( 'Y-m-j' , $nuevafecha );
 
         $search= $search['search'];
-        if ($id_proveedor) {
+        if ($id_proveedor != NULL) {
              $query = 
                 "SELECT `productos`.*, `precios`.`precio`, `marcas`.`nombre` AS `nom_marca`, `existencias`.`cantidad`
                 FROM `productos`
@@ -127,6 +127,7 @@ class Application_Model_Producto extends Application_Model_Base
                 AND (precios.eliminado = 0) 
                 -- AND ('productos.codigo LIKE %$search% OR productos.nombre LIKE %$search% OR productos.descripcion LIKE %$search%')
                 GROUP BY `productos`.`id`";
+
         }
 
         if ($paginate)

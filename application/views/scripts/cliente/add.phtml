@@ -49,7 +49,7 @@ $this->headTitle($this->title);
                             <div class="col-sm-6 col-xs-12">                                            
                                 <div class="input-group">
                                     <span class="input-group-addon"><span class="fa fa-list"></span></span>
-                                    <input name="cuit" id="cuit" type="number" min="11" max="11" class="form-control"/>
+                                    <input name="cuit" id="cuit" type="text"  class="form-control"/>
                                 </div> 
                             </div>
                         </div>
@@ -210,9 +210,11 @@ $this->headTitle($this->title);
             },
             apellido: "required",
             id_tipo_empresa: "required",
-            cuit: {required: true,
-                   minlength: 11,
-                   maxlength: 11,
+            cuit: {
+                required: true,
+                maxlength: 11,
+                minlength: 11,
+                number: true
             },
             exento: "required",
             id_tipo_cliente: {

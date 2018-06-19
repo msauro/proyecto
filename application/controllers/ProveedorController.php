@@ -4,6 +4,9 @@ class ProveedorController extends Gabinando_Base {
 
 	public function init(){
 		parent::init();
+		if ($this->admin){
+			$this->_redirect('index/');
+		}
 	}
 
     public function addAction(){

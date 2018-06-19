@@ -82,6 +82,7 @@ echo $this->doctype(); ?>
                             </ul>
                         </li>
                     <!-- SETTINGS -->    
+                    <?php if($this->user['admin']) ?>
                         <li id="modules-settings" class="xn-openable">
                             <a href="javascript:void(0);">
                                 <div data-step="4" data-intro="Acá podrás gestionar los productos" data-position="right"><span class="fa fa-car" aria-hidden="true"></span><span class="xn-text">Productos</span></div>
@@ -120,6 +121,7 @@ echo $this->doctype(); ?>
                                 <li <?php if($controller == 'precio' && $action == 'list') echo 'class="active"' ?>><a href="/precio/list"><span class="fa fa-file-text-o" aria-hidden="true"></span> Listado</a></li>
                             </ul>
                         </li>
+                        <?php if ($this->admin){ ?>
                         <li id="modules-settings" class="xn-openable">
                             <a href="javascript:void(0);">
                                 <div data-step="7" data-intro="Acá podrás gestionar los proveedores" data-position="right"><span class="fa fa-users" aria-hidden="true"></span><span class="xn-text">Proveedores</span></div>
@@ -131,6 +133,8 @@ echo $this->doctype(); ?>
                                 <li <?php if($controller == 'productoproveedor' && $action == 'list') echo 'class="active"' ?>><a href="/proveedor/list"><span class="fa fa-file-text-o" aria-hidden="true"></span> Listado</a></li>
                             </ul>
                         </li>
+                        <?php } ?>
+
                         <li id="modules-settings" class="xn-openable">
                             <a href="javascript:void(0);">
                                 <div data-step="8" data-intro="Acá podrás gestionar los clientes" data-position="right"><span class="fa fa-user" aria-hidden="true"></span><span class="xn-text">Clientes</span></div>
@@ -168,6 +172,7 @@ echo $this->doctype(); ?>
                             </ul>
                         </li>
 
+                        <?php if ($this->admin){ ?>
                         <li id="modules-settings" class="xn-openable">
                             <a href="javascript:void(0);">
                                 <div data-step="12" data-intro="Acá podrás generar o ver los pedidos" data-position="right"><span class="fa fa-archive" aria-hidden="true"></span><span class="xn-text">Pedidos</span></div>
@@ -177,6 +182,9 @@ echo $this->doctype(); ?>
                                 <li <?php if($controller == 'pedido' && $action == 'list') echo 'class="active"' ?>><a href="/pedido/list"><span class="fa fa-file-text-o" aria-hidden="true"></span> Listado</a></li>
                             </ul>
                         </li>
+                        <?php } ?>
+                        
+
                         <li id="modules-settings" class="xn-openable">
                             <a href="javascript:void(0);">
                                 <div data-step="13" data-intro="Acá podrás gestionar o ver las ventas" data-position="right"><span class="fa fa-archive" aria-hidden="true"></span><span class="xn-text">Ventas</span></div>

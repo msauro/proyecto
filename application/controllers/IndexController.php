@@ -44,9 +44,11 @@ class IndexController extends Gabinando_Base{
 
 
 
-        //widget cantidad de productos en punto de pedido o menor por marca TERMINAR
+        //widget cantidad de productos en punto de pedido o menor 
         $existenciaModel = new Application_Model_Existencia();
         $cantPtoPedido = $existenciaModel->getCantPtoPedido();
+        // die(var_dump($cantPtoPedido['cantPtoPedido']));
+        $this->view->cantPtoPedido = $cantPtoPedido['cantPtoPedido'];
 
 // die(var_dump($cantPtoPedido));
 

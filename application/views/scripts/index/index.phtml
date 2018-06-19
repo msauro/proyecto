@@ -61,7 +61,7 @@ $(".xn-icon-button").fadeIn();
         </div>  
       </div>  
       <!-- Ventas por tipo de cliente x mes -->
-      <div class="col-md-4">   
+      <!-- <div class="col-md-4">   
         <div class="widget widget-default widget-carousel ">
           <div class="owl-carousel" id="owl-example">
               <div>                                    
@@ -92,7 +92,7 @@ $(".xn-icon-button").fadeIn();
           </div>                            
           <div class="widget-controls"></div>
         </div>  
-      </div> 
+      </div>  -->
       <!-- Productos con stock critico -->
       <!-- <div class="col-md-3">   
         <div class="widget widget-default widget-carousel ">
@@ -126,6 +126,28 @@ $(".xn-icon-button").fadeIn();
           <div class="widget-controls"></div>
         </div>  
       </div> -->
+
+      <div class="col-md-4">   
+          <div class="widget widget-default widget-item-icon">
+            <div class="widget-item-left">
+                <span class="fa fa-arrow-down"></span>
+            </div>                             
+            <div class="widget-data">
+              <?php if($this->cantPtoPedido["cantPtoPedido"] == 0) {?>
+              <div class="widget-title" style="position:relative;top:35px;">
+                  No hay productos con stock crítico
+              </div>
+              <?php } else { ?>
+              <div id="widget_cancelled" class="widget-int num-count" style="font-size:25px;">
+                  <?php echo $this->cantPtoPedido["cantPtoPedido"]; ?> 
+              </div>
+              <div class="widget-title">
+                Productos con stock crítico
+              </div>
+              <?php } ?>
+            </div>
+          </div>
+      </div>
 
 
       <!-- COLUMN 1 / VENTAS HOY -->

@@ -6,6 +6,7 @@ class ProductoController extends Gabinando_Base {
 
 	public function init(){
 		parent::init();
+		
 	}
 
     public function addAction(){

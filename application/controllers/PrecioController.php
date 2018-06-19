@@ -14,10 +14,9 @@ class PrecioController extends Gabinando_Base {
 			// $params['fecha'] = new DateTime($params['fecha']);
             $params['eliminado'] = 0;
 			
-			$params['fecha'] = strtotime($params['fecha']);
+			// $params['fecha'] = strtotime($params['fecha']);
 
-            $params['fecha'] = date("Y-m-d",($params['fecha']));
-			
+            $params['fecha'] = date("Y-m-d H:i:s");
 			$precio = new Application_Model_Precio();
             $result = $precio->add($params);
 
@@ -78,7 +77,7 @@ class PrecioController extends Gabinando_Base {
 		if($this->getRequest()->isPost()){
 			$params = $this->getRequest()->getPost();
 			$params['id'] = $this->getRequest()->getParam('id');
-			
+			$params['fecha'] = date("Y-m-d H:i:s", strtotime($params['fecha']));
 			$precio = new Application_Model_Precio();
 			$result = $precio->edit($params['id'], $params);
 

@@ -193,10 +193,8 @@ class Application_Model_Venta extends Application_Model_Base
 	public function getDeudas(){
 		try{
             $query = $this->select()->setIntegrityCheck(false)
-	            ->from($this, 'SUM(ventas.id) as deuda')
+	            ->from($this, 'count(ventas.id) as deuda')
 	            ->where('ventas.pagado = ?', 0);
-
-	        $query = $query->order('ventas.fecha DESC');
             $row = $this->fetchRow($query);
 
 			if(!$row) {
