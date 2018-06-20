@@ -68,7 +68,6 @@ class Application_Model_ProductoEquivalente extends Application_Model_Base
                 LEFT JOIN producto_equivalente AS pe2 
                 ON pe.id_original = pe2.id_original
                 WHERE pe.id_producto = '$id_producto'";
-
         $db = Zend_Db_Table_Abstract::getDefaultAdapter();
         $stmt = $db->query($query);
 

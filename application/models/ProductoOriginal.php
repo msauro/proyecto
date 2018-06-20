@@ -16,13 +16,21 @@ class Application_Model_ProductoOriginal extends Application_Model_Base
     }
 
 
-    public function getProductosByParams($codigo, $id){
+    public function getProductosByParams($codigo, $id=NULL){
         try{
-            $query = $this->select()
+        	if ($id != NULL) {
+        		 $query = $this->select()
                 ->from($this, array('*'))
                 ->where('id_producto_original = ?', $codigo)
                 ->where('id != ?', $id)
                 ->where('eliminado = ?', 0);
+        	}else{
+        		 $query = $this->select()
+                ->from($this, array('*'))
+                ->where('id_producto_original = ?', $codigo)
+                ->where('eliminado = ?', 0);
+        	}
+           
 
             $row = $this->fetchRow($query);
             if(!$row) {

@@ -80,7 +80,6 @@ class ProductoController extends Gabinando_Base {
             	}
 
             	$id_producto = $result;
-
 				if (sizeof($params['id_original']) > 1) {
 					foreach ($params['id_original'] as $id_original) {
 		            	$paramsEquivalente = array(
@@ -89,6 +88,13 @@ class ProductoController extends Gabinando_Base {
 						);
 						$resultEquivalentes = $productoEquivalenteModel->add($paramsEquivalente);
 					}
+				}else{
+					$paramsEquivalente = array(
+						"id_original" 	=> $params['id_original'][0],
+						"id_producto" 	=> $params['codigo']
+					);
+					
+					$resultEquivalentes = $productoEquivalenteModel->add($paramsEquivalente);
 				}
 
 				
@@ -347,7 +353,6 @@ class ProductoController extends Gabinando_Base {
 
 			$productoOriginalModel = new Application_Model_ProductoOriginal();
 			$productoOriginal = $productoOriginalModel->getProductosByParams($params['id_producto_original']);
-			
 			if($productoOriginal instanceof Exception){
                 Gabinando_Base::addError($productoOriginal->getMessage());
                 $this->_redirect('/producto/add');
