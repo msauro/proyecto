@@ -325,3 +325,6 @@ body.page-container-boxed {
   font-size: 40px;
   
 }
+.introjs-fixParent * {
+  will-change: inherit !important;
+}

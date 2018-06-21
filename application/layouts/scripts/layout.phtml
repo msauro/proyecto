@@ -72,15 +72,7 @@ echo $this->doctype(); ?>
                             <a href="/"> <div data-step="3" data-intro="Acá podrás ver datos sobre ventas, deudas y clientes" data-position="right"><span class="fa fa-desktop"></span> <span class="xn-text">Panel Principal</span></div></a>
                         </li>     
                     <!-- ADMINISTRATORS -->    
-                        <li id="modules-admins" class="xn-openable <?php if($this->user['rol'] != -1) echo hidden ?>">
-                            <a href="javascript:void(0);">
-                                <div><span class="fa fa-user"></span><span class="xn-text">Usuarios</span></div>
-                            </a>
-                            <ul>
-                                <li <?php if($controller == 'usuario' && $action == 'add') echo 'class="active"' ?>><a href="/usuario/add"><span class="fa fa-group"></span> Agregar usuario</a></li>
-                                <li <?php if($controller == 'usuario' && $action == 'list') echo 'class="active"' ?>><a href="/usuario/list"><span class="fa fa-group"></span> Listado</a></li>
-                            </ul>
-                        </li>
+                        
                     <!-- SETTINGS -->    
                     <?php if($this->user['admin']) ?>
                         <li id="modules-settings" class="xn-openable">
@@ -103,15 +95,7 @@ echo $this->doctype(); ?>
                                 <li <?php if($controller == 'marca' && $action == 'list') echo 'class="active"' ?>><a href="/marca/list"><span class="fa fa-file-text-o" aria-hidden="true"></span> Listado</a></li>
                             </ul>
                         </li>
-                        <!-- <li id="modules-settings" class="xn-openable">
-                            <a href="javascript:void(0);">
-                                <div data-step="5" data-intro="Acá podrás gestionar las listas de precios" data-position="right"><span class="fa fa-money" aria-hidden="true"></span><span class="xn-text">Listas de Precios</span></div>
-                            </a>
-                            <ul>
-                                <li <?php if($controller == 'precio' && $action == 'add') echo 'class="active"' ?>><a href="/listaprecios/add"><span class="fa fa-group"></span> Agregar lista de precio</a></li>
-                                <li <?php if($controller == 'precio' && $action == 'list') echo 'class="active"' ?>><a href="/listaprecios/list"><span class="fa fa-file-text-o" aria-hidden="true"></span> Listado</a></li>
-                            </ul>
-                        </li> -->
+                      
                         <li id="modules-settings" class="xn-openable">
                             <a href="javascript:void(0);">
                                 <div data-step="6" data-intro="Acá podrás gestionar los precios" data-position="right"><span class="fa fa-money" aria-hidden="true"></span><span class="xn-text">Precios</span></div>
@@ -184,7 +168,6 @@ echo $this->doctype(); ?>
                         </li>
                         <?php } ?>
                         
-
                         <li id="modules-settings" class="xn-openable">
                             <a href="javascript:void(0);">
                                 <div data-step="13" data-intro="Acá podrás gestionar o ver las ventas" data-position="right"><span class="fa fa-archive" aria-hidden="true"></span><span class="xn-text">Ventas</span></div>
@@ -196,7 +179,7 @@ echo $this->doctype(); ?>
                         </li>
                         <li id="modules-settings" class="xn-openable">
                             <a href="javascript:void(0);">
-                                <div data-step="12" data-intro="Acá podrás gestionar los tipos de empresa" data-position="right"><span class="fa fa-user" aria-hidden="true"></span><span class="xn-text">Tipos de empresas</span></div>
+                                <div data-step="14" data-intro="Acá podrás gestionar los tipos de empresa" data-position="right"><span class="fa fa-user" aria-hidden="true"></span><span class="xn-text">Tipos de empresas</span></div>
                             </a>
                             <ul>
                                 <li <?php if($controller == 'tipoempresa' && $action == 'add') echo 'class="active"' ?>><a href="/tipoempresa/add"><span class="fa fa-group"></span> Agregar tipo de empresa</a></li>
