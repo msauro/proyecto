@@ -51,7 +51,7 @@ $(".xn-icon-button").fadeIn();
                                         <td><?php echo $producto['punto_pedido'] ?></td>
                                         <td><?php echo $producto['nom_marca'] ?></td>
                                         <td class="text-center">
-                                            <button data-id="<?= $producto['codigo'] ?>" class="btn btn-default btn-rounded btn-condensed btn-sm btn-ver-equivalentes"><span class="fa fa-eye"></span></button>
+                                            <button data-id="<?= $producto['codigo'] ?>" class="btn btn-default btn-rounded btn-condensed btn-sm btn-ver-equivalentes"><attr data-toggle="tooltip" title="Ver productos equivalentes"><span class="fa fa-eye"></span></attr></button>
                                             <button class="btn btn-default btn-rounded btn-condensed btn-sm" onclick="editarProducto(<?php echo $producto['id'] ?>)"><span class="fa fa-pencil"></span></button>
                                             <button class="btn btn-danger btn-rounded btn-condensed btn-sm btn-delete" id="<?php echo $producto['id'] ?>"><span class="fa fa-trash-o" data-toggle="modal" data-target="#delete_modal"></span></button>
                                         </td>

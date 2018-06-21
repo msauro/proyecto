@@ -109,11 +109,19 @@ class Application_Model_Producto extends Application_Model_Base
                 AND (marcas.eliminado = 0) 
                 AND (precios.eliminado = 0) 
                 GROUP BY `productos`.`id`";
+// die($query);
+
         }else{
             $query = 
-                "SELECT `productos`.*, `precios`.`precio`, `marcas`.`nombre` AS `nom_marca`, `existencias`.`cantidad`
+                "SELECT `productos`.*, precios.precio,  `marcas`.`nombre` AS `nom_marca`, `existencias`.`cantidad`
                 FROM `productos`
-                INNER JOIN `precios` ON precios.id_producto = productos.id
+                -- INNER JOIN `precios` ON precios.id_producto = productos.id
+                INNER JOIN (
+                    SELECT MAX(id) AS maxid, id_producto, precio, eliminado
+                        FROM precios
+                        GROUP BY id_producto
+                ) AS t1 ON t1.id_producto = productos.id
+                INNER JOIN `precios` ON precios.id = t1.maxid
                 INNER JOIN `marcas` ON marcas.id = productos.id_marca
                 INNER JOIN (
                     SELECT MAX(id) AS maxid, id_producto
@@ -124,10 +132,10 @@ class Application_Model_Producto extends Application_Model_Base
                 WHERE (existencias.eliminado = 0) 
                 AND (productos.eliminado = 0) 
                 AND (marcas.eliminado = 0) 
-                AND (precios.eliminado = 0) 
+                AND (t1.eliminado = 0) 
                 -- AND ('productos.codigo LIKE %$search% OR productos.nombre LIKE %$search% OR productos.descripcion LIKE %$search%')
                 GROUP BY `productos`.`id`";
-
+// die($query);
         }
 
         if ($paginate)

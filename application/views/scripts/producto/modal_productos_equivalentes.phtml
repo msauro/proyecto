@@ -1,8 +1,13 @@
 <div class="table-responsive">
-            <?php foreach ($this->listadoEquivalentes as $equivalente): ?>
+
+            <?php  if(is_array($this->listadoEquivalentes)){
+             foreach ($this->listadoEquivalentes as $equivalente): ?>
 
                 <?php echo $equivalente ?></br>
             <?php endforeach; ?>
+            <?php }else{ 
+              echo $this->listadoEquivalentes;
+            }?>
 </div>
 
 <script>

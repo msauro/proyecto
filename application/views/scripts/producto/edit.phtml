@@ -94,11 +94,11 @@ $this->headTitle($this->title);
                             <div class="col-sm-6 col-xs-12">                                            
                                 <div class="input-group">
                                     <span class="input-group-addon"><span class="fa fa-suitcase"></span></span>
+
                                     <select name="id_original[]" id="id_original" type="text" class="form-control select" data-live-search="true" multiple title="Selecciona el/los nros originales">
                                         <?php 
                                            foreach ($this->listadoOriginal as $key => $original): 
                                             foreach ($this->listadoEquivalente as $key => $equivalente): ?>
-
                                                 <option <?php echo $original['id_producto_original'] == $equivalente['id_original'] ? "selected" : '' ; ?><?php endforeach; ?> value=<?php echo $original['id_producto_original'] ?>><?php echo $original['id_producto_original']?></option>
                                         <?php endforeach; ?>
                                     </select>

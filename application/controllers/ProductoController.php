@@ -146,7 +146,7 @@ class ProductoController extends Gabinando_Base {
 		if($this->getRequest()->isPost()){
 			$params = $this->getRequest()->getPost();
 			$params['id'] = $this->getRequest()->getParam('id');
-			
+
 			if($_FILES['imagen_url']['size'] > 0){
 				$file = $_FILES['imagen_url'];
 
@@ -191,8 +191,7 @@ class ProductoController extends Gabinando_Base {
 				$productoEquivalenteModel = new Application_Model_ProductoEquivalente();
 
 				// elimino los equivalentes
-				$resultEquivalentes = $productoEquivalenteModel->remove('$id_producto',$params['codigo']);
-
+				$resultEquivalentes = $productoEquivalenteModel->eliminarEquivalentes($params['codigo']);
 				// vuelvo a crear los equivalentes
 
    				if (sizeof($params['id_original']) > 1) {
@@ -203,6 +202,13 @@ class ProductoController extends Gabinando_Base {
 						);
 						$resultEquivalentes = $productoEquivalenteModel->add($paramsEquivalente);
 					}
+				}else{
+					$paramsEquivalente = array(
+						"id_original" 	=> $params['id_original'][0],
+						"id_producto" 	=> $params['codigo']
+					);
+					
+					$resultEquivalentes = $productoEquivalenteModel->add($paramsEquivalente);
 				}
 
 
@@ -233,9 +239,9 @@ class ProductoController extends Gabinando_Base {
 				$productoModel = new Application_Model_Producto();
 				$producto = $productoModel->getProductoById($id);
 				$producto['equivalente'] = $productoModel->getProductoEquivalenteById($producto['codigo']);
-				
 				$originalModel = new Application_Model_ProductoOriginal();
 				$listadoOriginal = $originalModel->getList();
+			// die(var_dump($listadoOriginal));
 				
 				if (!$producto['equivalente']) {
 					$producto['equivalente'] = $listadoOriginal;
@@ -263,11 +269,9 @@ class ProductoController extends Gabinando_Base {
 		$id_proveedor = NULL;
 		$params["id_proveedor"] = NULL;
 		$params 	 = $params = $this->getRequest()->getParams();
-		// die(var_dump($params));
 		if ($params["id_proveedor"]) {
 			$id_proveedor = $params["id_proveedor"];
 		}
-	// die(var_dump($params));
 		if( isset($params['search']) ){
 			$search 	 = array(
 				'search' => $params['search'],
@@ -304,7 +308,6 @@ class ProductoController extends Gabinando_Base {
 			$this->sendErrorResponse($productoList->getMessage());
 
 		$pages = ceil(count($productoPager) / $paginate['per_page']);
-// die(var_dump(count($productoPager)));
 		$this->sendSuccessResponse(array(
 				'search' 		=> $search,
 				'productos' 	=> $productos,
@@ -318,7 +321,6 @@ class ProductoController extends Gabinando_Base {
 	public function getProductoById($id=null){
 		$producto = new Application_Model_Producto();		
 		$params 	 = $params = $this->getRequest()->getParams();
-		//die(var_dump($id));
 	}
 
 	public function verequivalentesAction(){
@@ -328,9 +330,9 @@ class ProductoController extends Gabinando_Base {
 		
 			$productoEquivalenteModel = new Application_Model_ProductoEquivalente();
 			$listadoEquivalentes = $productoEquivalenteModel->getEquivalentes($codigo);
-		// die(var_dump($listadoEquivalentes));
-		$arrayEquivalente= [];
+			$arrayEquivalente= [];
 			
+// die(var_dump($arrayEquivalente));
 		// 	$a = array_unique($listadoEquivalentes['id_producto_equivalente']);
 			foreach ($listadoEquivalentes as $equivalente) {
 
@@ -339,8 +341,11 @@ class ProductoController extends Gabinando_Base {
 				$arrayEquivalente[] = $equivalente['id_original'];
 			}
 		$arrayEquivalente = array_unique($arrayEquivalente);
-
-
+			
+			if (!$arrayEquivalente) {
+				$arrayEquivalente = 'No hay productos equivalentes cargados para este producto';
+			}
+			
 			$this->view->listadoEquivalentes =  $arrayEquivalente;
 			$render = $this->view->render('/producto/modal_productos_equivalentes.phtml');
             return $this->sendSuccessResponse($render);

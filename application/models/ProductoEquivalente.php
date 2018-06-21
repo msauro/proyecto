@@ -37,7 +37,7 @@ class Application_Model_ProductoEquivalente extends Application_Model_Base
 
 //////////////////////////////
 
- public function getClientesMasVentas($mesActualDesde,$mesActualHasta){
+    public function getClientesMasVentas($mesActualDesde,$mesActualHasta){
 
         $query = "SELECT * FROM clientes c
                     INNER JOIN ( 
@@ -74,6 +74,14 @@ class Application_Model_ProductoEquivalente extends Application_Model_Base
         $productosEquivalentes =  $stmt->fetchAll();
         return $productosEquivalentes;
             
+    }
+
+    public function eliminarEquivalentes($id){
+        $query = "DELETE from producto_equivalente WHERE id_producto = '$id'";
+        $db = Zend_Db_Table_Abstract::getDefaultAdapter();
+        $stmt = $db->query($query);
+        return true;
+
     }
 
 }
