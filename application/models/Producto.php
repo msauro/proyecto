@@ -135,11 +135,14 @@ class Application_Model_Producto extends Application_Model_Base
                 AND (t1.eliminado = 0) 
                 -- AND ('productos.codigo LIKE %$search% OR productos.nombre LIKE %$search% OR productos.descripcion LIKE %$search%')
                 GROUP BY `productos`.`id`";
-// die($query);
+        }
+        if ($search) {
+           $query.= "AND ('productos.codigo LIKE %$search% OR productos.nombre LIKE %$search% OR productos.descripcion LIKE %$search%')";
         }
 
         if ($paginate)
             $query.= "LIMIT ".$paginate['per_page']." OFFSET ". $paginate['start_from'];
+// die($query);
         $db = Zend_Db_Table_Abstract::getDefaultAdapter();
         $stmt = $db->query($query);
         $productos =  $stmt->fetchAll();

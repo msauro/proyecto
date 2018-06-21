@@ -83,7 +83,7 @@ class Application_Model_Proveedor extends Application_Model_Base
             ->where('proveedores.eliminado = 0')
             ->where("(proveedores.id LIKE '%{$search['search']}%' OR proveedores.razon_social LIKE '%{$search['search']}%' OR cuit LIKE '%{$search['search']}%')")
             ->group('proveedores.id');
-
+// die($query);
             if ($paginate)
                 $query->limit($paginate['per_page'],$paginate['start_from']);
            
