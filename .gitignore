@@ -1,0 +1,6 @@
+application/configs/application.ini
+application/configs/local.ini
+application/configs/custom.ini
+application/configs/*
+cache/
+public/.htaccess
