@@ -7,6 +7,7 @@ $this->headTitle($this->title);
 $(".xn-icon-button").fadeIn();
 </script>
 
+
 <!-- BREADCRUMB -->
   <ul class="breadcrumb">                 
       <li class="active">Panel principal</li>
@@ -130,7 +131,7 @@ $(".xn-icon-button").fadeIn();
       <div class="col-md-4">   
           <div class="widget widget-default widget-item-icon">
             <div class="widget-item-left">
-                <span class="fa fa-arrow-down"></span>
+                <span class="fa fa-info-circle"></span>
             </div>                             
             <div class="widget-data">
               <?php if($this->cantPtoPedido["cantPtoPedido"] == 0) {?>
@@ -149,7 +150,8 @@ $(".xn-icon-button").fadeIn();
           </div>
       </div>
 
-
+    <?php if ($this->admin["administrador"] == 1) {?>
+   
       <!-- COLUMN 1 / VENTAS HOY -->
       <div class="col-md-4">   
           <div class="widget widget-default widget-item-icon">
@@ -239,6 +241,7 @@ $(".xn-icon-button").fadeIn();
               </div>
           </div>  
       </div> -->
+     <?php } ?>
     </div>
   
 

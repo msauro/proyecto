@@ -46,8 +46,10 @@ $(".xn-icon-button").fadeIn();
                                         <td><?php echo $precio['precio'] ?></td>
                                         <td><?php echo date("d-m-Y",strtotime($precio['fecha'])) ?></td> 
                                         <td class="text-center">
-                                            <button class="btn btn-default btn-rounded btn-condensed btn-sm" onclick="editarPrecio(<?php echo $precio['id'] ?>)"><span class="fa fa-pencil"></span></button>
-                                            <button class="btn btn-danger btn-rounded btn-condensed btn-sm btn-delete" id="<?php echo $precio['id'] ?>"><span class="fa fa-trash-o" data-toggle="modal" data-target="#delete_modal"></span></button>
+                                        <?php ($this->admin["administrador"] == 0) ? $disabled = 'disabled' : $disabled = ''; ?>
+
+                                            <button class="btn btn-default btn-rounded btn-condensed btn-sm  <?php echo $disabled ?>" onclick="editarPrecio(<?php echo $precio['id'] ?>)"><span class="fa fa-pencil"></span></button>
+                                            <button class="btn btn-danger btn-rounded btn-condensed btn-sm btn-delete <?php echo $disabled ?>" id="<?php echo $precio['id'] ?>"><span class="fa fa-trash-o" data-toggle="modal" data-target="#delete_modal"></span></button>
                                         </td>
                                     </tr>
                                     <?php endforeach; ?>
