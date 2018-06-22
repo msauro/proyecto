@@ -142,7 +142,7 @@ $this->headTitle($this->title);
                                       </div>
                                   </div>
                               </p>
-                              <div class="table-responsive products">
+                              <div class="table-responsive products" id="list-producto">
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
@@ -953,7 +953,7 @@ function getProducts(){
     panelAjax("/producto/getproductos/",params, function(data){
        console.log('data');
         console.log(data);
-        $("#list-cliente").html('');
+        $("#list-producto tbody").html('');
         $(".result-search-product").html(data.productos.length + ' de ' + data.total + ' clientes');
         if (data.productos.length == 0) {
             $('.pagination').fadeOut(500);
