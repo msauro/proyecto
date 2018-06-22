@@ -390,8 +390,23 @@ class VentaController extends Gabinando_Base{
 
 	public function removeAction(){
     	$id_venta = $this->getRequest()->getParam('id');
-    	$ventaModel = new Application_ModelVenta();
+    	$ventaModel = new Application_Model_Venta();
 		$result = $ventaModel->remove('id',$id_venta);
+		if($result instanceof Exception){
+			Gabinando_Base::addError($result->getMessage());
+		}else{
+			Gabinando_Base::addSuccess('Nota de crédito realizada correctamente');
+		}
+		$this->_redirect('venta/list');
+
+	}
+
+	public function notacreditoAction(){
+    	$id_venta = $this->getRequest()->getPost();
+    	$ventaModel = new Application_Model_Venta();
+    	// die(var_dump($id_venta['id_venta']));
+    	$params['eliminado'] = 1;
+		$result = $ventaModel->edit($id_venta['id_venta'],$params);
 		if($result instanceof Exception){
 			Gabinando_Base::addError($result->getMessage());
 		}else{

@@ -173,6 +173,7 @@ class Application_Model_Venta extends Application_Model_Base
             	// ->join('ventas_detalles', 'ventas_detalles.id_venta = ventas.id', array('precio','cantidad'))
             	// ->join('productos', 'productos.id = ventas_detalles.id_producto', array('productos.codigo','productos.nombre','descripcion'))
 	            ->where('ventas.id_cliente = ?', $id_cliente)
+	            ->where('ventas.eliminado = ?', 0)
 	            ->where('ventas.pagado = ?', 0);
 
 	        $query = $query->order('ventas.fecha DESC');

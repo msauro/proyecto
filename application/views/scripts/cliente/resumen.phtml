@@ -52,8 +52,11 @@ $(".xn-icon-button").fadeIn();
                                         <td class="text-center">
                        						 <?php ($this->venta["pagado"] == 0) ? $disabled = ''  : $disabled = 'disabled' ?>
                                             <a class="btn btn-default btn-rounded btn-condensed btn-sm btn-pago <?php echo $disabled; ?>" id="<?php echo $venta['id'] ?>" data-toggle="tooltip" title="Pagar factura" value="<?php echo $this->venta['id'] ?> "><span class="fa fa-check"></span></a>
+
                                             <a class="btn btn-default btn-rounded btn-condensed btn-sm" onclick="detalleVenta(<?php echo $venta['id'] ?>)"><span class="fa fa-eye"></span></a>
-                                            <button class="btn btn-danger btn-rounded btn-condensed btn-sm btn-delete" id="<?php echo $venta['id'] ?>"><a href="#" data-toggle="tooltip" title="Nota de crédito"><span class="fa fa-remove" data-toggle="modal" data-target="#delete_modal"></span></a></button>
+
+                                             <a class="btn btn-default btn-rounded btn-condensed btn-sm btn-nc " id="<?php echo $venta['id'] ?>" data-toggle="tooltip" title="Nota de crédito" value="<?php echo $this->venta['id'] ?> "><span class="fa fa-remove"></span></a>
+                                           
                                         </td>
                                     </tr>
                                     <?php endforeach; ?>
@@ -83,6 +86,22 @@ $(".xn-icon-button").fadeIn();
 	    })
 
 	});
+
+    var detalleVenta = function(id){
+        window.location.href = "/venta/detalle/id/" + id;
+    }
+
+    $(".btn-nc").click(function(event){
+    var params = {};
+        params.id_venta = $('.btn-pago').attr('id');
+        console.log(params.id_venta);
+        panelAjax("/venta/notaCredito",params, function(data){
+            location.reload();
+            
+        })
+
+    });
+
 
 
 
