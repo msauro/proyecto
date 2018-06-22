@@ -2,7 +2,7 @@
 
 class ProductoController extends Gabinando_Base {
 
-	const UPLOADPATHAVATAR = '/resources/admin_avatars/';
+	const UPLOADPATHAVATAR = '/resources/img_productos/';
 
 	public function init(){
 		parent::init();
@@ -146,7 +146,7 @@ class ProductoController extends Gabinando_Base {
 		if($this->getRequest()->isPost()){
 			$params = $this->getRequest()->getPost();
 			$params['id'] = $this->getRequest()->getParam('id');
-
+			$paramsProducto= array();
 			if($_FILES['imagen_url']['size'] > 0){
 				$file = $_FILES['imagen_url'];
 
@@ -156,8 +156,9 @@ class ProductoController extends Gabinando_Base {
 					die($img['message']);
 				}
 
-				//$params['imagen_url'] = $img['message'];
+				$paramsProducto["imagen_url"] = $img['message'];
 			}
+// die(var_dump($img['message']));
 
 			$producto = new Application_Model_Producto();
 
@@ -172,7 +173,6 @@ class ProductoController extends Gabinando_Base {
 				    "id_marca" 		=> $params['id_marca'],
 				    "nombre"		=> $params['nombre'],
 				    "eliminado"		=> 0,
-				    "imagen_url"	=> $img['message'],
 				    "punto_pedido"	=> $params['punto_pedido'],
 				    "descripcion"	=> $params['descripcion']
 				);
@@ -182,9 +182,13 @@ class ProductoController extends Gabinando_Base {
 					'fecha' 		=> date('Y-m-d H:i:s')
 
 				);
+				if($img['message']) {
+					$paramsProducto["imagen_url"]= $img['message'];
+					
+				}
 				$producto = new Application_Model_Producto();
 				$stock = new Application_Model_Existencia();
-
+// die(var_dump($paramsProducto));
 				$resultProducto = $producto->edit($params['id'], $paramsProducto);
            		$resultStock = $stock->edit($params['id'], $paramsStock);
 

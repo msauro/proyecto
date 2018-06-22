@@ -110,12 +110,12 @@ class ClienteController extends Gabinando_Base {
 
 			$error = null;
 			if ($prov['cuit'] != $params['cuit']) {
-				$alreadyRegistered = $cliente->getClienteByCuit($params['cuit']);
+				$alreadyRegistered = $cliente->getClienteByCuit($params['cuit'], $params['id']);
 				if(!is_null($alreadyRegistered)) $error = 'Existe un cliente con ese CUIT';
 			}
 
 			if ($prov['email'] != $params['email']) {
-				$alreadyRegistered = $cliente->getClienteByEmail($params['email']);
+				$alreadyRegistered = $cliente->getClienteByEmail($params['email'], $params['id']);
 				if(!is_null($alreadyRegistered)) $error = 'Existe un cliente con ese Email';
 			}
 

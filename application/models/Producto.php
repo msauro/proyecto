@@ -36,9 +36,10 @@ class Application_Model_Producto extends Application_Model_Base
 
     public function getProductoEquivalenteById($codigo){
 
-        $query = "SELECT ep.id_original, ep2.id_producto AS id_producto_equivalente FROM producto_equivalente AS ep
+        $query = "SELECT DISTINCT ep.id_original, ep2.id_producto AS id_producto_equivalente FROM producto_equivalente AS ep
                 LEFT JOIN producto_equivalente AS ep2 ON ep.id_original = ep2.id_original
-                WHERE ep.id_producto = '$codigo'";
+                WHERE ep2.id_producto = '$codigo'";
+        // die($query);
         $db = Zend_Db_Table_Abstract::getDefaultAdapter();
         $stmt = $db->query($query);
         $equivalentes =  $stmt->fetchAll();

@@ -17,11 +17,12 @@ class Application_Model_Cliente extends Application_Model_Base
         return $rows->toArray();
     }
 
-    public function getClienteByEmail($email){
+    public function getClienteByEmail($email,$id=NULL){
         try{
             $query = $this->select()
             ->from($this, array('*'))
             ->where('email = ?', $email)
+            ->where('id != ?', $id)
             ->where('eliminado = ?', 0);
 
             $row = $this->fetchRow($query);
@@ -38,11 +39,12 @@ class Application_Model_Cliente extends Application_Model_Base
         }
     }
 
-    public function getClienteByCuit($cuit){
+    public function getClienteByCuit($cuit, $id=NULL){
         try{
             $query = $this->select()
             ->from($this, array('*'))
             ->where('cuit = ?', $cuit)
+            ->where('id != ?', $id)
             ->where('eliminado = ?', 0);
 
             $row = $this->fetchRow($query);

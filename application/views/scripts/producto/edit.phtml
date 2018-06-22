@@ -99,8 +99,13 @@ $this->headTitle($this->title);
                                         <?php 
                                            foreach ($this->listadoOriginal as $key => $original): 
                                             foreach ($this->listadoEquivalente as $key => $equivalente): ?>
-                                                <option <?php echo $original['id_producto_original'] == $equivalente['id_original'] ? "selected" : '' ; ?><?php endforeach; ?> value=<?php echo $original['id_producto_original'] ?>><?php echo $original['id_producto_original']?></option>
+                                                <?php var_dump($original['id_producto_original']); ?>
+                                                <option <?php echo $original['id_producto_original'] == $equivalente['id_original'] ? 'selected' : '' ; ?>
+                                            <?php endforeach; ?> value='<?php echo $original['id_producto_original'] ?>'><?php echo $original['id_producto_original']?></option>
+                                                <?php var_dump($equivalente['id_original']); ?>
+
                                         <?php endforeach; ?>
+                                    <?php die('2'); ?>
                                     </select>
                                 </div> 
                             </div>
