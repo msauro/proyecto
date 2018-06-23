@@ -916,7 +916,7 @@ function getProducts(){
     panelAjax("/productoproveedor/getproductos/",params, function(data){
        console.log(data);
         $("#list-producto tbody").html('');
-        if (data.productos > 0) {
+        if (data.productos.length > 0) {
             $.each(data.productos, function( index, value ){
                 item = "<tr id='id_producto' value='"+ value.id_prod +"'>" +
                 "<td id='id' class='hidden'>" + value.id_prod + "</td>" +
