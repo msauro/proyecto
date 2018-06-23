@@ -83,7 +83,7 @@ class Application_Model_ProductoProveedor extends Application_Model_Base
         $search= $search['search'];
         if ($id_proveedor) {
              $query = 
-                "SELECT `productos`.`id` as `id_prod`,`productos`.*, `producto_proveedor`.*, `marcas`.`nombre` AS `nom_marca`, `existencias`.`cantidad`, `producto_proveedor_precio`.*
+                "SELECT `productos`.`id` as `id_prod`,`productos`.*, `producto_proveedor`.*, `marcas`.`nombre` AS `nom_marca`, `existencias`.`cantidad`, `producto_proveedor_precio`.`codigo_producto_proveedor`, `producto_proveedor_precio`.`precio`
                 FROM `producto_proveedor`
                 INNER JOIN `productos` ON productos.codigo = producto_proveedor.codigo_producto
                 INNER JOIN `marcas` ON marcas.id = productos.id_marca
@@ -123,7 +123,6 @@ class Application_Model_ProductoProveedor extends Application_Model_Base
                 -- AND ('productos.codigo LIKE %$search% OR productos.nombre LIKE %$search% OR productos.descripcion LIKE %$search%')
                 GROUP BY `productos`.`id`";
         }
-
         if ($paginate)
             $query.= "LIMIT ".$paginate['per_page']." OFFSET ". $paginate['start_from'];
 

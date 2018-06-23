@@ -190,7 +190,7 @@ $this->headTitle($this->title);
                                             </div>
                                         </div>
                                     </p>
-                              <div class="table-responsive products">
+                              <div class="table-responsive products" id="list-producto">
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
@@ -207,8 +207,8 @@ $this->headTitle($this->title);
                                             <tbody id="productList"></tbody>
                                         </table>
                                     </div>
-                                    <span id="prev" class="btn btn-default"> Anterior </span>
-                                    <span id="next" class="btn btn-default"> Siguiente </span>
+                                    <span id="prev" class="btn btn-default"> Pag. Anterior </span>
+                                    <span id="next" class="btn btn-default"> Pag. Siguiente </span>
                                     <span id="page" rel="1"></span>
                                 </div>
                             </div>
@@ -915,54 +915,51 @@ function getProducts(){
 
     panelAjax("/productoproveedor/getproductos/",params, function(data){
        console.log(data);
-        $(".products tbody").html('');
-        $.each(data.productos, function( index, value ){
-            item = "<tr id='id_producto' value='"+ value.id_prod +"'>" +
-            "<td id='id' class='hidden'>" + value.id_prod + "</td>" +
-            "<td id='codigo_producto'>" + value.codigo_producto + "</td>" +
-            "<td id='descripcion'>" + value.descripcion + "</td>" +
-            "<td id='marca'>" + value.nom_marca + "</td>" +
-            "<td id='codigo_proveedor'>" + value.codigo_producto_proveedor + "</td>" +
-            "<td id='existencia'>" + value.cantidad + "</td>" +
-            "<td id='imagen_url' class='hidden'>" + value.imagen_url + "</td>" +
-            "<td id='precio'>" + value.precio + "</td>";
-            var disable;
-            var cant_real = parseInt(value.cantidad);
-            var pto_pedido = parseInt(value.punto_pedido);
-                //Mido nivel de Stock
-                item = item + "</td>" + "<td>";
+        $("#list-producto tbody").html('');
+        if (data.productos > 0) {
+            $.each(data.productos, function( index, value ){
+                item = "<tr id='id_producto' value='"+ value.id_prod +"'>" +
+                "<td id='id' class='hidden'>" + value.id_prod + "</td>" +
+                "<td id='codigo_producto'>" + value.codigo_producto + "</td>" +
+                "<td id='descripcion'>" + value.descripcion + "</td>" +
+                "<td id='marca'>" + value.nom_marca + "</td>" +
+                "<td id='codigo_proveedor'>" + value.codigo_producto_proveedor + "</td>" +
+                "<td id='existencia'>" + value.cantidad + "</td>" +
+                "<td id='imagen_url' class='hidden'>" + value.imagen_url + "</td>" +
+                "<td id='precio'>" + value.precio + "</td>";
+                var disable;
+                var cant_real = parseInt(value.cantidad);
+                var pto_pedido = parseInt(value.punto_pedido);
+                    //Mido nivel de Stock
+                    item = item + "</td>" + "<td>";
 
-                if(cant_real > pto_pedido ){
-                    item = item + "<span class='label label-success'>En Stock</span>";
-                    
-                }else if(cant_real <= 0 || cant_real == null){
-                    item = item + "<span class='label label-danger'>Sin stock</span>";
-                    // disable = 'disabled';
+                    if(cant_real > pto_pedido ){
+                        item = item + "<span class='label label-success'>En Stock</span>";
+                        
+                    }else if(cant_real <= 0 || cant_real == null){
+                        item = item + "<span class='label label-danger'>Sin stock</span>";
+                        // disable = 'disabled';
 
-                }else{
-                    item = item + "<span class='label label-warning'>Punto de pedido</span>";
+                    }else{
+                        item = item + "<span class='label label-warning'>Punto de pedido</span>";
 
-                }
-                // if (value.cantidad <= 0 || value.cantidad == null) {
-                // }
-                // if (true) {}
-                // else{
-                //     if(cant_real < pto_pedido ){
-                //         item = item + "<span class='label label-warning'>Punto de pedido</span>";
-                //     }else{
-                //         item = item + "<span class='label label-success'>En Stock</span>";
-                //     }
-                // } 
-                item = item + "</td>" + 
-                "<td style='margin:0px;padding:0px;'>" +
-                "<div class='btn-group' role='group'>"+
-                "<button type='button' class='btn btn-sm btn-default select-product "+disable+"'><span style='margin-right:0px' class='fa fa-plus'></span></button>"+
-                // "<button type='button' class='btn btn-sm btn-default ver-producto'><span style='margin-right:0px' class='fa fa-eye'></span></button>"+ 
-                "</div>"              
-                "</td>" +
-                "</tr>";
-                $("#productList").append(item);
+                    }
+                  
+                    item = item + "</td>" + 
+                    "<td style='margin:0px;padding:0px;'>" +
+                    "<div class='btn-group' role='group'>"+
+                    "<button type='button' class='btn btn-sm btn-default select-product "+disable+"'><span style='margin-right:0px' class='fa fa-plus'></span></button>"+
+                    // "<button type='button' class='btn btn-sm btn-default ver-producto'><span style='margin-right:0px' class='fa fa-eye'></span></button>"+ 
+                    "</div>"              
+                    "</td>" +
+                    "</tr>";
+                    $("#productList").append(item);
             });
+        }else{
+             item = "No hay productos agregados para este proveedor"
+            $("#productList").append(item);
+
+        }
     });
 }
 

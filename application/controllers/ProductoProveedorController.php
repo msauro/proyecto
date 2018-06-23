@@ -163,7 +163,6 @@ class ProductoProveedorController extends Gabinando_Base {
 	public function compararcostoAction(){
 		if($this->getRequest()->isPost()){
 			$params = $this->getRequest()->getPost();
-die(var_dump($params));
 
 		}
 	}
