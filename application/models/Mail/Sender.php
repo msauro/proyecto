@@ -65,7 +65,6 @@ class Application_Model_Mail_Sender {
         $emailObj->setSubject($subject);
         $emailObj->setVariables($dataArray);
         $emailObj->send();
-        // die(var_dump($emailObj));
     }
 
 }

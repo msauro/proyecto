@@ -11,7 +11,6 @@ class MarcaController extends Gabinando_Base {
     public function addAction(){
 		if($this->getRequest()->isPost()){
 			$params = $this->getRequest()->getPost();
-			// die(var_dump($params));
 			// Set idDeleted property to false in order to "reactivate" the registered admin
             $params['eliminado'] = 0;
 			

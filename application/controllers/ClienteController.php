@@ -68,7 +68,6 @@ class ClienteController extends Gabinando_Base {
 
 		$listadoclientes = $cliente->getList();
 		// $deuda = $ventaModel->getDeuda($params['id']);
-// die(var_dump($deuda));
 		$this->view->listadoclientes = $listadoclientes;
 		$this->view->deuda = $deuda;
 
@@ -90,7 +89,6 @@ class ClienteController extends Gabinando_Base {
 	public function editAction() {
 		if($this->getRequest()->isPost()){
 			$params = $this->getRequest()->getPost();
-			// die(var_dump($params));
 			$params['id'] = $this->getRequest()->getParam('id');
 
 			$cliente = new Application_Model_Cliente();
@@ -235,7 +233,6 @@ class ClienteController extends Gabinando_Base {
 		$ventaModel = new Application_Model_Venta();
 		$listadoPendientes = $ventaModel->getPendientes($params['id']);
 		$deuda = $ventaModel->getDeuda($params['id']);
-// die(var_dump($deuda));
 
 		if($listadoPendientes instanceof Exception){
 		    $this->addError("Error al mostrar las últimas compras.");

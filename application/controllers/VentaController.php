@@ -233,7 +233,6 @@ class VentaController extends Gabinando_Base{
 					);
 					//disminuye el stock en la existencia
 					$result = $existenciaModel->add($actualizarStock);
-					// die(var_dump($result));
 
 	            	// End Inventario
 				}else{
@@ -259,7 +258,7 @@ class VentaController extends Gabinando_Base{
 							'cantidad'		=> $nuevaCantidad,
 							'fecha' 		=> date('Y-m-d H:i:s')
 						);
-						// die(var_dump($actualizarStock));
+
 						//disminuye el stock en la existencia
 						$result = $existenciaModel->add($actualizarStock);
 		            	// End Inventario
@@ -275,7 +274,6 @@ class VentaController extends Gabinando_Base{
 					$message 	= "Hola ".$params['data']['nombre']."! Gracias por tu compra por un total de:".$params['data']['total'].". <br>Forma de pago:".$params['data']["forma_pago"]." <br><br> Fecha: " . date('d-m-Y h:i a') ;
 
 					$result 	= $sender->sendEmail($params['data']['email'],"Nueva compra",$message);
-				// die(var_dump($result));
 				}
 				
 				// End - Mail al cliente para avisarle que tiene una nueva venta
@@ -343,7 +341,6 @@ class VentaController extends Gabinando_Base{
 
 				$detalleVenta =$ventaDetalleModel->getDetalleVentaById($id);
 				$venta = $ventaModel->getFullVenta($id);
-			// die(var_dump($venta));
 				if ($venta['descuento']>0) {
 					$subDesc = $venta['subtotal'] - ($venta['subtotal'] *$venta['descuento']/100);
 					$venta['iva_calculado'] = (round($subDesc*0.21,2));
@@ -369,7 +366,6 @@ class VentaController extends Gabinando_Base{
 		
 			$productoEquivalenteModel = new Application_Model_ProductoEquivalente();
 			$listadoEquivalentes = $productoEquivalenteModel->getEquivalentes($codigo);
-		// die(var_dump($listadoEquivalentes));
 		$arrayEquivalente= [];
 			
 		// 	$a = array_unique($listadoEquivalentes['id_producto_equivalente']);
@@ -404,7 +400,6 @@ class VentaController extends Gabinando_Base{
 	public function notacreditoAction(){
     	$id_venta = $this->getRequest()->getPost();
     	$ventaModel = new Application_Model_Venta();
-    	// die(var_dump($id_venta['id_venta']));
     	$params['eliminado'] = 1;
 		$result = $ventaModel->edit($id_venta['id_venta'],$params);
 		if($result instanceof Exception){
@@ -419,10 +414,8 @@ class VentaController extends Gabinando_Base{
 	    public function pagadoAction(){
 			$params = $this->getRequest()->getPost();
 	        $actualiza['pagado'] = 1;
-			// die(var_dump($params));
 			$ventaModel = new Application_Model_Venta();
 	        $result = $ventaModel->edit($params["id_venta"], $actualiza);
-	        // die(var_dump($result));
 	        if($result instanceof Exception){
 	            return $this->sendErrorResponse('Error al poner la venta como pagada');
 	        }else{

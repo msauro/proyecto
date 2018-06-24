@@ -134,7 +134,6 @@ class Application_Model_Cliente extends Application_Model_Base
         $stmt = $db->query($query);
 
         $clientesMasVentas =  $stmt->fetchAll();
-        // die(var_dump($query));
         return $clientesMasVentas;
     }
 
@@ -143,7 +142,6 @@ class Application_Model_Cliente extends Application_Model_Base
         ->from($this, array('COUNT(ventas.id) as cli_deuda'))
         ->join('ventas', 'ventas.id_cliente = clientes.id', array('id'))
         ->where('clientes.eliminado = 0 AND ventas.forma_pago = "ctacte"');
-// die($query);
         $rows = $this->fetchAll($query);
         return $rows->toArray();
     }

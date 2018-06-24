@@ -56,7 +56,6 @@ class Application_Model_ProductoEquivalente extends Application_Model_Base
         $stmt = $db->query($query);
 
         $clientesMasVentas =  $stmt->fetchAll();
-        // die(var_dump($query));
         return $clientesMasVentas;
     }
 //////////////////////////////

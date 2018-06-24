@@ -136,7 +136,6 @@ class Application_Model_ProductoProveedor extends Application_Model_Base
 
     public function getProductosByProveedor($id_proveedor){
         try{
-            // die(var_dump($id_proveedor));
             $query = $this->select()
                 ->from($this, array('codigo_producto_proveedor as codigo_proveedor'))
                 ->where('producto_proveedor.id_proveedor = ?', $id_proveedor);

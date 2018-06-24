@@ -123,7 +123,6 @@ class ProveedorController extends Gabinando_Base {
     public function getproveedoresAction(){
 		$proveedorModel = new Application_Model_Proveedor();		
 		$params 	 = $params = $this->getRequest()->getParams();
-	// die(var_dump($params));
 		if( isset($params['search']) ){
 			$search 	 = array(
 				'search' => $params['search'],

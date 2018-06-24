@@ -66,7 +66,6 @@ class UsuarioController extends Gabinando_Base {
 	public function editAction() {
 		if($this->getRequest()->isPost()){
 			$params = $this->getRequest()->getPost();
-	// die(var_dump($params));
 			$params['id'] = $this->getRequest()->getParam('id');
 			(isset($params["administrador"])) ? $params["administrador"] = 1 : $params["administrador"] = 0;
 

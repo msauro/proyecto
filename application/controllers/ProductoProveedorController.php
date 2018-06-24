@@ -51,7 +51,6 @@ class ProductoProveedorController extends Gabinando_Base {
 				$params = $this->getRequest()->getPost();
 				$costoproductoproveedorModel = new Application_Model_ProductoProveedorPrecio();
 				$fecha = date("Y-m-d", strtotime($params['fecha']));
-				// die(var_dump($fecha));
 
             	$paramsProducto = array(
 				    "id_proveedor"				=> $params['id_proveedor'],
@@ -146,7 +145,6 @@ class ProductoProveedorController extends Gabinando_Base {
 			$params = $params = $this->getRequest()->getParams();
 			$producto = new Application_Model_ProductoProveedor();
 			$listadoProductos = $producto->getProductosByProveedor($params["id_proveedor"]);
-			// die(var_dump($listadoProductos));
 			$this->sendSuccessResponse(array(
 				'listadoProductos' 		=> $listadoProductos
 				// 'pages' 		=> $pages,
@@ -258,7 +256,6 @@ class ProductoProveedorController extends Gabinando_Base {
 		}//si no es POST
 		else{
 			$id = $this->getRequest()->getParam('id');
-	// die(var_dump($id));
 			
 			if($id){
 				$marcaModel = new Application_Model_Marca();
@@ -270,7 +267,6 @@ class ProductoProveedorController extends Gabinando_Base {
 				$producto['equivalente'] = $productoModel->getProductoEquivalenteById($producto['codigo']);
 				$originalModel = new Application_Model_ProductoOriginal();
 				$listadoOriginal = $originalModel->getList();
-			// die(var_dump($listadoOriginal));
 				
 				if (!$producto['equivalente']) {
 					$producto['equivalente'] = $listadoOriginal;

@@ -243,7 +243,6 @@ class ProductoController extends Gabinando_Base {
 				$producto['equivalente'] = $productoModel->getProductoEquivalenteById($producto['codigo']);
 				$originalModel = new Application_Model_ProductoOriginal();
 				$listadoOriginal = $originalModel->getList();
-			// die(var_dump($listadoOriginal));
 				
 				if (!$producto['equivalente']) {
 					$producto['equivalente'] = $listadoOriginal;
@@ -298,7 +297,7 @@ class ProductoController extends Gabinando_Base {
 		$paginate['start_from'] = ($paginate['page']-1) * $paginate['per_page'];
 
 		$productos = $producto->getListFiltered($search,$paginate,$id_proveedor);
-	// die(var_dump($productos));
+
 		if($productos instanceof Exception)
 			$this->sendErrorResponse($productos->getMessage());
 		$productoPager = $producto->getListFiltered($search,NULL);
@@ -334,7 +333,6 @@ class ProductoController extends Gabinando_Base {
 			$listadoEquivalentes = $productoEquivalenteModel->getEquivalentes($codigo);
 			$arrayEquivalente= [];
 			
-// die(var_dump($arrayEquivalente));
 		// 	$a = array_unique($listadoEquivalentes['id_producto_equivalente']);
 			foreach ($listadoEquivalentes as $equivalente) {
 
@@ -435,8 +433,6 @@ class ProductoController extends Gabinando_Base {
 				$productoOriginalModel = new Application_Model_ProductoOriginal();
 				$producto = $productoOriginalModel->getProductoById($id);
 				
-			// die(var_dump($producto));
-		
 				if($producto){
 					$this->view->data = $producto;
 				}

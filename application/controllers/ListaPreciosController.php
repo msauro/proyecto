@@ -18,7 +18,6 @@ class ListaPreciosController extends Gabinando_Base {
 			$params['fecha_desde'] = date_format($params['fecha_desde'],  'Y-m-d');
 			$params['fecha_hasta'] = date_create($params['fecha_hasta']);
 			$params['fecha_hasta'] = date_format($params['fecha_hasta'],  'Y-m-d');
-			// die(var_dump($date));
 			// $params['fecha_desde'] = date("Y-m-d", strtotime($params['fecha_vigencia']));
 			// $params['fecha_hasta'] = date("Y-m-d", strtotime($params['fecha_vigencia']));
             $params['eliminado'] = 0;

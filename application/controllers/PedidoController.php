@@ -270,7 +270,6 @@ class PedidoController extends Gabinando_Base{
 	public function listAction() {
 		$pedidoModel = new Application_Model_Pedido();
 		$listadoPedidos = $pedidoModel->getList();
-// echo "<pre>"; die(var_dump($listadoPedidos));
 
 		$this->view->listadoPedidos = $listadoPedidos;
     }
@@ -287,7 +286,6 @@ class PedidoController extends Gabinando_Base{
 
 				$detallePedido =$pedidoDetalleModel->getDetallePedidoById($id);
 				$pedido = $pedidoModel->getFullPedido($id);
-			// die(var_dump($pedido));
 
 				if($pedido){
 					$pedido['detalle'] = $detallePedido;

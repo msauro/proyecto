@@ -19,7 +19,6 @@ class IndexController extends Gabinando_Base{
         //widget Cantidad de ventas del día de hoy (OK)
         $ventasModel = new Application_Model_Venta();
         $cantVentas = $ventasModel->getCantVentasRango($desde,$hasta);
-        // die(var_dump($cantVentas));
         $this->view->cantVentas = $cantVentas;
 
         //widget Cantidad de ventas del mes (OK)
@@ -47,10 +46,8 @@ class IndexController extends Gabinando_Base{
         //widget cantidad de productos en punto de pedido o menor 
         $existenciaModel = new Application_Model_Existencia();
         $cantPtoPedido = $existenciaModel->getCantPtoPedido();
-        // die(var_dump($cantPtoPedido['cantPtoPedido']));
         $this->view->cantPtoPedido = $cantPtoPedido['cantPtoPedido'];
 
-// die(var_dump($cantPtoPedido));
 
         if($cantPtoPedido instanceof Exception){
             Gabinando_Base::addError($result->getMessage());
