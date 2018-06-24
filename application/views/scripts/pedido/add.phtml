@@ -293,7 +293,7 @@ $this->headTitle($this->title);
                                                      </div>
                                                      <div class="panel-footer">
                                                          <button class="btn btn-default" type="button" onclick="history.back()">Volver</button>
-                                                         <button class="btn btn-primary pull-right">Guardar</button>
+                                                         
                                                      </div>
                                                  
                                              </form>
@@ -567,7 +567,8 @@ $this->headTitle($this->title);
     //Selecciono el proveedor
     $("#list-proveedor").on( "click", ".select-proveedor", function(slideEvt) {
         if($(this).attr('id') != ""){
-
+            
+            $("#list-producto tbody").html('');
             var params = {};
             params.direccion = $(this).find('.profile-data-direccion').text();
             params.telefono = $(this).find('.profile-data-telefono').text();
@@ -987,6 +988,7 @@ function getProveedores(search){
 
     $("div#spinner").fadeIn("fast");
     $("#list-proveedor").hide();
+    $("#list-producto tbody").html('');
     var params = {};
     params.search   = search;
     params.page     = $('#page-patient').attr('rel');

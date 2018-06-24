@@ -160,12 +160,138 @@ class ProductoProveedorController extends Gabinando_Base {
 		}
 	}
 
+	//FALTA TERMINAR
 	public function compararcostoAction(){
 		if($this->getRequest()->isPost()){
 			$params = $this->getRequest()->getPost();
 
 		}
 	}
+
+	public function editAction() {
+		if($this->getRequest()->isPost()){
+			$params = $this->getRequest()->getPost();
+			$params['id'] = $this->getRequest()->getParam('id');
+			$paramsProducto= array();
+			if($_FILES['imagen_url']['size'] > 0){
+				$file = $_FILES['imagen_url'];
+
+				$img = $this->uploadImage(self::UPLOADPATHAVATAR,$file,$params['id']);
+
+				if($img['status'] == 'error'){
+					die($img['message']);
+				}
+
+				$paramsProducto["imagen_url"] = $img['message'];
+			}
+
+			$producto = new Application_Model_Producto();
+
+			$productoExistente = $producto->getProductosByParams($params['codigo'], $params['id_marca'], $params['id']);
+			
+			if($productoExistente instanceof Exception){
+                Gabinando_Base::addError($productoExistente->getMessage());
+            // si el producto no fue agregado anteriormente -> edito producto
+            }elseif($productoExistente == null){
+            	$paramsProducto = array(
+				    "codigo" 		=> $params['codigo'],
+				    "id_marca" 		=> $params['id_marca'],
+				    "nombre"		=> $params['nombre'],
+				    "eliminado"		=> 0,
+				    "punto_pedido"	=> $params['punto_pedido'],
+				    "descripcion"	=> $params['descripcion']
+				);
+				$paramsStock = array(
+				    "id_producto" 	=> $params['id'],
+				    "cantidad" 		=> $params['cantidad'],
+					'fecha' 		=> date('Y-m-d H:i:s')
+
+				);
+				if($img['message']) {
+					$paramsProducto["imagen_url"]= $img['message'];
+					
+				}
+				$producto = new Application_Model_Producto();
+				$stock = new Application_Model_Existencia();
+				$resultProducto = $producto->edit($params['id'], $paramsProducto);
+           		$resultStock = $stock->edit($params['id'], $paramsStock);
+
+				$productoEquivalenteModel = new Application_Model_ProductoEquivalente();
+
+				// elimino los equivalentes
+				$resultEquivalentes = $productoEquivalenteModel->eliminarEquivalentes($params['codigo']);
+				// vuelvo a crear los equivalentes
+
+   				if (sizeof($params['id_original']) > 1) {
+					foreach ($params['id_original'] as $id_original) {
+		            	$paramsEquivalente = array(
+							"id_original" 	=> $id_original,
+							"id_producto" 	=> $params['codigo']
+						);
+						$resultEquivalentes = $productoEquivalenteModel->add($paramsEquivalente);
+					}
+				}else{
+					$paramsEquivalente = array(
+						"id_original" 	=> $params['id_original'][0],
+						"id_producto" 	=> $params['codigo']
+					);
+					
+					$resultEquivalentes = $productoEquivalenteModel->add($paramsEquivalente);
+				}
+
+
+				if($result instanceof Exception){
+	                Gabinando_Base::addError($result->getMessage());
+
+	            }else{
+	            	           		
+	            	Gabinando_Base::addSuccess('Producto actualizado correctamente');
+	            	$this->_redirect('/producto/list');
+	            }
+	        }else{
+
+            	Gabinando_Base::addError('Ya existe un producto con ese código para esa marca.');
+                $this->_redirect('/producto/edit/id/'.$params['id']);
+            	
+            }
+
+		}//si no es POST
+		else{
+			$id = $this->getRequest()->getParam('id');
+	// die(var_dump($id));
+			
+			if($id){
+				$marcaModel = new Application_Model_Marca();
+
+				$listadoMarcas = $marcaModel->getList();
+
+				$productoModel = new Application_Model_Producto();
+				$producto = $productoModel->getProductoById($id);
+				$producto['equivalente'] = $productoModel->getProductoEquivalenteById($producto['codigo']);
+				$originalModel = new Application_Model_ProductoOriginal();
+				$listadoOriginal = $originalModel->getList();
+			// die(var_dump($listadoOriginal));
+				
+				if (!$producto['equivalente']) {
+					$producto['equivalente'] = $listadoOriginal;
+				}
+
+				$this->view->listadoOriginal = $listadoOriginal;
+				$this->view->listadoEquivalente = $producto['equivalente'];
+				$this->view->listadoMarcas = $listadoMarcas;
+
+				if($producto){
+					$this->view->data = $producto;
+				}
+				else{
+					$this->_redirect('/producto/list');
+				}
+			}
+			else{
+				$this->_redirect('/producto/list');
+			}
+		}
+    }
 
 
 

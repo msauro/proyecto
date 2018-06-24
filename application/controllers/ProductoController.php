@@ -158,7 +158,6 @@ class ProductoController extends Gabinando_Base {
 
 				$paramsProducto["imagen_url"] = $img['message'];
 			}
-// die(var_dump($img['message']));
 
 			$producto = new Application_Model_Producto();
 
@@ -188,7 +187,6 @@ class ProductoController extends Gabinando_Base {
 				}
 				$producto = new Application_Model_Producto();
 				$stock = new Application_Model_Existencia();
-// die(var_dump($paramsProducto));
 				$resultProducto = $producto->edit($params['id'], $paramsProducto);
            		$resultStock = $stock->edit($params['id'], $paramsStock);
 

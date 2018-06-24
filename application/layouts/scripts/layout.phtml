@@ -55,11 +55,11 @@ echo $this->doctype(); ?>
                         </a>
                         <div class="profile">
                             <div class="profile-imagen">
-                                <img src="<?php  echo isset($this->user['avatar_url']) ? back_uri.$this->user['avatar_url'] : back_uri.'admin-public/img/user.png' ?>" alt="<?php echo $this->user['first_name'] ?> <?php echo $this->user['last_name'] ?>"/>
+                                <img src="<?php  echo isset($this->admin['avatar_url']) ? back_uri.$this->admin['avatar_url'] : back_uri.'admin-public/img/user.png' ?>" alt="<?php echo $this->user['first_name'] ?> <?php echo $this->user['last_name'] ?>"/>
                             </div>
                             <div class="profile-data">
                                 <div class="profile-data-name">
-                                    <?php  echo $this->user['first_name'] ?> <?php echo $this->user['last_name'] ?>
+                                    <?php  echo $this->admin['nombre'] ?> <?php echo $this->admin['apellido'] ?>
                                 </div>
                             </div>
                             
@@ -202,6 +202,7 @@ echo $this->doctype(); ?>
                       <!-- < ?php if(in_array('admin_donations', $this->admin['rol_modules']) || in_array('admin_standarddonations', $this->admin['rol_modules']) || in_array('admin_patients', $this->admin['rol_modules'])) : ?> -->
                     <li class="xn-icon-button" style="margin-top:10px;">
                        <div data-step="2" data-intro="Acá podrás crear facturas, pedidos y clientes" data-position="right"><button type="button" class="btn btn-default"><span class="fa fa-plus" style="color:#337ab7;"></span><b>Crear</b></button></div>
+
                         <ul class="xn-drop-left xn-drop-white animated zoomIn">
                             <!-- < ?php if(in_array('admin_donations', $this->admin['rol_modules'])): ?> -->
                             <li><a href="/venta/add"><span class="fa fa-files-o"></span>Venta</a></li>
@@ -211,7 +212,9 @@ echo $this->doctype(); ?>
                             <li><a href="/cliente/add"><span class="fa fa-users"></span>Nuevo cliente</a></li> 
                             <!-- < ?php endif ?> -->
                         </ul>                        
-                    </li>               
+                    </li>   
+
+                              
                     <!-- < ?php endif; ?>    -->
                 <!-- LOGOUT -->
 
