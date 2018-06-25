@@ -89,6 +89,7 @@ class Application_Model_Producto extends Application_Model_Base
         $fecha = date('Y-m-j');
         $nuevafecha = strtotime ( "-$days day" , strtotime ( $fecha ) ) ;
         $nuevafecha = date ( 'Y-m-j' , $nuevafecha );
+        // die(var_dump($search));
 
         $search= $search['search'];
         if ($id_proveedor != NULL) {
@@ -134,12 +135,12 @@ class Application_Model_Producto extends Application_Model_Base
                 AND (productos.eliminado = 0) 
                 AND (marcas.eliminado = 0) 
                 AND (t1.eliminado = 0) 
-                -- AND ('productos.codigo LIKE %$search% OR productos.nombre LIKE %$search% OR productos.descripcion LIKE %$search%')
-                GROUP BY `productos`.`id`";
+               ";
         }
         if ($search) {
-           $query.= "AND ('productos.codigo LIKE %$search% OR productos.nombre LIKE %$search% OR productos.descripcion LIKE %$search%')";
+           $query.= "AND (productos.codigo LIKE '%$search%' OR productos.nombre LIKE '%$search%' OR productos.descripcion LIKE '%$search%') ";
         }
+        $query.= "GROUP BY `productos`.`id`";
 
         if ($paginate)
             $query.= "LIMIT ".$paginate['per_page']." OFFSET ". $paginate['start_from'];

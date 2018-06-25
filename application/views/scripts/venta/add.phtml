@@ -744,10 +744,13 @@ $this->headTitle($this->title);
     });
 
     $('.btn-buscar-producto').click(function() {
-        getProducts();
+        var search = $('#buscar-prodyucto').val();
+        $("#list-producto tbody").html('');
+        getProducts(search);
     });
 
     $('.btn-buscar-cliente').click(function() {
+        $("#list-cliente tbody").html('');
         var search = $('#buscar-cliente').val();
         getClientes(search);
     });
@@ -944,7 +947,7 @@ function resetForm(step){
 //Obtengo los productos para el PASO 2
 
 /////////////////////////
-function getProducts(){
+function getProducts(search){
     var params = {};
     params.search        = $('#buscar-productos').val();;
     params.page          = $('#page').attr('rel');
@@ -960,7 +963,7 @@ function getProducts(){
             var item = "<div class='col-md-12'>" +
             "<div class='panel panel-default'>" +
             "<div class='panel-body'>" +
-            "<p style='text-align:center;'>No se encontraron clientes</p>" + 
+            "<p style='text-align:center;'>No se encontraron productos</p>" + 
             "</div>" +
             "</div>" +
             "</div>";

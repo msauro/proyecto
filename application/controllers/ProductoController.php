@@ -269,7 +269,8 @@ class ProductoController extends Gabinando_Base {
 		$producto = new Application_Model_Producto();		
 		$id_proveedor = NULL;
 		$params["id_proveedor"] = NULL;
-		$params 	 = $params = $this->getRequest()->getParams();
+		$params  = $this->getRequest()->getParams();
+		// die(var_dump($params));
 		if ($params["id_proveedor"]) {
 			$id_proveedor = $params["id_proveedor"];
 		}
