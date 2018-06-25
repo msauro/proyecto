@@ -627,7 +627,8 @@ $this->headTitle($this->title);
         products.push(producto_id);
 
         //asigno precio al resumen
-        prices[producto_id] = producto_precio;
+        prices[producto_id] = producto_precio.substring(2);
+
         $("#selected-products table tbody").append('<tr>'+
             '<input name="id_producto[]" type="hidden" value="'+producto_id+'">'+
             '<input name="precio[]" type="hidden" value="'+producto_precio+'">'+
@@ -638,7 +639,7 @@ $this->headTitle($this->title);
             '<td>'+producto_codigo+'</td>'+
             '<td>'+producto_marca+'</td>'+
             '<td>'+codigo_proveedor+'</td>'+
-            '<td>$'+producto_precio+'</td>'+
+            '<td>'+producto_precio+'</td>'+
             '<th><span class="fa fa-trash-o"></span></th>'+
             '</tr>');
 
@@ -927,7 +928,7 @@ function getProducts(){
                 "<td id='codigo_proveedor'>" + value.codigo_producto_proveedor + "</td>" +
                 "<td id='existencia'>" + value.cantidad + "</td>" +
                 "<td id='imagen_url' class='hidden'>" + value.imagen_url + "</td>" +
-                "<td id='precio'>" + value.precio + "</td>";
+                "<td id='precio'>$ " + Number(value.precio).toFixed(2) + "</td>";
                 var disable;
                 var cant_real = parseInt(value.cantidad);
                 var pto_pedido = parseInt(value.punto_pedido);
@@ -1159,6 +1160,8 @@ function getProveedores(search){
 var calculateTotal = function(){
     var tot_discount, enviototal, total;
     total = parseFloat($("#subtotal_cost_hidden").val()); 
+    console.log('total');
+    console.log(total);
     subtotal = total;
     // tot_discount = parseFloat($('#rdiscount_hidden').val());
 

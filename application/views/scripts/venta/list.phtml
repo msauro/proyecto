@@ -48,7 +48,7 @@ $(".xn-icon-button").fadeIn();
                                         <td><?php echo $venta['cuit'] ?></td>
                                         <td><?php echo $venta['direccion'] ?></td>
                                         <td><?php echo $venta['telefono'] ?></td>
-                                        <td>$<?php echo $venta['total'] ?></td>
+                                        <td>$<?php echo number_format($venta['total'], 2,',','') ?></td>
                                         <td class="text-center">
                                             <button class="btn btn-default btn-rounded btn-condensed btn-sm" onclick="detalleVenta(<?php echo $venta['id'] ?>)"><span class="fa fa-eye"></span></button>
                                             <button class="btn btn-danger btn-rounded btn-condensed btn-sm btn-delete" id="<?php echo $venta['id'] ?>"><a href="#" data-toggle="tooltip" title="Nota de crédito"><span class="fa fa-remove" data-toggle="modal" data-target="#delete_modal"></span></a></button>

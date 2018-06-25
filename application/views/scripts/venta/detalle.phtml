@@ -106,9 +106,9 @@ $this->headTitle($this->title);
                                                     <thead>
                                                         <tr>
                                                             <td><strong>Código</strong></td>
-                                                            <td class="text-center"><strong>Descripción</strong></td>
-                                                            <td class="text-center"><strong>Precio unitario</strong></td>
-                                                            <td class="text-center"><strong>Cantidad</strong></td>
+                                                            <td class="text-left"><strong>Descripción</strong></td>
+                                                            <td class="text-right"><strong>Precio unitario</strong></td>
+                                                            <td class="text-right"><strong>Cantidad</strong></td>
                                                             <td class="text-right"><strong>Total</strong></td>
                                                         </tr>
                                                     </thead>
@@ -117,10 +117,10 @@ $this->headTitle($this->title);
                                                     <?php foreach ($this->venta["detalle"] as $detalle) { ?>
                                                         <tr>
                                                             <td><?php echo  $detalle['codigo'] ?></td>
-                                                            <td class="center"><?php echo  $detalle['descripcion'] ?></td>
-                                                            <td class="text-center">$<?php echo  $detalle['precio'] ?></td>
-                                                            <td class="text-center"><?php echo  $detalle['cantidad'] ?></td>
-                                                            <td class="text-right">$<?php echo ($detalle['precio']*$detalle['cantidad'])?></td>
+                                                            <td class="text-left"><?php echo  $detalle['descripcion'] ?></td>
+                                                            <td class="text-right">$<?php echo  number_format($detalle['precio'], 2,',','') ?></td>
+                                                            <td class="text-right"><?php echo  $detalle['cantidad'] ?></td>
+                                                            <td class="text-right">$<?php echo number_format(($detalle['precio']*$detalle['cantidad']), 2,',','')?></td>
                                                         </tr>
                                                     <?php } ?>
                                                        
@@ -129,7 +129,7 @@ $this->headTitle($this->title);
                                                             <td class="thick-line"></td>
                                                             <td class="thick-line"></td>
                                                             <td class="thick-line text-center"><strong>Subtotal</strong></td>
-                                                            <td class="thick-line text-right">$<?php echo  $this->venta['subtotal'] ?></td>
+                                                            <td class="thick-line text-right">$<?php echo  number_format($this->venta['subtotal'], 2,',','') ?></td>
                                                         </tr>
                                                         <?php if ($this->venta['descuento'] > 0) { ?>
                                                         <tr>
@@ -137,7 +137,7 @@ $this->headTitle($this->title);
                                                             <td class="no-line"></td>
                                                             <td class="no-line"></td>
                                                             <td class="no-line text-center"><strong>Descuento (<?php echo ($this->venta['descuento'])?>%)</strong></td>
-                                                            <td class="no-line text-right">-$<?php echo ($this->venta['subtotal'] *$this->venta['descuento']/100)?></td>
+                                                            <td class="no-line text-right">-$<?php echo number_format(($this->venta['subtotal'] *$this->venta['descuento']/100), 2,',','') ?></td>
                                                         </tr>
                                                         <?php } ?>
                                                         <tr>
@@ -145,7 +145,7 @@ $this->headTitle($this->title);
                                                             <td class="no-line"></td>
                                                             <td class="no-line"></td>
                                                             <td class="no-line text-center"><strong>IVA (21%)</strong></td>
-                                                            <td class="no-line text-right">$<?php echo  $this->venta['iva_calculado'] ?></td>
+                                                            <td class="no-line text-right">$<?php echo  number_format($this->venta['iva_calculado'], 2,',','') ?></td>
                                                         </tr>
                                                         <?php if ($this->venta['envio'] > 0) { ?>
                                                         <tr>
@@ -153,7 +153,7 @@ $this->headTitle($this->title);
                                                             <td class="no-line"></td>
                                                             <td class="no-line"></td>
                                                             <td class="no-line text-center"><strong>Envío</strong></td>
-                                                            <td class="no-line text-right">$<?php echo  $this->venta['envio'] ?></td>
+                                                            <td class="no-line text-right">$<?php echo  number_format($this->venta['envio'], 2,',','') ?></td>
                                                         </tr>
                                                         <?php } ?>
                                                         <tr>
@@ -161,7 +161,7 @@ $this->headTitle($this->title);
                                                             <td class="no-line"></td>
                                                             <td class="no-line"></td>
                                                             <td class="no-line text-center"><strong>Total</strong></td>
-                                                            <td class="no-line text-right"><strong>$<?php echo  $this->venta['total'] ?></strong></td>
+                                                            <td class="no-line text-right"><strong>$<?php echo number_format($this->venta['total'], 2,',','') ?></strong></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>

@@ -105,7 +105,8 @@ echo $this->doctype(); ?>
                                 <li <?php if($controller == 'precio' && $action == 'list') echo 'class="active"' ?>><a href="/precio/list"><span class="fa fa-file-text-o" aria-hidden="true"></span> Listado</a></li>
                             </ul>
                         </li>
-                        <?php if ($this->admin){ ?>
+                        
+                        <?php if ($this->admin["administrador"] == 1){ ?> 
                         <li id="modules-settings" class="xn-openable">
                             <a href="javascript:void(0);">
                                 <div data-step="7" data-intro="Acá podrás gestionar los proveedores" data-position="right"><span class="fa fa-users" aria-hidden="true"></span><span class="xn-text">Proveedores</span></div>
