@@ -19,6 +19,10 @@ class ClienteController extends Gabinando_Base {
 				if($img['status'] == 'error'){
 					die($img['message']);
 				}
+				$params['imagen_url'] = $img['message'];
+
+			}else{
+				$params['imagen_url'] = '/resources/admin_avatars/cliente-sin-foto.jpg';
 			}
 			//si es monotributista, no es Resp. Inscripto, por lo tanto sería como exento
 			if ($params['id_tipo_empresa'] == 1) {
@@ -27,11 +31,10 @@ class ClienteController extends Gabinando_Base {
 
 			$params['estado'] = 1;
 
-			$params['imagen_url'] = $img['message'];
             $params['eliminado'] = 0;
 			$cliente = new Application_Model_cliente();
-			$alreadyRegisteredByCuit = $cliente->getClienteByCuit($params['cuit']);
-			$alreadyRegisteredByEmail = $cliente->getClienteByEmail($params['email']);
+			$alreadyRegisteredByCuit = $cliente->getClienteByCuit($params['cuit'],NULL);
+			$alreadyRegisteredByEmail = $cliente->getClienteByEmail($params['email'],NULL);
 
 			if(!is_null($alreadyRegisteredByCuit) OR !is_null($alreadyRegisteredByEmail)){
                 Gabinando_Base::addError('Existe un cliente con ese CUIT o Email');

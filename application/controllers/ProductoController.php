@@ -188,6 +188,7 @@ class ProductoController extends Gabinando_Base {
 				$producto = new Application_Model_Producto();
 				$stock = new Application_Model_Existencia();
 				$resultProducto = $producto->edit($params['id'], $paramsProducto);
+				
            		$resultStock = $stock->edit($params['id'], $paramsStock);
 
 				$productoEquivalenteModel = new Application_Model_ProductoEquivalente();

@@ -46,6 +46,7 @@ class Application_Model_Base extends Zend_Db_Table_Abstract
 
     public function edit($id,$params){
         try{
+            // die(var_dump($params));
             return $this->update($params, array("id = $id"));
         }catch(Exception $e){
             return $e;
