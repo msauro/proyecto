@@ -270,7 +270,7 @@ class VentaController extends Gabinando_Base{
 		
 				if ($params['data']['email'] != 'consumidor@final.com') {
 					$sender 	= new Application_Model_Mail_Sender();
-					$message 	= "Hola ".$params['data']['nombre']."! Gracias por tu compra por un total de:".$params['data']['total'].". <br>Forma de pago:".$params['data']["forma_pago"]." <br><br> Fecha: " . date('d-m-Y h:i a') ;
+					$message 	= "Hola ".$params['data']['nombre']."! Gracias por tu compra por un total de:$ ".$params['data']['total'].". <br>Forma de pago:".$params['data']["forma_pago"]." <br><br> Fecha: " . date('d-m-Y h:i a') ;
 
 					$result 	= $sender->sendEmail($params['data']['email'],"Nueva compra",$message);
 				}
