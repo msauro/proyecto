@@ -241,15 +241,14 @@ class VentaController extends Gabinando_Base{
 						$productoMaxExistencia = $existenciaModel->getUltimaExistencia($id_producto);
 						
 						$nuevaCantidad = $productoMaxExistencia['cantidad'] - $prod['cant'];
-
+						$precio = substr($prod['precio'], 2);
 						// Start - Crea linea de venta
 						$dProductsObj = array(
 								'id_producto'	=> $prod['id_producto'],
 								'cantidad'		=> $prod['cant'],
-								'precio'		=> $prod['precio'],
+								'precio'		=> $precio,
 								'id_venta'		=> $idVenta
 						);
-
 						$ventas_detalleModel->add($dProductsObj);
 						
 						// Start descontar stock Inventario 
