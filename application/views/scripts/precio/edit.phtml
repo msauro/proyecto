@@ -39,7 +39,7 @@ $this->headTitle($this->title);
                             <div class="col-sm-6 col-xs-12">                                            
                                 <div class="input-group">
                                     <span class="input-group-addon"><span class="fa fa-list"></span></span>
-                                    <input name="precio" type="text" class="form-control" value="<?php echo $this->data['precio'] ?>"/>
+                                    <input name="precio" type="text" class="form-control" value="<?php echo number_format($this->data['precio'], 2, '.', '');  ?>"/>
                                 </div>                                            
                             </div>
                         </div>

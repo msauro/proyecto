@@ -93,6 +93,7 @@ class PrecioController extends Gabinando_Base {
 		}
 		else{
 			$id = $this->getRequest()->getParam('id');
+
 			if($id){
 				$marcaModel = new Application_Model_Marca();
 
