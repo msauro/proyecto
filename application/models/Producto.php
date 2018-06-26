@@ -110,7 +110,6 @@ class Application_Model_Producto extends Application_Model_Base
                 AND (productos.eliminado = 0) 
                 AND (marcas.eliminado = 0) 
                 AND (precios.eliminado = 0)";
-// die($query);
 
         }else{
             $query = 

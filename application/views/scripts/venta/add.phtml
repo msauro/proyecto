@@ -554,7 +554,6 @@ $this->headTitle($this->title);
                 params.productos = productos;
                 //params.futureDeliveries = futureDeliveries;
                 panelAjax("/venta/setventa",params, function(data){              
-                    console.log(data);
                     if(data){
                             // $('.wizard').smartWizard('showMessage','Venta generada y stock actualizado correctamente');
                             $("#order_number").empty();
@@ -711,8 +710,8 @@ $this->headTitle($this->title);
         producto_id = $(this).closest("tr").find("input[name='id_producto[]']").val();
         cant = $(this).val();
         precio = $(this).closest("tr").find("input[name='precio[]']").val();
+        precio = precio.substring(2);
         
-
         prices[producto_id] = cant*precio;
         //actualizo el valor de cada producto dependiendo la cantidad comprada
         $("#selected-products table tbody").find("input[name='subtotal[]']").val(cant*precio);
@@ -872,7 +871,6 @@ function validateSteps(step) {
         case "3":
         var condicion = false; //condicion de que haya seleccionado la forma de pago
         var variable = false;  //variable que determina que si es consumidor final no puede ser ctacta
-        console.log(form_data.length);
         if (form_data.length > 19) {
             if(form_data[8]['value'] == 'Consumidor Final' && form_data[19]['value'] == 'ctacte'){
                 variable = true;
@@ -954,8 +952,6 @@ function getProducts(search){
     if (params.page < 0) { params.page = 1; };
 
     panelAjax("/producto/getproductos/",params, function(data){
-       console.log('data');
-        console.log(data);
         $("#list-producto tbody").html('');
         $(".result-search-product").html(data.productos.length + ' de ' + data.total + ' clientes');
         if (data.productos.length == 0) {
@@ -1123,7 +1119,6 @@ function getClientes(search){
     params.page     = $('#page-patient').attr('rel');
     if (params.page < 0) { params.page = 1; };
     panelAjax("/cliente/getClientes/",params, function(data){
-        console.log(data);
         $("#list-cliente").html('');
         $(".result-search-patient").html(data.clientes.length + ' de ' + data.total + ' clientes');
         if (data.clientes.length == 0) {
