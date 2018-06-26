@@ -83,7 +83,7 @@ $this->headTitle($this->title);
                                                         <tr>
                                                             <td class="text-center"><strong>Cantidad</strong></td>
                                                             <td class="text-center"><strong>Código</strong></td>
-                                                            <td class="text-center"><strong>Descripción</strong></td>
+                                                            <td class="text-right"><strong>Descripción</strong></td>
                                                             <td class="text-right"><strong>Código proveedor</strong></td>
                                                         </tr>
                                                     </thead>
@@ -92,8 +92,8 @@ $this->headTitle($this->title);
                                                         <tr>
                                                             <td class="text-center"><?php echo  $detalle['cantidad'] ?></td>
                                                             <td class="text-center"><?php echo  $detalle['codigo'] ?></td>
-                                                            <td class="center"><?php echo  $detalle['descripcion'] ?></td>
-                                                            <td class="text-center"><?php echo $detalle['codigo_producto_proveedor']?></td>
+                                                            <td class="text-right"><?php echo  $detalle['descripcion'] ?></td>
+                                                            <td class="text-right"><?php echo $detalle['codigo_producto_proveedor']?></td>
                                                         </tr>
                                                     <?php } ?>
                                                     </tbody>

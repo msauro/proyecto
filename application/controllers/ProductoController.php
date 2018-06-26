@@ -24,7 +24,7 @@ class ProductoController extends Gabinando_Base {
 
 				$params['imagen_url'] = $img['message'];
 			}else{
-				$img['message'] = NULL;
+				$params['imagen_url'] = '/resources/img_productos/producto-sin-foto.jpg';
 			}
            // $params['eliminado'] = 0;
 			
@@ -188,7 +188,7 @@ class ProductoController extends Gabinando_Base {
 				$producto = new Application_Model_Producto();
 				$stock = new Application_Model_Existencia();
 				$resultProducto = $producto->edit($params['id'], $paramsProducto);
-				
+
            		$resultStock = $stock->edit($params['id'], $paramsStock);
 
 				$productoEquivalenteModel = new Application_Model_ProductoEquivalente();
