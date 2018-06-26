@@ -103,8 +103,7 @@ class Application_Model_ProductoProveedor extends Application_Model_Base
                 WHERE (producto_proveedor.id_proveedor = '$id_proveedor')
                 AND (existencias.eliminado = 0) 
                 AND (productos.eliminado = 0) 
-                AND (marcas.eliminado = 0) 
-                GROUP BY `productos`.`id`";
+                AND (marcas.eliminado = 0)";
         }else{
             $query = 
                 "SELECT `productos`.*,  `marcas`.`nombre` AS `nom_marca`, `existencias`.`cantidad`
@@ -119,10 +118,15 @@ class Application_Model_ProductoProveedor extends Application_Model_Base
                 INNER JOIN `existencias` ON existencias.id = t2.maxid
                 WHERE (existencias.eliminado = 0) 
                 AND (productos.eliminado = 0) 
-                AND (marcas.eliminado = 0) 
-                -- AND ('productos.codigo LIKE %$search% OR productos.nombre LIKE %$search% OR productos.descripcion LIKE %$search%')
-                GROUP BY `productos`.`id`";
+                AND (marcas.eliminado = 0)";
         }
+
+         if ($search) {
+           $query.= "AND (productos.codigo LIKE '%$search%' OR productos.nombre LIKE '%$search%' OR productos.descripcion LIKE '%$search%') ";
+        }
+
+        $query.= "GROUP BY `productos`.`id`";
+
         if ($paginate)
             $query.= "LIMIT ".$paginate['per_page']." OFFSET ". $paginate['start_from'];
 

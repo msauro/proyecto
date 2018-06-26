@@ -109,8 +109,7 @@ class Application_Model_Producto extends Application_Model_Base
                 WHERE (existencias.eliminado = 0) 
                 AND (productos.eliminado = 0) 
                 AND (marcas.eliminado = 0) 
-                AND (precios.eliminado = 0) 
-                GROUP BY `productos`.`id`";
+                AND (precios.eliminado = 0)";
 // die($query);
 
         }else{
