@@ -953,10 +953,11 @@ function getProducts(search){
 
     panelAjax("/producto/getproductos/",params, function(data){
         $("#list-producto tbody").html('');
+        $(".sin-resultado").remove();
         $(".result-search-product").html(data.productos.length + ' de ' + data.total + ' clientes');
         if (data.productos.length == 0) {
             $('.pagination').fadeOut(500);
-            var item = "<div class='col-md-12'>" +
+            var item = "<div class='col-md-12 sin-resultado'>" +
             "<div class='panel panel-default'>" +
             "<div class='panel-body'>" +
             "<p style='text-align:center;'>No se encontraron productos</p>" + 

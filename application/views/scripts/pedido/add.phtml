@@ -916,6 +916,8 @@ function getProducts(){
 
     panelAjax("/productoproveedor/getproductos/",params, function(data){
         $("#list-producto tbody").html('');
+        $(".sin-resultado").remove();
+
         if (data.productos.length > 0) {
             $.each(data.productos, function( index, value ){
                 item = "<tr id='id_producto' value='"+ value.id_prod +"'>" +
@@ -998,7 +1000,7 @@ function getProveedores(search){
         $(".result-search-proveedor").html(data.proveedores.length + ' de ' + data.total + ' proveedores');
         if (data.proveedores.length == 0) {
             $('.pagination').fadeOut(500);
-            var item = "<div class='col-md-12'>" +
+            var item = "<div class='col-md-12 sin-resultado'>" +
             "<div class='panel panel-default'>" +
             "<div class='panel-body'>" +
             "<p style='text-align:center;'>No se encontraron proveedores</p>" + 
